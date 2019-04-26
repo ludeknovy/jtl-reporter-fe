@@ -1,0 +1,140 @@
+.items-overview {
+  padding-left: 200px;
+  padding-right: 200px;
+  background-color: #f0f1f4;
+  padding-top: 20px;
+  min-height: 100%;
+  width: 100%;;
+  position: absolute;
+}
+
+.items-overview  [class*='col'] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.items {
+  padding-bottom: 10px;
+  background-color: white;
+  border-radius: 0.23rem;
+}
+a {
+  color: #1d1e3a
+}
+
+.items-count {
+  font-size: 12px;
+}
+
+.head {
+  font-size: 12px;
+  color: #888888c7;
+  border-top: 0px;
+  width: 15rem;
+  min-width: 8rem;
+  border-bottom: 2px solid #a5a2a247;
+
+}
+
+.head-edit {
+  border-top: 0px;
+}
+
+td {
+  border-top: 1px solid #a5a2a247;
+  padding-left: 20px;
+}
+
+th {
+  padding-left: 20px;
+}
+
+.card-footer {
+  background-color: white;
+  border-top: none;
+}
+
+.card-body {
+  padding: 0px 0px 0px 0px;
+}
+
+.edit {
+  padding: 0px;
+  border: none;
+}
+
+.empty-table {
+  color: #99A3A4;
+}
+
+.project-stat {
+  border: none;
+  margin-top: 10px;
+}
+
+.container-fluid {
+  margin-bottom: 20px;
+}
+
+.card-header {
+  border: none
+}
+
+.add-item {
+  float: right;
+}
+
+tbody tr:hover {
+  cursor: pointer;
+  background-color: #e8e8e847;
+}
+
+.recent-runs {
+  min-width: 100%;
+}
+
+.card {
+  margin-bottom: 20px;
+  border: none;
+}
+
+.graph {
+  margin: 1.25rem
+}
+
+.add-new {
+  margin-bottom: 30px;
+}
+
+
+.ellipsis {
+  max-width: 50px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.panel-table .panel-footer .col{
+  line-height: 34px;
+  height: 34px;
+ }
+
+ .table-footer {
+   padding-left: 20px;
+   padding-right: 20px;
+   margin-top: 30px;
+ }
+
+.total {
+  font-size: 15px;
+  float: right;
+} 
+
+.base-icon {
+  color: #0066ffd1
+}
+
+.status-icon {
+  font-size: 19px;
+}
+ 

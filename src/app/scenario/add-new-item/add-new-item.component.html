@@ -1,0 +1,67 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add new test item</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Kpi jtl file</span>
+        </div>
+        <input type="file" class="form-control" (change)="onFileChange($event, 'kpiFile')" formControlName="kpiFile"
+          aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Error jtl file</span>
+        </div>
+        <input type="file" class="form-control" (change)="onFileChange($event, 'errorFile')" formControlName="errorFile"
+          aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Environment</span>
+        </div>
+        <input type="testName" class="form-control" formControlName="environment" aria-label="Default"
+          aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Note</span>
+        </div>
+        <input type="note" class="form-control" formControlName="note" aria-label="Default"
+          aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text" id="inputGroup-sizing-default">Status</div>
+        </div>
+        <select class="form-control custom-select" formControlName="status">
+          <option *ngFor="let s of statusValues" [value]="s">
+            {{s}}
+          </option>
+        </select>
+      </div>
+
+
+      <div class="form-control-feedback" *ngIf="kpiFile.errors && (kpiFile.dirty || kpiFile.touched)">
+        <p class="alert alert-danger" *ngIf="kpiFile.errors.required">Jtl file is required</p>
+      </div>
+      <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">
+        <p class="alert alert-danger" *ngIf="environment.errors.required">Environment is required</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<button class="btn btn-primary btn-sm" (click)="open(content)"><i class="fas fa-plus-circle"></i>
+  new test item</button>

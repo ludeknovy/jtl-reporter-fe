@@ -1,0 +1,114 @@
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ItemsApiService } from '../../items-api.service';
+import { ActivatedRoute } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { NotificationMessage } from '../../notification/notification-messages';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ItemsService } from 'src/app/items.service';
+import { ProjectService } from 'src/app/project.service';
+import { ItemStatus } from 'src/app/item-detail/item-detail.model';
+
+@Component({
+  selector: 'app-add-new-item-modal',
+  templateUrl: './add-new-item.component.html',
+  styleUrls: ['./add-new-item.component.css'],
+
+})
+export class AddNewItemComponent implements OnInit {
+  closeResult: string;
+  myform: FormGroup;
+  kpiFile: FormControl;
+  errorFile: FormControl;
+  environment: FormControl;
+  note: FormControl;
+  status: FormControl;
+  routeParams;
+  statusValues = [ 'passed', 'failed', 'terminated', 'none' ];
+
+
+  constructor(
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
+    private cd: ChangeDetectorRef,
+    private itemsService: ItemsService,
+    private itemsApiService: ItemsApiService,
+    private projectService: ProjectService,
+    private notification: NotificationMessage,
+    private spinner: NgxSpinnerService
+  ) { }
+  ngOnInit() {
+    this.route.params.subscribe(_ => this.routeParams = _);
+    this.createFormControls();
+    this.createForm();
+
+  }
+
+  createFormControls() {
+    this.kpiFile = new FormControl('', [
+      Validators.required
+    ]);
+    this.errorFile = new FormControl('', []);
+    this.environment = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(150)
+    ]);
+    this.note = new FormControl('', [
+      Validators.maxLength(150)
+    ]);
+    this.status = new FormControl('none', [
+    ]);
+  }
+
+  createForm() {
+    this.myform = new FormGroup({
+      kpiFile: this.kpiFile,
+      errorFile: this.errorFile,
+      environment: this.environment,
+      note: this.note,
+      status: this.status
+    });
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  onFileChange(event, fileType) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.myform.get(fileType).setValue(file);
+    }
+  }
+
+  onSubmit() {
+    this.formCheck();
+    if (this.myform.valid) {
+      this.spinner.show();
+      const { kpiFile, errorFile, environment, note, status } = this.myform.value;
+      this.itemsApiService.addNewTestItem(
+        this.routeParams.projectName,
+        this.routeParams.scenarioName,
+        environment, note, ItemStatus[status], kpiFile, errorFile)
+        .pipe(catchError(r => of(r)))
+        .subscribe(_ => {
+          const message = this.notification.newTestItemNotificationMessage(_);
+          this.itemsService.fetchItems(this.routeParams.projectName, this.routeParams.scenarioName);
+          this.projectService.fetchScenarioTrends(this.routeParams.projectName, this.routeParams.scenarioName);
+          this.spinner.hide();
+          return this.itemsApiService.setData(message);
+        });
+      this.myform.reset();
+      this.modalService.dismissAll();
+    }
+  }
+
+  formCheck() {
+    Object.keys(this.myform.controls).forEach(field => {
+      const control = this.myform.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
+}

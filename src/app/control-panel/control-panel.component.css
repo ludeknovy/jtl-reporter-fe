@@ -1,0 +1,36 @@
+#top-panel {
+  background-color: white;
+  border-bottom: 1px solid #b9babd1f;
+  margin-left: 210px;
+  margin-right: 210px;
+  margin-top: 20px;
+  border-radius: 0.2rem;
+}
+
+@media (max-width: 1550px) {
+  #top-panel {
+    margin-left: 110px;
+    margin-right: 110px;
+  }
+}
+@media (max-width: 1350px) {
+  #top-panel {
+    margin-left: 60px;
+    margin-right: 60px;
+  }
+}
+@media (max-width: 1150px) {
+  #top-panel {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-collapse {
+  padding-bottom: 5px;
+  padding-top: 5px;
+}

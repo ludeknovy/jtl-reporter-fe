@@ -1,0 +1,98 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Choose test run to compare</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col" *ngIf="items$ | async; let items">
+      <div class="responsive-table">
+        <table class="table items" [mfData]="items.data" #mf="mfDataTable">
+          <thead>
+            <tr>
+              <th scope="col" class="head">
+                <mfDefaultSorter by="max_vu">VU</mfDefaultSorter>
+              </th>
+              <th scope="col" class="head">
+                <mfDefaultSorter by="duration">duration</mfDefaultSorter>
+              </th>
+              <th scope="col" class="head">
+                <mfDefaultSorter by="environment">environment</mfDefaultSorter>
+              </th>
+              <th scope="col" class="head">
+                <mfDefaultSorter by="note">note</mfDefaultSorter>
+              </th>
+              <th scope="col" class="head">
+                <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
+              <th scope="col" class="head">
+                <mfDefaultSorter by="status">status</mfDefaultSorter>
+              </th>
+              <th scope="col" class="head">
+                <mfDefaultSorter by="base"></mfDefaultSorter>
+              </th>
+              <th>
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="items.data.length === 0">
+            <tr>
+              <td></td>
+              <td>
+                <div class="empty-table">No data found.</div>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="items.data.length > 0">
+            <tr *ngFor="let _ of mf.data">
+              <td>
+                {{_.max_vu}}
+              </td>
+              <td>
+                {{_.duration}}
+              </td>
+              <td>
+                {{_.environment}}
+              </td>
+              <td [attr.title]="_.note" class="ellipsis">
+                {{_.note}}
+              </td>
+              <td>
+                {{_.start_time | date:'d. L. yyyy H:mm'}}
+              </td>
+              <td>
+                <span *ngIf="_.status === '0'" title="Passed"><i class="fas fa-check-circle text-success status-icon"></i></span>
+                <span *ngIf="_.status === '1'" title="Error/Terminated"><i class="fas fa-minus-circle text-secondary status-icon"></i></span>
+                <span *ngIf="_.status === '2'" title="Terminated"><i class="fas fa-minus-circle text-secondary status-icon"></i></span>
+                <span *ngIf="_.status === '3'" title="Failed"><i class="fas fa-minus-circle text-danger status-icon"></i></span>
+                <span *ngIf="_.status === '10'" title="Status not set"><i class="far fa-circle text-secondary status-icon"></i></span>
+              </td>
+              <td>
+                <span *ngIf="_.base"><i class="fas fa-asterisk base-icon"></i></span>
+              </td>
+              <td>
+                <input type="radio" name="item-id" [value]="_.id" (change)="onSelectionChange(_.id)">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="items.total > pageSize" class="d-flex justify-content-between table-footer">
+
+          <ngb-pagination [collectionSize]="items.total" [(page)]="page" [pageSize]="pageSize"
+            aria-label="Default pagination" (pageChange)="loadMore($event)" size="sm">
+          </ngb-pagination>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" (click)="loadItemToCompare()" class="btn btn-primary">Compare</button>
+  </div>
+</ng-template>
+
+
+<a (click)="open(content)"><i class="fas fa-chart-line"></i></a>

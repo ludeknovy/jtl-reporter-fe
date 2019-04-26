@@ -1,0 +1,100 @@
+<div class="dashboard content-container">
+
+  <div class="container-fluid">
+    <div class="row statistic" *ngIf="overallStats">
+      <div class="col">
+        <div class="card stats">
+          <h6 class="card-header">Total test runs</h6>
+          <div class="card-body">
+            <h2 class="card-title">{{overallStats.totalRunCount}}</h2>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card stats">
+          <h6 class="card-header">Average test duration</h6>
+          <div class="card-body">
+            <h2 *ngIf="overallStats.avgDuration >= 60" class="card-title">{{
+                  Math.round((overallStats.avgDuration / 60) * 100) / 100}} <span class="unit-desc">h</span>
+            </h2>
+            <h2 *ngIf="overallStats.avgDuration < 60" class="card-title">{{
+                  overallStats.avgDuration}} <span class="unit-desc">m</span></h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card stats">
+          <h6 class="card-header">Average number of VU</h6>
+          <div class="card-body">
+            <h2 class="card-title">{{overallStats.avgVu}}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card stats">
+          <h6 class="card-header">Total duration</h6>
+          <div class="card-body">
+            <h2 *ngIf="overallStats.totalDuration >= 60" class="card-title">
+              {{Math.round((overallStats.totalDuration / 60) * 100) / 100}} <span class="unit-desc">h</span>
+            </h2>
+            <h2 *ngIf="overallStats.totalDuration < 60" class="card-title">{{
+                overallStats.totalDuration}} <span class="unit-desc">m</span></h2>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card recent-runs">
+          <h6 class="card-header">Recent Test Runs</h6>
+          <div class="card-body ">
+            <div class="table-responsive">
+              <table class="table items">
+                <thead>
+                  <tr>
+                    <th scope="col" class="head">scenario</th>
+                    <th scope="col" class="head">project name</th>
+                    <th scope="col" class="head">environment</th>
+                    <th scope="col" class="head">start time</th>
+                    <th scope="col" class="head">status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="!latestItems || latestItems.length === 0">
+                    <td colspan="4" class="text-muted no-data">No Data...</td>
+                  </tr>
+                  <tr *ngFor="let _ of latestItems" (click)="open(_.project_name, _.name, _.id)">
+                    <td class="ellipsis">
+                      {{_.name}}
+                    </td>
+                    <td>
+                      {{_.project_name}}
+                    </td>
+                    <td>
+                      {{_.environment}}
+                    </td>
+                    <td class="ellipsis">
+                      {{_.start_time | date:'d. L. yyyy H:mm'}}
+                    </td>
+                    <td>
+                      <span *ngIf="_.status === '0'" title="Passed"><i class="fas fa-check-circle text-success status-icon"></i></span>
+                      <span *ngIf="_.status === '1'" title="Error/Terminated"><i class="fas fa-minus-circle text-secondary status-icon"></i></span>
+                      <span *ngIf="_.status === '2'" title="Terminated"><i class="fas fa-minus-circle text-secondary status-icon"></i></span>
+                      <span *ngIf="_.status === '3'" title="Failed"><i class="fas fa-minus-circle text-danger status-icon"></i></span>
+                      <span *ngIf="_.status === '10'" title="Status not set"><i class="far fa-circle text-secondary status-icon"></i></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

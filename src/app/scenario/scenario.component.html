@@ -1,0 +1,141 @@
+<app-control-panel>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+        <app-breadcrumb></app-breadcrumb>
+
+    </li>
+  </ul>
+  <div>
+    <app-add-new-item-modal></app-add-new-item-modal>
+    <app-edit-scenario [scenarioData]="items$"></app-edit-scenario>
+    <app-delete-scenario [scenarioData]="params"></app-delete-scenario>
+  </div>
+
+</app-control-panel>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" color="#fff" type="pacman"></ngx-spinner>
+
+<div class="items-overview content-container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <h6 class="card-header percentil">90% response time</h6>
+          <div class="card-body">
+            <div class="graph">
+              <app-scenario-graph [graphData]="{ obs: trends$, value: 'ninetyHistoryChart'}"></app-scenario-graph>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <h6 class="card-header belize">Throughput</h6>
+          <div class="card-body">
+            <div class="graph">
+              <app-scenario-graph [graphData]="{ obs: trends$, value: 'throughputHistoryChart'}"></app-scenario-graph>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <h6 class="card-header alizarin">Error rate</h6>
+          <div class="card-body">
+            <div class="graph">
+              <app-scenario-graph [graphData]="{ obs: trends$, value: 'errorRateHistoryChart'}"></app-scenario-graph>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row rr">
+      <div class="col" *ngIf="items$ | async; let items">
+        <div class="card recent-runs">
+          <h6 class="card-header">Test Runs
+            <span class="text-secondary total">{{items.total}} tests</span>
+          </h6>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table items" [mfData]="items.data" #mf="mfDataTable">
+                <thead>
+                  <tr>
+                    <th scope="col" class="head">
+                      <mfDefaultSorter by="max_vu">virtual users</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="head">
+                      <mfDefaultSorter by="duration">duration</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="head">
+                      <mfDefaultSorter by="environment">environment</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="head">
+                      <mfDefaultSorter by="note">note</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="head">
+                      <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="head">
+                      <mfDefaultSorter by="status">status</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="head">
+                      <mfDefaultSorter by="base"></mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="items.data.length === 0">
+                  <tr>
+                    <td></td>
+                    <td>
+                      <div class="empty-table">No data found.</div>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="items.data.length > 0">
+                  <tr *ngFor="let _ of mf.data" (click)="open(_.id)">
+                    <td>
+                      {{_.max_vu}}
+                    </td>
+                    <td>
+                      {{_.duration}}
+                    </td>
+                    <td>
+                      {{_.environment}}
+                    </td>
+                    <td [attr.title]="_.note" class="ellipsis">
+                      {{_.note}}
+                    </td>
+                    <td>
+                      {{_.start_time | date:'d. L. yyyy H:mm'}}
+                    </td>
+                    <td>
+                      <span *ngIf="_.status === '0'" title="Passed"><i class="fas fa-check-circle text-success status-icon"></i></span>
+                      <span *ngIf="_.status === '1'" title="Error/Terminated"><i class="fas fa-minus-circle text-secondary status-icon"></i></span>
+                      <span *ngIf="_.status === '2'" title="Terminated"><i class="fas fa-minus-circle text-secondary status-icon"></i></span>
+                      <span *ngIf="_.status === '3'" title="Failed"><i class="fas fa-minus-circle text-danger status-icon"></i></span>
+                      <span *ngIf="_.status === '10'" title="Status not set"><i class="far fa-circle text-secondary status-icon"></i></span>
+                    </td>
+                    <td>
+                      <span *ngIf="_.base"><i class="fas fa-asterisk base-icon"></i></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div *ngIf="items.total > pageSize" class="d-flex justify-content-between table-footer">
+
+                <ngb-pagination [collectionSize]="items.total" [(page)]="page" [pageSize]="pageSize"
+                  aria-label="Default pagination" (pageChange)="loadMore($event)" size="sm">
+                </ngb-pagination>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

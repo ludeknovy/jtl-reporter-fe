@@ -1,0 +1,202 @@
+.items-overview {
+  padding-left: 200px;
+  padding-right: 200px;
+  background-color: #f0f1f4;
+  padding-top: 20px;
+  min-height: 100%;
+  width: 100%;;
+}
+
+.card-text .small {
+  font-size: 10px
+}
+
+.text-indigo {
+  color: #6610F1
+}
+
+.text-blue {
+  color: #007bff
+}
+
+.labels-detail, .overview-additional {
+  background: white;
+}
+
+.overview-additional {
+  margin-bottom: 20px
+}
+
+.info {
+  font-size: 15px;
+  margin-left: -5px;
+  margin-right: -5px;
+  background-color: white;
+  border-radius: 0.25rem;
+  padding-left: 10px;
+}
+
+.top {
+  padding-top: 15px;
+}
+
+.bottom {
+  padding-bottom: 15px;
+}
+
+.small-text {
+  padding-left: 10px
+}
+
+.card {
+  border: 0px;
+}
+
+thead {
+  font-size: 14px;
+}
+
+.latency {
+  background-color: #1A5276;
+  color: white
+}
+
+.text-latency {
+  color: #1A5276;
+}
+
+.hd {
+  border-top: 0px;
+}
+
+.environment {
+  padding-left: 10px;
+}
+
+.test-name {
+  padding-left: 17px;
+  float: left;
+  position: absolute;
+}
+
+.environment {
+  margin-left: 15px;
+}
+
+.item-tab-content {
+  padding-top: 20px;
+}
+
+#note, .note {
+  max-width: 35rem;
+  min-width: 35rem;
+  float: right;
+  padding-top: 15px;
+  padding-right: 15px
+}
+
+.note-area label {
+  font-size: 10px
+}
+
+.card-header-overview {
+  background-color: #f0f1f4;
+  border: none;
+}
+
+.body-item {
+  background-color: #f0f1f4
+}
+
+.items-overview [class*='col'] {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 20px;
+}
+
+
+.request-stats {
+  margin-bottom: 20px;
+}
+
+.errors-list {
+  padding-top: 0px;
+}
+
+.errors {
+  margin-bottom: 20px;
+}
+
+.errors-list /deep/ .card {
+  border: none;
+}
+
+.errors-list /deep/ .card-header {
+  background-color: white;
+  padding: 0px;
+  border: none;
+}
+
+#label-filter {
+  box-shadow:none !important;
+  outline: none;
+}
+
+::placeholder {
+  opacity: 0.6;
+}
+
+.fa-search {
+  color: #808280;
+}
+
+.unit-desc {
+  font-size: 20px;
+}
+
+.badge-counter {
+  font-size: 10px;
+  vertical-align:middle;
+  margin-top: -0.5em;
+}
+
+.error-codes-overview {
+  padding-left: 10px;
+}
+
+thead .hd {
+  font-size: 12px;
+}
+
+.error-counter {
+  margin-left: 3px;
+}
+
+.error-code {
+  margin-left: 3px;
+}
+
+.compare {
+  float: right;
+}
+
+.value-negative {
+  color: #28a745;
+}
+
+.value-positive {
+  color: #dc3545;
+}
+
+.remove-comparison {
+  margin-right: 10px;
+}
+
+.comparison-desc {
+  font-size: 13px;
+  margin-right: 15px;
+}
+
+.quick-base-comparison {
+  margin-right: 10px;
+}

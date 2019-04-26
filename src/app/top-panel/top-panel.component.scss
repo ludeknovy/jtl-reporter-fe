@@ -1,0 +1,128 @@
+
+.top-bar {
+  padding-left: 210px;
+  padding-right: 210px;
+}
+
+@media (max-width: 1550px) {
+  .top-bar {
+    padding-left: 110px;
+    padding-right: 110px;
+  }
+}
+
+@media (max-width: 1350px) {
+  .top-bar {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+@media (max-width: 1150px) {
+  .top-bar {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+
+.drop {
+  color: white;
+  background-color: #2f353a;
+  border: 0px;
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  display: block;
+  border-color: #2f353a;
+  cursor: pointer;
+}
+
+.drop:focus {
+  outline: 0 !important;
+}
+
+.projects {
+  padding-top: 10px;
+}
+
+a {
+  overflow:hidden; 
+  overflow-y:hidden;
+}
+
+.project {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.overview {
+  background-color: #515d68
+}
+
+.global-settings {
+  float: right;
+  margin-right: 30px;
+  margin-top: 13px;
+} 
+
+.nav-title {
+  text-transform: uppercase;
+  color: #515d68;
+  font-size: 10px;
+  padding-left: 10px
+}
+
+.overview {
+  background-color: #515d68
+}
+
+.admin-icon {
+  font-size: 20px;
+}
+
+.no-project {
+  margin-left: 15px;
+}
+
+#top-panel {
+  width: 100%;
+  position: fixed;
+  padding-left: 200px;
+  padding-right: 30px;
+  z-index: 1;
+  background-color:#f0f1f4;
+  height: 50px;
+  border-bottom: 1px solid #b9babd1f;
+}
+
+.first {
+  padding-left: 22px;
+}
+
+.drop-area .btn {
+  color: black
+}
+
+.drop-area li:hover {
+  background-color: #5092da59
+}
+
+#dropdownBasic1 {
+  padding: 2px !important;
+  background-color: #343a40;
+  font-size: 18px;
+}
+
+#dropdownBasic1:hover {
+  background-color: inherit !important;
+}
+
+.dropdown-menu {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.navbar-toggler {
+  border: none;
+}

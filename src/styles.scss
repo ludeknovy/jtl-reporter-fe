@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap.scss";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+
+.maroon {
+  background-color: #85144b;
+  color: white;
+}
+
+.greenland-green {
+  background-color: #22a6b3;
+  color: white;
+}
+
+.text-greenland-green {
+  color: #22a6b3;
+}
+
+.alizarin {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.text-alizarin {
+  color: #e74c3c;
+}
+
+.amethyst {
+  background-color: #9b59b6;
+  color: white;
+}
+
+.text-amethyst {
+  color: #9b59b6
+}
+
+.belize {
+  background-color: #2980b9;
+  color: white;
+}
+
+.text-belize {
+  color: #2980b9;
+}
+.samaritane {
+  background-color: #3c6382;
+  color: white;
+}
+.text-samaritane {
+  color: #3c6382;
+}
+
+.carrot {
+  background-color: #e58e26;
+  color: white;
+}
+
+.percentil {
+  background-color: #117a8b;
+  color: white;
+}
+
+.text-percentil {
+  color: #117a8b;
+}
+
+.text-carrot {
+  color: #e58e26;
+}
+
+body {
+  background-color: #f0f1f4
+}
+
+.navigate-back {
+  background: none;
+  font-size: 20px;
+  color: #696868;
+  padding: 0;
+  border: none;
+}

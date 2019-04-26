@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark top-bar">
+  <a class="navbar-brand" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+
+
+  <button class="navbar-toggler text-white" type="button" (click)="toggleNavbar()">
+      <i class="fas fa-ellipsis-h"></i>
+  </button>
+
+
+  <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn text-white" id="dropdownBasic1" ngbDropdownToggle>{{selectedProject || "Project"}}</button>
+          <div class="drop-area" ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="projectsState$ | async; let projects">
+            <li *ngFor="let _ of projects">
+              <a class="btn btn-block text-left" routerLink="/project/{{_.project_name}}/scenarios"
+                routerLinkActive="active" (click)="changeSelectedProject(_.project_name)">{{_.project_name}}</a>
+            </li>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div>
+      <a class="text-white" href="/administration"><i class="fas fa-cog admin-icon"></i></a>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

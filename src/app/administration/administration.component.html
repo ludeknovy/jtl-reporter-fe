@@ -1,0 +1,63 @@
+<app-control-panel>
+  <ul class="navbar-nav mr-auto">
+  </ul>
+  <app-add-project></app-add-project>
+</app-control-panel>
+<div class="administration content-container">
+  <div class="container-fluid">
+    <div class="card projects">
+      <h6 class="card-header projects-header">All projects
+      </h6>
+      <div class="card-body" *ngIf="projects$ | async; let projects">
+        <div class="card-body">
+          <div class="table-responsive" *ngIf="projects$ | async; let projects">
+            <table class="table items">
+              <thead>
+                <tr>
+                  <th scope="col" class="head">project name</th>
+                  <th scope="col" class="head">number of launches</th>
+                  <th scope="col" class="head">number of scenarios</th>
+                  <th scope="col" class="head">last run</th>
+                  <th scope="col" class="head"></th>
+                  <th scope="col" class="head"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="projects.length === 0">
+                  <td></td>
+                  <td></td>
+                  <td class="text-muted">No data...</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr *ngFor="let _ of projects">
+                  <td class="project-name">
+                    <span>{{_.project_name}}</span>
+                  </td>
+                  <td>
+                    {{_.total_tests}}
+                  </td>
+                  <td>
+                    {{_.unique_scenarios}}
+                  </td>
+                  <td *ngIf="! _.latest_run">
+                    never run
+                  </td>
+                  <td *ngIf="_.latest_run" class="latest-run">
+                    <span>{{_.latest_run | timeAgo}}</span>
+                  </td>
+                  <td class="edit">
+                    <app-edit-project [projectDataInput]="{ projectName: _.project_name }"></app-edit-project>
+                  </td>
+                  <td class="edit">
+                    <app-delete-project [projectData]="{ projectName: _.project_name }"></app-delete-project>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

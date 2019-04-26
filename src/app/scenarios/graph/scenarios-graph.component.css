@@ -1,0 +1,30 @@
+app-scenarios-graph {
+  display: block;
+  width: fit-content;
+  width: 60rem;
+}
+
+.chart {
+  width: 100%;
+  background: white;
+  border-radius: 0.25rem;
+}
+
+.dark-periwinkle {
+  background-color: #575fcf;
+  color: white
+}
+
+.card-scenario {
+  border: none;
+  margin-bottom: 20px;
+}
+
+.graphs {
+  margin-bottom: 20px;
+}
+
+.scenarios-overview [class*='col'] {
+  padding-left: 10px;
+  padding-right: 10px;
+}

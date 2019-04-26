@@ -1,0 +1,32 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit project</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+        <p>Please enter 5 random characters:</p>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Delete check</span>
+        </div>
+        <input type="deleteCheck" class="form-control" formControlName="deleteCheck" aria-label="Default"
+          aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="form-control-feedback" *ngIf="deleteCheck.errors && (deleteCheck.dirty || deleteCheck.touched)">
+        <p class="alert alert-danger" *ngIf="deleteCheck.errors.minlength">Please enter at least 5 characters...</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<span>
+  <button class="btn btn-link add-btn delete-project" (click)="open(content)"><i class="fas fa-trash-alt"></i>
+  </button>
+</span>

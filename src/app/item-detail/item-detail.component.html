@@ -1,0 +1,267 @@
+<app-control-panel>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <app-breadcrumb></app-breadcrumb>
+    </li>
+  </ul>
+  <div>
+    <app-edit-item *ngIf="itemData.environment"
+      [itemDetailData]="{note: itemData.note, environment: itemData.environment, isBase: itemData.isBase, params: itemParams}"
+      (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
+    <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
+    <app-delete-item [itemData]="itemParams"></app-delete-item>
+  </div>
+
+</app-control-panel>
+
+
+<div class="items-overview content-container" *ngIf="itemData.overview !== null">
+  <div class="container-fluid">
+    <div class="overview-info">
+      <div class="row">
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header amethyst">Max Virtual Users</h6>
+            <div class="card-body">
+              <h2 class="card-title text-amethyst">{{itemData.overview.maxVu}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header belize">Throughput</h6>
+            <div class="card-body">
+              <h2 class="card-title text-belize">{{itemData.overview.throughput}} <span class="unit-desc">hits/s</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header samaritane">Avg. response time</h6>
+            <div class="card-body">
+              <h2 *ngIf="itemData.overview.avgResponseTime >= 1000" class="card-title text-samaritane">{{
+                 Math.round((itemData.overview.avgResponseTime / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+              </h2>
+              <h2 *ngIf="itemData.overview.avgResponseTime < 1000" class="card-title text-samaritane">{{
+                itemData.overview.avgResponseTime}} <span class="unit-desc">ms</span></h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header percentil">90% Response time</h6>
+            <div class="card-body">
+              <h2 *ngIf="itemData.overview.percentil >= 1000" class="card-title text-percentil">{{
+                Math.round((itemData.overview.percentil / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+              </h2>
+              <h2 *ngIf="itemData.overview.percentil < 1000" class="card-title text-percentil">{{
+                itemData.overview.percentil}} <span class="unit-desc">ms</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header latency">Avg. latency</h6>
+            <div class="card-body">
+              <h2 *ngIf="itemData.overview.avgLatency >= 1000" class="card-title text-latency">{{
+                Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+              </h2>
+              <h2 *ngIf="itemData.overview.avgLatency < 1000" class="card-title text-latency">{{
+                itemData.overview.avgLatency}} <span class="unit-desc">ms</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header alizarin">Error rate</h6>
+            <div class="card-body">
+              <h2 class="card-title text-alizarin">{{itemData.overview.errorRate}} <span class="unit-desc">%</span></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="overview-additional">
+      <div class="row info">
+        <div class="col-sm">
+          <div class="date top">
+            <span>started:</span>
+            <span class="small-text">{{itemData.overview.startDate | date:'d. L. yyyy H:mm:ss'}}</span>
+          </div>
+          <div class="date">
+            <span>ended:</span>
+            <span class="small-text">{{itemData.overview.endDate | date:'d. L. yyyy H:mm:ss'}}</span>
+          </div>
+          <div class="date bottom">
+            <span>duration:</span>
+            <span class="small-text">{{itemData.overview.duration}} min</span>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="date top">
+            <span>environment:</span>
+            <span class="small-text">{{itemData.environment}}</span>
+          </div>
+          <div class="date" *ngIf="itemData.status">
+            <span>status:</span>
+            <span class="small-text"> {{getTextStatus(itemData.status)}}</span>
+          </div>
+          <div class="date bottom" *ngIf="itemData.note">
+            <span>note:</span>
+            <span class="small-text"> {{itemData.note}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="row charts">
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header samaritane">Overall Response Time</h6>
+            <div class="card-body">
+              <div class="chart">
+                <div [chart]="overallResponseTimeChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header belize">Overall Throughput</h6>
+            <div class="card-body">
+              <div class="chart">
+                <div [chart]="overallThroughput"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header samaritane">Response Time</h6>
+            <div class="card-body">
+              <div class="chart">
+                <div [chart]="responseTimeChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header belize">Throughput</h6>
+            <div class="card-body">
+              <div class="chart">
+                <div [chart]="throughputChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card request-stats">
+          <h6 class="card-header maroon">Request Statistics <span class="compare">
+              <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
+                {{comparedMetadata.maxVu}} VU</span>
+              <a class="remove-comparison" *ngIf="comparedData" (click)="resetStatsData()"><i
+                  class="fas fa-minus"></i></a>
+              <a class="quick-base-comparison"
+                *ngIf="(itemData.baseId && itemData.baseId !== itemParams.id) && !comparedData"
+                (click)="quickBaseComparison(itemData.baseId)"><i class="fas fa-rocket"></i></a>
+              <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+            </span></h6>
+          <div class="card-body">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control" id="label-filter" type="search" placeholder="label"
+                (keyup)='search($event.target.value)'>
+            </div>
+            <div class="labels-detail table-responsive">
+              <table class="table" [mfData]="labelsData" #mf="mfDataTable">
+                <thead>
+                  <tr>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="label">label</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="samples">samples</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="maxResponseTime">max [ms]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="n0">90% [ms]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="n5">95% [ms]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="n9">99% [ms]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="throughput">throughput [hits/s]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="errorRate">errorRate</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd" *ngIf="itemData.overview.errorRate > 0">
+                      <mfDefaultSorter by="errorRate">errors</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let _ of mf.data">
+                    <td>{{_.label}}</td>
+                    <td>{{_.samples}}</td>
+                    <td>{{_.avgResponseTime}} <sup [className]="_.avgDiff > 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.avgDiff">{{_.avgDiff}}</sup></td>
+                    <td>{{_.minResponseTime}} <sup [className]="_.minDiff > 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.minDiff">{{_.minDiff}}</sup></td>
+                    <td>{{_.maxResponseTime}} <sup [className]="_.maxDiff > 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.maxDiff">{{_.maxDiff}}</sup></td>
+                    <td>{{_.n0}} <sup [ngClass]="_.n0Diff > 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.n0Diff">{{_.n0Diff}}</sup></td>
+                    <td>{{_.n5}} <sup [className]="_.n5Diff > 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.n5Diff">{{_.n5Diff}}</sup></td>
+                    <td>{{_.n9}} <sup [className]="_.n9Diff > 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.n9Diff">{{_.n9Diff}}</sup></td>
+                    <td>{{_.throughput || "n/a"}} <sup
+                        [className]="_.throughputDiff < 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.throughputDiff">{{_.throughputDiff}}</sup></td>
+                    <td>{{_.errorRate}} % <sup [className]="_.errorRateDiff > 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.errorRateDiff">{{_.errorRateDiff}}</sup></td>
+                    <td>
+                      <span *ngFor="let e of _.errors | keyvalue">
+                        <span class="error-code">{{e.key}} </span>
+                        <span class="badge badge-counter badge-pill badge-danger error-counter">{{e.value}}</span>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

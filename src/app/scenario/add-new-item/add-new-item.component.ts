@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ItemsApiService } from '../../items-api.service';
@@ -9,7 +9,8 @@ import { NotificationMessage } from '../../notification/notification-messages';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ItemsService } from 'src/app/items.service';
 import { ProjectService } from 'src/app/project.service';
-import { ItemStatus } from 'src/app/item-detail/item-detail.model';
+import { ItemStatus } from './add-new-item.model';
+import { ItemStatusValue } from 'src/app/item-detail/item-detail.model';
 
 @Component({
   selector: 'app-add-new-item-modal',
@@ -26,13 +27,12 @@ export class AddNewItemComponent implements OnInit {
   note: FormControl;
   status: FormControl;
   routeParams;
-  statusValues = [ 'passed', 'failed', 'terminated', 'none' ];
-
+  statuses = Object.values(ItemStatus);
+  DEFAULT_STATUS = ItemStatus.None;
 
   constructor(
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private cd: ChangeDetectorRef,
     private itemsService: ItemsService,
     private itemsApiService: ItemsApiService,
     private projectService: ProjectService,
@@ -43,7 +43,6 @@ export class AddNewItemComponent implements OnInit {
     this.route.params.subscribe(_ => this.routeParams = _);
     this.createFormControls();
     this.createForm();
-
   }
 
   createFormControls() {
@@ -58,7 +57,7 @@ export class AddNewItemComponent implements OnInit {
     this.note = new FormControl('', [
       Validators.maxLength(150)
     ]);
-    this.status = new FormControl('none', [
+    this.status = new FormControl(this.DEFAULT_STATUS, [
     ]);
   }
 
@@ -91,7 +90,7 @@ export class AddNewItemComponent implements OnInit {
       this.itemsApiService.addNewTestItem(
         this.routeParams.projectName,
         this.routeParams.scenarioName,
-        environment, note, ItemStatus[status], kpiFile, errorFile)
+        environment, note, ItemStatusValue[status], kpiFile, errorFile)
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newTestItemNotificationMessage(_);
@@ -100,7 +99,7 @@ export class AddNewItemComponent implements OnInit {
           this.spinner.hide();
           return this.itemsApiService.setData(message);
         });
-      this.myform.reset();
+      this.myform.reset({ environment: '', status: this.DEFAULT_STATUS, note: '' });
       this.modalService.dismissAll();
     }
   }

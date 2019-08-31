@@ -11,14 +11,14 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-default">Kpi jtl file</span>
         </div>
-        <input type="file" class="form-control" (change)="onFileChange($event, 'kpiFile')" formControlName="kpiFile"
+        <input type="file" class="form-control" (change)="onFileChange($event, 'kpiFile')"
           aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-default">Error jtl file</span>
         </div>
-        <input type="file" class="form-control" (change)="onFileChange($event, 'errorFile')" formControlName="errorFile"
+        <input type="file" class="form-control" (change)="onFileChange($event, 'errorFile')"
           aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="input-group mb-3">
@@ -42,7 +42,7 @@
           <div class="input-group-text" id="inputGroup-sizing-default">Status</div>
         </div>
         <select class="form-control custom-select" formControlName="status">
-          <option *ngFor="let s of statusValues" [value]="s">
+          <option *ngFor="let s of statuses" [value]="s">
             {{s}}
           </option>
         </select>

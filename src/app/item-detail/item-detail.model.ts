@@ -1,4 +1,4 @@
-export enum ItemStatus {
+export enum ItemStatusValue {
   none = '10',
   passed = '0',
   error = '1',

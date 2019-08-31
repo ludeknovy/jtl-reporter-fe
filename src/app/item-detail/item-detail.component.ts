@@ -14,7 +14,7 @@ import { catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
-import { ItemStatus } from './item-detail.model';
+import { ItemStatusValue } from './item-detail.model';
 
 @Component({
   selector: 'app-item-detail',
@@ -170,8 +170,8 @@ export class ItemDetailComponent implements OnInit {
   }
 
   getTextStatus(status) {
-    for (const k in ItemStatus) {
-      if (ItemStatus[k] === status) {
+    for (const k in ItemStatusValue) {
+      if (ItemStatusValue[k] === status) {
         return k;
       }
     }

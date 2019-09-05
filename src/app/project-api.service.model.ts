@@ -1,6 +1,6 @@
 export interface ProjectsListing {
   id: string;
-  project_name: string;
+  projectName: string;
 }
 
 export interface NewProjectBody {

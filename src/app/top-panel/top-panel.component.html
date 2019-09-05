@@ -14,8 +14,8 @@
           <button class="btn text-white" id="dropdownBasic1" ngbDropdownToggle>{{selectedProject || "Project"}}</button>
           <div class="drop-area" ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="projectsState$ | async; let projects">
             <li *ngFor="let _ of projects">
-              <a class="btn btn-block text-left" routerLink="/project/{{_.project_name}}/scenarios"
-                routerLinkActive="active" (click)="changeSelectedProject(_.project_name)">{{_.project_name}}</a>
+              <a class="btn btn-block text-left" routerLink="/project/{{_.projectName}}/scenarios"
+                routerLinkActive="active" (click)="changeSelectedProject(_.projectName)">{{_.projectName}}</a>
             </li>
           </div>
         </div>

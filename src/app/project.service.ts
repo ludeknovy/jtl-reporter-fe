@@ -31,8 +31,8 @@ export class ProjectService {
     this.projectApiService.fetchProjects()
       .subscribe(_ => {
         _.sort((a, b) => {
-          const nameA = a.project_name.toUpperCase();
-          const nameB = b.project_name.toUpperCase();
+          const nameA = a.projectName.toUpperCase();
+          const nameB = b.projectName.toUpperCase();
           if (nameA < nameB) {
             return -1;
           }

@@ -68,18 +68,18 @@
                   <tr *ngIf="!latestItems || latestItems.length === 0">
                     <td colspan="4" class="text-muted no-data">No Data...</td>
                   </tr>
-                  <tr *ngFor="let _ of latestItems" (click)="open(_.project_name, _.name, _.id)">
+                  <tr *ngFor="let _ of latestItems" (click)="open(_.projectName, _.name, _.id)">
                     <td class="ellipsis">
                       {{_.name}}
                     </td>
                     <td>
-                      {{_.project_name}}
+                      {{_.projectName}}
                     </td>
                     <td>
                       {{_.environment}}
                     </td>
                     <td class="ellipsis">
-                      {{_.start_time | date:'d. L. yyyy H:mm'}}
+                      {{_.startTime | date:'d. L. yyyy H:mm'}}
                     </td>
                     <td>
                       <span *ngIf="_.status === '0'" title="Passed"><i class="fas fa-check-circle text-success status-icon"></i></span>

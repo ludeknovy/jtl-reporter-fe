@@ -37,16 +37,16 @@
                         <span>{{_.projectName}}</span>
                       </td>
                       <td>
-                        {{_.total_tests}}
+                        {{_.itemCount}}
                       </td>
                       <td>
-                        {{_.unique_scenarios}}
+                        {{_.scenarioCount}}
                       </td>
-                      <td *ngIf="! _.latest_run">
+                      <td *ngIf="! _.latestRun">
                         never run
                       </td>
-                      <td *ngIf="_.latest_run" class="latest-run">
-                        <span>{{_.latest_run | timeAgo}}</span>
+                      <td *ngIf="_.latestRun" class="latest-run">
+                        <span>{{_.latestRun | timeAgo}}</span>
                       </td>
                       <td class="edit">
                         <app-edit-project [projectDataInput]="{ projectName: _.projectName }"></app-edit-project>

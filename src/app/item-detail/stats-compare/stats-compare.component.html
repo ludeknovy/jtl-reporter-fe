@@ -12,7 +12,7 @@
           <thead>
             <tr>
               <th scope="col" class="head">
-                <mfDefaultSorter by="max_vu">VU</mfDefaultSorter>
+                <mfDefaultSorter by="maxVu">VU</mfDefaultSorter>
               </th>
               <th scope="col" class="head">
                 <mfDefaultSorter by="duration">duration</mfDefaultSorter>
@@ -24,7 +24,7 @@
                 <mfDefaultSorter by="note">note</mfDefaultSorter>
               </th>
               <th scope="col" class="head">
-                <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
+                <mfDefaultSorter by="startTime">start time</mfDefaultSorter>
               <th scope="col" class="head">
                 <mfDefaultSorter by="status">status</mfDefaultSorter>
               </th>
@@ -47,7 +47,7 @@
           <tbody *ngIf="items.data.length > 0">
             <tr *ngFor="let _ of mf.data">
               <td>
-                {{_.max_vu}}
+                {{_.maxVu}}
               </td>
               <td>
                 {{_.duration}}
@@ -59,7 +59,7 @@
                 {{_.note}}
               </td>
               <td>
-                {{_.start_time | date:'d. L. yyyy H:mm'}}
+                {{_.startTime | date:'d. L. yyyy H:mm'}}
               </td>
               <td>
                 <span *ngIf="_.status === '0'" title="Passed"><i class="fas fa-check-circle text-success status-icon"></i></span>

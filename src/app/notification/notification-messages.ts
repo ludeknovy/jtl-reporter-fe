@@ -44,7 +44,7 @@ export class NotificationMessage {
 
   private statusCodeMessage(response, succesMessgae) {
     let message = { success: false, message: `Something went wrong` };
-    if ([200, 201, 202, 204].find(_ => _ === response.status)) {
+    if (response.status >= 200 && response.status < 300) {
       message = { success: true, message: succesMessgae };
     } else if (response.status === 400) {
       try {

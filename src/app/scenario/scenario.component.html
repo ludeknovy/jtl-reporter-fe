@@ -59,25 +59,25 @@
               <table class="table items" [mfData]="items.data" #mf="mfDataTable">
                 <thead>
                   <tr>
-                    <th scope="col" class="head">
+                    <th scope="col" class="head vu">
                       <mfDefaultSorter by="maxVu">virtual users</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head">
+                    <th scope="col" class="head duration">
                       <mfDefaultSorter by="duration">duration</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head">
+                    <th scope="col" class="head environment">
                       <mfDefaultSorter by="environment">environment</mfDefaultSorter>
                     </th>
                     <th scope="col" class="head">
                       <mfDefaultSorter by="note">note</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head">
+                    <th scope="col" class="head start-time">
                       <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head">
+                    <th scope="col" class="head status">
                       <mfDefaultSorter by="status">status</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head">
+                    <th scope="col" class="head base">
                       <mfDefaultSorter by="base"></mfDefaultSorter>
                     </th>
                   </tr>
@@ -99,7 +99,7 @@
                     <td>
                       {{_.duration}}
                     </td>
-                    <td>
+                    <td class="ellipsis-environment">
                       {{_.environment}}
                     </td>
                     <td [attr.title]="_.note" class="ellipsis">

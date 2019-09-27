@@ -224,6 +224,9 @@
                     <th scope="col" class="hd" *ngIf="itemData.overview.errorRate > 0">
                       <mfDefaultSorter by="errorRate">errors</mfDefaultSorter>
                     </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by=""></mfDefaultSorter>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -252,6 +255,9 @@
                         <span class="error-code">{{e.key}} </span>
                         <span class="badge badge-counter badge-pill badge-danger error-counter">{{e.value}}</span>
                       </span>
+                    </td>
+                    <td>
+                      <app-label-trend [labelName]="_.label"></app-label-trend>
                     </td>
                   </tr>
                 </tbody>

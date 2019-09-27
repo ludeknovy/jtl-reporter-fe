@@ -107,3 +107,14 @@ export interface ProjectsOverallStats {
   totalDuration: number;
   totalRunCount: number;
 }
+
+export interface LabelTrend {
+  timePoints: string[];
+  errorRate: number[];
+  id: string;
+  n0: number[];
+  n5: number[];
+  n9: number[];
+  throughput: number[];
+  threads: number[];
+}

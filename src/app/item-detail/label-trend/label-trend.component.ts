@@ -35,7 +35,7 @@ export class LabelTrendComponent implements OnInit {
         this.params.scenarioName,
         this.params.id,
         {
-          name: this.trendInput.labelName,
+          label: this.trendInput.labelName,
           environment: this.trendInput.environment
         }
       ).subscribe(__ => {

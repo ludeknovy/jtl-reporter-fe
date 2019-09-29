@@ -15,7 +15,7 @@ export class LabelTrendComponent implements OnInit {
   params;
   labelChart;
 
-  @Input() labelName: any;
+  @Input() trendInput: { labelName: string, environment: string };
 
   constructor(
     private modalService: NgbModal,
@@ -34,7 +34,10 @@ export class LabelTrendComponent implements OnInit {
         this.params.projectName,
         this.params.scenarioName,
         this.params.id,
-        { name: this.labelName }
+        {
+          label: this.trendInput.labelName,
+          environment: this.trendInput.environment
+        }
       ).subscribe(__ => {
         const chartOptions: any = __.timePoints.length > 5 ? labelTrendChartOptions(__) : emptyChart();
         this.labelChart = new Chart(...chartOptions);

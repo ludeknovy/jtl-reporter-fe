@@ -27,6 +27,7 @@ export class LabelTrendComponent implements OnInit {
   }
 
   open(content) {
+    // @ts-ignore
     this.modalService.open(content, { size: 'xl' });
     this.route.params.subscribe(_ => {
       this.params = _;

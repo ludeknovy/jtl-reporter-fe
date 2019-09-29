@@ -253,6 +253,9 @@
                         <span class="badge badge-counter badge-pill badge-danger error-counter">{{e.value}}</span>
                       </span>
                     </td>
+                    <td>
+                      <app-label-trend [trendInput]="{ environment: itemData.environment, labelName: _.label }"></app-label-trend>
+                    </td>
                   </tr>
                 </tbody>
               </table>

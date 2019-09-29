@@ -1,0 +1,16 @@
+<ng-template #content let-modal>
+  <div class="modal-header" ngbAutofocus>
+    <h5 class="modal-title" id="modal-basic-title">{{trendInput.labelName}}</h5>
+    <button type="button" class="close" aria-label="" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div [chart]="labelChart"></div>
+  </div>
+</ng-template>
+
+
+
+
+<a (click)="open(content)"><i class="fas fa-chart-area"></i></a>

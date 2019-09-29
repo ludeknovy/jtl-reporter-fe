@@ -15,6 +15,14 @@
   margin-bottom: 30px;
 }
 
-#label-filter, #basic-addon1 {
-  height: 28px;
+#scenario-filter, #basic-addon1, .scenario-order {
+  height: 33px;
+}
+
+.scenario-order {
+  margin-left: 10px
+} 
+
+.scenario-order:focus {
+  outline: 0 !important;
 }

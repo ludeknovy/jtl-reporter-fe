@@ -5,8 +5,15 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
         </div>
-        <input class="form-control" id="label-filter" type="search" placeholder="scenario name"
+        <input class="form-control" id="scenario-filter" type="search" placeholder="scenario name"
           (keyup)='search($event.target.value)'>
+        <div class="input-group-append">
+          <select [(ngModel)]='nrSelect' class='scenario-order rounded-left input-group-text' (change)="changingValue($event)">
+            <option value='newest'>From newest</option>
+            <option value='az'>From A-Z</option>
+            <option value='za'>From Z-A</option>
+          </select>
+        </div>
       </div>
     </li>
   </ul>

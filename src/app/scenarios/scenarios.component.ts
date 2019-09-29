@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { IScenarios } from '../items.service.model';
 import { SharedMainBarService } from '../shared-main-bar.service';
@@ -15,12 +14,13 @@ export class ScenariosComponent implements OnInit {
   scenarios;
   filteredScenarios;
   projectName: string;
+  nrSelect = 'az';
 
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
     private sharedMainBarService: SharedMainBarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe(_ => {
@@ -28,7 +28,7 @@ export class ScenariosComponent implements OnInit {
       this.projectService.fetchScenarios(this.projectName);
       this.sharedMainBarService.setProjectName(this.projectName);
       this.projectService.scenarios$.subscribe((scenario) => {
-        this.filteredScenarios = scenario;
+        this.filteredScenarios = scenario.sort(this.azSort);
         this.scenarios = scenario;
       });
     });
@@ -41,5 +41,37 @@ export class ScenariosComponent implements OnInit {
     } else {
       this.filteredScenarios = this.scenarios;
     }
+  }
+
+  changingValue(event) {
+    const ordering = event.target.value;
+    switch (ordering) {
+      case 'newest':
+        this.filteredScenarios.sort(this.fromNewest);
+        break;
+      case 'az':
+        this.filteredScenarios.sort(this.azSort);
+        break;
+      case 'za':
+        this.filteredScenarios.sort(this.zaSort);
+        break;
+    }
+
+  }
+
+  private fromNewest(a, b) {
+    return new Date(b.data[0].startDate).getTime() - new Date(a.data[0].startDate).getTime();
+  }
+
+  private azSort(a, b) {
+    const textA = a.name.toUpperCase();
+    const textB = b.name.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  }
+
+  private zaSort(a, b) {
+    const textA = a.name.toUpperCase();
+    const textB = b.name.toUpperCase();
+    return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
   }
 }

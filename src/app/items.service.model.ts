@@ -82,6 +82,18 @@ export interface ProjectOverview {
 export interface IScenarios {
   id: string;
   name: string;
+  data: [{
+    avgLatency: number
+    avgResponseTime: number
+    duration: number
+    endDate: string
+    errorRate: number
+    errors: any
+    maxVu: number
+    percentil: number
+    startDate: string
+    throughput: number
+  }];
 }
 
 export interface ItemErrors {

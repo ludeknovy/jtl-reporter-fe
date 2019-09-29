@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ItemDetail, Items } from './items.service.model';
+import { ItemDetail, Items, LabelTrend } from './items.service.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +64,11 @@ export class ItemsApiService {
         responseType: 'blob',
       }
     );
+  }
+
+  fetchLabelTrend(projectName, scenarioName, itemId, params) {
+    return this.http.get<LabelTrend>(
+      `projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label-trend`, { params });
   }
 
   setData(data) {

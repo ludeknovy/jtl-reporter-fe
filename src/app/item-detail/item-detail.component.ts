@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ItemsApiService } from '../items-api.service';
 import { ItemDetail } from '../items.service.model';
 import { NgxSpinnerService } from 'ngx-spinner';

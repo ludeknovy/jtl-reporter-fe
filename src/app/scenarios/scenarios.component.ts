@@ -61,7 +61,7 @@ export class ScenariosComponent implements OnInit {
     }
   }
 
-  changeView(viewType: ViewType) {
+  changeView(viewType) {
     this.viewType = viewType;
   }
 

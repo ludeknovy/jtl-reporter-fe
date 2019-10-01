@@ -8,12 +8,18 @@
         <input class="form-control" id="scenario-filter" type="search" placeholder="scenario name"
           (keyup)='search($event.target.value)'>
         <div class="input-group-append">
-          <select [(ngModel)]='nrSelect' class='scenario-order rounded-left input-group-text' (change)="changingValue($event)">
+          <button class="btn view-settings" (click)="changeView('list')"><i class="fas fa-list"></i></button>
+          <button class="btn view-settings" (click)="changeView('cards')"><i class="fas fa-th"></i></button>
+        </div>
+        <div class="input-group-append">
+          <select [(ngModel)]='nrSelect' class='scenario-order rounded-left input-group-text'
+            (change)="changingValue($event)">
             <option value='newest'>From newest</option>
             <option value='az'>From A-Z</option>
             <option value='za'>From Z-A</option>
           </select>
         </div>
+
       </div>
     </li>
   </ul>
@@ -27,7 +33,7 @@
   <div class="container-fluid">
     <div class="row">
     </div>
-    <div class="row" *ngIf="filteredScenarios">
+    <div class="row" *ngIf="filteredScenarios && viewType === 'cards'">
       <div class="col-md-3" *ngFor="let _ of filteredScenarios">
         <div class="card card-scenario">
           <h6 class="card-header">
@@ -36,6 +42,35 @@
           <div class="card-body">
             <div class="chart">
               <app-scenarios-graph [graphData]="_.data"></app-scenarios-graph>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="filteredScenarios && viewType === 'list'">
+      <div class="col">
+        <div class="card card-list">
+          <h6 class="card-header">Scenarios</h6>
+          <div class="card-body">
+            <div class="labels-detail table-responsive">
+              <table class="table" [mfData]="filteredScenarios" #mf="mfDataTable">
+                <thead>
+                  <tr>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="name">name</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="data[0].startDate">last run</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let _ of mf.data" (click)="open(_.name)">
+                    <td>{{_.name}}</td>
+                    <td>{{_.data[0].startDate | date:'d. L. yyyy H:mm'}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

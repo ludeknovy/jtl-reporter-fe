@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IScenarios } from '../items.service.model';
 import { SharedMainBarService } from '../shared-main-bar.service';
+import { ViewType } from './scenario.component.model';
 
 @Component({
   selector: 'app-scenarios',
@@ -15,10 +16,12 @@ export class ScenariosComponent implements OnInit {
   filteredScenarios;
   projectName: string;
   nrSelect = 'az';
+  viewType = ViewType.Cards;
 
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
+    private router: Router,
     private sharedMainBarService: SharedMainBarService
   ) { }
 
@@ -56,6 +59,14 @@ export class ScenariosComponent implements OnInit {
         this.filteredScenarios.sort(this.zaSort);
         break;
     }
+  }
+
+  changeView(viewType: ViewType) {
+    this.viewType = viewType;
+  }
+
+  open(scenarioName) {
+    this.router.navigate([`./project/${this.projectName}/scenario/${scenarioName}/items`]);
 
   }
 

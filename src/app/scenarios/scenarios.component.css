@@ -7,7 +7,7 @@
   width: 100%;;
 }
 
-.card-header {
+.card-header, .card-list {
   border: none;
 }
 
@@ -25,4 +25,24 @@
 
 .scenario-order:focus {
   outline: 0 !important;
+}
+
+.hd {
+  font-size: 12px;
+  color: #888888c7;
+  border-top: 0px;
+  border-bottom: 2px solid #a5a2a247;
+}
+
+.card-list .card-body {
+  padding-top: 0px;
+}
+
+tbody tr:hover {
+  cursor: pointer;
+  background-color: #e8e8e847;
+}
+
+.view-settings {
+  padding-top: 3px;
 }

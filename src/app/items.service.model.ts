@@ -130,3 +130,10 @@ export interface LabelTrend {
   throughput: number[];
   threads: number[];
 }
+
+export interface LabelMaxVu {
+  result: [{
+    maxVu: number;
+    count: number;
+  }];
+}

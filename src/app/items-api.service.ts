@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ItemDetail, Items, LabelTrend } from './items.service.model';
+import { ItemDetail, Items } from './items.service.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ import { ItemDetail, Items, LabelTrend } from './items.service.model';
 export class ItemsApiService {
   private response = new BehaviorSubject<any>({});
   public response$ = this.response.asObservable();
+
 
   constructor(private http: HttpClient) {
   }
@@ -43,8 +44,8 @@ export class ItemsApiService {
     return this.http.post(
       `projects/${projectName}/scenarios/${scenarioName}/items`,
       formData, {
-        headers, observe: 'response'
-      }
+      headers, observe: 'response'
+    }
     );
   }
 
@@ -61,14 +62,9 @@ export class ItemsApiService {
     const { projectName, scenarioName, id } = params;
     return this.http.get(
       `projects/${projectName}/scenarios/${scenarioName}/items/${id}/errors`, {
-        responseType: 'blob',
-      }
+      responseType: 'blob',
+    }
     );
-  }
-
-  fetchLabelTrend(projectName, scenarioName, itemId, params) {
-    return this.http.get<LabelTrend>(
-      `projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label-trend`, { params });
   }
 
   setData(data) {

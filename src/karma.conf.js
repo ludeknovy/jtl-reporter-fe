@@ -37,7 +37,7 @@ module.exports = function (config) {
       spec: 2
     }],
     proxies: {
-      '/projects/': 'http://127.0.0.1:1234/projects/'
+      '/projects': 'http://127.0.0.1:1234/projects'
     }
   });
 };

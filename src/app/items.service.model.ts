@@ -4,6 +4,7 @@ export interface ItemsListing {
   project_name: string;
   environment: string;
   upload_time: string;
+  status: string;
 }
 
 export interface Items {

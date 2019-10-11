@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LabelTrendComponent } from './label-trend.component';
+import { ChartModule } from 'angular-highcharts';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LabelTrendComponent', () => {
   let component: LabelTrendComponent;
@@ -8,7 +10,12 @@ describe('LabelTrendComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LabelTrendComponent ]
+      declarations: [ LabelTrendComponent ],
+      imports: [
+        ChartModule,
+        HttpClientModule,
+        RouterTestingModule,
+      ]
     })
     .compileComponents();
   }));

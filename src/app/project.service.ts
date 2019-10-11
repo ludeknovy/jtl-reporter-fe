@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ProjectsListing } from './project-api.service.model';
 import { IScenarios, Items } from './items.service.model';
 import { scenarioHistoryGraphs } from './graphs/scenario-trends';
+import { ScenarioApiService } from './scenario-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class ProjectService {
   public trends$ = this.trends.asObservable();
 
   constructor(
-    private projectApiService: ProjectApiService
+    private projectApiService: ProjectApiService,
+    private scenarioApiService: ScenarioApiService
   ) { }
 
   loadProjects() {
@@ -47,12 +49,12 @@ export class ProjectService {
   }
 
   fetchScenarios(projectName) {
-    this.projectApiService.fetchScenarios(projectName)
+    this.scenarioApiService.fetchScenarios(projectName)
       .subscribe(_ => this.scenarios.next(_));
   }
 
   fetchScenarioTrends(projectName, scenarioName) {
-    this.projectApiService.fetchScenarioTrend(projectName, scenarioName)
+    this.scenarioApiService.fetchScenarioTrend(projectName, scenarioName)
       .subscribe(_ => this.trends.next(scenarioHistoryGraphs(_, projectName, scenarioName)));
   }
 

@@ -36,19 +36,6 @@ export class ProjectApiService {
     return this.http.put(`projects/${projectName}`, body, { observe: 'response' });
   }
 
-  fetchScenarios(projectName): Observable<IScenarios[]> {
-    return this.http.get<IScenarios[]>(`projects/${projectName}/scenarios`);
-  }
-
-  fetchScenarioTrend(projectName, scenarioName): Observable<any[]> {
-    return this.http.get<any[]>(
-      `projects/${projectName}/scenarios/${scenarioName}/trends`);
-  }
-
-  createNewScenario(projectName, body): Observable<{}> {
-    return this.http.post(`projects/${projectName}/scenarios`, body, { observe: 'response'});
-  }
-
   fetchOverallStats(): Observable<ProjectsOverallStats> {
     return this.http.get<ProjectsOverallStats>('projects/overall-stats');
   }

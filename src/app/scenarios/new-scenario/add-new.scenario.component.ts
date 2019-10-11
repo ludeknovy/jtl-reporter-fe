@@ -6,6 +6,7 @@ import { ProjectApiService } from 'src/app/project-api.service';
 import { pipe, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ProjectService } from 'src/app/project.service';
+import { ScenarioApiService } from 'src/app/scenario-api.service';
 
 @Component({
   selector: 'app-add-new-scenario',
@@ -20,7 +21,7 @@ export class AddNewScenarioComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private projectApiService: ProjectApiService,
+    private scenarioApiService: ScenarioApiService,
     private projectService: ProjectService,
     private notification: NotificationMessage
   ) {}
@@ -51,12 +52,12 @@ export class AddNewScenarioComponent implements OnInit {
   onSubmit() {
     if (this.myform.valid) {
       const { scenarioName } = this.myform.value;
-      this.projectApiService.createNewScenario(this.projectName, {scenarioName})
+      this.scenarioApiService.createNewScenario(this.projectName, {scenarioName})
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newProjectNotificationMessage(_);
           this.projectService.fetchScenarios(this.projectName);
-          return this.projectApiService.setData(message);
+          return this.scenarioApiService.setData(message);
         });
       this.myform.reset();
       this.modalService.dismissAll();

@@ -1,13 +1,16 @@
 language: node_js
-node_js: '10'
+node_js: "10"
 cache: npm
 
+addons:
+  chrome: stable
+
 branches:
-  only: 
+  only:
     - master
 
-install:
-  npm install
+install: npm install
 
 script:
   - ng lint
+  - npm run test:headless

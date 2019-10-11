@@ -1,0 +1,50 @@
+{
+  "consumer": {
+    "name": "jtl-reporter-ui"
+  },
+  "provider": {
+    "name": "jtl-reporter-be"
+  },
+  "interactions": [
+    {
+      "description": "a request for latest items",
+      "providerState": "i have a list of latest items",
+      "request": {
+        "method": "GET",
+        "path": "/projects/latest-items"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "environment": "test",
+            "id": "b13373a3-4d27-4752-977a-2f42a2606595",
+            "name": "test-scenario",
+            "project_name": "test-project",
+            "upload_time": "2013-08-16T15:31:20+10:00"
+          }
+        ],
+        "matchingRules": {
+          "$.body": {
+            "min": 1
+          },
+          "$.body[*].*": {
+            "match": "type"
+          },
+          "$.body[*].upload_time": {
+            "match": "regex",
+            "regex": "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

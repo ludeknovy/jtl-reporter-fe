@@ -7,6 +7,43 @@
   },
   "interactions": [
     {
+      "description": "a request for updating project",
+      "providerState": "i have existing project",
+      "request": {
+        "method": "PUT",
+        "path": "/projects/test-project",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "projectName": "project-name"
+        },
+        "matchingRules": {
+          "$.body.projectName": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 204,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request for deleting project",
+      "providerState": "i have existing project",
+      "request": {
+        "method": "DELETE",
+        "path": "/projects/test-project"
+      },
+      "response": {
+        "status": 204,
+        "headers": {
+        }
+      }
+    },
+    {
       "description": "a request for projects",
       "providerState": "i have list of existing projects",
       "request": {
@@ -55,43 +92,6 @@
       },
       "response": {
         "status": 201,
-        "headers": {
-        }
-      }
-    },
-    {
-      "description": "a request for deleting project",
-      "providerState": "i have existing project",
-      "request": {
-        "method": "DELETE",
-        "path": "/projects/test-project"
-      },
-      "response": {
-        "status": 204,
-        "headers": {
-        }
-      }
-    },
-    {
-      "description": "a request for updating project",
-      "providerState": "i have existing project",
-      "request": {
-        "method": "PUT",
-        "path": "/projects/test-project",
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "body": {
-          "projectName": "project-name"
-        },
-        "matchingRules": {
-          "$.body.projectName": {
-            "match": "type"
-          }
-        }
-      },
-      "response": {
-        "status": 204,
         "headers": {
         }
       }
@@ -153,43 +153,6 @@
           "$.body": {
             "match": "type"
           }
-        }
-      }
-    },
-    {
-      "description": "a request for updating scenario",
-      "providerState": "i have existing project with at least one scenarios",
-      "request": {
-        "method": "PUT",
-        "path": "/projects/test-project/scenarios/test-scenario",
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "body": {
-          "scenarioName": "new-scenario-name"
-        },
-        "matchingRules": {
-          "$.body": {
-            "match": "type"
-          }
-        }
-      },
-      "response": {
-        "status": 204,
-        "headers": {
-        }
-      }
-    },
-    {
-      "description": "a request for deleting scenario",
-      "providerState": "i have existing project with at least one scenarios",
-      "request": {
-        "method": "DELETE",
-        "path": "/projects/test-project/scenarios/test-scenario"
-      },
-      "response": {
-        "status": 204,
-        "headers": {
         }
       }
     },
@@ -268,6 +231,43 @@
             "match": "regex",
             "regex": "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z"
           }
+        }
+      }
+    },
+    {
+      "description": "a request for deleting scenario",
+      "providerState": "i have existing project with at least one scenarios",
+      "request": {
+        "method": "DELETE",
+        "path": "/projects/test-project/scenarios/test-scenario"
+      },
+      "response": {
+        "status": 204,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request for updating scenario",
+      "providerState": "i have existing project with at least one scenarios",
+      "request": {
+        "method": "PUT",
+        "path": "/projects/test-project/scenarios/test-scenario",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "scenarioName": "new-scenario-name"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 204,
+        "headers": {
         }
       }
     }

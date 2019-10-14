@@ -113,6 +113,9 @@ describe('Scenario', () => {
             path: '/projects/test-project/scenarios',
             body: {
               scenarioName: Matchers.somethingLike(`new-test-scenario`)
+            },
+            headers: {
+              'Content-Type': 'application/json'
             }
           },
           willRespondWith: {
@@ -125,7 +128,7 @@ describe('Scenario', () => {
       });
       it('should be able to create new scenario', (done) => {
         const scenarioService: ScenarioApiService = TestBed.get(ScenarioApiService);
-        scenarioService.createNewScenario('test-project', { scenarioName: 'new-scenario'}).subscribe(response => {
+        scenarioService.createNewScenario('test-project', { scenarioName: 'new-scenario' }).subscribe(response => {
           // @ts-ignore
           expect(response.status).toEqual(201);
           done();
@@ -144,7 +147,10 @@ describe('Scenario', () => {
             path: '/projects/test-project/scenarios/test-scenario',
             body: Matchers.somethingLike({
               scenarioName: 'new-scenario-name'
-            })
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            }
           },
           willRespondWith: {
             status: 204,

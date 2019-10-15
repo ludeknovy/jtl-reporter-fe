@@ -233,7 +233,7 @@ describe('Projects', () => {
             status: '0'
           }, { min: 1 }),
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=utf-8'
           }
         }
       }).then(done, e => done.fail(e));

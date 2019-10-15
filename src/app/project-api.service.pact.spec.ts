@@ -93,7 +93,10 @@ describe('Projects', () => {
             path: '/projects',
             body: {
               projectName: Matchers.somethingLike(`project-name`)
-            }
+            },
+            headers: {
+              'Content-Type': 'application/json'
+            },
           },
           willRespondWith: {
             status: 201,
@@ -125,10 +128,13 @@ describe('Projects', () => {
             path: '/projects/test-project',
             body: {
               projectName: Matchers.somethingLike(`project-name`)
+            },
+            headers: {
+              'Content-Type': 'application/json'
             }
           },
           willRespondWith: {
-            status: 201,
+            status: 204,
           },
           headers: {
             'Content-Type': 'application/json'
@@ -138,7 +144,7 @@ describe('Projects', () => {
       it('should be able to update project', (done) => {
         const projectService: ProjectApiService = TestBed.get(ProjectApiService);
         projectService.updateProject('test-project', { projectName: 'test-project-1' }).subscribe(response => {
-          expect(response.status).toEqual(201);
+          expect(response.status).toEqual(204);
           done();
         });
       });

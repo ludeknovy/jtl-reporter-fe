@@ -1,9 +1,9 @@
 export interface ItemsListing {
   id: string;
   name: string;
-  project_name: string;
+  projectName: string;
   environment: string;
-  upload_time: string;
+  startTime: string;
   status: string;
 }
 

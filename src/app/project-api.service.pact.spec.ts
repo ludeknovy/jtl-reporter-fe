@@ -212,7 +212,7 @@ describe('Projects', () => {
   });
 
 
-  describe('/projects/latest-items', () => {
+  describe('c', () => {
     beforeAll((done) => {
       provider.addInteraction({
         state: 'there is at least one existing test item',
@@ -227,9 +227,9 @@ describe('Projects', () => {
             environment: 'test',
             id: 'b13373a3-4d27-4752-977a-2f42a2606595',
             name: 'test-scenario',
-            project_name: 'test-project',
+            projectName: 'test-project',
             // tslint:disable-next-line:max-line-length
-            upload_time: Matchers.term({ generate: '2019-09-22T18:20:23.265Z', matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z' }),
+            startTime: Matchers.term({ generate: '2019-09-22T18:20:23.265Z', matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z' }),
             status: '0'
           }, { min: 1 }),
           headers: {
@@ -249,13 +249,13 @@ describe('Projects', () => {
           expect(_.id).toEqual(jasmine.any(String));
           expect(_.name).toEqual(jasmine.any(String));
           expect(_.status).toEqual(jasmine.any(String));
-          expect(_.project_name).toEqual(jasmine.any(String));
+          expect(_.projectName).toEqual(jasmine.any(String));
           expect(_.environment.length).toBeGreaterThan(0);
           expect(_.id.length).toBeGreaterThan(0);
           expect(_.name.length).toBeGreaterThan(0);
-          expect(_.project_name.length).toBeGreaterThan(0);
+          expect(_.projectName.length).toBeGreaterThan(0);
           expect(_.status.length).toEqual(1);
-          expect(moment(_.upload_time, moment.ISO_8601).isValid()).toBe(true);
+          expect(moment(_.startTime, moment.ISO_8601).isValid()).toBe(true);
         });
         done();
       });

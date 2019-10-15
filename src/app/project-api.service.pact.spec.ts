@@ -212,7 +212,7 @@ describe('Projects', () => {
   });
 
 
-  describe('c', () => {
+  describe('/project/latest-items', () => {
     beforeAll((done) => {
       provider.addInteraction({
         state: 'there is at least one existing test item',

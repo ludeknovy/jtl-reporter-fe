@@ -46,7 +46,7 @@ describe('Projects', () => {
     describe('GET /projects', () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'i have list of existing projects',
+          state: 'there is at least one existing test item',
           uponReceiving: 'a request for projects',
           withRequest: {
             method: 'GET',
@@ -121,7 +121,7 @@ describe('Projects', () => {
     describe('PUT /projects/:projectName', () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'i have existing project',
+          state: 'there is existing project',
           uponReceiving: 'a request for updating project',
           withRequest: {
             method: 'PUT',
@@ -152,7 +152,7 @@ describe('Projects', () => {
     describe('DELETE /project/:projectName', () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'i have existing project',
+          state: 'there is existing project',
           uponReceiving: 'a request for deleting project',
           withRequest: {
             method: 'DELETE',
@@ -179,7 +179,7 @@ describe('Projects', () => {
   describe('/projects/overall-stats', () => {
     beforeAll((done) => {
       provider.addInteraction({
-        state: 'i have existing overall stats',
+        state: 'there is at least one existing test item',
         uponReceiving: 'a request for overall-stats',
         withRequest: {
           method: 'GET',
@@ -215,7 +215,7 @@ describe('Projects', () => {
   describe('/projects/latest-items', () => {
     beforeAll((done) => {
       provider.addInteraction({
-        state: 'i have a list of latest items',
+        state: 'there is at least one existing test item',
         uponReceiving: 'a request for latest items',
         withRequest: {
           method: 'GET',

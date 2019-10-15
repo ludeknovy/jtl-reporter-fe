@@ -46,7 +46,7 @@ describe('Scenario', () => {
     describe('GET /projects/:projectName/scenarios', () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'i have existing project with at least one scenarios',
+          state: 'there is at least one existing test item',
           uponReceiving: 'a request for scenarios',
           withRequest: {
             method: 'GET',
@@ -106,7 +106,7 @@ describe('Scenario', () => {
     describe('POST /project/:projectName/scenarios', () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'i have existing project',
+          state: 'there is existing project',
           uponReceiving: 'a request for creating new scenario',
           withRequest: {
             method: 'POST',
@@ -140,7 +140,7 @@ describe('Scenario', () => {
     describe('PUT /project/:projectName/scenarios/:scenarioName', () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'i have existing project with at least one scenarios',
+          state: 'there is existing project with at least one scenario',
           uponReceiving: 'a request for updating scenario',
           withRequest: {
             method: 'PUT',
@@ -173,7 +173,7 @@ describe('Scenario', () => {
     describe('DELETE /project/:projectName/scenarios/:scenarioName', () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'i have existing project with at least one scenarios',
+          state: 'there is existing project with at least one scenario',
           uponReceiving: 'a request for deleting scenario',
           withRequest: {
             method: 'DELETE',

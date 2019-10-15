@@ -1,5 +1,5 @@
 language: node_js
-node_js: "10"
+node_js: '10'
 cache: npm
 
 addons:
@@ -14,3 +14,7 @@ install: npm install
 script:
   - ng lint
   - npm run test:headless
+
+env:
+  global:
+    secure: 1Q7uIIoAKYY8lewXlsXIgYEQozAiF4FhR5qa485s8ODvJ/6N942Se77fHQqI8fYRriy3VV9yDSVTKOlcKo5WbvHUhh+ZxAzb06Tv9AAOIDUgeJo2lz/jiQc72ItmLaE3qKYHxfpr6wb+2/zVxjlaJk5qZstj4QP1zRyBN0pVoMXa+ZFXTD+BIddxCopiVH3kCc3vpLWMEOC0LDoWzaN+ztJ+4jntGSV/dBwHk8ufkIogMI3v+kncO65Jy1Ugna17ixQ5/p5kZVRZxYd0/rz2Ko985H2VAj0pSNnGgRJh3eet+CP3WmKhH4o98SL7izYTFARaBUfsG5mPwCtnfUDD7EGAybd7nCooJ+mlXLgedQ4ovgYTPjXnEbyg/0RceOqkshZqkl6ewBJKTOav81fVdgxss46oOv5Fo7F10N5ng/EjJzV48hYxUhQvSOE8JdOTKKkD4h4X5R3J7UseKLaR4qCn2u/im9QTHE7dAWNpnIfsCTPd16IKvMxCMqWw1lK64qlths5dS3fq42QBVzkX1zsxywURlkD8Aeyr/md39H7IGcywVY4rlBmLu/iSEK3+ZacV+4TdmcjFw0dPDTa20UiIWTPTLzuwJLQtIDmh73mOyo0zAQqYRIei1dLrN5c4XHMSD2oQMq70lIsYw+KIp2/naB96MU63ibls9gkAET4=

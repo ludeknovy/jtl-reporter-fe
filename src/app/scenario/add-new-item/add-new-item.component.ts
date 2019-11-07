@@ -26,6 +26,7 @@ export class AddNewItemComponent implements OnInit {
   environment: FormControl;
   note: FormControl;
   status: FormControl;
+  hostname: FormControl;
   routeParams;
   statuses = Object.values(ItemStatus);
   DEFAULT_STATUS = ItemStatus.None;
@@ -57,6 +58,9 @@ export class AddNewItemComponent implements OnInit {
     this.note = new FormControl('', [
       Validators.maxLength(150)
     ]);
+    this.hostname = new FormControl('', [
+      Validators.maxLength(200)
+    ]);
     this.status = new FormControl(this.DEFAULT_STATUS, [
     ]);
   }
@@ -67,6 +71,7 @@ export class AddNewItemComponent implements OnInit {
       errorFile: this.errorFile,
       environment: this.environment,
       note: this.note,
+      hostname: this.hostname,
       status: this.status
     });
   }
@@ -86,11 +91,11 @@ export class AddNewItemComponent implements OnInit {
     this.formCheck();
     if (this.myform.valid) {
       this.spinner.show();
-      const { kpiFile, errorFile, environment, note, status } = this.myform.value;
+      const { kpiFile, errorFile, environment, note, hostname, status } = this.myform.value;
       this.itemsApiService.addNewTestItem(
         this.routeParams.projectName,
         this.routeParams.scenarioName,
-        environment, note, ItemStatusValue[status], kpiFile, errorFile)
+        environment, note, hostname, ItemStatusValue[status], kpiFile, errorFile)
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newTestItemNotificationMessage(_);
@@ -99,7 +104,7 @@ export class AddNewItemComponent implements OnInit {
           this.spinner.hide();
           return this.itemsApiService.setData(message);
         });
-      this.myform.reset({ environment: '', status: this.DEFAULT_STATUS, note: '' });
+      this.myform.reset({ environment: '', status: this.DEFAULT_STATUS, note: '', hostname: '' });
       this.modalService.dismissAll();
     }
   }

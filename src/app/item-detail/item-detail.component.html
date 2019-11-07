@@ -111,9 +111,13 @@
             <span>status:</span>
             <span class="small-text"> {{getTextStatus(itemData.status)}}</span>
           </div>
-          <div class="date bottom" *ngIf="itemData.note">
+          <div class="date" *ngIf="itemData.note">
             <span>note:</span>
             <span class="small-text"> {{itemData.note}}</span>
+          </div>
+          <div class="date bottom" *ngIf="itemData.hostname">
+            <span>hostname:</span>
+            <span class="small-text"> {{itemData.hostname}}</span>
           </div>
         </div>
       </div>

@@ -29,7 +29,7 @@ export class ItemsApiService {
   }
 
   addNewTestItem(projectName: string, scenarioName: string,
-    environment: string = null, note, status, kpiFile, errorFile?) {
+    environment: string = null, note, hostname, status, kpiFile, errorFile?) {
     const headers = new HttpHeaders();
     headers.set('Content-Type', null);
     headers.set('Accept', 'multipart/form-data');
@@ -37,6 +37,7 @@ export class ItemsApiService {
     formData.append('kpi', kpiFile);
     formData.append('environment', environment);
     formData.append('note', note);
+    formData.append('hostname', hostname);
     formData.append('status', status);
     if (errorFile) {
       formData.append('errors', errorFile);

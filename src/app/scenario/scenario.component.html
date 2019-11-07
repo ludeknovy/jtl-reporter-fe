@@ -1,7 +1,7 @@
 <app-control-panel>
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-        <app-breadcrumb></app-breadcrumb>
+      <app-breadcrumb></app-breadcrumb>
 
     </li>
   </ul>
@@ -74,6 +74,9 @@
                     <th scope="col" class="head start-time">
                       <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
                     </th>
+                    <th scope="col" class="head hostname">
+                      <mfDefaultSorter by="hostname">hostname</mfDefaultSorter>
+                    </th>
                     <th scope="col" class="head status">
                       <mfDefaultSorter by="status">status</mfDefaultSorter>
                     </th>
@@ -108,12 +111,20 @@
                     <td>
                       {{_.startTime | date:'d. L. yyyy H:mm'}}
                     </td>
+                    <td [attr.title]="_.hostname" class="ellipsis">
+                      {{_.hostname}}
+                    </td>
                     <td>
-                      <span *ngIf="_.status === '0'" title="Passed"><i class="fas fa-check-circle text-success status-icon"></i></span>
-                      <span *ngIf="_.status === '1'" title="Error/Terminated"><i class="fas fa-minus-circle text-secondary status-icon"></i></span>
-                      <span *ngIf="_.status === '2'" title="Terminated"><i class="fas fa-minus-circle text-secondary status-icon"></i></span>
-                      <span *ngIf="_.status === '3'" title="Failed"><i class="fas fa-minus-circle text-danger status-icon"></i></span>
-                      <span *ngIf="_.status === '10'" title="Status not set"><i class="far fa-circle text-secondary status-icon"></i></span>
+                      <span *ngIf="_.status === '0'" title="Passed"><i
+                          class="fas fa-check-circle text-success status-icon"></i></span>
+                      <span *ngIf="_.status === '1'" title="Error/Terminated"><i
+                          class="fas fa-minus-circle text-secondary status-icon"></i></span>
+                      <span *ngIf="_.status === '2'" title="Terminated"><i
+                          class="fas fa-minus-circle text-secondary status-icon"></i></span>
+                      <span *ngIf="_.status === '3'" title="Failed"><i
+                          class="fas fa-minus-circle text-danger status-icon"></i></span>
+                      <span *ngIf="_.status === '10'" title="Status not set"><i
+                          class="far fa-circle text-secondary status-icon"></i></span>
                     </td>
                     <td>
                       <span *ngIf="_.base"><i class="fas fa-asterisk base-icon"></i></span>

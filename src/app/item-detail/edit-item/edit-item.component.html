@@ -22,6 +22,13 @@
           aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Hostname</span>
+        </div>
+        <input type="testName" class="form-control" formControlName="hostname" aria-label="Default"
+          aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="input-group mb-3">
         <div>
             <input type="checkbox" id="base-check" [attr.disabled]="disabled ? '' : null" formControlName="base" [(ngModel)]="isBase"
             data-md-icheck />

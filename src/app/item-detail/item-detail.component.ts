@@ -29,6 +29,7 @@ export class ItemDetailComponent implements OnInit {
     baseId: null,
     note: null,
     plot: null,
+    hostname: null,
     statistics: [],
     testName: null,
     attachements: []
@@ -93,9 +94,10 @@ export class ItemDetailComponent implements OnInit {
     });
   }
 
-  itemDetailChanged({ note, environment }) {
+  itemDetailChanged({ note, environment, hostname }) {
     this.itemData.note = note;
     this.itemData.environment = environment;
+    this.itemData.hostname = hostname;
   }
 
   itemToCompare(data) {

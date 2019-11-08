@@ -6,7 +6,7 @@
   </ul>
   <div>
     <app-edit-item *ngIf="itemData.environment"
-      [itemDetailData]="{note: itemData.note, environment: itemData.environment, isBase: itemData.isBase, params: itemParams}"
+      [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
       (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
     <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
     <app-delete-item [itemData]="itemParams"></app-delete-item>

@@ -28,6 +28,7 @@ export interface ItemDetail {
   baseId: string;
   testName: string;
   note: string;
+  hostname: string;
   environment: string;
   plot: {
     responseTime: [{

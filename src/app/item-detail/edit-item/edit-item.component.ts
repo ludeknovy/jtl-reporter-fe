@@ -18,6 +18,7 @@ export class EditItemComponent implements OnInit {
   myform: FormGroup;
   note;
   environment;
+  hostname;
   base;
   isBase;
   disabled;
@@ -49,6 +50,9 @@ export class EditItemComponent implements OnInit {
       Validators.required,
       Validators.maxLength(150)
     ]);
+    this.hostname = new FormControl(this.itemDetailData.hostname, [
+      Validators.maxLength(200)
+    ]);
     this.base = new FormControl(this.itemDetailData.isBase, []);
   }
 
@@ -56,6 +60,7 @@ export class EditItemComponent implements OnInit {
     this.myform = new FormGroup({
       note: this.note,
       environment: this.environment,
+      hostname: this.hostname,
       base: this.base
     });
   }
@@ -66,12 +71,12 @@ export class EditItemComponent implements OnInit {
 
   onSubmit() {
     if (this.myform.valid) {
-      const { note, environment, base } = this.myform.value;
+      const { note, environment, base, hostname } = this.myform.value;
       const { projectName, id, scenarioName } = this.params;
-      this.itemsService.updateItemInfo(id, projectName, scenarioName, { environment, note, base })
+      this.itemsService.updateItemInfo(id, projectName, scenarioName, { environment, note, base, hostname })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
-          this.itemDetailChange.emit({ note, environment });
+          this.itemDetailChange.emit({ note, environment, hostname });
           const message = this.notification.itemUpdate(_);
           return this.itemsService.setData(message);
         });

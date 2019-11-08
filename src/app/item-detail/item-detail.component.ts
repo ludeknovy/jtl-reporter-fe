@@ -114,6 +114,8 @@ export class ItemDetailComponent implements OnInit {
           avgDiff: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
           minDiff: (_.minResponseTime - labelToBeCompared.minResponseTime),
           maxDiff: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
+          // @ts-ignore
+          bytesDiff: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
           n0Diff: (_.n0 - labelToBeCompared.n0),
           n5Diff: (_.n5 - labelToBeCompared.n5),
           n9Diff: (_.n9 - labelToBeCompared.n9),

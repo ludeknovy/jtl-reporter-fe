@@ -38,18 +38,6 @@
         </div>
         <div class="col-sm">
           <div class="card">
-            <h6 class="card-header samaritane">Avg. response time</h6>
-            <div class="card-body">
-              <h2 *ngIf="itemData.overview.avgResponseTime >= 1000" class="card-title text-samaritane">{{
-                 Math.round((itemData.overview.avgResponseTime / 1000) * 100) / 100}} <span class="unit-desc">s</span>
-              </h2>
-              <h2 *ngIf="itemData.overview.avgResponseTime < 1000" class="card-title text-samaritane">{{
-                itemData.overview.avgResponseTime}} <span class="unit-desc">ms</span></h2>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm">
-          <div class="card">
             <h6 class="card-header percentil">90% Response time</h6>
             <div class="card-body">
               <h2 *ngIf="itemData.overview.percentil >= 1000" class="card-title text-percentil">{{
@@ -70,6 +58,19 @@
               </h2>
               <h2 *ngIf="itemData.overview.avgLatency < 1000" class="card-title text-latency">{{
                 itemData.overview.avgLatency}} <span class="unit-desc">ms</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header latency">Avg. connection</h6>
+            <div class="card-body">
+              <h2 *ngIf="itemData.overview.avgConnect >= 1000" class="card-title text-latency">{{
+                Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+              </h2>
+              <h2 *ngIf="itemData.overview.avgConnect < 1000" class="card-title text-latency">{{
+                itemData.overview.avgConnect}} <span class="unit-desc">ms</span>
               </h2>
             </div>
           </div>
@@ -223,6 +224,9 @@
                       <mfDefaultSorter by="throughput">throughput [hits/s]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
+                      <mfDefaultSorter by="bytes">avg data [kb]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
                       <mfDefaultSorter by="errorRate">errorRate</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd" *ngIf="itemData.overview.errorRate > 0">
@@ -255,6 +259,9 @@
                     <td>{{_.throughput || "n/a"}} <sup
                         [className]="_.throughputDiff < 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.throughputDiff">{{_.throughputDiff}}</sup></td>
+                    <td>{{(_.bytes / 1024).toFixed(2) || "n/a"}} <sup
+                        [className]="_.bytesDiff < 0 ? 'value-positive' : 'value-negative'"
+                        *ngIf="_.bytesDiff && bytesDiff !== 0">{{_.bytesDiff}}</sup></td>
                     <td>{{_.errorRate}} % <sup [className]="_.errorRateDiff > 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.errorRateDiff">{{_.errorRateDiff}}</sup></td>
                     <td>

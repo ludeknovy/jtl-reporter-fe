@@ -44,6 +44,9 @@
               <app-scenarios-graph [graphData]="_.data"></app-scenarios-graph>
             </div>
           </div>
+          <div class="card-footer text-muted">
+            <span class="last-run"> <i class="far fa-clock"></i> {{_.data[0].startDate | timeAgo}}</span>
+          </div>
         </div>
       </div>
     </div>

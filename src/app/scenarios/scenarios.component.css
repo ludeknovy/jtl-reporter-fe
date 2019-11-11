@@ -46,3 +46,10 @@ tbody tr:hover {
 .view-settings {
   padding-top: 3px;
 }
+
+.card-scenario .card-footer  {
+  background: white;
+  border: 0px;
+  font-size: 12px;
+  padding-top: 0px;
+}

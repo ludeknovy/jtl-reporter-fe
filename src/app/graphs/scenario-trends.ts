@@ -4,7 +4,10 @@ import * as moment from 'moment';
 const options = ({ data, projectId, scenarioId }, yUnit) => {
   return {
     hover: {
-      intersect: false
+      intersect: true,
+      onHover: function (event, elements) {
+        event.target.style.cursor = elements[0] ? 'pointer' : 'default';
+      }
     },
     legend: false,
     tooltips: {

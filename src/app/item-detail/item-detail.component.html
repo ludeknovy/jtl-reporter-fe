@@ -70,7 +70,7 @@
               <h2 *ngIf="itemData.overview.avgConnect >= 1000" class="card-title text-latency">{{
                 Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span class="unit-desc">s</span>
               </h2>
-              <h2 *ngIf="itemData.overview.avgLatency < 1000" class="card-title text-latency">{{
+              <h2 *ngIf="itemData.overview.avgConnect < 1000" class="card-title text-latency">{{
                 itemData.overview.avgConnect}} <span class="unit-desc">ms</span>
               </h2>
             </div>

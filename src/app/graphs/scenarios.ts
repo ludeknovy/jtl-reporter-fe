@@ -21,7 +21,7 @@ export const scenarioHistory = (inputData) => {
       datasets: [
         {
           data: dt.map(_ => _.percentil),
-          backgroundColor: '#3D9970',
+          backgroundColor: 'rgb(17,122,139, 0.8)',
           fill: true,
           borderWidth: 1,
         }

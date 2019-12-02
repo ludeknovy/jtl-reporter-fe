@@ -45,7 +45,10 @@
             </div>
           </div>
           <div class="card-footer text-muted">
-            <span class="last-run"> <i class="far fa-clock"></i> {{_.data[0].startDate | timeAgo}}</span>
+            <span class="last-run"><i class="far fa-clock"></i>
+              <span *ngIf="_.data && _.data.length > 0"> {{ _.data[0].startDate | timeAgo}}</span>
+              <span *ngIf="!_.data || _.data.length === 0"> never run</span>
+            </span>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 export const commonGraphSettings: any = (text) => {
   return {
     chart: {
+      zoomType: 'x',
       type: 'spline',
       spacingRight: -7,
       spacingLeft: -7
@@ -16,10 +17,10 @@ export const commonGraphSettings: any = (text) => {
     },
     plotOptions: {
       spline: {
-        lineWidth: 2,
+        lineWidth: 1,
         states: {
           hover: {
-            lineWidth: 2
+            lineWidth: 1
           }
         },
         marker: {

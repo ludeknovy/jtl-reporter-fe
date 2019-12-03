@@ -23,6 +23,13 @@
       </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Montitoring CSV file</span>
+        </div>
+        <input type="file" class="form-control" (change)="onFileChange($event, 'monitoringFile')"
+          aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-default">Environment</span>
         </div>
         <input type="testName" class="form-control" formControlName="environment" aria-label="Default"

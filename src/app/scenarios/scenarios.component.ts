@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IScenarios } from '../items.service.model';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ViewType } from './scenario.component.model';
 

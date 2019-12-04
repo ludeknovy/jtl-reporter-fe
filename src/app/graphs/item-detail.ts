@@ -2,6 +2,7 @@ export const commonGraphSettings: any = (text) => {
   return {
     chart: {
       type: 'line',
+      zoomType: 'x',
       spacingRight: -7,
       spacingLeft: -7
     },
@@ -16,7 +17,6 @@ export const commonGraphSettings: any = (text) => {
     },
     plotOptions: {
       line: {
-        // step: true,
         lineWidth: 1.5,
         states: {
           hover: {

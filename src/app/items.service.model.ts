@@ -25,6 +25,7 @@ export interface ItemDetail {
     startDate: string
     throughput: number
   };
+  monitoringData: { cpu: [], mem: []};
   baseId: string;
   testName: string;
   note: string;
@@ -49,6 +50,16 @@ export interface ItemDetail {
   };
   statistics: any;
   attachements: [];
+}
+
+interface MonitoringData {
+  'bytes-recv'?: string;
+  'bytes-sent'?: string;
+  'conn-all'?: string;
+  cpu?: string;
+  'diskSpace'?: string;
+  mem?: string;
+  ts?: string;
 }
 
 export interface ScenarioTrendsData {

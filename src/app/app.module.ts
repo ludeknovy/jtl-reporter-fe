@@ -36,6 +36,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { LabelTrendComponent } from './item-detail/label-trend/label-trend.component';
+import { MonitoringStatsComponent } from './item-detail/monitoring-stats/monitoring-stats.component';
 
 
 const appRoutes: Routes = [
@@ -94,7 +95,8 @@ const appRoutes: Routes = [
     AttachementsComponent,
     ControlPanelComponent,
     BreadcrumbComponent,
-    LabelTrendComponent
+    LabelTrendComponent,
+    MonitoringStatsComponent
   ],
   imports: [
     RouterModule.forRoot(

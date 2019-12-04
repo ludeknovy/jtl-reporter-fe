@@ -1,8 +1,7 @@
-export const commonGraphSettings: any = (text) => {
+export const monitoringGraphSettings: any = () => {
   return {
     chart: {
       type: 'line',
-      zoomType: 'x',
       spacingRight: -7,
       spacingLeft: -7
     },
@@ -17,7 +16,8 @@ export const commonGraphSettings: any = (text) => {
     },
     plotOptions: {
       line: {
-        lineWidth: 1.5,
+        step: true,
+        lineWidth: 1.7,
         states: {
           hover: {
             lineWidth: 1.5
@@ -33,9 +33,10 @@ export const commonGraphSettings: any = (text) => {
       type: 'datetime'
     },
     yAxis: [{
+      gridLineWidth: 0.5,
       lineWidth: 0,
       title: {
-        text
+        text: '%'
       }
     }, {
       lineWidth: 0,
@@ -46,39 +47,3 @@ export const commonGraphSettings: any = (text) => {
     }],
   };
 };
-
-export const threeAxisGraphSettings = (text, text2 = '') => {
-  const commonSettings = commonGraphSettings(text);
-  commonSettings.yAxis.push({
-    lineWidth: 0,
-    opposite: true,
-    labels: {
-      enabled: false
-    },
-    title: {
-      text: text2
-    }
-  });
-  return commonSettings;
-};
-
-export const threadLineSettings: any = {
-  color: '#000000',
-  dashStyle: 'shortDot',
-  yAxis: 1
-};
-
-export const errorLineSettings: any = {
-  color: '#e74c3c',
-  dashStyle: 'shortDot',
-  yAxis: 2
-};
-
-export const throughputLineSettings: any = {
-  color: '#2ECC71',
-};
-
-export const responseTimeLineSettings: any = {
-};
-
-

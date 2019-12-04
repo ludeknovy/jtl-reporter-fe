@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Chart } from 'angular-highcharts';
 import { monitoringGraphSettings } from 'src/app/graphs/monitoring';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-monitoring-stats',
@@ -9,7 +9,8 @@ import { monitoringGraphSettings } from 'src/app/graphs/monitoring';
   styleUrls: ['./monitoring-stats.component.css']
 })
 export class MonitoringStatsComponent implements OnInit {
-  monitoringChart;
+  Highcharts: typeof Highcharts = Highcharts;
+  monitoringChartOptions;
   constructor(
     private modalService: NgbModal,
   ) { }
@@ -20,10 +21,10 @@ export class MonitoringStatsComponent implements OnInit {
   }
 
   open(content) {
-    this.monitoringChart = new Chart({
+    this.monitoringChartOptions = {
       ...monitoringGraphSettings(), series: [
         { data: this.data.cpu, name: 'cpu' }, { data: this.data.mem, name: 'mem' }]
-    });
+    };
     // @ts-ignore
     this.modalService.open(content, { size: 'xl' });
   }

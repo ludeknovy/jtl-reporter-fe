@@ -36,7 +36,7 @@ export const monitoringGraphSettings: any = () => {
       gridLineWidth: 0.5,
       lineWidth: 0,
       title: {
-        text: "%"
+        text: '%'
       }
     }, {
       lineWidth: 0,

@@ -34,7 +34,7 @@ export class ItemDetailComponent implements OnInit {
     statistics: [],
     testName: null,
     attachements: [],
-    monitoringData: { mem: [], cpu: []},
+    monitoringData: { mem: [], cpu: [] },
   };
   responseTimeChart;
   throughputChart;
@@ -88,7 +88,10 @@ export class ItemDetailComponent implements OnInit {
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
     this.responseTimeChart = new Chart({ ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine] });
     this.throughputChart = new Chart({ ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine] });
-    this.overallChart = new Chart({ ...threeAxisGraphSettings('ms', 'hits/s'), series: [ overallTimeResponse, throughputLine, ...errorLine, ...threadLine]})
+    this.overallChart = new Chart({
+      ...threeAxisGraphSettings('ms', 'hits/s'), series: [
+        overallTimeResponse, throughputLine, ...errorLine, ...threadLine]
+    });
 
   }
 

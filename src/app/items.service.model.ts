@@ -1,5 +1,3 @@
-import { string } from "@pact-foundation/pact-web/dsl/matchers"
-
 export interface ItemsListing {
   id: string;
   name: string;
@@ -27,7 +25,7 @@ export interface ItemDetail {
     startDate: string
     throughput: number
   };
-  monitoringData: { cpu: [], mem: []},
+  monitoringData: { cpu: [], mem: []};
   baseId: string;
   testName: string;
   note: string;

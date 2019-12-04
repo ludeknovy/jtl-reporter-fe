@@ -20,7 +20,10 @@ export class MonitoringStatsComponent implements OnInit {
   }
 
   open(content) {
-    this.monitoringChart = new Chart({ ...monitoringGraphSettings(), series: [{ data: this.data.cpu, name: 'cpu'}, { data: this.data.mem, name: 'mem'}]})
+    this.monitoringChart = new Chart({
+      ...monitoringGraphSettings(), series: [
+        { data: this.data.cpu, name: 'cpu' }, { data: this.data.mem, name: 'mem' }]
+    });
     // @ts-ignore
     this.modalService.open(content, { size: 'xl' });
   }

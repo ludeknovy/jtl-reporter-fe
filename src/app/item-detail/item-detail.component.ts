@@ -15,6 +15,7 @@ import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemStatusValue } from './item-detail.model';
+import { monitoringGraphSettings } from '../graphs/monitoring';
 
 @Component({
   selector: 'app-item-detail',
@@ -32,11 +33,14 @@ export class ItemDetailComponent implements OnInit {
     hostname: null,
     statistics: [],
     testName: null,
-    attachements: []
+    attachements: [],
+    monitoringData: { mem: [], cpu: []},
   };
   responseTimeChart;
   throughputChart;
+  overallChart;
   overallResponseTimeChart;
+  monitoringChart;
   overallThroughput;
   itemParams;
   comparedData;
@@ -84,14 +88,8 @@ export class ItemDetailComponent implements OnInit {
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
     this.responseTimeChart = new Chart({ ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine] });
     this.throughputChart = new Chart({ ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine] });
-    this.overallResponseTimeChart = new Chart({
-      ...threeAxisGraphSettings('ms'),
-      series: [overallTimeResponse, ...threadLine, ...errorLine]
-    });
-    this.overallThroughput = new Chart({
-      ...threeAxisGraphSettings('hits/s'),
-      series: [throughputLine, ...threadLine, ...errorLine]
-    });
+    this.overallChart = new Chart({ ...threeAxisGraphSettings('ms', 'hits/s'), series: [ overallTimeResponse, throughputLine, ...errorLine, ...threadLine]})
+
   }
 
   itemDetailChanged({ note, environment, hostname }) {

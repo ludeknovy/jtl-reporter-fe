@@ -4,7 +4,8 @@ export const commonGraphSettings: any = (text) => {
       type: 'line',
       zoomType: 'x',
       spacingRight: -7,
-      spacingLeft: -7
+      spacingLeft: -7,
+      className: 'chart-sync'
     },
     title: {
       text: ''
@@ -14,6 +15,7 @@ export const commonGraphSettings: any = (text) => {
     tooltip: {
       split: false,
       crosshairs: [true]
+
     },
     plotOptions: {
       line: {
@@ -30,13 +32,14 @@ export const commonGraphSettings: any = (text) => {
     },
     xAxis: {
       lineWidth: 0,
-      type: 'datetime'
+      type: 'datetime',
+      crosshair: true,
     },
     yAxis: [{
       lineWidth: 0,
       title: {
         text
-      }
+      },
     }, {
       lineWidth: 0,
       opposite: true,
@@ -80,5 +83,3 @@ export const throughputLineSettings: any = {
 
 export const responseTimeLineSettings: any = {
 };
-
-

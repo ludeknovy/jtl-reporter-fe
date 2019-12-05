@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
-import { Chart } from 'angular-highcharts';
 import { labelTrendChartOptions, emptyChart } from 'src/app/graphs/label-trend';
 import { Observable } from 'rxjs';
 import { LabelTrend } from 'src/app/items.service.model';
 import { LabelApiService } from 'src/app/label-api.service';
+import * as Highcharts from 'highcharts';
 
 
 @Component({
@@ -14,8 +14,13 @@ import { LabelApiService } from 'src/app/label-api.service';
   styleUrls: ['./label-trend.component.css']
 })
 export class LabelTrendComponent implements OnInit {
+  Highcharts: typeof Highcharts = Highcharts;
+  chart;
+  chartConstructor = 'chart';
+  chartCallback;
+  updateFlag = false;
   params;
-  labelChart;
+  labelChartOption;
   vuFilters;
   labelTrend$: Observable<LabelTrend>;
 
@@ -27,6 +32,10 @@ export class LabelTrendComponent implements OnInit {
     private labelApiService: LabelApiService,
 
   ) {
+    const self = this;
+    this.chartCallback = chart => {
+      self.chart = chart;
+    };
     this.labelTrend$ = labelApiService.labelTrend$;
   }
 
@@ -46,8 +55,8 @@ export class LabelTrendComponent implements OnInit {
         { environment: this.trendInput.environment }
       );
       this.labelTrend$.subscribe((trend) => {
-        const chartOptions: any = trend.timePoints.length > 5 ? labelTrendChartOptions(trend) : emptyChart();
-        this.labelChart = new Chart(...chartOptions);
+        this.labelChartOption = trend.timePoints.length > 5 ? labelTrendChartOptions(trend) : emptyChart();
+        this.updateData();
       });
       this.labelApiService.fetchLabelMaxVu(
         this.params.projectName,
@@ -60,6 +69,10 @@ export class LabelTrendComponent implements OnInit {
           this.vuFilters = __.result.filter((r) => r.count > 5).map((r) => r.maxVu);
         });
     });
+  }
+
+  updateData() {
+    this.updateFlag = true;
   }
 
   filterByVu(event) {

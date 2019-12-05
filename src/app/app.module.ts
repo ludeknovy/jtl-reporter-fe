@@ -28,7 +28,6 @@ import { EditScenarioComponent } from './scenario/edit-scenario/edit-scenario.co
 import { DeleteScenarioComponent } from './scenario/delete-scenario/delete-scenario.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DataTableModule} from 'angular-6-datatable';
-import { ChartModule } from 'angular-highcharts';
 import { StatsCompareComponent } from './item-detail/stats-compare/stats-compare.component';
 import { AttachementsComponent } from './item-detail/attachements/attachements.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
@@ -37,6 +36,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { LabelTrendComponent } from './item-detail/label-trend/label-trend.component';
 import { MonitoringStatsComponent } from './item-detail/monitoring-stats/monitoring-stats.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+
 
 
 const appRoutes: Routes = [
@@ -113,7 +114,7 @@ const appRoutes: Routes = [
     NgbModule,
     NgxSpinnerModule,
     DataTableModule,
-    ChartModule,
+    HighchartsChartModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot()
   ],

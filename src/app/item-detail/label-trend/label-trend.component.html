@@ -1,8 +1,7 @@
 <ng-template #content let-modal>
   <div class="modal-header" ngbAutofocus>
     <h5 class="modal-title" id="modal-basic-title">{{trendInput.labelName}}</h5>
-    <select class='vu-filter rounded-left input-group-text'
-      (change)="filterByVu($event)">
+    <select class='vu-filter rounded-left input-group-text' (change)="filterByVu($event)">
       <option value="0">No VU filter</option>
       <option *ngFor="let _ of vuFilters" value='{{_}}'>{{_}} VU</option>
     </select>
@@ -11,7 +10,14 @@
     </button>
   </div>
   <div class="modal-body">
-    <div [chart]="labelChart"></div>
+    <highcharts-chart
+    [Highcharts]="Highcharts"
+    [options]="labelChartOption"
+    [(update)]="updateFlag"
+    [callbackFunction]="chartCallback"
+    [constructorType]="chartConstructor"
+    [oneToOne]="true"
+      style="width: 100%; height: 400px; display: block;"></highcharts-chart>
   </div>
 </ng-template>
 

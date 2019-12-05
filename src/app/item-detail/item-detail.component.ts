@@ -4,7 +4,8 @@ import { ItemsApiService } from '../items-api.service';
 import { ItemDetail } from '../items.service.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DecimalPipe } from '@angular/common';
-import { Chart } from 'angular-highcharts';
+import * as Highcharts from 'highcharts';
+
 import {
   commonGraphSettings, threadLineSettings,
   errorLineSettings, threeAxisGraphSettings,
@@ -15,7 +16,6 @@ import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemStatusValue } from './item-detail.model';
-import { monitoringGraphSettings } from '../graphs/monitoring';
 
 @Component({
   selector: 'app-item-detail',
@@ -24,6 +24,7 @@ import { monitoringGraphSettings } from '../graphs/monitoring';
   providers: [DecimalPipe]
 })
 export class ItemDetailComponent implements OnInit {
+  Highcharts: typeof Highcharts = Highcharts;
   itemData: ItemDetail = {
     overview: null,
     environment: null,
@@ -36,9 +37,9 @@ export class ItemDetailComponent implements OnInit {
     attachements: [],
     monitoringData: { mem: [], cpu: [] },
   };
-  responseTimeChart;
-  throughputChart;
-  overallChart;
+  responseTimeChartOptions;
+  throughputChartOptions;
+  overallChartOptions;
   overallResponseTimeChart;
   monitoringChart;
   overallThroughput;
@@ -86,13 +87,12 @@ export class ItemDetailComponent implements OnInit {
     const threadLine = { ...threadLineSettings, name: 'th', data: threads };
     const errorLine = { ...errorLineSettings, ...overAllFailRate };
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
-    this.responseTimeChart = new Chart({ ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine] });
-    this.throughputChart = new Chart({ ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine] });
-    this.overallChart = new Chart({
+    this.responseTimeChartOptions = { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine] };
+    this.throughputChartOptions = { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine] };
+    this.overallChartOptions = {
       ...threeAxisGraphSettings('ms', 'hits/s'), series: [
         overallTimeResponse, throughputLine, ...errorLine, ...threadLine]
-    });
-
+    };
   }
 
   itemDetailChanged({ note, environment, hostname }) {

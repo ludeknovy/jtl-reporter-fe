@@ -5,7 +5,7 @@ export const commonGraphSettings: any = (text) => {
       zoomType: 'x',
       spacingRight: -7,
       spacingLeft: -7,
-      className: "chart-sync"
+      className: 'chart-sync'
     },
     title: {
       text: ''

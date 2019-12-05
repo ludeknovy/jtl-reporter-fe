@@ -16,7 +16,7 @@ import * as Highcharts from 'highcharts';
 export class LabelTrendComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   chart;
-  chartConstructor = "chart";
+  chartConstructor = 'chart';
   chartCallback;
   updateFlag = false;
   params;
@@ -53,10 +53,10 @@ export class LabelTrendComponent implements OnInit {
         this.params.id,
         this.trendInput.labelName,
         { environment: this.trendInput.environment }
-      )
+      );
       this.labelTrend$.subscribe((trend) => {
         this.labelChartOption = trend.timePoints.length > 5 ? labelTrendChartOptions(trend) : emptyChart();
-        this.updateData()
+        this.updateData();
       });
       this.labelApiService.fetchLabelMaxVu(
         this.params.projectName,

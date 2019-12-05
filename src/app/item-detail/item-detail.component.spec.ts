@@ -9,7 +9,7 @@ import { ControlPanelComponent } from '../control-panel/control-panel.component'
 import { StatsCompareComponent } from './stats-compare/stats-compare.component';
 import { DataTableModule } from 'angular-6-datatable';
 import { LabelTrendComponent } from './label-trend/label-trend.component';
-import { ChartModule } from 'angular-highcharts';
+import { HighchartsChartModule } from 'highcharts-angular';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -35,7 +35,7 @@ describe('ItemDetailComponent', () => {
       ],
       imports: [
         DataTableModule,
-        ChartModule,
+        HighchartsChartModule,
         RouterTestingModule,
         ReactiveFormsModule,
         HttpClientModule,

@@ -68,7 +68,7 @@ export class LabelTrendComponent implements OnInit {
     this.fetchTrendData(filterVu);
   }
 
-  fetchTrendData(virtualUsers) {
+  fetchTrendData(virtualUsers?) {
     this.labelApiService.fetchLabelTrend(
       this.params.projectName,
       this.params.scenarioName,

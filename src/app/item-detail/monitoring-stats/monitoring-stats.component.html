@@ -6,8 +6,11 @@
     </button>
   </div>
   <div class="modal-body">
-      <highcharts-chart [Highcharts]="Highcharts" [options]="monitoringChartOptions"
-      style="width: 100%; height: 400px; display: block;"></highcharts-chart>  </div>
+    <div *ngIf="monitoringChartOptions">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="monitoringChartOptions" [callbackFunction]="chartCallback" [(update)]="updateFlag"
+        [constructorType]="chartConstructor" style="width: auto; height: 400px; display: block;"></highcharts-chart>
+    </div>
+  </div>
 </ng-template>
 
 

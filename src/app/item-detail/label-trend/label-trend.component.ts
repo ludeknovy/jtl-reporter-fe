@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { labelTrendChartOptions, emptyChart } from 'src/app/graphs/label-trend';
-import { Observable } from 'rxjs';
-import { LabelTrend } from 'src/app/items.service.model';
 import { LabelApiService } from 'src/app/label-api.service';
 import * as Highcharts from 'highcharts';
 
@@ -22,7 +20,6 @@ export class LabelTrendComponent implements OnInit {
   params;
   labelChartOption;
   vuFilters;
-  labelTrend$: Observable<LabelTrend>;
 
   @Input() trendInput: { labelName: string, environment: string };
 
@@ -36,7 +33,6 @@ export class LabelTrendComponent implements OnInit {
     this.chartCallback = chart => {
       self.chart = chart;
     };
-    this.labelTrend$ = labelApiService.labelTrend$;
   }
 
   ngOnInit() {
@@ -44,20 +40,12 @@ export class LabelTrendComponent implements OnInit {
 
   open(content) {
     // @ts-ignore
-    this.modalService.open(content, { size: 'xl' });
+    this.modalService.open(content, { size: 'xl' }).result
+      .then((_) => { this.labelChartOption = null; }, () => { this.labelChartOption = null; })
     this.route.params.subscribe(_ => {
       this.params = _;
-      this.labelApiService.fetchLabelTrend(
-        this.params.projectName,
-        this.params.scenarioName,
-        this.params.id,
-        this.trendInput.labelName,
-        { environment: this.trendInput.environment }
-      );
-      this.labelTrend$.subscribe((trend) => {
-        this.labelChartOption = trend.timePoints.length > 5 ? labelTrendChartOptions(trend) : emptyChart();
-        this.updateData();
-      });
+      this.fetchTrendData();
+
       this.labelApiService.fetchLabelMaxVu(
         this.params.projectName,
         this.params.scenarioName,
@@ -77,6 +65,10 @@ export class LabelTrendComponent implements OnInit {
 
   filterByVu(event) {
     const filterVu = event.target.value;
+    this.fetchTrendData(filterVu);
+  }
+
+  fetchTrendData(virtualUsers = undefined) {
     this.labelApiService.fetchLabelTrend(
       this.params.projectName,
       this.params.scenarioName,
@@ -84,8 +76,11 @@ export class LabelTrendComponent implements OnInit {
       this.trendInput.labelName,
       {
         environment: this.trendInput.environment,
-        virtualUsers: filterVu,
+        virtualUsers
       }
-    );
+    ).subscribe((_) => {
+      this.labelChartOption = _.timePoints.length > 5 ? labelTrendChartOptions(_) : emptyChart();
+      this.updateData();
+    });
   }
 }

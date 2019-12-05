@@ -1,7 +1,7 @@
 export const labelTrendChartOptions = (_) => {
   return {
     chart: {
-      type: 'spline'
+      type: 'spline',
     },
     title: { text: '' },
     subtitle: {

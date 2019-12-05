@@ -12,7 +12,7 @@ export class LabelApiService {
 
   fetchLabelTrend(projectName, scenarioName, itemId, label, params) {
     return this.http.get<LabelTrend>(
-      `projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${label}/trend`, { params })
+      `projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${label}/trend`, { params });
   }
 
   fetchLabelMaxVu(projectName, scenarioName, itemId, label, params) {

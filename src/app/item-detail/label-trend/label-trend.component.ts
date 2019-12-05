@@ -41,7 +41,7 @@ export class LabelTrendComponent implements OnInit {
   open(content) {
     // @ts-ignore
     this.modalService.open(content, { size: 'xl' }).result
-      .then((_) => { this.labelChartOption = null; }, () => { this.labelChartOption = null; })
+      .then((_) => { this.labelChartOption = null; }, () => { this.labelChartOption = null; });
     this.route.params.subscribe(_ => {
       this.params = _;
       this.fetchTrendData();
@@ -68,7 +68,7 @@ export class LabelTrendComponent implements OnInit {
     this.fetchTrendData(filterVu);
   }
 
-  fetchTrendData(virtualUsers = undefined) {
+  fetchTrendData(virtualUsers) {
     this.labelApiService.fetchLabelTrend(
       this.params.projectName,
       this.params.scenarioName,

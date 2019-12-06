@@ -242,9 +242,6 @@
                     <th scope="col" class="hd">
                       <mfDefaultSorter by="errorRate">errorRate</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd" *ngIf="itemData.overview.errorRate > 0">
-                      <mfDefaultSorter by="errorRate">errors</mfDefaultSorter>
-                    </th>
                     <th scope="col" class="hd">
                       <mfDefaultSorter by=""></mfDefaultSorter>
                     </th>
@@ -276,12 +273,11 @@
                         [className]="_.bytesDiff < 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.bytesDiff && bytesDiff !== 0">{{_.bytesDiff}}</sup></td>
                     <td>{{_.errorRate}} % <sup [className]="_.errorRateDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.errorRateDiff">{{_.errorRateDiff}}</sup></td>
+                        *ngIf="_.errorRateDiff">{{_.errorRateDiff}}</sup>
+                    </td>
                     <td>
-                      <span *ngFor="let e of _.errors | keyvalue">
-                        <span class="error-code">{{e.key}} </span>
-                        <span class="badge badge-counter badge-pill badge-danger error-counter">{{e.value}}</span>
-                      </span>
+                      <app-label-error *ngIf="_.errorRate > 0 && hasErrorsAttachment"
+                        [labelInput]="{ labelName: _.label, params: itemParams }"></app-label-error>
                     </td>
                     <td>
                       <app-label-trend [trendInput]="{ environment: itemData.environment, labelName: _.label }">

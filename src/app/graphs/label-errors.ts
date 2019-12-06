@@ -1,4 +1,4 @@
-import { colors } from "./colors"
+import { colors } from './colors';
 
 export const responseCodesChart = (data) => {
   return {
@@ -8,7 +8,7 @@ export const responseCodesChart = (data) => {
       plotShadow: false
     },
     title: {
-      text: data.length > 0 ? 'Response codes': 'no data',
+      text: data.length > 0 ? 'Response codes' : 'no data',
       align: 'center',
       verticalAlign: 'middle',
       y: 60
@@ -38,5 +38,5 @@ export const responseCodesChart = (data) => {
       innerSize: '50%',
       data
     }]
-  }
-}
+  };
+};

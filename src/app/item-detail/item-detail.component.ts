@@ -78,7 +78,7 @@ export class ItemDetailComponent implements OnInit {
       .subscribe((results) => {
         this.itemData = results;
         this.labelsData = this.itemData.statistics;
-        this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error')
+        this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
         this.generateCharts();
         this.spinner.hide();
       });

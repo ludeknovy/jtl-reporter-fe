@@ -36,12 +36,12 @@ export class LabelErrorComponent implements OnInit {
   open(content) {
     // @ts-ignore
     this.modalService.open(content, { size: 'xl' }).result
-      .then((_) => { this.labelErrorChartOption = null; }, () => { this.labelErrorChartOption = null; });;
+      .then((_) => { this.labelErrorChartOption = null; }, () => { this.labelErrorChartOption = null; });
     const { projectName, scenarioName, id } = this.labelInput.params;
     this.labelApiService.fetchLabelErrors(projectName, scenarioName, id, this.labelInput.labelName)
       .subscribe((_) => {
         const errors = Object.keys(_.stat).map((e) => {
-          return [e, _.stat[e]]
+          return [e, _.stat[e]];
         });
         this.labelErrorChartOption = responseCodesChart(errors);
       });

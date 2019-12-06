@@ -37,6 +37,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { LabelTrendComponent } from './item-detail/label-trend/label-trend.component';
 import { MonitoringStatsComponent } from './item-detail/monitoring-stats/monitoring-stats.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { LabelErrorComponent } from './item-detail/label-error/label-error.component';
 
 
 
@@ -97,7 +98,8 @@ const appRoutes: Routes = [
     ControlPanelComponent,
     BreadcrumbComponent,
     LabelTrendComponent,
-    MonitoringStatsComponent
+    MonitoringStatsComponent,
+    LabelErrorComponent
   ],
   imports: [
     RouterModule.forRoot(

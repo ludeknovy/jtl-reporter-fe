@@ -35,7 +35,7 @@ export class ItemDetailComponent implements OnInit {
     statistics: [],
     testName: null,
     attachements: [],
-    monitoringData: { mem: [], cpu: [] },
+    monitoringData: { mem: [], maxCpu: 0, maxMem: 0, cpu: [] },
   };
   responseTimeChartOptions;
   throughputChartOptions;
@@ -79,6 +79,7 @@ export class ItemDetailComponent implements OnInit {
         this.itemData = results;
         this.labelsData = this.itemData.statistics;
         this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
+        this.monitoringAlerts();
         this.generateCharts();
         this.spinner.hide();
       });
@@ -146,11 +147,11 @@ export class ItemDetailComponent implements OnInit {
     this.labelsData = this.comparedData;
 
     if (this.comparisonWarning.length) {
-      this.showWarnings();
+      this.showComparisonWarnings();
     }
   }
 
-  showWarnings() {
+  showComparisonWarnings() {
     this.toastr.warning(this.comparisonWarning.join('<br>'), 'Comparison Warning!',
       {
         closeButton: true,
@@ -158,6 +159,27 @@ export class ItemDetailComponent implements OnInit {
         timeOut: 15000
       });
     this.comparisonWarning = [];
+  }
+
+  monitoringAlerts() {
+    const alertMessages = [];
+    const { maxCpu, maxMem } = this.itemData.monitoringData;
+    if (maxCpu > 90) {
+      alertMessages.push(`High CPU usage`);
+    }
+    if (maxMem > 90) {
+      alertMessages.push(`High memory usage`);
+    }
+
+    if (alertMessages.length > 0) {
+      this.toastr.warning(alertMessages.join('<br>'), 'Monitoring Alert!',
+        {
+          closeButton: true,
+          disableTimeOut: true,
+          enableHtml: true,
+        });
+    }
+
   }
 
   resetStatsData() {

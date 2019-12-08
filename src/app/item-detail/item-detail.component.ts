@@ -164,10 +164,10 @@ export class ItemDetailComponent implements OnInit {
   monitoringAlerts() {
     const alertMessages = [];
     const { maxCpu, maxMem } = this.itemData.monitoringData;
-    if (maxCpu > 20) {
+    if (maxCpu > 90) {
       alertMessages.push(`High CPU usage`)
     }
-    if (maxMem > 10) {
+    if (maxMem > 90) {
       alertMessages.push(`High memory usage`)
     }
 

@@ -37,7 +37,8 @@ export class StatsCompareComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { size: 'lg' });
+    // @ts-ignore
+    this.modalService.open(content, { size: 'xl' });
     this.route.params.subscribe(_ => {
       this.params = _;
       this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });

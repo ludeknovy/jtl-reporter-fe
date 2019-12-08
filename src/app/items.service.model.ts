@@ -25,7 +25,7 @@ export interface ItemDetail {
     startDate: string
     throughput: number
   };
-  monitoringData: { cpu: [], mem: []};
+  monitoringData: { cpu: [], mem: [], maxCpu?: number, maxMem?: number};
   baseId: string;
   testName: string;
   note: string;

@@ -17,6 +17,10 @@ export const commonGraphSettings: any = (text) => {
       crosshairs: [true]
 
     },
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+    },
     plotOptions: {
       line: {
         lineWidth: 1.5,
@@ -37,6 +41,7 @@ export const commonGraphSettings: any = (text) => {
     },
     yAxis: [{
       lineWidth: 0,
+      type: 'logarithmic',
       title: {
         text
       },
@@ -46,11 +51,12 @@ export const commonGraphSettings: any = (text) => {
       title: {
         text: 'threads'
       }
-    }],
+    }
+    ],
   };
 };
 
-export const threeAxisGraphSettings = (text, text2 = '') => {
+export const fourAxisGraphSettings = (text, text2, text3) => {
   const commonSettings = commonGraphSettings(text);
   commonSettings.yAxis.push({
     lineWidth: 0,

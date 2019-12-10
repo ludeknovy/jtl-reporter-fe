@@ -7,7 +7,7 @@ import { SharedMainBarService } from '../../shared-main-bar.service';
 @Component({
   selector: 'app-administration',
   templateUrl: './administration.component.html',
-  styleUrls: ['./administration.component.css', '../../shared-styles.css']
+  styleUrls: ['./administration.component.css', '../../shared-styles.css', '../administration.css']
 })
 export class ProjectsAdministrationComponent implements OnInit {
 

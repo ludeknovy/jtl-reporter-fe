@@ -33,7 +33,7 @@ a {
   padding: 0px;
 }
 
-.api-keys {
+.card-content {
   border: none;
   margin-right: -10px;
 }
@@ -46,6 +46,7 @@ a {
 .edit {
   padding: unset;
   padding-left: 20px;
+  padding-right: 35px;
 }
 
 .table td.latest-run {

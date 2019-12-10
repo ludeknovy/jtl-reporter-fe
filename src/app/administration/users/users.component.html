@@ -1,58 +1,50 @@
 <app-control-panel>
-    <app-administrate-navigation></app-administrate-navigation>
+  <app-administrate-navigation></app-administrate-navigation>
   <ul class="navbar-nav mr-auto">
   </ul>
-  <app-add-token></app-add-token>
+  <app-add-user></app-add-user>
 </app-control-panel>
 <div class="administration content-container">
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <div class="card api-keys">
+        <div class="card card-content">
           <h6 class="card-header projects-header">Users
           </h6>
-          <div class="card-body" *ngIf="apiKeys$ | async; let apiKeys">
+          <div class="card-body" *ngIf="users$ | async; let users">
             <div class="card-body">
-              <div class="table-responsive" *ngIf="apiKeys$ | async; let apiKeys">
-                <table class="table items">
-                  <thead>
-                    <tr>
-                      <th scope="col" class="head">token</th>
-                      <th scope="col" class="head">description</th>
-                      <th scope="col" class="head">created at</th>
-                      <th scope="col" class="head"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngIf="apiKeys.length === 0">
-                      <td></td>
-                      <td></td>
-                      <td class="text-muted">No api tokens...</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr *ngFor="let _ of apiKeys">
-                      <td>
-                        <span>{{_.token}}</span>
-                      </td>
-                      <td>
-                        {{_.description}}
-                      </td>
-                      <td>
-                        {{_.createDate}}
-                      </td>
-                      <td>
-                        <app-delete-token [tokenInput]="_.id"></app-delete-token>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="table-responsive" *ngIf="users$ | async; let users">
+                  <table class="table items">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="head">username</th>
+                        <th scope="col" class="head"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="users.length === 0">
+                        <td></td>
+                        <td></td>
+                        <td class="text-muted">No users...</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr *ngFor="let _ of users">
+                        <td>
+                          <span>{{_.username}}</span>
+                        </td>
+                        <td class="edit text-right">
+                          <app-delete-token [tokenInput]="_.id"></app-delete-token>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
-</div>

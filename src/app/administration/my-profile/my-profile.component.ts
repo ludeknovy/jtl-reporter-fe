@@ -48,7 +48,7 @@ export class MyProfileComponent implements OnInit {
       this.authenticationService.changePassword({ newPassword, currentPassword })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
-          const message = this.notification.passwordChangeNotificationMessage(_);
+          const message = this.notification.userCreatedNotificationMessage(_);
           this.notificationService.showNotification(message);
         });
       this.myform.reset();

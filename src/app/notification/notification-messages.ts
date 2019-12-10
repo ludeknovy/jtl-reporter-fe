@@ -52,7 +52,10 @@ export class NotificationMessage {
 
   passwordChangeNotificationMessage(response) {
     return this.statusCodeMessage(response, 'Password has been changed');
+  }
 
+  userCreatedNotificationMessage(response) {
+    return this.statusCodeMessage(response, 'User has been created');
   }
 
   private statusCodeMessage(response, succesMessgae) {

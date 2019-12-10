@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <div class="card api-keys">
+        <div class="card card-content">
           <h6 class="card-header projects-header">Api keys
           </h6>
           <div class="card-body" *ngIf="apiKeys$ | async; let apiKeys">
@@ -41,7 +41,7 @@
                       <td>
                         {{_.createDate}}
                       </td>
-                      <td>
+                      <td class="edit text-right">
                         <app-delete-token [tokenInput]="_.id"></app-delete-token>
                       </td>
                     </tr>

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { RequestHttpInterceptor } from './http-interceptor';
+import { RequestHttpInterceptor } from './_interceptors/http-interceptor';
 import { TopPanelComponent } from './top-panel/top-panel.component';
 import { ScenarioComponent } from './scenario/scenario.component';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
@@ -13,11 +13,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddNewItemComponent } from './scenario/add-new-item/add-new-item.component';
 import { NotificationComponent } from './notification/notification.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AdministrationComponent } from './administration/administration.component';
+import { ProjectsAdministrationComponent } from './administration/project/administration.component';
 import { TimeAgoPipe } from 'time-ago-pipe';
-import { AddNewProjectComponent } from './administration/add-project/add-project-modal.component';
-import { EditProjectComponent } from './administration/edit-project/edit-project.component';
-import { DeleteProjectComponent } from './administration/delete-project/delete-project.component';
+import { AddNewProjectComponent } from './administration/project/add-project/add-project-modal.component';
+import { EditProjectComponent } from './administration/project/edit-project/edit-project.component';
+import { DeleteProjectComponent } from './administration/project/delete-project/delete-project.component';
 import { DeleteItemComponent } from './item-detail/delete-item/delete-item.component';
 import { ScenariosComponent } from './scenarios/scenarios.component';
 import { ScenariosGraphComponent } from './scenarios/graph/scenarios-graph.component';
@@ -38,12 +38,21 @@ import { LabelTrendComponent } from './item-detail/label-trend/label-trend.compo
 import { MonitoringStatsComponent } from './item-detail/monitoring-stats/monitoring-stats.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { LabelErrorComponent } from './item-detail/label-error/label-error.component';
+import { AuthGuard } from './auth.guard';
+import { LoginComponent } from './login/login.component';
+import { ErrorInterceptor } from './_interceptors/error-interceptor';
+import { JwtInterceptor } from './_interceptors/jwt-interceptor';
+import { ApiKeysComponent } from './administration/api-token/api-keys.component';
+import { NavigationComponent } from './administration/navigation/navigation.component';
+import { AddTokenComponent } from './administration/api-token/add-token/add-token.component';
+import { DeleteTokenComponent } from './administration/api-token/delete-token/delete-token.component';
 
 
 
 const appRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'administration', component: AdministrationComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'administration/projects', component: ProjectsAdministrationComponent, canActivate: [AuthGuard] },
+  { path: 'administration/api-keys', component: ApiKeysComponent, canActivate: [AuthGuard] },
   {
     path: '',
     redirectTo: '/dashboard',
@@ -51,21 +60,21 @@ const appRoutes: Routes = [
   },
   {
     path: 'project/:projectName/scenario/:scenarioName/items', component: ScenarioComponent,
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
   },
   {
     path: 'project/:projectName/scenario/:scenarioName/items', component: TopPanelComponent,
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
   },
   {
     path: 'project/:projectName/scenario/:scenarioName/item/:id', component: ItemDetailComponent,
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
   },
   {
     path: 'project/:projectName/scenarios', component: ScenariosComponent,
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
   },
-  { path: '**', component: AppComponent }
+  { path: 'login', component: LoginComponent },
 ];
 
 
@@ -82,7 +91,7 @@ const appRoutes: Routes = [
     NotificationComponent,
     DashboardComponent,
     EditItemComponent,
-    AdministrationComponent,
+    ProjectsAdministrationComponent,
     TimeAgoPipe,
     EditProjectComponent,
     DeleteProjectComponent,
@@ -99,7 +108,12 @@ const appRoutes: Routes = [
     BreadcrumbComponent,
     LabelTrendComponent,
     MonitoringStatsComponent,
-    LabelErrorComponent
+    LabelErrorComponent,
+    LoginComponent,
+    ApiKeysComponent,
+    NavigationComponent,
+    AddTokenComponent,
+    DeleteTokenComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -125,6 +139,16 @@ const appRoutes: Routes = [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestHttpInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
       multi: true
     },
   ],

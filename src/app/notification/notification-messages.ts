@@ -42,6 +42,10 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, 'Scenario has been deleted');
   }
 
+  newApitokenNotificationMessage(response) {
+    return this.statusCodeMessage(response, 'Api token has been created');
+  }
+
   private statusCodeMessage(response, succesMessgae) {
     let message = { success: false, message: `Something went wrong` };
     if (response.status >= 200 && response.status < 300) {

@@ -1,0 +1,81 @@
+.administration {
+  padding-left: 200px;
+  padding-right: 200px;
+  background-color: #f0f1f4;
+  padding-top: 20px;
+  min-height: 100%;
+  width: 100%;
+  margin-left: -5px;
+}
+
+.items {
+  padding-bottom: 1px;
+  background-color: white;
+  border-radius: 0.23rem;
+}
+
+a {
+  color: #1d1e3a
+}
+
+.items-count {
+  font-size: 12px;
+}
+
+.head {
+  font-size: 12px;
+  padding-bottom: 5px;
+  border-top: 0px;
+  width: 30rem;
+}
+
+.card-body {
+  padding: 0px;
+}
+
+.api-keys {
+  border: none;
+  margin-right: -10px;
+}
+
+
+.projects-header {
+  border: none
+}
+
+.edit {
+  padding: unset;
+  padding-left: 20px;
+}
+
+.table td.latest-run {
+  max-width: 177px;
+}
+
+.table td.latest-run span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+}
+
+th {
+  padding-left: 20px;
+  color: #888888c7;
+}
+
+td {
+  padding-left: 20px;
+}
+
+
+tr:hover {
+  cursor: pointer;
+  background-color: #e8e8e847;
+}
+
+.table td {
+  padding-top: 12px;
+  padding-bottom: 5px;
+}

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProjectApiService } from '../../project-api.service';
+import { ProjectApiService } from '../../../project-api.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { NotificationMessage } from '../../notification/notification-messages';
-import { ProjectService } from '../../project.service';
+import { NotificationMessage } from '../../../notification/notification-messages';
+import { ProjectService } from '../../../project.service';
 
 @Component({
   selector: 'app-add-project',

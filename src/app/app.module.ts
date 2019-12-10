@@ -13,11 +13,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddNewItemComponent } from './scenario/add-new-item/add-new-item.component';
 import { NotificationComponent } from './notification/notification.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProjectsAdministrationComponent } from './administration/project/administration.component';
+import { ProjectsAdministrationComponent } from './administration/projects/administration.component';
 import { TimeAgoPipe } from 'time-ago-pipe';
-import { AddNewProjectComponent } from './administration/project/add-project/add-project-modal.component';
-import { EditProjectComponent } from './administration/project/edit-project/edit-project.component';
-import { DeleteProjectComponent } from './administration/project/delete-project/delete-project.component';
+import { AddNewProjectComponent } from './administration/projects/add-project/add-project-modal.component';
+import { EditProjectComponent } from './administration/projects/edit-project/edit-project.component';
+import { DeleteProjectComponent } from './administration/projects/delete-project/delete-project.component';
 import { DeleteItemComponent } from './item-detail/delete-item/delete-item.component';
 import { ScenariosComponent } from './scenarios/scenarios.component';
 import { ScenariosGraphComponent } from './scenarios/graph/scenarios-graph.component';
@@ -46,13 +46,16 @@ import { ApiKeysComponent } from './administration/api-token/api-keys.component'
 import { NavigationComponent } from './administration/navigation/navigation.component';
 import { AddTokenComponent } from './administration/api-token/add-token/add-token.component';
 import { DeleteTokenComponent } from './administration/api-token/delete-token/delete-token.component';
-
-
+import { MyProfileComponent } from './administration/my-profile/my-profile.component';
+import { UsersComponent } from './administration/users/users.component';
+import { AddUserComponent } from './administration/users/add-user/add-user.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'administration/projects', component: ProjectsAdministrationComponent, canActivate: [AuthGuard] },
   { path: 'administration/api-keys', component: ApiKeysComponent, canActivate: [AuthGuard] },
+  { path: 'administration/my-profile', component: MyProfileComponent, canActivate: [AuthGuard] },
+  { path: 'administration/users', component: UsersComponent, canActivate: [AuthGuard] },
   {
     path: '',
     redirectTo: '/dashboard',
@@ -113,7 +116,10 @@ const appRoutes: Routes = [
     ApiKeysComponent,
     NavigationComponent,
     AddTokenComponent,
-    DeleteTokenComponent
+    DeleteTokenComponent,
+    MyProfileComponent,
+    UsersComponent,
+    AddUserComponent
   ],
   imports: [
     RouterModule.forRoot(

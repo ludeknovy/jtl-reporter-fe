@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ApiTokenService } from 'src/app/_services/api-token.service';
 import { NotificationMessage } from 'src/app/notification/notification-messages';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 @Component({
   selector: 'app-add-token',
@@ -19,6 +20,7 @@ export class AddTokenComponent implements OnInit {
     private modalService: NgbModal,
     private apiTokenService: ApiTokenService,
     private notification: NotificationMessage,
+    private notificationService: NotificationService,
   ) { }
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class AddTokenComponent implements OnInit {
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newApitokenNotificationMessage(_);
+          this.notificationService.showNotification(message);
           this.apiTokenService.loadApiKeys();
         });
       this.myform.reset();

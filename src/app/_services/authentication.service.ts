@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiKey } from './api-token.model';
 
 
@@ -30,6 +30,10 @@ export class AuthenticationService {
   logout() {
     this.setLogin(false);
     localStorage.removeItem('currentUser');
+  }
+
+  changePassword(body): Observable<any> {
+    return this.http.post<any>('auth/change-password', body, { observe: 'response'})
   }
 
   setLogin (value) {

@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ApiTokenService } from 'src/app/_services/api-token.service';
+import { NotificationService } from 'src/app/_services/notification.service';
+import { NotificationMessage } from 'src/app/notification/notification-messages';
 
 @Component({
   selector: 'app-delete-token',
@@ -11,10 +14,15 @@ import { of } from 'rxjs';
 })
 export class DeleteTokenComponent implements OnInit {
 
+  @Input() tokenInput
   myform: FormGroup;
   deleteCheck;
 
-  constructor(private modalService: NgbModal
+  constructor(
+    private modalService: NgbModal,
+    private apiTokenService: ApiTokenService,
+    private notification: NotificationMessage,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -40,17 +48,17 @@ export class DeleteTokenComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (this.myform.valid) {
-    //   this.projectApiService.deleteProject(this.projectData.projectName)
-    //   .pipe(catchError(r => of(r)))
-    //   .subscribe(_ => {
-    //     const message = this.notification.deleteProjectNotification(_);
-    //     this.projectService.loadProjects();
-    //     return this.projectApiService.setData(message);
-    //   });
-    //   this.myform.reset();
-    //   this.modalService.dismissAll();
-    // }
+    if (this.myform.valid) {
+      this.apiTokenService.deleteApiToken({ id: this.tokenInput })
+        .pipe(catchError(r => of(r)))
+        .subscribe(_ => {
+          const message = this.notification.deleteApitokenNotificationMessage(_);
+          this.apiTokenService.loadApiKeys();
+          this.notificationService.showNotification(message);
+        });
+      this.myform.reset();
+      this.modalService.dismissAll();
+    }
   }
 
 }

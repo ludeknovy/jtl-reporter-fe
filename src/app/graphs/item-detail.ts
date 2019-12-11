@@ -22,6 +22,9 @@ export const commonGraphSettings: any = (text) => {
       align: 'right',
     },
     plotOptions: {
+      series: {
+        connectNulls: true,
+      },
       line: {
         lineWidth: 1.5,
         states: {

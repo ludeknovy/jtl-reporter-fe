@@ -17,10 +17,6 @@ export const commonGraphSettings: any = (text) => {
       crosshairs: [true]
 
     },
-    legend: {
-      layout: 'vertical',
-      align: 'right',
-    },
     plotOptions: {
       series: {
         connectNulls: true,
@@ -44,7 +40,6 @@ export const commonGraphSettings: any = (text) => {
     },
     yAxis: [{
       lineWidth: 0,
-      type: 'logarithmic',
       title: {
         text
       },

@@ -8,7 +8,7 @@ import * as Highcharts from 'highcharts';
 
 import {
   commonGraphSettings, threadLineSettings,
-  errorLineSettings, fourAxisGraphSettings,
+  errorLineSettings, overallChartSettings,
   throughputLineSettings
 } from '../graphs/item-detail';
 import { catchError, withLatestFrom } from 'rxjs/operators';
@@ -93,7 +93,7 @@ export class ItemDetailComponent implements OnInit {
     this.responseTimeChartOptions = { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine] };
     this.throughputChartOptions = { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine] };
     this.overallChartOptions = {
-      ...fourAxisGraphSettings('ms', 'hits/s', '%'), series: [
+      ...overallChartSettings('ms'), series: [
         threadLine, overallTimeResponse, throughputLine, errorLine]
     };
   }

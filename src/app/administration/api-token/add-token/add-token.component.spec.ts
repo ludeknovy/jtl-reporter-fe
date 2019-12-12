@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddTokenComponent } from './add-token.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AddTokenComponent', () => {
   let component: AddTokenComponent;
@@ -8,6 +10,7 @@ describe('AddTokenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ ReactiveFormsModule, HttpClientModule ],
       declarations: [ AddTokenComponent ]
     })
     .compileComponents();

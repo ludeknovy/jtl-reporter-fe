@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     // reset login status
     this.authenticationService.logout();
-    
+
     // slow down to give top panel time to disappear
     new Promise(resolve => setTimeout(resolve, 0)).then();
 

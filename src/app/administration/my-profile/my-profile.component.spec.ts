@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MyProfileComponent } from './my-profile.component';
+import { NavigationComponent } from '../navigation/navigation.component';
+import { ControlPanelComponent } from 'src/app/control-panel/control-panel.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('MyProfileComponent', () => {
   let component: MyProfileComponent;
@@ -8,7 +13,8 @@ describe('MyProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyProfileComponent ]
+      imports: [ReactiveFormsModule, RouterTestingModule, HttpClientModule],
+      declarations: [ MyProfileComponent, NavigationComponent, ControlPanelComponent ]
     })
     .compileComponents();
   }));

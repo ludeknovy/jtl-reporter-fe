@@ -16,7 +16,7 @@ export class TopPanelComponent implements OnInit {
   navbarOpen = false;
   selectedProject = null;
 
-  isLoggedIn$ : Observable<boolean>;
+  isLoggedIn$: Observable<boolean>;
   projectsState$: Observable<ProjectsListing[]>;
 
   constructor(
@@ -31,10 +31,10 @@ export class TopPanelComponent implements OnInit {
   ngOnInit() {
     this.isLoggedIn$ = this.authService.isLoggedIn;
     this.authService.isLoggedIn.subscribe((_) =>  {
-      if(_ === true) {
+      if (_ === true) {
         this.projectService.loadProjects();
       }
-    })
+    });
   }
 
 

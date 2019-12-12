@@ -70,11 +70,11 @@ export const overallChartSettings = (text) => {
     title: {
       text: '%'
     },
-  }]
+  }];
 
   yAxis.forEach((axis) => {
     commonSettings.yAxis.push(axis);
-  })
+  });
 
   return commonSettings;
 };

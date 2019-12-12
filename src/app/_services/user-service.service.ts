@@ -21,6 +21,6 @@ export class UserService {
   }
 
   createNewUser(body) {
-    return this.http.post('users', body, { observe: 'response' })
+    return this.http.post('users', body, { observe: 'response' });
   }
 }

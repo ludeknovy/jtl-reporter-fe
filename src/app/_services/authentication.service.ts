@@ -33,7 +33,7 @@ export class AuthenticationService {
   }
 
   changePassword(body): Observable<any> {
-    return this.http.post<any>('auth/change-password', body, { observe: 'response'})
+    return this.http.post<any>('auth/change-password', body, { observe: 'response'});
   }
 
   setLogin (value) {

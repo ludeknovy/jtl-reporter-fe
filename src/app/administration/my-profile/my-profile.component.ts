@@ -14,7 +14,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 export class MyProfileComponent implements OnInit {
   myform: FormGroup;
   currentPassword;
-  newPassword
+  newPassword;
   apiTokenService: any;
   tokenInput: any;
 
@@ -32,7 +32,7 @@ export class MyProfileComponent implements OnInit {
 
   createFormControls() {
     this.currentPassword = new FormControl('', [Validators.required]);
-    this.newPassword = new FormControl('', [Validators.required, Validators.minLength(8)])
+    this.newPassword = new FormControl('', [Validators.required, Validators.minLength(8)]);
   }
 
   createForm() {

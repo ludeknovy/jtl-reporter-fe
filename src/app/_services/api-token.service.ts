@@ -21,7 +21,7 @@ export class ApiTokenService {
     return this.http.post<NewTokenReponse>('api-tokens', body, { observe: 'response' });
   }
   deleteApiToken(body: { id: string }): Observable<any> {
-    return this.http.request('delete','api-tokens', { observe: 'response', body });
+    return this.http.request('delete', 'api-tokens', { observe: 'response', body });
   }
 
   loadApiKeys() {

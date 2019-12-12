@@ -14,7 +14,7 @@ import { NotificationMessage } from 'src/app/notification/notification-messages'
 })
 export class DeleteTokenComponent implements OnInit {
 
-  @Input() tokenInput
+  @Input() tokenInput;
   myform: FormGroup;
   deleteCheck;
 

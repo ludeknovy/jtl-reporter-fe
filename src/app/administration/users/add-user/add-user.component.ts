@@ -39,7 +39,7 @@ export class AddUserComponent implements OnInit {
     this.password = new FormControl('', [
       Validators.required,
       Validators.minLength(8),
-    ])
+    ]);
   }
 
   createForm() {
@@ -61,7 +61,7 @@ export class AddUserComponent implements OnInit {
         .subscribe(_ => {
           const message = this.notification.userCreatedNotificationMessage(_);
           this.userService.loadUsers();
-          this.notificationService.showNotification(message)
+          this.notificationService.showNotification(message);
         });
       this.myform.reset();
       this.modalService.dismissAll();

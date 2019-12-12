@@ -1,0 +1,43 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add new user</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+          </div>
+          <input type="text" class="form-control" formControlName="username" aria-label="Default"
+            aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+          </div>
+          <input type="text" class="form-control" formControlName="password" aria-label="Default"
+            aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="form-control-feedback" *ngIf="username.errors && (username.dirty || username.touched)">
+          <p class="alert alert-danger" *ngIf="username.errors.required">Username is required</p>
+          <p class="alert alert-danger" *ngIf="username.errors.pattern">Special characters are not allowed besides "."</p>
+          <p class="alert alert-danger" *ngIf="username.errors.minlength">Username must be at least 3 characters long</p>
+        </div>
+        <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
+          <p class="alert alert-danger" *ngIf="password.errors.required">Password is required</p>
+          <p class="alert alert-danger" *ngIf="password.errors.minlength">Password must be at least 8 characters long</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </ng-template>
+
+  <div class="settings">
+    <button class="btn btn-primary btn-sm" (click)="open(content)"> <i class="fas fa-plus-circle"></i>
+      Add user</button>
+  </div>

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectsListing } from '../project-api.service.model';
+import { ProjectsListing } from '../../project-api.service.model';
 import { Observable } from 'rxjs';
-import { ProjectService } from '../project.service';
-import { SharedMainBarService } from '../shared-main-bar.service';
+import { ProjectService } from '../../project.service';
+import { SharedMainBarService } from '../../shared-main-bar.service';
 
 @Component({
   selector: 'app-administration',
   templateUrl: './administration.component.html',
-  styleUrls: ['./administration.component.css', '../shared-styles.css']
+  styleUrls: ['./administration.component.css', '../../shared-styles.css', '../administration.css']
 })
-export class AdministrationComponent implements OnInit {
+export class ProjectsAdministrationComponent implements OnInit {
 
   projects$: Observable<ProjectsListing[]>;
 

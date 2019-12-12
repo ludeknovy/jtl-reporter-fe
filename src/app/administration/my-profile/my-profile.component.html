@@ -1,0 +1,60 @@
+<app-control-panel>
+  <app-administrate-navigation></app-administrate-navigation>
+  <ul class="navbar-nav mr-auto">
+  </ul>
+</app-control-panel>
+<div class="administration content-container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-content">
+          <h6 class="card-header projects-header">Change password
+          </h6>
+          <div class="card-body">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+                    <div class="modal-body">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">Current password</span>
+                        </div>
+                        <input type="password" class="form-control" formControlName="currentPassword"
+                          aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                      </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">New password</span>
+                        </div>
+                        <input type="password" class="form-control" formControlName="newPassword" aria-label="Default"
+                          aria-describedby="inputGroup-sizing-default">
+                      </div>
+                      <div class="form-control-feedback"
+                        *ngIf="newPassword.errors && (newPassword.dirty || newPassword.touched)">
+                        <p class="alert alert-danger" *ngIf="newPassword.errors.required">New password is required</p>
+                        <p class="alert alert-danger" *ngIf="newPassword.errors.minlength">New password must be at least
+                          8
+                          characters long</p>
+                      </div>
+                      <div class="form-control-feedback"
+                        *ngIf="currentPassword.errors && (newPassword.dirty || newPassword.touched)">
+                        <p class="alert alert-danger" *ngIf="currentPassword.errors.required">Current password is
+                          required</p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

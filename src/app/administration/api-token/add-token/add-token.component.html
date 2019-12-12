@@ -1,0 +1,32 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add new token</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+          </div>
+          <input type="text" class="form-control" formControlName="description" aria-label="Default"
+            aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="form-control-feedback" *ngIf="description.errors && (description.dirty || description.touched)">
+          <p class="alert alert-danger" *ngIf="description.errors.required">Description is required</p>
+          <p class="alert alert-danger" *ngIf="description.errors.minlength">Description must be at least 3 characters long</p>
+          <p class="alert alert-danger" *ngIf="description.errors.maxlength">Max length is 250 characters</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </ng-template>
+
+  <div class="settings">
+    <button class="btn btn-primary btn-sm" (click)="open(content)"> <i class="fas fa-plus-circle"></i>
+      Add token</button>
+  </div>

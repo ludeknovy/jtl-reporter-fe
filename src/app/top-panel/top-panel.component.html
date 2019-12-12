@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark top-bar">
+<nav *ngIf="isLoggedIn$ | async" class="navbar navbar-expand-lg navbar-dark bg-dark top-bar">
   <a class="navbar-brand" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
 
 
@@ -28,10 +28,14 @@
       </button>
       <div class="drop-area drop-area-left" ngbDropdownMenu aria-labelledby="dropdownSettings">
         <li>
-          <a class="btn btn-block text-left" href="/administration"><i class="fas fa-cog icon"></i>Administrate</a>
+          <a class="btn btn-block text-left" [routerLink]="['/administration/projects']"><i class="fas fa-cog icon"></i>Administrate</a>
         </li>
         <li>
-          <a class="btn btn-block text-left" href="/api-docs" target="_blank"><i class="far fa-question-circle icon"></i>Api docs</a>
+          <a class="btn btn-block text-left" href="/api-docs" target="_blank"><i
+              class="far fa-question-circle icon"></i>Api docs</a>
+        </li>
+        <li>
+          <a class="btn btn-block text-left" [routerLink]="['/login']"><i class="fas fa-sign-out-alt icon"></i> Logout</a>
         </li>
       </div>
     </div>

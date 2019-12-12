@@ -4,6 +4,7 @@ import { ItemsApiService } from '../items-api.service';
 import { ProjectApiService } from '../project-api.service';
 import { ScenarioApiService } from '../scenario-api.service';
 import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from '../_services/notification.service';
 
 @Component({
   selector: 'app-alert',
@@ -16,6 +17,7 @@ export class NotificationComponent implements OnInit {
     private itemsApiService: ItemsApiService,
     private projectService: ProjectApiService,
     private scenarioApiService: ScenarioApiService,
+    private notificationService: NotificationService,
     private toastr: ToastrService
   ) { }
 
@@ -26,6 +28,7 @@ export class NotificationComponent implements OnInit {
     this.itemsApiService.response$.subscribe(_ => this.showNotification(_));
     this.projectService.response$.subscribe(_ => this.showNotification(_));
     this.scenarioApiService.response$.subscribe(_ => this.showNotification(_));
+    this.notificationService.notificationMessage$.subscribe(_ => this.showNotification(_));
 
 
     this._success.subscribe((message) => {

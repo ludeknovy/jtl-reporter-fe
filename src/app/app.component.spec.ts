@@ -33,7 +33,6 @@ describe('AppComponent', () => {
   it(`should have as title 'jtl-reporter'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    console.log(app.title);
     expect(app.title).toEqual('jtl-reporter');
   }));
 });

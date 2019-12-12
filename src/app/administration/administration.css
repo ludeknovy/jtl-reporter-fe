@@ -33,7 +33,7 @@ a {
   padding: 0px;
 }
 
-.projects {
+.card-content {
   border: none;
   margin-right: -10px;
 }
@@ -46,6 +46,7 @@ a {
 .edit {
   padding: unset;
   padding-left: 20px;
+  padding-right: 35px;
 }
 
 .table td.latest-run {
@@ -69,17 +70,6 @@ td {
   padding-left: 20px;
 }
 
-.table td.project-name {
-  max-width: 177px;
-}
-
-.table td.project-name span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
-}
 
 tr:hover {
   cursor: pointer;

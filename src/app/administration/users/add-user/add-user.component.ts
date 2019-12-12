@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UserService } from 'src/app/_services/user-service.service';
+import { UserService } from 'src/app/_services/user.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { NotificationService } from 'src/app/_services/notification.service';

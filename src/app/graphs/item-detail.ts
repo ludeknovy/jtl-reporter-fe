@@ -18,6 +18,9 @@ export const commonGraphSettings: any = (text) => {
 
     },
     plotOptions: {
+      series: {
+        connectNulls: true,
+      },
       line: {
         lineWidth: 1.5,
         states: {
@@ -40,28 +43,39 @@ export const commonGraphSettings: any = (text) => {
       title: {
         text
       },
-    }, {
+    },
+    {
       lineWidth: 0,
       opposite: true,
       title: {
         text: 'threads'
       }
-    }],
+    },
+    ],
   };
 };
 
-export const threeAxisGraphSettings = (text, text2 = '') => {
+export const overallChartSettings = (text) => {
   const commonSettings = commonGraphSettings(text);
-  commonSettings.yAxis.push({
+  const yAxis = [
+  {
+    lineWidth: 0,
+    title: {
+      text: 'hits/s'
+    },
+  },
+  {
     lineWidth: 0,
     opposite: true,
-    labels: {
-      enabled: false
-    },
     title: {
-      text: text2
-    }
-  });
+      text: '%'
+    },
+  }]
+
+  yAxis.forEach((axis) => {
+    commonSettings.yAxis.push(axis);
+  })
+
   return commonSettings;
 };
 
@@ -74,11 +88,12 @@ export const threadLineSettings: any = {
 export const errorLineSettings: any = {
   color: '#e74c3c',
   dashStyle: 'shortDot',
-  yAxis: 2
+  yAxis: 3
 };
 
 export const throughputLineSettings: any = {
   color: '#2ECC71',
+  yAxis: 2
 };
 
 export const responseTimeLineSettings: any = {

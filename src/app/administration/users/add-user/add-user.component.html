@@ -23,11 +23,12 @@
         </div>
         <div class="form-control-feedback" *ngIf="username.errors && (username.dirty || username.touched)">
           <p class="alert alert-danger" *ngIf="username.errors.required">Username is required</p>
+          <p class="alert alert-danger" *ngIf="username.errors.pattern">Special characters are not allowed besides "."</p>
           <p class="alert alert-danger" *ngIf="username.errors.minlength">Username must be at least 3 characters long</p>
         </div>
         <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
           <p class="alert alert-danger" *ngIf="password.errors.required">Password is required</p>
-          <p class="alert alert-danger" *ngIf="password.errors.minlength">Password must be at least 3 characters long</p>
+          <p class="alert alert-danger" *ngIf="password.errors.minlength">Password must be at least 8 characters long</p>
         </div>
       </div>
       <div class="modal-footer">

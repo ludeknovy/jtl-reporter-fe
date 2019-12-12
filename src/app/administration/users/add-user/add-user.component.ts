@@ -35,6 +35,7 @@ export class AddUserComponent implements OnInit {
     this.username = new FormControl('', [
       Validators.required,
       Validators.minLength(3),
+      Validators.pattern('^[0-9a-zA-Z.]+$')
     ]);
     this.password = new FormControl('', [
       Validators.required,

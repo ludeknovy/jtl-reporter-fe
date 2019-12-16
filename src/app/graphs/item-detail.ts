@@ -13,7 +13,7 @@ export const commonGraphSettings: any = (text) => {
     colors: ['#5DADE2', '#2ECC71', '#F4D03F', '#D98880',
       '#707B7C', '#7DCEA0', '#21618C', '#873600', '#AF7AC5', '#B7950B'],
     tooltip: {
-      split: false,
+      split: true,
       crosshairs: [true]
 
     },

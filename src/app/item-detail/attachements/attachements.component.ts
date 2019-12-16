@@ -26,17 +26,17 @@ export class AttachementsComponent implements OnInit {
 
   getErrors() {
     this.itemApiService.downloadTestErrors(this.params).subscribe(res => {
-        const url = window.URL.createObjectURL(res);
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.href = url;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove(); // remove the element
-      }, error => {
-        console.log('download error:', JSON.stringify(error));
-      }, () => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = 'errors.json';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove(); // remove the element
+    }, error => {
+    }, () => {
     });
   }
 

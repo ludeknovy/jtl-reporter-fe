@@ -27,7 +27,6 @@
     "@pact-foundation/karma-pact": "^2.2.0",
     "@pact-foundation/pact-node": "^9.0.6",
     "@pact-foundation/pact-web": "^9.2.0",
-    "angular-8-datatable": "^1.0.2",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.7.3",
     "core-js": "^2.5.4",

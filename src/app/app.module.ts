@@ -119,7 +119,7 @@ const appRoutes: Routes = [
     DeleteTokenComponent,
     MyProfileComponent,
     UsersComponent,
-    AddUserComponent
+    AddUserComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -135,10 +135,10 @@ const appRoutes: Routes = [
     HttpClientModule,
     NgbModule,
     NgxSpinnerModule,
-    DataTableModule,
     HighchartsChartModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    DataTableModule
   ],
   providers: [
     // no need to place any providers due to the `providedIn` flag...

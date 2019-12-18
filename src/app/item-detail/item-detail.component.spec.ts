@@ -7,7 +7,6 @@ import { AttachementsComponent } from './attachements/attachements.component';
 import { DeleteItemComponent } from './delete-item/delete-item.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 import { StatsCompareComponent } from './stats-compare/stats-compare.component';
-import { DataTableModule } from 'angular-6-datatable';
 import { LabelTrendComponent } from './label-trend/label-trend.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -15,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { DataTableModule } from 'ng-angular8-datatable';
 
 
 describe('ItemDetailComponent', () => {

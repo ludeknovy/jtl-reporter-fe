@@ -22,7 +22,7 @@ import { scenarioHistory } from 'src/app/graphs/scenarios';
 export class ScenariosGraphComponent implements AfterViewInit, OnDestroy {
 
   @Input() graphData: any;
-  @ViewChild('graphCanvasRef') chartCanvas: ElementRef;
+  @ViewChild('graphCanvasRef', { static: true }) chartCanvas: ElementRef;
   @HostBinding('class.chart') htmlCardClass = true;
 
   private chart: Chart;

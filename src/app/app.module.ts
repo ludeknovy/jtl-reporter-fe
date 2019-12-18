@@ -15,6 +15,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectsAdministrationComponent } from './administration/projects/administration.component';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { DataTableModule } from 'ng-angular8-datatable';
 import { AddNewProjectComponent } from './administration/projects/add-project/add-project-modal.component';
 import { EditProjectComponent } from './administration/projects/edit-project/edit-project.component';
 import { DeleteProjectComponent } from './administration/projects/delete-project/delete-project.component';
@@ -27,7 +28,6 @@ import { AddNewScenarioComponent } from './scenarios/new-scenario/add-new.scenar
 import { EditScenarioComponent } from './scenario/edit-scenario/edit-scenario.component';
 import { DeleteScenarioComponent } from './scenario/delete-scenario/delete-scenario.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import {DataTableModule} from 'angular-6-datatable';
 import { StatsCompareComponent } from './item-detail/stats-compare/stats-compare.component';
 import { AttachementsComponent } from './item-detail/attachements/attachements.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';

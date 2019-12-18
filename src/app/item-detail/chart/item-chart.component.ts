@@ -21,7 +21,7 @@ import { Chart } from 'chart.js';
 export class ItemChartComponent implements AfterViewInit, OnDestroy {
 
   @Input() chartData: any;
-  @ViewChild('chartCanvasRef') chartCanvas: ElementRef;
+  @ViewChild('chartCanvasRef', { static: true }) chartCanvas: ElementRef;
   @HostBinding('class.chart') htmlCardClass = true;
 
   private chart: Chart;

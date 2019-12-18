@@ -8,28 +8,28 @@
   <div class="modal-body">
     <div class="col" *ngIf="items$ | async; let items">
       <div class="responsive-table">
-        <table class="table items" [mfData]="items.data" #mf="mfDataTable">
+        <table class="table items" [svData]="items.data" #sv="svDataTable">
           <thead>
             <tr>
               <th scope="col" class="head">
-                <mfDefaultSorter by="maxVu">VU</mfDefaultSorter>
+                <sv-default-sorter by="maxVu">VU</sv-default-sorter>
               </th>
               <th scope="col" class="head">
-                <mfDefaultSorter by="duration">duration</mfDefaultSorter>
+                <sv-default-sorter by="duration">duration</sv-default-sorter>
               </th>
               <th scope="col" class="head">
-                <mfDefaultSorter by="environment">environment</mfDefaultSorter>
+                <sv-default-sorter by="environment">environment</sv-default-sorter>
               </th>
               <th scope="col" class="head">
-                <mfDefaultSorter by="note">note</mfDefaultSorter>
+                <sv-default-sorter by="note">note</sv-default-sorter>
               </th>
               <th scope="col" class="head">
-                <mfDefaultSorter by="startTime">start time</mfDefaultSorter>
+                <sv-default-sorter by="startTime">start time</sv-default-sorter>
               <th scope="col" class="head">
-                <mfDefaultSorter by="status">status</mfDefaultSorter>
+                <sv-default-sorter by="status">status</sv-default-sorter>
               </th>
               <th scope="col" class="head">
-                <mfDefaultSorter by="base"></mfDefaultSorter>
+                <sv-default-sorter by="base"></sv-default-sorter>
               </th>
               <th>
               </th>
@@ -45,7 +45,7 @@
             </tr>
           </tbody>
           <tbody *ngIf="items.data.length > 0">
-            <tr *ngFor="let _ of mf.data">
+            <tr *ngFor="let _ of sv.data">
               <td>
                 {{_.maxVu}}
               </td>

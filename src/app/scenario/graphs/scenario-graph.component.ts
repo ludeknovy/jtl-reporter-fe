@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
 export class ScenarioGraphComponent implements AfterViewInit, OnDestroy {
 
   @Input() graphData: { obs: Observable<{}>, value: string };
-  @ViewChild('chartCanvasRef') chartCanvas: ElementRef;
+  @ViewChild('chartCanvasRef', { static: true }) chartCanvas: ElementRef;
   @HostBinding('class.chart') htmlCardClass = true;
 
   private chart: Chart;

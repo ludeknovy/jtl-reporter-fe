@@ -8,11 +8,11 @@ import { DeleteScenarioComponent } from './delete-scenario/delete-scenario.compo
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 import { ScenarioGraphComponent } from './graphs/scenario-graph.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { DataTableModule } from 'angular-6-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DataTableModule } from 'ng-angular8-datatable';
 
 describe('ScenarioComponent', () => {
   let component: ScenarioComponent;

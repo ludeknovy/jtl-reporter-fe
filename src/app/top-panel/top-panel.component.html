@@ -15,8 +15,8 @@
           <div class="drop-area" ngbDropdownMenu aria-labelledby="dropdownBasic1"
             *ngIf="projectsState$ | async; let projects">
       <li *ngFor="let _ of projects">
-        <a class="btn btn-block text-left" routerLink="/project/{{_.projectName}}/scenarios" routerLinkActive="active"
-          (click)="changeSelectedProject(_.projectName)">{{_.projectName}}</a>
+        <a ngbDropdownItem class="btn btn-block text-left" routerLink="/project/{{_.projectName}}/scenarios"
+          routerLinkActive="active" (click)="changeSelectedProject(_.projectName)">{{_.projectName}}</a>
       </li>
   </div>
   </div>
@@ -28,14 +28,16 @@
       </button>
       <div class="drop-area drop-area-left" ngbDropdownMenu aria-labelledby="dropdownSettings">
         <li>
-          <a class="btn btn-block text-left" [routerLink]="['/administration/projects']"><i class="fas fa-cog icon"></i>Administrate</a>
+          <a ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/administration/projects']"><i
+              class="fas fa-cog icon"></i>Administrate</a>
         </li>
         <li>
-          <a class="btn btn-block text-left" href="/api-docs" target="_blank"><i
+          <a ngbDropdownItem class="btn btn-block text-left" href="/api-docs" target="_blank"><i
               class="far fa-question-circle icon"></i>Api docs</a>
         </li>
         <li>
-          <a class="btn btn-block text-left" [routerLink]="['/login']"><i class="fas fa-sign-out-alt icon"></i> Logout</a>
+          <a ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/login']"><i class="fas fa-sign-out-alt icon"></i>
+            Logout</a>
         </li>
       </div>
     </div>

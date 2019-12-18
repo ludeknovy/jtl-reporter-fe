@@ -70,9 +70,12 @@ td {
   padding-left: 20px;
 }
 
+thead tr:hover {
+  background-color: white;
+}
 
-tr:hover {
-  cursor: pointer;
+
+tbody tr:hover {
   background-color: #e8e8e847;
 }
 

@@ -1,11 +1,9 @@
-FROM node:8.13.0-alpine as builder
+FROM node:12.14.0-alpine3.9 as builder
 
 WORKDIR /src/fe
 
 RUN apk --update add openjdk8 \
-    nodejs \
-    nodejs-npm \
-    git && \ 
+    git && \
 rm -rf /var/lib/apt/lists/*
 
 COPY package.json package-lock.json angular.json ./

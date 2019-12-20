@@ -27,6 +27,8 @@ a {
   padding-bottom: 5px;
   border-top: 0px;
   width: 30rem;
+  height: 43px;
+  color: #343a40;
 }
 
 .card-body {

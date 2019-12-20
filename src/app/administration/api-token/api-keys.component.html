@@ -20,6 +20,7 @@
                       <th scope="col" class="head">token</th>
                       <th scope="col" class="head">description</th>
                       <th scope="col" class="head">created at</th>
+                      <th scope="col" class="head">created by</th>
                       <th scope="col" class="head"></th>
                     </tr>
                   </thead>
@@ -39,7 +40,10 @@
                         {{_.description}}
                       </td>
                       <td>
-                        {{_.createDate}}
+                        {{_.createDate | date:'d. L. yyyy H:mm'}}
+                      </td>
+                      <td>
+                        {{_.createdBy}}
                       </td>
                       <td class="edit text-right">
                         <app-delete-token [tokenInput]="_.id"></app-delete-token>

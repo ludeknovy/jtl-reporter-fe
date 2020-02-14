@@ -1,12 +1,14 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Delete project</h4>
+    <h4 class="modal-title" id="modal-basic-title">Delete user</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
+        <p>Are you sure you want to delete user: <b>{{deleteUserInput.username}} ?</b></p>
+        <p *ngIf="deleteUserInput.tokenCount > 0" class="text-danger">Deleting this user will delete {{deleteUserInput.tokenCount}} token(s) as well.</p>
         <p>Please enter 5 random characters:</p>
       <div class="input-group mb-3">
         <div class="input-group-prepend">

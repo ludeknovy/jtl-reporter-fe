@@ -1,26 +1,28 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { catchError } from 'rxjs/operators';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { UserService } from 'src/app/_services/user.service';
 import { of } from 'rxjs';
-import { ApiTokenService } from 'src/app/_services/api-token.service';
-import { NotificationService } from 'src/app/_services/notification.service';
+import { catchError } from 'rxjs/operators';
 import { NotificationMessage } from 'src/app/notification/notification-messages';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 @Component({
-  selector: 'app-delete-token',
-  templateUrl: './delete-token.component.html',
-  styleUrls: ['./delete-token.component.css', '../../administration.css']
+  selector: 'app-delete-user',
+  templateUrl: './delete-user.component.html',
+  styleUrls: ['./delete-user.component.css', '../../administration.css']
 })
-export class DeleteTokenComponent implements OnInit {
 
-  @Input() tokenInput;
+
+
+export class DeleteUserComponent implements OnInit {
+  @Input() deleteUserInput;
   myform: FormGroup;
   deleteCheck;
 
   constructor(
     private modalService: NgbModal,
-    private apiTokenService: ApiTokenService,
+    private userService: UserService,
     private notification: NotificationMessage,
     private notificationService: NotificationService
   ) { }
@@ -28,6 +30,10 @@ export class DeleteTokenComponent implements OnInit {
   ngOnInit() {
     this.createFormControls();
     this.createForm();
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   createFormControls() {
@@ -43,17 +49,13 @@ export class DeleteTokenComponent implements OnInit {
     });
   }
 
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
-  }
-
   onSubmit() {
     if (this.myform.valid) {
-      this.apiTokenService.deleteApiToken({ id: this.tokenInput })
+      this.userService.deleteUser(this.deleteUserInput.userId)
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
-          const message = this.notification.deleteApitokenNotificationMessage(_);
-          this.apiTokenService.loadApiKeys();
+          const message = this.notification.userDeletedNotificationMessage(_);
+          this.userService.loadUsers();
           this.notificationService.showNotification(message);
         });
       this.myform.reset();

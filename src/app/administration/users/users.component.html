@@ -40,6 +40,7 @@
                           <span>{{_.tokenCount}}</span>
                         </td>
                         <td class="edit text-right">
+                          <app-delete-user [deleteUserInput]="{ username: _.username, tokenCount: _.tokenCount, userId: _.id}"></app-delete-user>
                         </td>
                       </tr>
                     </tbody>

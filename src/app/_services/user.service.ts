@@ -23,4 +23,8 @@ export class UserService {
   createNewUser(body) {
     return this.http.post('users', body, { observe: 'response' });
   }
+
+  deleteUser(userId): Observable<any> {
+    return this.http.request('delete', `users/${userId}`, { observe: 'response' });
+  }
 }

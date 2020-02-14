@@ -85,3 +85,7 @@ tbody tr:hover {
   padding-top: 12px;
   padding-bottom: 5px;
 }
+
+.settings-icon {
+  font-size: 14px;
+}

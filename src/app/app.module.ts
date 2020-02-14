@@ -49,6 +49,7 @@ import { DeleteTokenComponent } from './administration/api-token/delete-token/de
 import { MyProfileComponent } from './administration/my-profile/my-profile.component';
 import { UsersComponent } from './administration/users/users.component';
 import { AddUserComponent } from './administration/users/add-user/add-user.component';
+import { DeleteUserComponent } from './administration/users/delete-user/delete-user.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -120,6 +121,7 @@ const appRoutes: Routes = [
     MyProfileComponent,
     UsersComponent,
     AddUserComponent,
+    DeleteUserComponent,
   ],
   imports: [
     RouterModule.forRoot(

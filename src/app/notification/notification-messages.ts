@@ -58,6 +58,10 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, 'User has been created');
   }
 
+  userDeletedNotificationMessage(response) {
+    return this.statusCodeMessage(response, 'User has been deleted');
+  }
+
   private statusCodeMessage(response, succesMessgae) {
     let message = { success: false, message: `Something went wrong` };
     if (response.status >= 200 && response.status < 300) {

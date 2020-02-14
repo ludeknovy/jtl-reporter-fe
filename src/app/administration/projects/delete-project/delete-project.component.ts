@@ -10,7 +10,7 @@ import { ProjectService } from 'src/app/project.service';
 @Component({
   selector: 'app-delete-project',
   templateUrl: './delete-project.component.html',
-  styleUrls: ['./delete-project.component.css']
+  styleUrls: ['./delete-project.component.css', '../../administration.css']
 })
 export class DeleteProjectComponent implements OnInit {
 

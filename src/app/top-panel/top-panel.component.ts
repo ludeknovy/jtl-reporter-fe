@@ -15,6 +15,7 @@ export class TopPanelComponent implements OnInit {
   message;
   navbarOpen = false;
   selectedProject = null;
+  username: string;
 
   isLoggedIn$: Observable<boolean>;
   projectsState$: Observable<ProjectsListing[]>;
@@ -33,6 +34,8 @@ export class TopPanelComponent implements OnInit {
     this.authService.isLoggedIn.subscribe((_) =>  {
       if (_ === true) {
         this.projectService.loadProjects();
+        const { username } = JSON.parse(localStorage.getItem('currentUser'));
+        this.username = username;
       }
     });
   }

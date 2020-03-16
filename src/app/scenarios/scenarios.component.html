@@ -59,19 +59,19 @@
           <h6 class="card-header">Scenarios</h6>
           <div class="card-body">
             <div class="labels-detail table-responsive">
-              <table class="table" [svData]="filteredScenarios" #sv="svDataTable">
+              <table class="table" [mfData]="filteredScenarios" #mf="mfDataTable">
                 <thead>
                   <tr>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="name">name</sv-default-sorter>
+                      <mfDefaultSorter by="name">name</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="data[0].startDate">last run</sv-default-sorter>
+                      <mfDefaultSorter by="data[0].startDate">last run</mfDefaultSorter>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let _ of sv.data" (click)="open(_.name)">
+                  <tr *ngFor="let _ of mf.data" (click)="open(_.name)">
                     <td>{{_.name}}</td>
                     <td>{{_.data[0].startDate | date:'d. L. yyyy H:mm'}}</td>
                   </tr>

@@ -15,7 +15,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectsAdministrationComponent } from './administration/projects/administration.component';
 import { TimeAgoPipe } from 'time-ago-pipe';
-import { DataTableModule } from 'ng-angular8-datatable';
+import { DataTableModule } from '@rushvora/ng-datatable';
 import { AddNewProjectComponent } from './administration/projects/add-project/add-project-modal.component';
 import { EditProjectComponent } from './administration/projects/edit-project/edit-project.component';
 import { DeleteProjectComponent } from './administration/projects/delete-project/delete-project.component';

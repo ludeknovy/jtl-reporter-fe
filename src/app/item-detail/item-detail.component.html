@@ -208,52 +208,50 @@
                 (keyup)='search($event.target.value)'>
             </div>
             <div class="labels-detail table-responsive">
-              <table class="table" [svData]="labelsData" #sv="svDataTable">
+              <table class="table table-striped" [mfData]="labelsData" #mf="mfDataTable">
                 <thead>
                   <tr>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="label">label</sv-default-sorter>
+                      <mfDefaultSorter by="label">label</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="samples">samples</sv-default-sorter>
+                      <mfDefaultSorter by="samples">samples</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="avgResponseTime">avg [ms]</sv-default-sorter>
+                      <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="minResponseTime">min [ms]</sv-default-sorter>
+                      <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="maxResponseTime">max [ms]</sv-default-sorter>
+                      <mfDefaultSorter by="maxResponseTime">max [ms]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="n0">90% [ms]</sv-default-sorter>
+                      <mfDefaultSorter by="n0">90% [ms]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="n5">95% [ms]</sv-default-sorter>
+                      <mfDefaultSorter by="n5">95% [ms]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="n9">99% [ms]</sv-default-sorter>
+                      <mfDefaultSorter by="n9">99% [ms]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="throughput">throughput [hits/s]</sv-default-sorter>
+                      <mfDefaultSorter by="throughput">throughput [hits/s]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="bytes">avg data [kb]</sv-default-sorter>
+                      <mfDefaultSorter by="bytes">avg data [kb]</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by="errorRate">errorRate</sv-default-sorter>
+                      <mfDefaultSorter by="errorRate">errorRate</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by=""></sv-default-sorter>
                     </th>
                     <th scope="col" class="hd">
-                      <sv-default-sorter by=""></sv-default-sorter>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let _ of sv.data">
+                  <tr *ngFor="let _ of mf.data">
                     <td>{{_.label}}</td>
                     <td>{{_.samples}}</td>
                     <td>{{_.avgResponseTime}} <sup [className]="_.avgDiff > 0 ? 'value-positive' : 'value-negative'"

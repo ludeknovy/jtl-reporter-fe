@@ -56,32 +56,32 @@
           </h6>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table items" [svData]="items.data" #sv="svDataTable">
+              <table class="table items" [mfData]="items.data" #mf="mfDataTable">
                 <thead>
                   <tr>
                     <th scope="col" class="head vu">
-                      <sv-default-sorter by="maxVu">virtual users</sv-default-sorter>
+                      <mfDefaultSorter by="maxVu">virtual users</mfDefaultSorter>
                     </th>
                     <th scope="col" class="head duration">
-                      <sv-default-sorter by="duration">duration</sv-default-sorter>
+                      <mfDefaultSorter by="duration">duration</mfDefaultSorter>
                     </th>
                     <th scope="col" class="head environment">
-                      <sv-default-sorter by="environment">environment</sv-default-sorter>
+                      <mfDefaultSorter by="environment">environment</mfDefaultSorter>
                     </th>
                     <th scope="col" class="head">
-                      <sv-default-sorter by="note">note</sv-default-sorter>
+                      <mfDefaultSorter by="note">note</mfDefaultSorter>
                     </th>
                     <th scope="col" class="head start-time">
-                      <sv-default-sorter by="start_time">start time</sv-default-sorter>
+                      <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
                     </th>
                     <th scope="col" class="head hostname">
-                      <sv-default-sorter by="hostname">hostname</sv-default-sorter>
+                      <mfDefaultSorter by="hostname">hostname</mfDefaultSorter>
                     </th>
                     <th scope="col" class="head status">
-                      <sv-default-sorter by="status">status</sv-default-sorter>
+                      <mfDefaultSorter by="status">status</mfDefaultSorter>
                     </th>
                     <th scope="col" class="head base">
-                      <sv-default-sorter by="base"></sv-default-sorter>
+                      <mfDefaultSorter by="base"></mfDefaultSorter>
                     </th>
                   </tr>
                 </thead>
@@ -95,7 +95,7 @@
                   </tr>
                 </tbody>
                 <tbody *ngIf="items.data.length > 0">
-                  <tr *ngFor="let _ of sv.data" (click)="open(_.id)">
+                  <tr *ngFor="let _ of mf.data" (click)="open(_.id)">
                     <td>
                       {{_.maxVu}}
                     </td>

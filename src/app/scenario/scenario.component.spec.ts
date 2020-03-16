@@ -12,7 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DataTableModule } from 'ng-angular8-datatable';
+import { DataTableModule } from '@rushvora/ng-datatable';
 
 describe('ScenarioComponent', () => {
   let component: ScenarioComponent;

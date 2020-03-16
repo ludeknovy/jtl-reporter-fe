@@ -14,7 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { DataTableModule } from 'ng-angular8-datatable';
+import { DataTableModule } from '@rushvora/ng-datatable';
 
 
 describe('ItemDetailComponent', () => {

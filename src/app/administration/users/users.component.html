@@ -17,6 +17,7 @@
                       <tr>
                         <th scope="col" class="head">username</th>
                         <th scope="col" class="head">create date</th>
+                        <th scope="col" class="head">role</th>
                         <th scope="col" class="head"># of tokens</th>
                         <th scope="col" class="head"></th>
                       </tr>
@@ -35,6 +36,9 @@
                         </td>
                         <td>
                           <span>{{_.createDate | date:'d. L. yyyy H:mm'}}</span>
+                        </td>
+                        <td>
+                          <span>{{_.role}}</span>
                         </td>
                         <td>
                           <span>{{_.tokenCount}}</span>

@@ -21,6 +21,16 @@
           <input type="text" class="form-control" formControlName="password" aria-label="Default"
             aria-describedby="inputGroup-sizing-default">
         </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="inputGroup-sizing-default">Role</div>
+          </div>
+          <select class="form-control custom-select" formControlName="role">
+            <option *ngFor="let role of roles" [value]="role">
+              {{role}}
+            </option>
+          </select>
+        </div>
         <div class="form-control-feedback" *ngIf="username.errors && (username.dirty || username.touched)">
           <p class="alert alert-danger" *ngIf="username.errors.required">Username is required</p>
           <p class="alert alert-danger" *ngIf="username.errors.pattern">Special characters are not allowed besides "."</p>

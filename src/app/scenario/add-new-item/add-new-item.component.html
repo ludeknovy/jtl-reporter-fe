@@ -78,5 +78,5 @@
 
 </ng-template>
 
-<button class="btn btn-primary btn-sm" (click)="open(content)"><i class="fas fa-plus-circle"></i>
+<button *userRole="'regular'" class="btn btn-primary btn-sm" (click)="open(content)"><i class="fas fa-plus-circle"></i>
   new test item</button>

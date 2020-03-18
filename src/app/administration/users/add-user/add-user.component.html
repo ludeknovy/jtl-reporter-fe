@@ -48,6 +48,6 @@
   </ng-template>
 
   <div class="settings">
-    <button class="btn btn-primary btn-sm" (click)="open(content)"> <i class="fas fa-plus-circle"></i>
+    <button *userRole="'admin'" class="btn btn-primary btn-sm" (click)="open(content)"> <i class="fas fa-plus-circle"></i>
       Add user</button>
   </div>

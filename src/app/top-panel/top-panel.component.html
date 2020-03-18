@@ -28,7 +28,11 @@
       </button>
       <div class="drop-area drop-area-left" ngbDropdownMenu aria-labelledby="dropdownSettings">
         <li>
-          <a ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/administration/projects']"><i
+          <a *ngIf="role !== 'readonly'" ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/administration/projects']"><i
+              class="fas fa-cog icon"></i>Administrate</a>
+        </li>
+        <li>
+          <a *ngIf="role === 'readonly'" ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/administration/my-profile']"><i
               class="fas fa-cog icon"></i>Administrate</a>
         </li>
         <li>

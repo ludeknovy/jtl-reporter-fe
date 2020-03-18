@@ -46,4 +46,4 @@
 
 </ng-template>
 
-<button class="edit btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-pencil-alt"></i> edit</button>
+<button *userRole="'regular'" class="edit btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-pencil-alt"></i> edit</button>

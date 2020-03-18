@@ -28,5 +28,5 @@
 
 </ng-template>
 
-<button class="btn btn-sm btn-primary" (click)="open(content)"> <i class="fas fa-plus-circle"></i>
+<button *userRole="'regular'" class="btn btn-sm btn-primary" (click)="open(content)"> <i class="fas fa-plus-circle"></i>
   create new scenario</button>

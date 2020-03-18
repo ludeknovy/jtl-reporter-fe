@@ -29,6 +29,6 @@
 </ng-template>
 
 <span>
-  <button class="btn btn-link add-btn settings-icon" (click)="open(content)"><i class="fas fa-trash-alt"></i>
+  <button *userRole="'admin'" class="btn btn-link add-btn settings-icon" (click)="open(content)"><i class="fas fa-trash-alt"></i>
   </button>
 </span>

@@ -50,6 +50,7 @@ import { MyProfileComponent } from './administration/my-profile/my-profile.compo
 import { UsersComponent } from './administration/users/users.component';
 import { AddUserComponent } from './administration/users/add-user/add-user.component';
 import { DeleteUserComponent } from './administration/users/delete-user/delete-user.component';
+import { RoleDirective } from './role.directive';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -122,6 +123,7 @@ const appRoutes: Routes = [
     UsersComponent,
     AddUserComponent,
     DeleteUserComponent,
+    RoleDirective,
   ],
   imports: [
     RouterModule.forRoot(

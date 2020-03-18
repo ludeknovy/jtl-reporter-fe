@@ -7,7 +7,7 @@ import { SharedMainBarService } from '../../shared-main-bar.service';
 @Component({
   selector: 'app-administration',
   templateUrl: './administration.component.html',
-  styleUrls: ['./administration.component.css', '../../shared-styles.css', '../administration.css']
+  styleUrls: ['../administration.css', '../../shared-styles.css']
 })
 export class ProjectsAdministrationComponent implements OnInit {
 
@@ -16,7 +16,7 @@ export class ProjectsAdministrationComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private sharedMainBarService: SharedMainBarService
-    ) {
+  ) {
     this.projects$ = this.projectService.state$;
 
   }

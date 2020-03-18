@@ -21,75 +21,101 @@
       <div class="row">
         <div class="col-sm">
           <div class="card">
-            <h6 class="card-header amethyst">Max Virtual Users</h6>
-            <div class="card-body">
-              <h2 class="card-title text-amethyst">{{itemData.overview.maxVu}}</h2>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header belize">Throughput <i class="ttp" placement="bottom" ngbTooltip="Throughput is calculated as requests/unit of time. The time is calculated from the start of the first sample to the end of the last sample. This includes any intervals between samples, as it is supposed to represent the load on the server.
-              The formula is: Throughput = (number of requests) / (total time)."><i
-                  class="far fa-question-circle icon"></i></i></h6>
-            <div class="card-body">
-              <h2 class="card-title text-belize">{{itemData.overview.throughput}} <span class="unit-desc">hits/s</span>
-              </h2>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header percentil">90% Response time</h6>
-            <div class="card-body">
-              <h2 *ngIf="itemData.overview.percentil >= 1000" class="card-title text-percentil">{{
-                Math.round((itemData.overview.percentil / 1000) * 100) / 100}} <span class="unit-desc">s</span>
-              </h2>
-              <h2 *ngIf="itemData.overview.percentil < 1000" class="card-title text-percentil">{{
-                itemData.overview.percentil}} <span class="unit-desc">ms</span>
-              </h2>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header latency">Avg. latency <i class="ttp" placement="bottom"
-                ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
-                  class="far fa-question-circle icon"></i></i></h6>
-            <div class="card-body">
-              <h2 *ngIf="itemData.overview.avgLatency >= 1000" class="card-title text-latency">{{
-                Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span class="unit-desc">s</span>
-              </h2>
-              <h2 *ngIf="itemData.overview.avgLatency < 1000" class="card-title text-latency">{{
-                itemData.overview.avgLatency}} <span class="unit-desc">ms</span>
-              </h2>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header connection">Avg. connection <i class="ttp" placement="bottom"
-                ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
-                  class="far fa-question-circle icon"></i></i></h6>
-            <div class="card-body">
-              <h2 *ngIf="itemData.overview.avgConnect >= 1000" class="card-title text-latency">{{
-                Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span class="unit-desc">s</span>
-              </h2>
-              <h2 *ngIf="itemData.overview.avgConnect < 1000" class="card-title text-latency">{{
-                itemData.overview.avgConnect}} <span class="unit-desc">ms</span>
-              </h2>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header alizarin">Error rate</h6>
-            <div class="card-body">
-              <h2 class="card-title text-alizarin">{{itemData.overview.errorRate}} <span class="unit-desc">%</span></h2>
+            <div class="card-body performance-overview-card">
+
+              <div class="row">
+                <div class="col-sm">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title text-amethyst">{{itemData.overview.maxVu}}</h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Virtual Users</div>
+
+                  </div>
+                </div>
+
+                <div class="col-sm">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title text-belize">{{itemData.overview.throughput}} <span
+                          class="unit-desc">hits/s</span>
+                      </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Throughput <i class="ttp"
+                        placement="bottom" ngbTooltip="Throughput is calculated as requests/unit of time. The time is calculated from the start of the first sample to the end of the last sample. This includes any intervals between samples, as it is supposed to represent the load on the server.
+                      The formula is: Throughput = (number of requests) / (total time)."><i
+                          class="far fa-question-circle icon"></i></i></div>
+
+                  </div>
+                </div>
+
+                <div class="col-sm">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 *ngIf="itemData.overview.percentil >= 1000" class="card-title text-percentil">{{
+                        Math.round((itemData.overview.percentil / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+                      </h2>
+                      <h2 *ngIf="itemData.overview.percentil < 1000" class="card-title text-percentil">{{
+                        itemData.overview.percentil}} <span class="unit-desc">ms</span>
+                      </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">90% Response time</div>
+
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 *ngIf="itemData.overview.avgLatency >= 1000" class="card-title text-latency">{{
+                        Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span
+                          class="unit-desc">s</span>
+                      </h2>
+                      <h2 *ngIf="itemData.overview.avgLatency < 1000" class="card-title text-latency">{{
+                        itemData.overview.avgLatency}} <span class="unit-desc">ms</span>
+                      </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Avg. latency <i class="ttp" placement="bottom"
+                      ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
+                        class="far fa-question-circle icon"></i></i></div>
+
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 *ngIf="itemData.overview.avgConnect >= 1000" class="card-title text-latency">{{
+                        Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span
+                          class="unit-desc">s</span>
+                      </h2>
+                      <h2 *ngIf="itemData.overview.avgConnect < 1000" class="card-title text-latency">{{
+                        itemData.overview.avgConnect}} <span class="unit-desc">ms</span>
+                      </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Avg. connection <i class="ttp" placement="bottom"
+                      ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
+                        class="far fa-question-circle icon"></i></i></div>
+
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title text-alizarin">{{itemData.overview.errorRate}} <span
+                          class="unit-desc">%</span></h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Error rate</div>
+
+                  </div>
+                </div>
+
+
+              </div>
+
             </div>
           </div>
         </div>
       </div>
+
     </div>
 
 
@@ -172,17 +198,17 @@
         </div>
       </div>
       <div class="row">
-          <div class="col-sm">
-              <div class="card">
-                <h6 class="card-header belize">Throughput</h6>
-                <div class="card-body">
-                  <div class="chart">
-                    <highcharts-chart [Highcharts]="Highcharts" [options]="throughputChartOptions"
-                      style="width: 100%; height: 250px; display: block;"></highcharts-chart>
-                  </div>
-                </div>
+        <div class="col-sm">
+          <div class="card">
+            <h6 class="card-header belize">Throughput</h6>
+            <div class="card-body">
+              <div class="chart">
+                <highcharts-chart [Highcharts]="Highcharts" [options]="throughputChartOptions"
+                  style="width: 100%; height: 250px; display: block;"></highcharts-chart>
               </div>
             </div>
+          </div>
+        </div>
       </div>
     </div>
 

@@ -151,7 +151,7 @@ thead {
 }
 
 .unit-desc {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .badge-counter {
@@ -214,3 +214,24 @@ thead .hd {
   font-size: 2.1rem;
 }
 
+.overview-card {
+  background-color: white;
+}
+
+.overview-body {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 0px;
+}
+
+
+.card-footer-overview {
+  border-top: none;
+  padding-top: 0px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.performance-overview-card {
+  padding-bottom: 0px;
+}

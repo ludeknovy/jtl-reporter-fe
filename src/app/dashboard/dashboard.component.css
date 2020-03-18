@@ -72,19 +72,24 @@ tbody tr:hover {
   min-width: 100%;
 }
 
-.stats {
-  margin-bottom: 20px;
-}
-
-.statistic .card-header {
-  background-color: #316d94;
-  color: white;
-}
-
-.statistic .card-body {
-  color: #316d94;
-}
-
 .unit-desc {
   font-size: 20px;
+}
+
+.card-footer-stats {
+  border-top: none;
+  padding-top: 0px;
+  color: #6c757d;
+  font-size: 13px;
+}
+
+.stats-body {
+  color: #316d94;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 0px;
+}
+
+.stats {
+  margin-bottom: 20px;
 }

@@ -36,7 +36,7 @@
     <div class="row" *ngIf="filteredScenarios && viewType === 'cards'">
       <div class="col-md-3" *ngFor="let _ of filteredScenarios">
         <div class="card card-scenario">
-          <h6 class="card-header">
+          <h6 class="card-header bg-transparent">
             <a routerLink="/project/{{projectName}}/scenario/{{_.name}}/items">{{_.name}}</a>
           </h6>
           <div class="card-body">

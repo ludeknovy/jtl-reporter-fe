@@ -118,6 +118,9 @@ thead {
 .request-stats {
   margin-bottom: 20px;
 }
+.request-stats .card-header {
+  border-bottom: none;
+}
 
 .errors-list {
   padding-top: 0px;
@@ -230,4 +233,8 @@ thead .hd {
 
 .performance-overview-card {
   padding-bottom: 0px;
+}
+
+.charts .card-header {
+  border-bottom: 0px;
 }

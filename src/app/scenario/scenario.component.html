@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="card">
-          <h6 class="card-header percentil">90% response time</h6>
+          <h6 class="card-header bg-transparent">90% response time</h6>
           <div class="card-body">
             <div class="graph">
               <app-scenario-graph [graphData]="{ obs: trends$, value: 'ninetyHistoryChart'}"></app-scenario-graph>
@@ -29,7 +29,7 @@
       </div>
       <div class="col-md-4">
         <div class="card">
-          <h6 class="card-header belize">Throughput</h6>
+          <h6 class="card-header bg-transparent">Throughput</h6>
           <div class="card-body">
             <div class="graph">
               <app-scenario-graph [graphData]="{ obs: trends$, value: 'throughputHistoryChart'}"></app-scenario-graph>
@@ -39,7 +39,7 @@
       </div>
       <div class="col-md-4">
         <div class="card">
-          <h6 class="card-header alizarin">Error rate</h6>
+          <h6 class="card-header bg-transparent">Error rate</h6>
           <div class="card-body">
             <div class="graph">
               <app-scenario-graph [graphData]="{ obs: trends$, value: 'errorRateHistoryChart'}"></app-scenario-graph>
@@ -51,7 +51,7 @@
     <div class="row rr">
       <div class="col" *ngIf="items$ | async; let items">
         <div class="card recent-runs">
-          <h6 class="card-header">Test Runs
+          <h6 class="card-header bg-transparent">Test Runs
             <span class="text-secondary total">{{items.total}} tests</span>
           </h6>
           <div class="card-body">

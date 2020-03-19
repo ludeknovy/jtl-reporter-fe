@@ -174,7 +174,7 @@
       <div class="row charts">
         <div class="col-sm">
           <div class="card">
-            <h6 class="card-header samaritane">Overall Chart</h6>
+            <h6 class="card-header bg-transparent">Overall Chart</h6>
             <div class="card-body">
               <div class="chart">
                 <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions"
@@ -187,7 +187,7 @@
       <div class="row">
         <div class="col-sm">
           <div class="card">
-            <h6 class="card-header samaritane">Response Time</h6>
+            <h6 class="card-header bg-transparent">Response Time</h6>
             <div class="card-body">
               <div class="chart">
                 <highcharts-chart [Highcharts]="Highcharts" [options]="responseTimeChartOptions"
@@ -200,7 +200,7 @@
       <div class="row">
         <div class="col-sm">
           <div class="card">
-            <h6 class="card-header belize">Throughput</h6>
+            <h6 class="card-header bg-transparent">Throughput</h6>
             <div class="card-body">
               <div class="chart">
                 <highcharts-chart [Highcharts]="Highcharts" [options]="throughputChartOptions"
@@ -215,7 +215,7 @@
     <div class="row">
       <div class="col">
         <div class="card request-stats">
-          <h6 class="card-header maroon">Request Statistics <span class="compare">
+          <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
               <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
                 {{comparedMetadata.maxVu}} VU</span>
               <a class="remove-comparison" *ngIf="comparedData" (click)="resetStatsData()"><i
@@ -234,7 +234,7 @@
                 (keyup)='search($event.target.value)'>
             </div>
             <div class="labels-detail table-responsive">
-              <table class="table table-striped" [mfData]="labelsData" #mf="mfDataTable">
+              <table class="table" [mfData]="labelsData" #mf="mfDataTable">
                 <thead>
                   <tr>
                     <th scope="col" class="hd">

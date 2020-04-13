@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class NotificationMessage {
 
   newTestItemNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'New test item has been saved');
+    return this.statusCodeMessage(response, 'New test item has been received and processing just started');
   }
 
   newProjectNotificationMessage(response) {

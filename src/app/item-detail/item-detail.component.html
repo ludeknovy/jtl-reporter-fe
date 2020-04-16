@@ -9,13 +9,35 @@
       [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
       (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
     <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
-    <app-delete-item [itemData]="itemParams"></app-delete-item>
+    <app-delete-item  *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
   </div>
-
 </app-control-panel>
 
+<div class="not-ready content-container" *ngIf="itemData.reportStatus === 'in_progress'">
+  <dir class="container-fluid">
+    <div class="row">
+      <div class="col-sm">
 
-<div class="items-overview content-container" *ngIf="itemData.overview !== null">
+          <div class="alert alert-primary" role="alert">
+            Test report is being processed. Please wait.
+          </div>
+      </div>
+    </div>
+  </dir>
+</div>
+<div class="not-ready content-container" *ngIf="itemData.reportStatus === 'error'">
+  <dir class="container-fluid">
+    <div class="row">
+      <div class="col-sm">
+          <div class="alert alert-danger" role="alert">
+            An error occured during processing test report.
+          </div>
+      </div>
+    </div>
+  </dir>
+</div>
+
+<div class="items-overview content-container" *ngIf="itemData.overview !== null && itemData.reportStatus === 'ready'">
   <div class="container-fluid">
     <div class="overview-info">
       <div class="row">

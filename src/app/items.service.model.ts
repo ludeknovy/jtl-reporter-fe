@@ -13,6 +13,12 @@ export interface Items {
   total: number;
 }
 
+export enum ReportStatus {
+  InProgress = 'in_progress',
+  Error = 'error',
+  Ready = 'ready'
+}
+
 export interface ItemDetail {
   overview: {
     avgLatency: number
@@ -25,6 +31,7 @@ export interface ItemDetail {
     startDate: string
     throughput: number
   };
+  reportStatus: ReportStatus;
   monitoringData: { cpu: [], mem: [], maxCpu?: number, maxMem?: number};
   baseId: string;
   testName: string;

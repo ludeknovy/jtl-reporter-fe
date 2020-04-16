@@ -31,6 +31,7 @@ export class ItemDetailComponent implements OnInit {
     baseId: null,
     note: null,
     plot: null,
+    reportStatus: null,
     hostname: null,
     statistics: [],
     testName: null,

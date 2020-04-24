@@ -58,11 +58,6 @@ const appRoutes: Routes = [
   { path: 'administration/my-profile', component: MyProfileComponent, canActivate: [AuthGuard] },
   { path: 'administration/users', component: UsersComponent, canActivate: [AuthGuard] },
   {
-    path: '',
-    redirectTo: '/dashboard',
-    pathMatch: 'full'
-  },
-  {
     path: 'project/:projectName/scenario/:scenarioName/items', component: ScenarioComponent,
     runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
   },

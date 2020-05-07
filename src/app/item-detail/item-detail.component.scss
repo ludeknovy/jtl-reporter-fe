@@ -193,6 +193,14 @@ thead .hd {
 
 .remove-comparison {
   margin-right: 10px;
+  background-color: white;
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.compare-desc-btn {
+  font-size: 13px;
+  font-weight: 400;
 }
 
 .comparison-desc {
@@ -200,8 +208,15 @@ thead .hd {
   margin-right: 15px;
 }
 
+.card-body-request-stats {
+  padding-top: 10px;
+}
+
 .quick-base-comparison {
   margin-right: 10px;
+  background-color: white;
+  color: black;
+  border-color: black;
 }
 
 .connection {

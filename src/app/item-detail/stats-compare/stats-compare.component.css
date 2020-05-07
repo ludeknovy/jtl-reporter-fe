@@ -21,3 +21,8 @@ thead {
   white-space: nowrap;
   overflow: hidden;
 }
+
+
+.compare-btn:hover{
+  color:#6c757d;
+}

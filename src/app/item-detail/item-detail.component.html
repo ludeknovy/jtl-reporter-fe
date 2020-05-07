@@ -9,7 +9,7 @@
       [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
       (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
     <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
-    <app-delete-item  *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
+    <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
   </div>
 </app-control-panel>
 
@@ -17,9 +17,9 @@
   <dir class="container-fluid">
     <div class="row">
       <div class="col-sm">
-          <div class="alert alert-primary" role="alert">
-            Test report is being processed. Please wait.
-          </div>
+        <div class="alert alert-primary" role="alert">
+          Test report is being processed. Please wait.
+        </div>
       </div>
     </div>
   </dir>
@@ -28,9 +28,9 @@
   <dir class="container-fluid">
     <div class="row">
       <div class="col-sm">
-          <div class="alert alert-danger" role="alert">
-            An error occured during processing test report.
-          </div>
+        <div class="alert alert-danger" role="alert">
+          An error occured during processing test report.
+        </div>
       </div>
     </div>
   </dir>
@@ -62,8 +62,8 @@
                           class="unit-desc">hits/s</span>
                       </h2>
                     </div>
-                    <div class="card-footer bg-transparent card-footer-overview">Throughput <i
-                        placement="bottom" ngbTooltip="Throughput is calculated as requests/unit of time. The time is calculated from the start of the first sample to the end of the last sample. This includes any intervals between samples, as it is supposed to represent the load on the server.
+                    <div class="card-footer bg-transparent card-footer-overview">Throughput <i placement="bottom"
+                        ngbTooltip="Throughput is calculated as requests/unit of time. The time is calculated from the start of the first sample to the end of the last sample. This includes any intervals between samples, as it is supposed to represent the load on the server.
                       The formula is: Throughput = (number of requests) / (total time)."><i
                           class="far fa-question-circle icon"></i></i></div>
 
@@ -95,9 +95,10 @@
                         itemData.overview.avgLatency}} <span class="unit-desc">ms</span>
                       </h2>
                     </div>
-                    <div class="card-footer bg-transparent card-footer-overview">Avg. latency <i class="ttp" placement="bottom"
-                      ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
-                        class="far fa-question-circle icon"></i></i></div>
+                    <div class="card-footer bg-transparent card-footer-overview">Avg. latency <i class="ttp"
+                        placement="bottom"
+                        ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
+                          class="far fa-question-circle icon"></i></i></div>
 
                   </div>
                 </div>
@@ -112,9 +113,10 @@
                         itemData.overview.avgConnect}} <span class="unit-desc">ms</span>
                       </h2>
                     </div>
-                    <div class="card-footer bg-transparent card-footer-overview">Avg. connection <i class="ttp" placement="bottom"
-                      ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
-                        class="far fa-question-circle icon"></i></i></div>
+                    <div class="card-footer bg-transparent card-footer-overview">Avg. connection <i class="ttp"
+                        placement="bottom"
+                        ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
+                          class="far fa-question-circle icon"></i></i></div>
 
                   </div>
                 </div>
@@ -128,10 +130,7 @@
 
                   </div>
                 </div>
-
-
               </div>
-
             </div>
           </div>
         </div>
@@ -165,13 +164,13 @@
             <span>status:</span>
             <span class="small-text"> {{getTextStatus(itemData.status)}}</span>
           </div>
+          <div class="date" *ngIf="itemData.hostname">
+            <span>hostname:</span>
+            <span class="small-text"> {{itemData.hostname}}</span>
+          </div>
           <div class="date" *ngIf="itemData.note">
             <span>note:</span>
             <span class="small-text"> {{itemData.note}}</span>
-          </div>
-          <div class="date bottom" *ngIf="itemData.hostname">
-            <span>hostname:</span>
-            <span class="small-text"> {{itemData.hostname}}</span>
           </div>
         </div>
         <div *ngIf="itemData.monitoringData.cpu.length > 0" class="col-sm">

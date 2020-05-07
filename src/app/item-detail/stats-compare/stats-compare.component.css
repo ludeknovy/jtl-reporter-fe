@@ -22,7 +22,7 @@ thead {
   overflow: hidden;
 }
 
-
-.compare-btn:hover{
-  color:#6c757d;
+.compare-desc {
+  font-size: 13px;
+  font-weight: 400;
 }

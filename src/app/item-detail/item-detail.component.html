@@ -238,14 +238,14 @@
           <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
               <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
                 {{comparedMetadata.maxVu}} VU</span>
-              <a class="remove-comparison" *ngIf="comparedData" (click)="resetStatsData()"><i
-                  class="fas fa-minus"></i></a>
-              <a class="quick-base-comparison"
+              <button class="remove-comparison btn btn-sm btn-outline-danger" *ngIf="comparedData" (click)="resetStatsData()"><i
+                  class="fas fa-minus"></i> <span class="compare-desc-btn"> remove</span></button>
+              <button class="quick-base-comparison btn btn-sm btn-outline-dark"
                 *ngIf="(itemData.baseId && itemData.baseId !== itemParams.id) && !comparedData"
-                (click)="quickBaseComparison(itemData.baseId)"><i class="fas fa-rocket"></i></a>
+                (click)="quickBaseComparison(itemData.baseId)"><i class="fas fa-rocket"></i> <span class="compare-desc-btn"> compare to base run</span></button>
               <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
             </span></h6>
-          <div class="card-body">
+          <div class="card-body card-body-request-stats">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>

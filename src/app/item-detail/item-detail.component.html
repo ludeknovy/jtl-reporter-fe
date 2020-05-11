@@ -143,43 +143,46 @@
       <div class="row info">
         <div class="col-sm">
           <div class="date top">
-            <span>started:</span>
+            <span class="text-secondary">started:</span>
             <span class="small-text">{{itemData.overview.startDate | date:'d. L. yyyy H:mm:ss'}}</span>
           </div>
           <div class="date">
-            <span>ended:</span>
+            <span class="text-secondary">ended:</span>
             <span class="small-text">{{itemData.overview.endDate | date:'d. L. yyyy H:mm:ss'}}</span>
           </div>
           <div class="date bottom">
-            <span>duration:</span>
+            <span class="text-secondary">duration:</span>
             <span class="small-text">{{itemData.overview.duration}} min</span>
           </div>
         </div>
-        <div class="col-sm">
+        <div class="col">
           <div class="date top">
-            <span>environment:</span>
+            <span class="text-secondary">environment:</span>
             <span class="small-text">{{itemData.environment}}</span>
           </div>
           <div class="date" *ngIf="itemData.status">
-            <span>status:</span>
-            <span class="small-text"> {{getTextStatus(itemData.status)}}</span>
+            <span class="text-secondary">status:</span>
+            <span class="small-text">{{getTextStatus(itemData.status)}}</span>
           </div>
           <div class="date" *ngIf="itemData.hostname">
-            <span>hostname:</span>
-            <span class="small-text"> {{itemData.hostname}}</span>
+            <span class="text-secondary">hostname:</span>
+            <span class="small-text">{{itemData.hostname}}</span>
           </div>
           <div class="date" *ngIf="itemData.note">
-            <span>note:</span>
-            <span class="small-text"> {{itemData.note}}</span>
+            <span class="text-secondary">note:</span>
+            <span class="small-text">{{itemData.note}}</span>
           </div>
         </div>
-        <div *ngIf="itemData.monitoringData.cpu.length > 0" class="col-sm">
+
+
+
+        <div class="col-sm" *ngIf="itemData.monitoringData.cpu.length > 0">
           <div class="date top">
-            <span>max cpu usage:</span>
+            <span class="text-secondary">max cpu usage:</span>
             <span class="small-text">{{itemData.monitoringData.maxCpu}}%</span>
           </div>
           <div class="date" *ngIf="itemData.status">
-            <span>max memory usage:</span>
+            <span class="text-secondary">max memory usage:</span>
             <span class="small-text">{{itemData.monitoringData.maxMem}}%</span>
           </div>
           <div class="date">
@@ -238,11 +241,13 @@
           <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
               <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
                 {{comparedMetadata.maxVu}} VU</span>
-              <button class="remove-comparison btn btn-sm btn-outline-danger" *ngIf="comparedData" (click)="resetStatsData()"><i
-                  class="fas fa-minus"></i> <span class="compare-desc-btn"> remove</span></button>
+              <button class="remove-comparison btn btn-sm btn-outline-danger" *ngIf="comparedData"
+                (click)="resetStatsData()"><i class="fas fa-minus"></i> <span class="compare-desc-btn">
+                  remove</span></button>
               <button class="quick-base-comparison btn btn-sm btn-outline-dark"
                 *ngIf="(itemData.baseId && itemData.baseId !== itemParams.id) && !comparedData"
-                (click)="quickBaseComparison(itemData.baseId)"><i class="fas fa-rocket"></i> <span class="compare-desc-btn"> compare to base run</span></button>
+                (click)="quickBaseComparison(itemData.baseId)"><i class="fas fa-rocket"></i> <span
+                  class="compare-desc-btn"> compare to base run</span></button>
               <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
             </span></h6>
           <div class="card-body card-body-request-stats">

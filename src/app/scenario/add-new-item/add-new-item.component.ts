@@ -44,7 +44,6 @@ export class AddNewItemComponent implements OnInit {
   ) { }
   ngOnInit() {
     this.route.params.subscribe(_ => this.routeParams = _);
-    console.log(this.routeParams)
     this.createFormControls();
     this.createForm();
   }

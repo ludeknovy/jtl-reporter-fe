@@ -62,12 +62,12 @@ export class ScenarioComponent implements OnInit, OnDestroy {
       this.processingItems = _;
       const { inprogress } = _ as any;
       if (Array.isArray(inprogress)) {
-        const processingItems = inprogress.map((_) => _.id);
-        const reloadItems = !this.currentProcessingItems.every((_) => processingItems.includes(_));
+        const processingItems = inprogress.map((item) => item.id);
+        const reloadItems = !this.currentProcessingItems.every((id) => processingItems.includes(id));
         if (reloadItems) {
           this.itemsService.fetchItems(this.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
         }
-        return this.currentProcessingItems = inprogress.map((_) => _.id);
+        return this.currentProcessingItems = inprogress.map((item) => item.id);
       }
     });
 

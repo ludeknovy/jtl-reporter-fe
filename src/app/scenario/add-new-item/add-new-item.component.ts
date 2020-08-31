@@ -11,6 +11,7 @@ import { ItemsService } from 'src/app/items.service';
 import { ProjectService } from 'src/app/project.service';
 import { ItemStatus } from './add-new-item.model';
 import { ItemStatusValue } from 'src/app/item-detail/item-detail.model';
+import { ScenarioService } from 'src/app/scenario.service';
 
 @Component({
   selector: 'app-add-new-item-modal',
@@ -35,9 +36,9 @@ export class AddNewItemComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private itemsService: ItemsService,
     private itemsApiService: ItemsApiService,
-    private projectService: ProjectService,
+    private itemService: ItemsService,
+    private scenarioService: ScenarioService,
     private notification: NotificationMessage,
     private spinner: NgxSpinnerService
   ) { }
@@ -103,8 +104,8 @@ export class AddNewItemComponent implements OnInit {
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newTestItemNotificationMessage(_);
-          this.itemsService.fetchItems(this.routeParams.projectName, this.routeParams.scenarioName);
-          this.projectService.fetchScenarioTrends(this.routeParams.projectName, this.routeParams.scenarioName);
+          this.itemService.fetchProcessingItems(this.routeParams.projectName, this.routeParams.scenarioName);
+          this.scenarioService.fetchScenarioTrends(this.routeParams.projectName, this.routeParams.scenarioName);
           this.spinner.hide();
           return this.itemsApiService.setData(message);
         });

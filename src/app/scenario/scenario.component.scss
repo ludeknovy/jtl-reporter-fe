@@ -140,7 +140,15 @@ tbody tr:hover {
 .total {
   font-size: 15px;
   float: right;
-} 
+  color: #28a746 !important;
+}
+
+.in-progress {
+  font-size: 15px;
+  float: right;
+  margin-right: 15px;
+  color: #f8cd0bea !important;
+}
 
 .base-icon {
   color: #0066ffd1
@@ -149,4 +157,3 @@ tbody tr:hover {
 .status-icon {
   font-size: 19px;
 }
- 

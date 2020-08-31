@@ -74,4 +74,8 @@ export class ItemsApiService {
   setData(data) {
     this.response.next(data);
   }
+
+  fetchProcessingItems(projectName, scenarioName): Observable<[]> {
+    return this.http.get<[]>(`projects/${projectName}/scenarios/${scenarioName}/processing-items`);
+  }
 }

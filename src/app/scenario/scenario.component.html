@@ -52,7 +52,8 @@
       <div class="col" *ngIf="items$ | async; let items">
         <div class="card recent-runs">
           <h6 class="card-header bg-transparent">Test Runs
-            <span class="text-secondary total">{{items.total}} tests</span>
+            <span  title="Total ready items" class="text-secondary total">{{items.total}} <i class="far fa-check-circle"></i></span>
+            <span title="Items in progress" *ngIf="processingItems"><span *ngIf="processingItems.inprogress && processingItems.inprogress.length > 0" class="text-secondary in-progress">{{processingItems.inprogress?.length}} <i class="far fa-clock"></i></span></span>
           </h6>
           <div class="card-body">
             <div class="table-responsive">

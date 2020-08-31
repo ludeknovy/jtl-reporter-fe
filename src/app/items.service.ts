@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, interval } from 'rxjs';
 import { Items } from './items.service.model';
 import { ItemsApiService } from './items-api.service';
 
@@ -8,6 +8,10 @@ import { ItemsApiService } from './items-api.service';
 })
 
 export class ItemsService {
+  public interval;
+
+  private processingItems = new BehaviorSubject<[]>([]);
+  public processingItems$ = this.processingItems.asObservable();
 
   private items = new BehaviorSubject<Items>({ name, data: [], total: 0 });
   public items$ = this.items.asObservable();
@@ -19,6 +23,17 @@ export class ItemsService {
   fetchItems(projectName, scenarioName, query = { limit: 15, offset: 0 }) {
     this.itemsApiService.fetchItems(projectName, scenarioName, query)
       .subscribe(_ => this.items.next(_));
+  }
+
+  fetchProcessingItems(projectName, scenarioName) {
+    return this.itemsApiService.fetchProcessingItems(projectName, scenarioName).subscribe((_) => this.processingItems.next(_));
+  }
+
+  processingItemsInterval(projectName, scenarioName) {
+    this.fetchProcessingItems(projectName, scenarioName);
+    this.interval = interval(5000).subscribe(() => {
+      return this.fetchProcessingItems(projectName, scenarioName);
+    });
   }
 
 }

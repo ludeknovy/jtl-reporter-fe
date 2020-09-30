@@ -10,9 +10,9 @@
   <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <div ngbDropdown class="d-inline-block">
+        <div  ngbDropdown class="d-inline-block">
           <button class="btn text-white" id="dropdownBasic1" ngbDropdownToggle>{{selectedProject || "Project"}}</button>
-          <div class="drop-area" ngbDropdownMenu aria-labelledby="dropdownBasic1"
+          <div class="drop-area drop-area-left dropdowncustom-area dropdown-static" ngbDropdownMenu aria-labelledby="dropdownBasic1"
             *ngIf="projectsState$ | async; let projects">
       <li *ngFor="let _ of projects">
         <a ngbDropdownItem class="btn btn-block text-left" routerLink="/project/{{_.projectName}}/scenarios"
@@ -26,7 +26,7 @@
     <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" ngbDropdown class="d-inline-block">
       <button class="btn text-white" id="dropdownSettings" ngbDropdownToggle> <i class="fas fa-user"></i> {{username}}
       </button>
-      <div class="drop-area drop-area-left" ngbDropdownMenu aria-labelledby="dropdownSettings">
+      <div class="drop-area drop-area-left dropdowncustom-area dropdown-dynamic" ngbDropdownMenu aria-labelledby="dropdownSettings">
         <li>
           <a ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/administration/projects']"><i
               class="fas fa-cog icon"></i>Administrate</a>
@@ -36,7 +36,8 @@
               class="far fa-question-circle icon"></i>Api docs</a>
         </li>
         <li>
-          <a ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/login']"><i class="fas fa-sign-out-alt icon"></i>
+          <a ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/login']"><i
+              class="fas fa-sign-out-alt icon"></i>
             Logout</a>
         </li>
       </div>

@@ -14,7 +14,7 @@
 </app-control-panel>
 
 <div class="not-ready content-container" *ngIf="itemData.reportStatus === 'in_progress'">
-  <dir class="container-fluid">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-sm">
         <div class="alert alert-primary" role="alert">
@@ -22,10 +22,10 @@
         </div>
       </div>
     </div>
-  </dir>
+  </div>
 </div>
 <div class="not-ready content-container" *ngIf="itemData.reportStatus === 'error'">
-  <dir class="container-fluid">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-sm">
         <div class="alert alert-danger" role="alert">
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-  </dir>
+  </div>
 </div>
 
 <div class="items-overview content-container" *ngIf="itemData.overview !== null && itemData.reportStatus === 'ready'">
@@ -211,7 +211,7 @@
             <div class="card-body">
               <div class="chart">
                 <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions"
-                  style="width: 100%; height: 250px; display: block;"></highcharts-chart>
+                  style="width: 100%; height: 350px; display: block;"></highcharts-chart>
               </div>
             </div>
           </div>
@@ -224,7 +224,7 @@
             <div class="card-body">
               <div class="chart">
                 <highcharts-chart [Highcharts]="Highcharts" [options]="responseTimeChartOptions"
-                  style="width: 100%; height: 250px; display: block;"></highcharts-chart>
+                  style="width: 100%; height: 350px; display: block;"></highcharts-chart>
               </div>
             </div>
           </div>
@@ -237,7 +237,7 @@
             <div class="card-body">
               <div class="chart">
                 <highcharts-chart [Highcharts]="Highcharts" [options]="throughputChartOptions"
-                  style="width: 100%; height: 250px; display: block;"></highcharts-chart>
+                  style="width: 100%; height: 350px; display: block;"></highcharts-chart>
               </div>
             </div>
           </div>

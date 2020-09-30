@@ -3,9 +3,15 @@ export const commonGraphSettings: any = (text) => {
     chart: {
       type: 'line',
       zoomType: 'x',
-      spacingRight: -7,
-      spacingLeft: -7,
-      className: 'chart-sync'
+      marginTop: 50,
+      className: 'chart-sync',
+    },
+    exporting: {
+      buttons: {
+        contextButton: {
+          enabled: false
+        },
+      }
     },
     title: {
       text: ''
@@ -15,7 +21,6 @@ export const commonGraphSettings: any = (text) => {
     tooltip: {
       split: true,
       crosshairs: [true]
-
     },
     plotOptions: {
       series: {
@@ -58,19 +63,19 @@ export const commonGraphSettings: any = (text) => {
 export const overallChartSettings = (text) => {
   const commonSettings = commonGraphSettings(text);
   const yAxis = [
-  {
-    lineWidth: 0,
-    title: {
-      text: 'hits/s'
+    {
+      lineWidth: 0,
+      title: {
+        text: 'hits/s'
+      },
     },
-  },
-  {
-    lineWidth: 0,
-    opposite: true,
-    title: {
-      text: '%'
-    },
-  }];
+    {
+      lineWidth: 0,
+      opposite: true,
+      title: {
+        text: '%'
+      },
+    }];
 
   yAxis.forEach((axis) => {
     commonSettings.yAxis.push(axis);

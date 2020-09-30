@@ -26,9 +26,6 @@ export class BreadcrumbComponent implements OnInit {
         const projectUrlTemplate = `/project/${projectName}/scenario/${scenarioName}/items`;
         this.urls.push({ label: scenarioName, url: projectUrlTemplate, last: _length === 2 });
       }
-      if (id) {
-        this.urls.push({ label: 'item', url: '', last: _length === 3 });
-      }
     });
   }
 }

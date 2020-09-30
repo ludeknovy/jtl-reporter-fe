@@ -6,6 +6,13 @@ export const commonGraphSettings: any = (text) => {
       marginTop: 50,
       className: 'chart-sync',
     },
+    time: {
+      getTimezoneOffset: function (timestamp) {
+        const d = new Date();
+        const timezoneOffset = d.getTimezoneOffset();
+        return timezoneOffset;
+      }
+    },
     exporting: {
       buttons: {
         contextButton: {

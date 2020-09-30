@@ -5,6 +5,9 @@ import { ItemDetail } from '../items.service.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DecimalPipe } from '@angular/common';
 import * as Highcharts from 'highcharts';
+import exporting from 'highcharts/modules/exporting';
+
+exporting(Highcharts);
 
 import {
   commonGraphSettings, threadLineSettings,
@@ -16,6 +19,7 @@ import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemStatusValue } from './item-detail.model';
+import { logScaleButton } from '../graphs/log-scale-button';
 
 @Component({
   selector: 'app-item-detail',
@@ -91,11 +95,13 @@ export class ItemDetailComponent implements OnInit {
     const threadLine = { ...threadLineSettings, name: 'th', data: threads };
     const errorLine = { ...errorLineSettings, ...overAllFailRate };
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
-    this.responseTimeChartOptions = { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine] };
-    this.throughputChartOptions = { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine] };
+    this.responseTimeChartOptions = {
+      ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine], ...logScaleButton
+    };
+    this.throughputChartOptions = { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine], ...logScaleButton };
     this.overallChartOptions = {
       ...overallChartSettings('ms'), series: [
-        threadLine, overallTimeResponse, throughputLine, errorLine]
+        threadLine, overallTimeResponse, throughputLine, errorLine],
     };
   }
 

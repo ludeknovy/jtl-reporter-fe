@@ -10,8 +10,6 @@ describe('Scenario', () => {
 
   beforeAll((done) => {
     provider = new PactWeb({
-      consumer: 'jtl-reporter-ui',
-      provider: 'jtl-reporter-be',
       port: 1234,
       host: '127.0.0.1',
     });

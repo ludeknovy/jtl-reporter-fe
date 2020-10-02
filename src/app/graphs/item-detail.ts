@@ -51,12 +51,14 @@ export const commonGraphSettings: any = (text) => {
       crosshair: true,
     },
     yAxis: [{
+      gridLineColor: '#f2f2f2',
       lineWidth: 0,
       title: {
         text
       },
     },
     {
+      gridLineColor: '#f2f2f2',
       lineWidth: 0,
       opposite: true,
       title: {
@@ -71,12 +73,14 @@ export const overallChartSettings = (text) => {
   const commonSettings = commonGraphSettings(text);
   const yAxis = [
     {
+      gridLineColor: '#f2f2f2',
       lineWidth: 0,
       title: {
         text: 'hits/s'
       },
     },
     {
+      gridLineColor: '#f2f2f2',
       lineWidth: 0,
       opposite: true,
       title: {

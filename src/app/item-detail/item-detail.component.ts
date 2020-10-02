@@ -92,7 +92,7 @@ export class ItemDetailComponent implements OnInit {
 
   private generateCharts() {
     const { responseTime, throughput, threads, overallTimeResponse, overallThroughput, overAllFailRate } = this.itemData.plot;
-    const threadLine = { ...threadLineSettings, name: 'th', data: threads };
+    const threadLine = { ...threadLineSettings, name: 'virtual users', data: threads };
     const errorLine = { ...errorLineSettings, ...overAllFailRate };
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
     this.responseTimeChartOptions = {

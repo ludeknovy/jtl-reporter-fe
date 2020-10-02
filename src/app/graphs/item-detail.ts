@@ -60,7 +60,7 @@ export const commonGraphSettings: any = (text) => {
       lineWidth: 0,
       opposite: true,
       title: {
-        text: 'threads'
+        text: 'virtual users'
       }
     },
     ],

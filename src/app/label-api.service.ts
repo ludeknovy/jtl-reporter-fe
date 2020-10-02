@@ -11,17 +11,20 @@ export class LabelApiService {
   constructor(private http: HttpClient) { }
 
   fetchLabelTrend(projectName, scenarioName, itemId, label, params) {
+    const encodedLabel = encodeURIComponent(label);
     return this.http.get<LabelTrend>(
-      `projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${label}/trend`, { params });
+      `projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${encodedLabel}/trend`, { params });
   }
 
   fetchLabelMaxVu(projectName, scenarioName, itemId, label, params) {
+    const encodedLabel = encodeURIComponent(label);
     // tslint:disable-next-line:max-line-length
-    return this.http.get<LabelMaxVu>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${label}/virtual-users`, { params });
+    return this.http.get<LabelMaxVu>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${encodedLabel}/virtual-users`, { params });
   }
 
   fetchLabelErrors(projectName, scenarioName, itemId, label) {
-    return this.http.get<{ stat: any }>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${label}/errors`);
+    const encodedLabel = encodeURIComponent(label);
+    return this.http.get<{ stat: any }>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${encodedLabel}/errors`);
 
   }
 }

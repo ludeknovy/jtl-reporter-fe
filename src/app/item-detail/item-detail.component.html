@@ -58,7 +58,7 @@
                 <div class="col-sm">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title text-belize">{{itemData.overview.throughput}} <span
+                      <h2 class="card-title text-belize">{{itemData.overview.throughput > 1000 ? Math.round(itemData.overview.throughput) : itemData.overview.throughput}} <span
                           class="unit-desc">hits/s</span>
                       </h2>
                     </div>

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of, Observable, Subscription } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 import { ProjectOverview, Items } from '../items.service.model';
-import { ProjectService } from '../project.service';
 import { ItemsService } from '../items.service';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ScenarioService } from '../scenario.service';

@@ -157,3 +157,10 @@ export interface LabelMaxVu {
     count: number;
   }];
 }
+
+export interface ScenarioNotifications {
+  id: string;
+  url: string;
+  type: string;
+}
+

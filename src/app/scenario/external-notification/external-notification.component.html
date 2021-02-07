@@ -1,0 +1,64 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">External notifications</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="myform" >
+    <div class="modal-body">
+      <div class="notif-control-panel">
+        <app-add-new-external-notification></app-add-new-external-notification>
+      </div>
+
+        <div class="responsive-table" *ngIf="notifications">
+          <table class="table items" [mfData]="notifications" #mf="mfDataTable">
+            <thead>
+            <tr>
+              <th scope="col" class="jtl-head">
+                <mfDefaultSorter by="name">Name</mfDefaultSorter>
+              </th>
+              <th scope="col" class="jtl-head">
+                <mfDefaultSorter by="type">Type</mfDefaultSorter>
+              </th>
+              <th scope="col" class="jtl-head">
+                <mfDefaultSorter by="url">URL</mfDefaultSorter>
+              </th>
+              <th>
+              </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="notifications.length === 0">
+            <tr>
+              <td></td>
+              <td>
+                <div class="empty-table">No data found.</div>
+              </td>
+              <td></td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="notifications.length > 0">
+            <tr *ngFor="let _ of mf.data">
+              <td>
+                {{_.name}}
+              </td>
+              <td>
+                {{_.type}}
+              </td>
+              <td>
+                {{_.url}}
+              </td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+
+          </div>
+        </div>
+<!--    <div class="modal-footer">
+    </div>-->
+  </form>
+
+</ng-template>
+
+<button class="notification btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-bell"></i> notification</button>

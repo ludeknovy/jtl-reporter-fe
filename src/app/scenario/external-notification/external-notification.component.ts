@@ -4,6 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ScenarioApiService} from '../../scenario-api.service';
 import {ScenarioNotifications} from '../../items.service.model';
+import { ScenarioService } from 'src/app/scenario.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-external-notification',
@@ -13,36 +15,29 @@ import {ScenarioNotifications} from '../../items.service.model';
 export class ExternalNotificationComponent implements OnInit {
 
   myform: FormGroup;
-  scenarioName;
   params;
-  notifications: ScenarioNotifications[] = null;
+  notifications$: Observable<ScenarioNotifications[]>;
+
 
 
   constructor(
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private scenarioApiService: ScenarioApiService,
+    private scenarioService: ScenarioService
   ) {
+    this.notifications$ = this.scenarioService.notifications$;
+
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
-    this.createFormControls();
     this.createForm();
-    this.scenarioApiService.fetchScenarioNotification(this.params.projectName, this.params.scenarioName)
-      .subscribe(_ => this.notifications = _);
-  }
-
-  createFormControls() {
-    this.scenarioName = new FormControl('', [
-      Validators.maxLength(100)
-    ]);
+    this.scenarioService.fetchScenarioNotifications(this.params.projectName, this.params.scenarioName);
   }
 
   createForm() {
-    this.myform = new FormGroup({
-      scenarioName: this.scenarioName,
-    });
+    this.myform = new FormGroup({});
   }
 
   open(content) {

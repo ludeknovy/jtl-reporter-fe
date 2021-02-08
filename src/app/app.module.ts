@@ -52,6 +52,7 @@ import { AddUserComponent } from './administration/users/add-user/add-user.compo
 import { DeleteUserComponent } from './administration/users/delete-user/delete-user.component';
 import { ExternalNotificationComponent } from './scenario/external-notification/external-notification.component';
 import { AddNewExternalNotificationComponent } from './scenario/external-notification/add-new-external-notification/add-new-external-notification.component';
+import { DeleteExternalNotificationComponent } from './scenario/external-notification/delete-external-notification/delete-external-notification.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -126,6 +127,7 @@ const appRoutes: Routes = [
     DeleteUserComponent,
     ExternalNotificationComponent,
     AddNewExternalNotificationComponent,
+    DeleteExternalNotificationComponent,
   ],
   imports: [
     RouterModule.forRoot(

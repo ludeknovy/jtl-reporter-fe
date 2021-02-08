@@ -8,10 +8,9 @@
   <form [formGroup]="myform" >
     <div class="modal-body">
       <div class="notif-control-panel">
-        <app-add-new-external-notification></app-add-new-external-notification>
+        <app-add-new-external-notification [params]="params"></app-add-new-external-notification>
       </div>
-
-        <div class="responsive-table" *ngIf="notifications">
+        <div class="responsive-table" *ngIf="notifications$ | async; let notifications">
           <table class="table items" [mfData]="notifications" #mf="mfDataTable">
             <thead>
             <tr>
@@ -24,7 +23,7 @@
               <th scope="col" class="jtl-head">
                 <mfDefaultSorter by="url">URL</mfDefaultSorter>
               </th>
-              <th>
+              <th class="jtl-head">
               </th>
             </tr>
             </thead>
@@ -48,7 +47,7 @@
               <td>
                 {{_.url}}
               </td>
-              <td></td>
+              <td><app-delete-external-notification [notificationInput]="{id: _.id, name: _.name}" [params]="params"></app-delete-external-notification></td>
             </tr>
             </tbody>
           </table>

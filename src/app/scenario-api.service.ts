@@ -38,6 +38,15 @@ export class ScenarioApiService {
     return this.http.get<ScenarioNotifications[]>(`projects/${projectName}/scenarios/${scenarioName}/notifications`);
   }
 
+  deleteScenarioNotification(projectName, scenarioName, id): Observable<{}> {
+    return this.http.delete<{}>(`projects/${projectName}/scenarios/${scenarioName}/notifications/${id}`, { observe: 'response'});
+  }
+
+  createNewScenarioNotification(projectName, scenarioName, body): Observable<{}> {
+    return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/notifications`, body, { observe: 'response' });
+
+  }
+
   setData(data) {
     this.response.next(data);
   }

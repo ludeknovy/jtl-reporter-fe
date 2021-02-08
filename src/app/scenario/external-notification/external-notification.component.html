@@ -44,8 +44,8 @@
               <td>
                 {{_.type}}
               </td>
-              <td>
-                {{_.url}}
+              <td class="ellipsis">
+                <span title={{_.url}}>{{_.url}}</span>
               </td>
               <td><app-delete-external-notification [notificationInput]="{id: _.id, name: _.name}" [params]="params"></app-delete-external-notification></td>
             </tr>

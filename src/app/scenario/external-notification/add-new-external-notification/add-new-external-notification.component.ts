@@ -38,10 +38,12 @@ export class AddNewExternalNotificationComponent implements OnInit {
 
   createFormControls() {
     this.url = new FormControl('', [
-      Validators.maxLength(200)
+      Validators.maxLength(400),
+      Validators.required
     ]);
     this.name = new FormControl('', [
-      Validators.maxLength(100)
+      Validators.maxLength(100),
+      Validators.required
     ])
   }
 

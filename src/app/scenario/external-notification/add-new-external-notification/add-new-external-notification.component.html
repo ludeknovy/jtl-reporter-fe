@@ -24,7 +24,16 @@
         </div>
         <input type="input" class="form-control" formControlName="name" aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
+      <div class="form-control-feedback" *ngIf="url.errors && (url.dirty || url.touched)">
+        <p class="alert alert-danger" *ngIf="url.errors.required">Webhook Url required</p>
+        <p class="alert alert-danger" *ngIf="url.errors.maxlength">The url is too long.</p>
+      </div>
+      <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
+        <p class="alert alert-danger" *ngIf="name.errors.required">Name required</p>
+        <p class="alert alert-danger" *ngIf="name.errors.maxlength">Name is too long.</p>
+      </div>
     </div>
+
     <div class="modal-footer">
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>

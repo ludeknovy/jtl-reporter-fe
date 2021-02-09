@@ -1,4 +1,10 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DataTableModule } from '@rushvora/ng-datatable';
+import { AddNewExternalNotificationComponent } from './add-new-external-notification/add-new-external-notification.component';
+import { DeleteExternalNotificationComponent } from './delete-external-notification/delete-external-notification.component';
 
 import { ExternalNotificationComponent } from './external-notification.component';
 
@@ -8,9 +14,13 @@ describe('ExternalNotificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExternalNotificationComponent ]
+      declarations: [ExternalNotificationComponent,
+        AddNewExternalNotificationComponent,
+        DeleteExternalNotificationComponent],
+      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule, DataTableModule],
+
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

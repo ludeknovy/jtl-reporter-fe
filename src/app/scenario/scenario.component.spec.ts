@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTableModule } from '@rushvora/ng-datatable';
+import { ExternalNotificationComponent } from './external-notification/external-notification.component';
 
 describe('ScenarioComponent', () => {
   let component: ScenarioComponent;
@@ -27,7 +28,8 @@ describe('ScenarioComponent', () => {
         EditScenarioComponent,
         DeleteScenarioComponent,
         ControlPanelComponent,
-        ScenarioGraphComponent
+        ScenarioGraphComponent,
+        ExternalNotificationComponent,
       ],
       imports: [
         NgxSpinnerModule,

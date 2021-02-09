@@ -14,7 +14,7 @@ export class ScenarioService {
   public trends$ = this.trends.asObservable();
 
   private notifications = new BehaviorSubject<ScenarioNotifications[]>([]);
-  public notifications$ = this.notifications.asObservable()
+  public notifications$ = this.notifications.asObservable();
 
   constructor(
     private scenarioApiService: ScenarioApiService
@@ -28,7 +28,7 @@ export class ScenarioService {
 
   fetchScenarioNotifications(projectName, scenarioName) {
     this.scenarioApiService.fetchScenarioNotification(projectName, scenarioName)
-      .subscribe(_ => this.notifications.next(_))
+      .subscribe(_ => this.notifications.next(_));
   }
 
 }

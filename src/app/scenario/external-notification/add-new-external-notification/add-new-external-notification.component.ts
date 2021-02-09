@@ -17,7 +17,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
   myform: FormGroup;
   url;
   name;
-  modal: NgbActiveModal
+  modal: NgbActiveModal;
   @Input() params;
 
   constructor(
@@ -28,8 +28,8 @@ export class AddNewExternalNotificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.createFormControls()
-    this.createForm()
+    this.createFormControls();
+    this.createForm();
   }
 
   open(content) {
@@ -44,7 +44,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
     this.name = new FormControl('', [
       Validators.maxLength(100),
       Validators.required
-    ])
+    ]);
   }
 
   createForm() {
@@ -60,7 +60,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
       const body = {
         ...this.myform.value,
         type: 'ms-teams'
-      }
+      };
 
       this.scenarioApiService.createNewScenarioNotification(projectName, scenarioName, body)
         .pipe(catchError(r => of(r)))

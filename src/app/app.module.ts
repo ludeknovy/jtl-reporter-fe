@@ -51,7 +51,9 @@ import { UsersComponent } from './administration/users/users.component';
 import { AddUserComponent } from './administration/users/add-user/add-user.component';
 import { DeleteUserComponent } from './administration/users/delete-user/delete-user.component';
 import { ExternalNotificationComponent } from './scenario/external-notification/external-notification.component';
+// tslint:disable-next-line:max-line-length
 import { AddNewExternalNotificationComponent } from './scenario/external-notification/add-new-external-notification/add-new-external-notification.component';
+// tslint:disable-next-line:max-line-length
 import { DeleteExternalNotificationComponent } from './scenario/external-notification/delete-external-notification/delete-external-notification.component';
 
 const appRoutes: Routes = [

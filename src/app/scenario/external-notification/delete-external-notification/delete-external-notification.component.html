@@ -1,0 +1,25 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Notification</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+
+      <div class="alert alert-primary" role="alert">
+        Are you sure you want to delete <strong>{{notificationInput.name}} </strong> notification?
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button>
+      <button type="submit" class="btn btn-danger float-left">Delete</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<button class="btn btn-link btn-sm text-danger float-right" (click)="open(content)">
+    <i class="fas fa-trash-alt"></i>
+</button>

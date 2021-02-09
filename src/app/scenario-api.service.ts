@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IScenarios } from './items.service.model';
+import {IScenarios, ScenarioNotifications} from './items.service.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,7 @@ export class ScenarioApiService {
   private response = new BehaviorSubject<any>({});
   public response$ = this.response.asObservable();
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   updateScenario(projectName, scenarioName, body): Observable<{}> {
     return this.http.put(`projects/${projectName}/scenarios/${scenarioName}`, body, { observe: 'response'});
@@ -33,6 +32,19 @@ export class ScenarioApiService {
 
   createNewScenario(projectName, body): Observable<{}> {
     return this.http.post(`projects/${projectName}/scenarios`, body, { observe: 'response'});
+  }
+
+  fetchScenarioNotification(projectName, scenarioName): Observable<ScenarioNotifications[]> {
+    return this.http.get<ScenarioNotifications[]>(`projects/${projectName}/scenarios/${scenarioName}/notifications`);
+  }
+
+  deleteScenarioNotification(projectName, scenarioName, id): Observable<{}> {
+    return this.http.delete<{}>(`projects/${projectName}/scenarios/${scenarioName}/notifications/${id}`, { observe: 'response'});
+  }
+
+  createNewScenarioNotification(projectName, scenarioName, body): Observable<{}> {
+    return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/notifications`, body, { observe: 'response' });
+
   }
 
   setData(data) {

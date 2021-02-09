@@ -8,6 +8,7 @@
   <div>
     <app-add-new-item-modal></app-add-new-item-modal>
     <app-edit-scenario [scenarioData]="items$"></app-edit-scenario>
+    <app-external-notification></app-external-notification>
     <app-delete-scenario [scenarioData]="params"></app-delete-scenario>
   </div>
 
@@ -60,28 +61,28 @@
               <table class="table items" [mfData]="items.data" #mf="mfDataTable">
                 <thead>
                   <tr>
-                    <th scope="col" class="head vu">
+                    <th scope="col" class="jtl-head vu">
                       <mfDefaultSorter by="maxVu">virtual users</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head duration">
+                    <th scope="col" class="jtl-head duration">
                       <mfDefaultSorter by="duration">duration</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head environment">
+                    <th scope="col" class="jtl-head environment">
                       <mfDefaultSorter by="environment">environment</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head">
+                    <th scope="col" class="jtl-head">
                       <mfDefaultSorter by="note">note</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head start-time">
+                    <th scope="col" class="jtl-head start-time">
                       <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head hostname">
+                    <th scope="col" class="jtl-head hostname">
                       <mfDefaultSorter by="hostname">hostname</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head status">
+                    <th scope="col" class="jtl-head status">
                       <mfDefaultSorter by="status">status</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="head base">
+                    <th scope="col" class="jtl-head base">
                       <mfDefaultSorter by="base"></mfDefaultSorter>
                     </th>
                   </tr>

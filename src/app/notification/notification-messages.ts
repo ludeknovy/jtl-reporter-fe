@@ -62,6 +62,14 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, 'User has been deleted');
   }
 
+  deleteScenarioNotification(response) {
+    return this.statusCodeMessage(response, 'Notification has been deleted');
+  }
+
+  createScenarioNotification(response) {
+    return this.statusCodeMessage(response, 'Notification has been created');
+  }
+
   private statusCodeMessage(response, succesMessgae) {
     let message = { success: false, message: `Something went wrong` };
     if (response.status >= 200 && response.status < 300) {

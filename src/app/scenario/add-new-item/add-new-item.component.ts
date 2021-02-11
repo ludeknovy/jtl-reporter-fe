@@ -8,7 +8,6 @@ import { of } from 'rxjs';
 import { NotificationMessage } from '../../notification/notification-messages';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ItemsService } from 'src/app/items.service';
-import { ProjectService } from 'src/app/project.service';
 import { ItemStatus } from './add-new-item.model';
 import { ItemStatusValue } from 'src/app/item-detail/item-detail.model';
 import { ScenarioService } from 'src/app/scenario.service';

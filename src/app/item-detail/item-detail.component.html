@@ -5,11 +5,20 @@
     </li>
   </ul>
   <div>
-    <app-edit-item *ngIf="itemData.environment"
-      [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
-      (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
-    <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
-    <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
+
+    <div class="btn-group mr-3">
+      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-sm jtl-no-glow jtl-control-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
+        <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+          <app-edit-item *ngIf="itemData.environment"
+          [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
+          (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
+        <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
+        <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
+        </div>
+      </div>
+    </div>
+
   </div>
 </app-control-panel>
 

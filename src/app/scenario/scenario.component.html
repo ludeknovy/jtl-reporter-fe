@@ -6,10 +6,18 @@
     </li>
   </ul>
   <div>
-    <app-add-new-item-modal></app-add-new-item-modal>
-    <app-edit-scenario [scenarioData]="items$"></app-edit-scenario>
-    <app-external-notification></app-external-notification>
-    <app-delete-scenario [scenarioData]="params"></app-delete-scenario>
+
+    <div class="btn-group mr-3">
+      <app-add-new-item-modal></app-add-new-item-modal>
+      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-sm jtl-no-glow jtl-control-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
+        <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+          <app-edit-scenario [scenarioData]="items$"></app-edit-scenario>
+          <app-external-notification></app-external-notification>
+          <app-delete-scenario [scenarioData]="params"></app-delete-scenario>
+        </div>
+      </div>
+    </div>
   </div>
 
 </app-control-panel>
@@ -53,8 +61,12 @@
       <div class="col" *ngIf="items$ | async; let items">
         <div class="card recent-runs">
           <h6 class="card-header bg-transparent">Test Runs
-            <span  title="Total ready items" class="text-secondary total">{{items.total}} <i class="far fa-check-circle"></i></span>
-            <span title="Items in progress" *ngIf="processingItems"><span *ngIf="processingItems.inprogress && processingItems.inprogress.length > 0" class="text-secondary in-progress">{{processingItems.inprogress?.length}} <i class="far fa-clock"></i></span></span>
+            <span title="Total ready items" class="text-secondary total">{{items.total}} <i
+                class="far fa-check-circle"></i></span>
+            <span title="Items in progress" *ngIf="processingItems"><span
+                *ngIf="processingItems.inprogress && processingItems.inprogress.length > 0"
+                class="text-secondary in-progress">{{processingItems.inprogress?.length}} <i
+                  class="far fa-clock"></i></span></span>
           </h6>
           <div class="card-body">
             <div class="table-responsive">

@@ -102,3 +102,28 @@ a:hover {
   height: 43px;
   color: #54545491;
 }
+
+.jtl-dropdown-control-menu {
+  box-shadow: #0c0c0d30 0px 5px 12px 4px;
+  border: none;
+}
+.jtl-control-menu::after {
+  display:none;
+}
+
+
+.jtl-no-glow,
+.jtl-no-glow:active{
+    box-shadow:none !important;
+    outline:0px !important;
+}
+
+.jtl-btn-light {
+  color: #4b7cf3;
+  background-color: #f2f4f8;
+}
+.jtl-btn-light:hover{
+  background-color: #dee3ed;
+  border-color: #dee3ed;
+  color: #4b7cf3;
+}

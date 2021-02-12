@@ -7,6 +7,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { AddNewProjectComponent } from './administration/projects/add-project/add-project-modal.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -14,13 +16,16 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         TopPanelComponent,
-        NotificationComponent
+        NotificationComponent,
+        AddNewProjectComponent,
       ],
       imports: [
         RouterTestingModule,
         NgxSpinnerModule,
         NgbModule,
         HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
         ToastrModule.forRoot(),
       ]
     }).compileComponents();

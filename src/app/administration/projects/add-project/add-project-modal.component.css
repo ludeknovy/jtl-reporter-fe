@@ -1,0 +1,15 @@
+.dropdown-new-project{
+  line-height: 2rem;
+  color: #cacaca;
+}
+
+.dropdown-new-project.active {
+  color: white !important;
+  background-color: #343a40;
+  border-radius: 0;
+}
+
+.dropdown-new-project:hover {
+  background-color: #5f6063 !important;
+  border-radius: 0;
+}

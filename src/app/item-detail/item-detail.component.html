@@ -7,14 +7,15 @@
   <div>
 
     <div class="btn-group mr-3">
-      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
+        aria-label="Button group with nested dropdown">
         <button class="btn btn-sm jtl-no-glow jtl-control-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-item *ngIf="itemData.environment"
-          [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
-          (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
-        <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
-        <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
+            [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
+            (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
+          <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
+          <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
         </div>
       </div>
     </div>
@@ -67,7 +68,8 @@
                 <div class="col-sm">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title text-belize">{{itemData.overview.throughput > 1000 ? Math.round(itemData.overview.throughput) : itemData.overview.throughput}} <span
+                      <h2 class="card-title text-belize">{{itemData.overview.throughput > 1000 ?
+                        Math.round(itemData.overview.throughput) : itemData.overview.throughput}} <span
                           class="unit-desc">hits/s</span>
                       </h2>
                     </div>
@@ -101,8 +103,7 @@
                         n/a
                       </h2>
                       <h2 *ngIf="itemData.overview.avgLatency >= 1000" class="card-title text-latency">{{
-                        Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span
-                          class="unit-desc">s</span>
+                        Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
                       <h2 *ngIf="itemData.overview.avgLatency < 1000 && itemData.overview.avgLatency > 0"
                         class="card-title text-latency">{{
@@ -124,8 +125,7 @@
                         n/a
                       </h2>
                       <h2 *ngIf="itemData.overview.avgConnect >= 1000" class="card-title text-latency">{{
-                        Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span
-                          class="unit-desc">s</span>
+                        Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
                       <h2 *ngIf="itemData.overview.avgConnect < 1000 && itemData.overview.avgConnect > 0"
                         class="card-title text-latency">{{
@@ -257,17 +257,30 @@
     <div class="row">
       <div class="col">
         <div class="card request-stats">
+
           <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
+
               <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
                 {{comparedMetadata.maxVu}} VU</span>
-              <button class="remove-comparison btn btn-sm btn-outline-danger" *ngIf="comparedData"
-                (click)="resetStatsData()"><i class="fas fa-minus"></i> <span class="compare-desc-btn">
-                  remove</span></button>
-              <button class="quick-base-comparison btn btn-sm btn-outline-dark"
-                *ngIf="(itemData.baseId && itemData.baseId !== itemParams.id) && !comparedData"
-                (click)="quickBaseComparison(itemData.baseId)"><i class="fas fa-rocket"></i> <span
-                  class="compare-desc-btn"> compare to base run</span></button>
-              <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+              <button class="remove-comparison btn btn-sm jtl-btn-light" *ngIf="comparedData"
+                (click)="resetStatsData()"><span class="compare-desc-btn">Remove</span>
+              </button>
+
+              <div class="btn-group mr-3">
+                <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown
+                  role="group" aria-label="Button group with nested dropdown">
+                  <button class="btn btn-sm jtl-no-glow jtl-control-menu" ngbDropdownToggle><i
+                      class="fas fa-bars"></i></button>
+                  <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+                    <button class="quick-base-comparison btn btn-sm btn-outline-dark"
+                      *ngIf="(itemData.baseId && itemData.baseId !== itemParams.id)"
+                      (click)="quickBaseComparison(itemData.baseId)" ngbDropdownItem><span class="compare-desc-btn">
+                        Compare to base run</span></button>
+                    <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+                  </div>
+                </div>
+              </div>
+
             </span></h6>
           <div class="card-body card-body-request-stats">
             <div class="input-group">

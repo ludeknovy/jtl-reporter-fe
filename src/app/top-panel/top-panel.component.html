@@ -18,6 +18,9 @@
               <a ngbDropdownItem class="btn btn-block text-left" routerLink="/project/{{_.projectName}}/scenarios"
                 routerLinkActive="active" (click)="changeSelectedProject(_.projectName)">{{_.projectName}}</a>
             </li>
+            <li>
+              <app-add-project [topMenu]="true">New Project</app-add-project>
+            </li>
           </div>
         </div>
       </li>

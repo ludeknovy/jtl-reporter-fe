@@ -32,7 +32,7 @@ export class NotificationComponent implements OnInit {
 
 
     this._success.subscribe((message) => {
-      const options = { positionClass: 'toast-bottom-right'}
+      const options = { positionClass: 'toast-bottom-right'};
       if (message.success === true) {
         this.toastr.success(message.message, null, options);
       } else {

@@ -82,7 +82,7 @@ export class EditItemComponent implements OnInit {
           return this.itemsApiService.setData(message);
         }).add((_) => {
           if (this.reloadItems) {
-            this.itemsService.fetchItems(projectName, scenarioName)
+            this.itemsService.fetchItems(projectName, scenarioName);
           }
         });
       this.modalService.dismissAll();

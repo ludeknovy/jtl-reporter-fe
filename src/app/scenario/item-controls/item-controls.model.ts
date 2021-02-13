@@ -1,13 +1,13 @@
 export interface ItemParams {
-  id: string,
-  projectName: string,
-  scenarioName: string
+  id: string;
+  projectName: string;
+  scenarioName: string;
 }
 
 export interface ItemInput {
   note?: string;
-  environment: string,
-  isBase?: boolean,
-  hostname?: string
-  params: ItemParams
+  environment: string;
+  isBase?: boolean;
+  hostname?: string;
+  params: ItemParams;
 }

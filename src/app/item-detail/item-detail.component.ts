@@ -163,7 +163,8 @@ export class ItemDetailComponent implements OnInit {
       {
         closeButton: true,
         enableHtml: true,
-        timeOut: 15000
+        timeOut: 15000,
+        positionClass: 'toast-bottom-right'
       });
     this.comparisonWarning = [];
   }

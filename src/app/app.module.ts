@@ -55,6 +55,7 @@ import { ExternalNotificationComponent } from './scenario/external-notification/
 import { AddNewExternalNotificationComponent } from './scenario/external-notification/add-new-external-notification/add-new-external-notification.component';
 // tslint:disable-next-line:max-line-length
 import { DeleteExternalNotificationComponent } from './scenario/external-notification/delete-external-notification/delete-external-notification.component';
+import { ItemControlsComponent } from './scenario/item-controls/item-controls.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -130,6 +131,7 @@ const appRoutes: Routes = [
     ExternalNotificationComponent,
     AddNewExternalNotificationComponent,
     DeleteExternalNotificationComponent,
+    ItemControlsComponent,
   ],
   imports: [
     RouterModule.forRoot(

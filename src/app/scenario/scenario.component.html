@@ -88,14 +88,10 @@
                     <th scope="col" class="jtl-head start-time">
                       <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="jtl-head hostname">
-                      <mfDefaultSorter by="hostname">hostname</mfDefaultSorter>
-                    </th>
                     <th scope="col" class="jtl-head status">
                       <mfDefaultSorter by="status">status</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="jtl-head base">
-                      <mfDefaultSorter by="base"></mfDefaultSorter>
+                    <th scope="col" class="jtl-head">
                     </th>
                   </tr>
                 </thead>
@@ -109,26 +105,23 @@
                   </tr>
                 </tbody>
                 <tbody *ngIf="items.data.length > 0">
-                  <tr *ngFor="let _ of mf.data" (click)="open(_.id)">
-                    <td>
+                  <tr *ngFor="let _ of mf.data">
+                    <td (click)="open(_.id)">
                       {{_.maxVu}}
                     </td>
-                    <td>
+                    <td (click)="open(_.id)">
                       {{_.duration}}
                     </td>
-                    <td class="ellipsis-environment">
+                    <td class="ellipsis-environment" (click)="open(_.id)">
                       {{_.environment}}
                     </td>
-                    <td [attr.title]="_.note" class="ellipsis">
+                    <td [attr.title]="_.note" class="ellipsis" (click)="open(_.id)">
                       {{_.note}}
                     </td>
-                    <td>
+                    <td (click)="open(_.id)">
                       {{_.startTime | date:'d. L. yyyy H:mm'}}
                     </td>
-                    <td [attr.title]="_.hostname" class="ellipsis">
-                      {{_.hostname}}
-                    </td>
-                    <td>
+                    <td (click)="open(_.id)">
                       <span *ngIf="_.status === '0'" title="Passed"><i
                           class="fas fa-check-circle text-success status-icon"></i></span>
                       <span *ngIf="_.status === '1'" title="Error/Terminated"><i
@@ -140,8 +133,8 @@
                       <span *ngIf="_.status === '10'" title="Status not set"><i
                           class="far fa-circle text-secondary status-icon"></i></span>
                     </td>
-                    <td>
-                      <span *ngIf="_.base"><i class="fas fa-asterisk base-icon"></i></span>
+                    <td class="text-right" >
+                      <app-item-controls [item]="{note: _.note, environment: _.environment, hostname: _.hostname, isBase: _.base, params: { id: _.id, scenarioName: params.scenarioName, projectName: params.projectName }}"></app-item-controls>
                     </td>
                   </tr>
                 </tbody>

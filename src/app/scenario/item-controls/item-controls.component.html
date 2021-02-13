@@ -1,0 +1,10 @@
+<div class="btn-group mr-3">
+  <div display="dynamic" container="body" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
+    aria-label="Button group with nested dropdown">
+    <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
+    <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+      <app-edit-item [itemDetailData]="item" [reloadItems]="true"></app-edit-item>
+      <app-delete-item [itemData]="{ id: item.params.id, scenarioName: item.params.scenarioName, projectName: item.params.projectName}"></app-delete-item>
+    </div>
+  </div>
+</div>

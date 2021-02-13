@@ -6,6 +6,8 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationMessage } from 'src/app/notification/notification-messages';
+import { ItemInput } from 'src/app/scenario/item-controls/item-controls.model';
+import { ItemsService } from 'src/app/items.service';
 
 @Component({
   selector: 'app-edit-item',
@@ -22,20 +24,19 @@ export class EditItemComponent implements OnInit {
   base;
   isBase;
   disabled;
-  params;
 
-  @Input() itemDetailData: any;
+  @Input() reloadItems: boolean;
+  @Input() itemDetailData: ItemInput;
   @Output() itemDetailChange = new EventEmitter<{}>();
 
   constructor(
-    private route: ActivatedRoute,
     private modalService: NgbModal,
-    private itemsService: ItemsApiService,
+    private itemsApiService: ItemsApiService,
+    private itemsService: ItemsService,
     private notification: NotificationMessage
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(_ => this.params = _);
     this.isBase = this.itemDetailData.isBase;
     this.disabled = this.isBase;
     this.createFormControls();
@@ -72,13 +73,17 @@ export class EditItemComponent implements OnInit {
   onSubmit() {
     if (this.myform.valid) {
       const { note, environment, base, hostname } = this.myform.value;
-      const { projectName, id, scenarioName } = this.params;
-      this.itemsService.updateItemInfo(id, projectName, scenarioName, { environment, note, base, hostname })
+      const { projectName, id, scenarioName } = this.itemDetailData.params;
+      this.itemsApiService.updateItemInfo(id, projectName, scenarioName, { environment, note, base, hostname })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           this.itemDetailChange.emit({ note, environment, hostname });
           const message = this.notification.itemUpdate(_);
-          return this.itemsService.setData(message);
+          return this.itemsApiService.setData(message);
+        }).add((_) => {
+          if (this.reloadItems) {
+            this.itemsService.fetchItems(projectName, scenarioName);
+          }
         });
       this.modalService.dismissAll();
     }

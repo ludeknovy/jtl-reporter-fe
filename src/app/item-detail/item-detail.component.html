@@ -9,7 +9,7 @@
     <div class="btn-group mr-3">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="Button group with nested dropdown">
-        <button class="btn btn-sm jtl-no-glow jtl-control-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
+        <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-item *ngIf="itemData.environment"
             [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
@@ -269,7 +269,7 @@
               <div class="btn-group mr-3">
                 <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown
                   role="group" aria-label="Button group with nested dropdown">
-                  <button class="btn btn-sm jtl-no-glow jtl-control-menu" ngbDropdownToggle><i
+                  <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
                       class="fas fa-bars"></i></button>
                   <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
                     <button class="quick-base-comparison btn btn-sm btn-outline-dark"

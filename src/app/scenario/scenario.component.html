@@ -10,7 +10,7 @@
     <div class="btn-group mr-3">
       <app-add-new-item-modal></app-add-new-item-modal>
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-        <button class="btn btn-sm jtl-no-glow jtl-control-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
+        <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-scenario [scenarioData]="items$"></app-edit-scenario>
           <app-external-notification></app-external-notification>

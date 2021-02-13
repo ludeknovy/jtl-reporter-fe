@@ -27,7 +27,7 @@ export class BreadcrumbComponent implements OnInit {
         this.urls.push({ label: scenarioName, url: projectUrlTemplate, last: _length === 2 });
       }
       if (id) {
-        this.urls.push({ label: "test run", url: "", last: _length === 3})
+        this.urls.push({ label: 'test run', url: '', last: _length === 3});
       }
     });
   }

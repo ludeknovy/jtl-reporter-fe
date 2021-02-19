@@ -16,6 +16,9 @@ export class ItemsService {
   private items = new BehaviorSubject<Items>({ name, data: [], total: 0 });
   public items$ = this.items.asObservable();
 
+  private shareTokens = new BehaviorSubject<[]>([]);
+  public shareTokens$ = this.shareTokens.asObservable();
+
   constructor(
     private itemsApiService: ItemsApiService
   ) { }
@@ -34,6 +37,10 @@ export class ItemsService {
     this.interval = interval(5000).subscribe(() => {
       return this.fetchProcessingItems(projectName, scenarioName);
     });
+  }
+
+  fetchItemShareTokens(projectName, scenarioName, itemId) {
+    this.itemsApiService.fetchItemShareTokens(projectName, scenarioName, itemId).subscribe((_) => this.shareTokens.next(_));
   }
 
 }

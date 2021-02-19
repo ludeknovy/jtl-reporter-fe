@@ -56,6 +56,9 @@ import { AddNewExternalNotificationComponent } from './scenario/external-notific
 // tslint:disable-next-line:max-line-length
 import { DeleteExternalNotificationComponent } from './scenario/external-notification/delete-external-notification/delete-external-notification.component';
 import { ItemControlsComponent } from './scenario/item-controls/item-controls.component';
+import { ShareComponent } from './item-detail/share/share.component';
+import { CreateNewShareLinkComponent } from './item-detail/share/create-new-share-link/create-new-share-link.component';
+import { DeleteShareLinkComponent } from './item-detail/share/delete-share-link/delete-share-link.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -78,7 +81,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'project/:projectName/scenario/:scenarioName/item/:id', component: ItemDetailComponent,
-    runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
+    runGuardsAndResolvers: 'always', canActivate: [AuthGuard],
   },
   {
     path: 'project/:projectName/scenarios', component: ScenariosComponent,
@@ -132,6 +135,9 @@ const appRoutes: Routes = [
     AddNewExternalNotificationComponent,
     DeleteExternalNotificationComponent,
     ItemControlsComponent,
+    ShareComponent,
+    CreateNewShareLinkComponent,
+    DeleteShareLinkComponent,
   ],
   imports: [
     RouterModule.forRoot(

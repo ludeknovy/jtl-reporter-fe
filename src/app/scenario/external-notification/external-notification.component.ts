@@ -1,8 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ScenarioApiService} from '../../scenario-api.service';
 import {ScenarioNotifications} from '../../items.service.model';
 import { ScenarioService } from 'src/app/scenario.service';
 import { Observable } from 'rxjs';
@@ -23,7 +22,6 @@ export class ExternalNotificationComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private scenarioApiService: ScenarioApiService,
     private scenarioService: ScenarioService
   ) {
     this.notifications$ = this.scenarioService.notifications$;

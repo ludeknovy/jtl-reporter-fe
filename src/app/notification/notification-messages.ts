@@ -71,7 +71,11 @@ export class NotificationMessage {
   }
 
   createItemShareLinkNotification(response) {
-    return this.statusCodeMessage(response, 'Link has been created');
+    return this.statusCodeMessage(response, 'Link was created');
+  }
+
+  deleteItemShareTokenNotification(response) {
+    return this.statusCodeMessage(response, 'Link was deleted');
   }
 
   private statusCodeMessage(response, succesMessgae) {

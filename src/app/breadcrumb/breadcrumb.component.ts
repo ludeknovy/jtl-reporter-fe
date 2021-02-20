@@ -20,7 +20,7 @@ export class BreadcrumbComponent implements OnInit {
       const _length = Object.keys(_).length;
       if (projectName) {
         const projectUrlTemplate = `/project/${projectName}/scenarios`;
-        this.urls.push({ label: 'scenarios', url: projectUrlTemplate, last: _length === 1});
+        this.urls.push({ label: projectName, url: projectUrlTemplate, last: _length === 1});
       }
       if (scenarioName) {
         const projectUrlTemplate = `/project/${projectName}/scenario/${scenarioName}/items`;

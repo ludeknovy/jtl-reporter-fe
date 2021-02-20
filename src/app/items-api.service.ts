@@ -81,7 +81,7 @@ export class ItemsApiService {
   }
 
   fetchItemShareTokens(projectName, scenarioName, itemId): Observable<[]> {
-    return this.http.get<[]>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/share-tokens`)
+    return this.http.get<[]>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/share-tokens`);
   }
 
   createItemShareToken(projectName, scenarioName, itemId, body: { note?: string }): Observable<HttpResponse<{ token: string }>> {

@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CreateNewShareLinkComponent } from './create-new-share-link.component';
 
@@ -8,7 +10,12 @@ describe('CreateNewShareLinkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateNewShareLinkComponent ]
+      declarations: [ CreateNewShareLinkComponent ],
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+      ]
     })
     .compileComponents();
   }));

@@ -1,0 +1,63 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Share Test Run</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="shareForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <p></p>
+      <div class="input-group mb-3">
+        <div>
+          <app-create-new-share-link [params]=params></app-create-new-share-link>
+        </div>
+
+        <div class="responsive-table" *ngIf="shareTokens$ | async; let shareTokens">
+          <table class="table items" [mfData]="shareTokens" #mf="mfDataTable">
+            <thead>
+            <tr >
+              <th scope="col" class="jtl-head">
+                <mfDefaultSorter by="name">Note</mfDefaultSorter>
+              </th>
+              <th class="jtl-head w-50">Link</th>
+              <th class="jtl-head"></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="shareTokens.length === 0">
+            <tr>
+              <td></td>
+              <td>
+                <div class="empty-table">No links created yet.</div>
+              </td>
+              <td></td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="shareTokens.length > 0">
+            <tr *ngFor="let _ of mf.data">
+              <td>
+                {{_.name}}
+              </td>
+              <td class="ellipses">
+                <input class="form-control link" type="text" value="{{selfUrl + '?token=' + _.token}}" #userinput>
+              </td>
+              <td class="text-right">
+                <button class="btn btn-sm jtl-btn-light jtl-no-glow" (click)="copyInputMessage(userinput)" value="click to copy" >Copy link</button>
+                <app-delete-share-link [params]=params [tokenId]=_.id></app-delete-share-link>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </form>
+
+</ng-template>
+
+<button class="btn btn-sm" (click)="open(content)" ngbDropdownItem>
+  Share
+</button>

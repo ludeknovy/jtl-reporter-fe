@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ItemDetail, Items } from './items.service.model';
 
@@ -15,9 +15,10 @@ export class ItemsApiService {
   constructor(private http: HttpClient) {
   }
 
-  fetchItemDetail(projectName: string, scenarioName: string, itemId: string): Observable<ItemDetail> {
+  fetchItemDetail(projectName: string, scenarioName: string, itemId: string, params?): Observable<ItemDetail> {
     return this.http.get<ItemDetail>(
-      `projects/${projectName}/scenarios/${scenarioName}/items/${itemId}`);
+      `projects/${projectName}/scenarios/${scenarioName}/items/${itemId}`,
+      { params });
   }
 
   updateItemInfo(itemId, projectName, scenarioName, body): Observable<{}> {
@@ -77,5 +78,20 @@ export class ItemsApiService {
 
   fetchProcessingItems(projectName, scenarioName): Observable<[]> {
     return this.http.get<[]>(`projects/${projectName}/scenarios/${scenarioName}/processing-items`);
+  }
+
+  fetchItemShareTokens(projectName, scenarioName, itemId): Observable<[]> {
+    return this.http.get<[]>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/share-tokens`);
+  }
+
+  createItemShareToken(projectName, scenarioName, itemId, body: { note?: string }): Observable<HttpResponse<{ token: string }>> {
+    return this.http.post<{ token: string }>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/share-tokens`, body, {
+      observe: 'response'
+    });
+  }
+
+  deleteItemShareToken(projectName, scenarioName, itemId, id): Observable<HttpResponse<{}>> {
+    return this.http.delete<{}>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/share-tokens/${id}`,
+      { observe: 'response' });
   }
 }

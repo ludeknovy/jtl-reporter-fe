@@ -1,4 +1,4 @@
-<app-control-panel>
+<app-control-panel *ngIf="!isAnonymous">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
       <app-breadcrumb></app-breadcrumb>
@@ -15,6 +15,7 @@
             [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
             (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
           <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
+          <app-share [params]=itemParams></app-share>
           <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
         </div>
       </div>
@@ -266,7 +267,7 @@
                 (click)="resetStatsData()"><span class="compare-desc-btn">Remove</span>
               </button>
 
-              <div class="btn-group mr-3">
+              <div *ngIf="!isAnonymous" class="btn-group mr-3">
                 <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown
                   role="group" aria-label="Button group with nested dropdown">
                   <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
@@ -359,11 +360,11 @@
                         *ngIf="_.errorRateDiff">{{_.errorRateDiff}}</sup>
                     </td>
                     <td>
-                      <app-label-error *ngIf="_.errorRate > 0 && hasErrorsAttachment"
+                      <app-label-error *ngIf="!isAnonymous && _.errorRate > 0 && hasErrorsAttachment"
                         [labelInput]="{ labelName: _.label, params: itemParams }"></app-label-error>
                     </td>
                     <td>
-                      <app-label-trend [trendInput]="{ environment: itemData.environment, labelName: _.label }">
+                      <app-label-trend *ngIf="!isAnonymous" [trendInput]="{ environment: itemData.environment, labelName: _.label }">
                       </app-label-trend>
                     </td>
                   </tr>

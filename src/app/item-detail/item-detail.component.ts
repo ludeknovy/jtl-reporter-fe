@@ -55,6 +55,8 @@ export class ItemDetailComponent implements OnInit {
   labelsData;
   Math: any;
   comparisonWarning = [];
+  token: string;
+  isAnonymous = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,11 +77,22 @@ export class ItemDetailComponent implements OnInit {
         return _;
       })
     ).subscribe(_ => this.itemParams = _);
+    this.route.queryParams.subscribe(_ => {
+      this.token = _.token;
+      if (this.token) {
+        this.isAnonymous = true;
+      }
+    });
     this.itemsService.fetchItemDetail(
       this.itemParams.projectName,
       this.itemParams.scenarioName,
-      this.itemParams.id)
-      .pipe(catchError(r => of(r)))
+      this.itemParams.id,
+      { token: this.token}
+      )
+      .pipe(catchError(r => {
+        this.spinner.hide();
+        return of(r);
+      }))
       .subscribe((results) => {
         this.itemData = results;
         this.labelsData = this.itemData.statistics;

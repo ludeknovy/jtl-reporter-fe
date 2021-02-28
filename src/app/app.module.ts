@@ -59,6 +59,7 @@ import { ItemControlsComponent } from './scenario/item-controls/item-controls.co
 import { ShareComponent } from './item-detail/share/share.component';
 import { CreateNewShareLinkComponent } from './item-detail/share/create-new-share-link/create-new-share-link.component';
 import { DeleteShareLinkComponent } from './item-detail/share/delete-share-link/delete-share-link.component';
+import { ThresholdComponent } from './scenario/threshold/threshold.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -138,6 +139,7 @@ const appRoutes: Routes = [
     ShareComponent,
     CreateNewShareLinkComponent,
     DeleteShareLinkComponent,
+    ThresholdComponent,
   ],
   imports: [
     RouterModule.forRoot(

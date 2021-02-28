@@ -44,7 +44,10 @@ export class ScenarioApiService {
 
   createNewScenarioNotification(projectName, scenarioName, body): Observable<{}> {
     return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/notifications`, body, { observe: 'response' });
+  }
 
+  fetchThresholds(projectName, scenarioName) {
+    return this.http.get(`projects/${projectName}/scenarios/${scenarioName}/thresholds`);
   }
 
   setData(data) {

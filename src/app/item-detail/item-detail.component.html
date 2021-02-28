@@ -9,7 +9,8 @@
     <div class="btn-group mr-3">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="Button group with nested dropdown">
-        <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
+        <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
+            class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-item *ngIf="itemData.environment"
             [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
@@ -48,8 +49,44 @@
 </div>
 
 <div class="items-overview content-container" *ngIf="itemData.overview !== null && itemData.reportStatus === 'ready'">
+
+
   <div class="container-fluid">
+
     <div class="overview-info">
+
+      <div class="row">
+        <div class="col">
+          <ng-template #tipContent>
+              <p>90 percentile decrease toleration: {{itemData.thresholds.thresholds.percentile}} %
+              </p>
+              <p>
+                Througput decrease toleration: {{itemData.thresholds.thresholds.throughput}}%
+              </p>
+              <p>
+                Error rate increase toleration: {{itemData.thresholds.thresholds.errorRate}}%
+              </p>
+          </ng-template>
+          <div *ngIf="itemData.thresholds && !itemData.thresholds?.passed" class="card perf-issue">
+            <div class="card-body perf-issue">
+              <h6 class="card-title text-alizarin">Performance regression issue detected! <i class="ttp text-secondary"
+                placement="bottom"
+                [ngbTooltip]="tipContent"><i
+                  class="far fa-question-circle icon"></i></i></h6>
+              <ul>
+                <li *ngIf="itemData.thresholds.diff.percentileDiff > 100"> 90 percentile response time is about {{
+                  Math.round(itemData.thresholds.diff.percentileDiff - 100) }}% slower than the average.
+                </li>
+                <li *ngIf="itemData.thresholds.diff.errorRateDiff > 100">Error rate is about {{
+                  Math.round(itemData.thresholds.diff.errorRateDiff - 100) }} higher than the average.</li>
+                <li *ngIf="itemData.thresholds.diff.throughputDiff < 100">Throughput is about {{
+                  Math.round(itemData.thresholds.diff.throughputDiff - 100 ) }}% lower than the average.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-sm">
           <div class="card">
@@ -157,7 +194,6 @@
       </div>
 
     </div>
-
 
     <div class="overview-additional">
       <div class="row info">
@@ -364,7 +400,8 @@
                         [labelInput]="{ labelName: _.label, params: itemParams }"></app-label-error>
                     </td>
                     <td>
-                      <app-label-trend *ngIf="!isAnonymous" [trendInput]="{ environment: itemData.environment, labelName: _.label }">
+                      <app-label-trend *ngIf="!isAnonymous"
+                        [trendInput]="{ environment: itemData.environment, labelName: _.label }">
                       </app-label-trend>
                     </td>
                   </tr>

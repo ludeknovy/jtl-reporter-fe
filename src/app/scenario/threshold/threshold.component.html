@@ -5,7 +5,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form [formGroup]="thresholdForm">
+  <form [formGroup]="thresholdForm" (ngSubmit)="onSubmit()">
     <div class="modal-body">
       <div class="alert alert-primary" role="alert">
         <i class="fas fa-info-circle"> </i>

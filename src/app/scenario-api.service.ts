@@ -50,6 +50,10 @@ export class ScenarioApiService {
     return this.http.get(`projects/${projectName}/scenarios/${scenarioName}/thresholds`);
   }
 
+  updateThresholds(projectName, scenarioName, body) {
+    return this.http.put(`projects/${projectName}/scenarios/${scenarioName}/thresholds`, body, { observe: 'response'});
+  }
+
   setData(data) {
     this.response.next(data);
   }

@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/internal/operators/catchError';
+import { NotificationMessage } from 'src/app/notification/notification-messages';
 import { ScenarioApiService } from 'src/app/scenario-api.service';
 
 @Component({
@@ -20,7 +23,8 @@ export class ThresholdComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private scenarioApiService: ScenarioApiService
+    private scenarioApiService: ScenarioApiService,
+    private notification: NotificationMessage
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +66,26 @@ export class ThresholdComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+  }
+
+  onSubmit() {
+    if (this.thresholdForm.valid) {
+      const { projectName, scenarioName } = this.params;
+      const body = {
+        errorRate: parseFloat(this.thresholdForm.value.errorRate),
+        throughput: parseFloat(this.thresholdForm.value.throughput),
+        percentile: parseFloat(this.thresholdForm.value.percentile),
+        enabled: this.thresholdForm.value.enabled
+      };
+
+      this.scenarioApiService.updateThresholds(projectName, scenarioName, body)
+        .pipe(catchError(r => of(r)))
+        .subscribe(_ => {
+          const message = this.notification.scenarioThresholdUpdate(_);
+          this.scenarioApiService.setData(message);
+        });
+      this.modalService.dismissAll();
+    }
   }
 
 

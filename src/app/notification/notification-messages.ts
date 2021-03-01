@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class NotificationMessage {
 
   newTestItemNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'File updoaded and processing just started');
+    return this.statusCodeMessage(response, 'File uploaded and processing just started');
   }
 
   newProjectNotificationMessage(response) {
@@ -76,6 +76,10 @@ export class NotificationMessage {
 
   deleteItemShareTokenNotification(response) {
     return this.statusCodeMessage(response, 'Link was deleted');
+  }
+
+  scenarioThresholdUpdate(response) {
+    return this.statusCodeMessage(response, 'Thresholds were updated');
   }
 
   private statusCodeMessage(response, succesMessgae) {

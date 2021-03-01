@@ -77,9 +77,9 @@
                 <li *ngIf="!itemData.thresholds.result.percentile.passed"> 90 percentile response time is about {{
                   Math.round(itemData.thresholds.result.percentile.diffValue - 100) }}% slower than the average.
                 </li>
-                <li *ngIf="itemData.thresholds.result.errorRate.passed">Error rate is about {{
+                <li *ngIf="!itemData.thresholds.result.errorRate.passed">Error rate is about {{
                   Math.round(100 - itemData.thresholds.result.errorRate.diffValue) }}% higher than the average.</li>
-                <li *ngIf="itemData.thresholds.result.throughput.passed">Throughput is about {{
+                <li *ngIf="!itemData.thresholds.result.throughput.passed">Throughput is about {{
                   Math.round(100 - itemData.thresholds.result.throughput.diffValue ) }}% lower than the average.</li>
               </ul>
             </div>

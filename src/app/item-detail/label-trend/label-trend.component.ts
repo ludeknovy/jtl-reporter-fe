@@ -54,7 +54,7 @@ export class LabelTrendComponent implements OnInit {
         { environment: this.trendInput.environment }
       )
         .subscribe(__ => {
-          this.vuFilters = __.result.filter((r) => r.count >= 5).map((r) => r.maxVu);
+          this.vuFilters = __.result.filter((r) => r.count >= 2).map((r) => r.maxVu);
         });
     });
   }
@@ -79,7 +79,7 @@ export class LabelTrendComponent implements OnInit {
         virtualUsers
       }
     ).subscribe((_) => {
-      this.labelChartOption = _.timePoints.length >= 5 ? labelTrendChartOptions(_) : emptyChart();
+      this.labelChartOption = _.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
       this.updateData();
     });
   }

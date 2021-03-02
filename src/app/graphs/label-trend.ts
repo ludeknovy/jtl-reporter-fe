@@ -165,7 +165,7 @@ export const emptyChart = () => {
     },
     title: { text: 'No data' },
     subtitle: {
-      text: 'there must be at least 5 records for given label'
+      text: 'there must be at least 2 records for given label'
     },
   };
 };

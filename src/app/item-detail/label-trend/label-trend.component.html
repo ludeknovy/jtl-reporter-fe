@@ -5,7 +5,7 @@
       <option value="0">No VU filter</option>
       <option *ngFor="let _ of vuFilters" value='{{_}}'>{{_}} VU</option>
     </select>
-    <button type="button" class="close" aria-label="" (click)="modal.dismiss('Cross click')">
+    <button type="button" style="outline: none;" class="close" aria-label="" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

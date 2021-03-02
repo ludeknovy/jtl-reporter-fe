@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ThresholdComponent } from './threshold.component';
 
@@ -8,7 +10,9 @@ describe('ThresholdComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ThresholdComponent ]
+      declarations: [ ThresholdComponent ],
+      imports: [ReactiveFormsModule, HttpClientModule],
+
     })
     .compileComponents();
   }));
@@ -16,6 +20,7 @@ describe('ThresholdComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ThresholdComponent);
     component = fixture.componentInstance;
+    component.params = {}
     fixture.detectChanges();
   });
 

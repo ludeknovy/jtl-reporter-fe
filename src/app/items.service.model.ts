@@ -57,6 +57,14 @@ export interface ItemDetail {
   };
   statistics: any;
   attachements: [];
+  thresholds?: {
+    passed: boolean,
+    diff: {
+      errorRateDiff: number,
+     percentileRateDiff: number,
+     throughputRateDiff: number
+    }
+  };
 }
 
 interface MonitoringData {

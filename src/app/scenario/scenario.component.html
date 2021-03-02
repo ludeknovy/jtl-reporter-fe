@@ -14,6 +14,7 @@
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-scenario [scenarioData]="items$"></app-edit-scenario>
           <app-external-notification></app-external-notification>
+          <app-threshold [params]=params></app-threshold>
           <app-delete-scenario [scenarioData]="params"></app-delete-scenario>
         </div>
       </div>
@@ -132,6 +133,9 @@
                           class="fas fa-minus-circle text-danger status-icon"></i></span>
                       <span *ngIf="_.status === '10'" title="Status not set"><i
                           class="far fa-circle text-secondary status-icon"></i></span>
+
+                          <i *ngIf="_.thresholdPassed === false" class="fas fa-exclamation-circle text-alizarin performance-issue"></i>
+
                     </td>
                     <td class="text-right" >
                       <app-item-controls [item]="{note: _.note, environment: _.environment, hostname: _.hostname, isBase: _.base, params: { id: _.id, scenarioName: params.scenarioName, projectName: params.projectName }}"></app-item-controls>

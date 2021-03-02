@@ -252,3 +252,11 @@ thead .hd {
 .charts .card-header {
   border-bottom: 0px;
 }
+
+.perf-issue {
+  border-left: 2px solid #e74c3c;
+}
+
+.perf-issue .card-body h6 {
+  font-size: 1rem !important;
+}

@@ -10,17 +10,17 @@ describe('ThresholdComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ThresholdComponent ],
+      declarations: [ThresholdComponent],
       imports: [ReactiveFormsModule, HttpClientModule],
 
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ThresholdComponent);
     component = fixture.componentInstance;
-    component.params = {}
+    component.params = {};
     fixture.detectChanges();
   });
 

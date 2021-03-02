@@ -64,7 +64,7 @@ export interface ItemDetail {
      percentileRateDiff: number,
      throughputRateDiff: number
     }
-  }
+  };
 }
 
 interface MonitoringData {

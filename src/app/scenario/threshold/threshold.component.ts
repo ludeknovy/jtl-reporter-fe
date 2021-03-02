@@ -31,7 +31,7 @@ export class ThresholdComponent implements OnInit {
     this.scenarioApiService.fetchThresholds(this.params.projectName, this.params.scenarioName).subscribe(_ => {
       this.createFormControls(_);
       this.createForm();
-    })
+    });
   }
 
   createFormControls(thresholds) {

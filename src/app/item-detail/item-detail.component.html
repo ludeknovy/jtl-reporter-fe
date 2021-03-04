@@ -130,9 +130,9 @@
                       </h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">90% Response time</div>
-
                   </div>
                 </div>
+
                 <div class="col-sm">
                   <div class="card">
                     <div class="card-body overview-body">
@@ -152,10 +152,10 @@
                         placement="bottom"
                         ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
                           class="far fa-question-circle icon"></i></i></div>
-
                   </div>
                 </div>
-                <div class="col-sm">
+
+                <div class="col-sm" *ngIf="!itemData.overview.bytesPerSecond || itemData.overview.bytesPerSecond === 0">
                   <div class="card">
                     <div class="card-body overview-body">
                       <!-- locust does not provide this metrics-->
@@ -174,9 +174,19 @@
                         placement="bottom"
                         ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
                           class="far fa-question-circle icon"></i></i></div>
-
                   </div>
                 </div>
+
+                <div class="col-sm" *ngIf="itemData.overview.bytesPerSecond && itemData.overview.bytesPerSecond !== 0">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title text-latency">{{bytesToMbps(itemData.overview.bytesPerSecond)}} <span class="unit-desc">Mbps</span>
+                      </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Bandwith</div>
+                  </div>
+                </div>
+
                 <div class="col-sm">
                   <div class="card">
                     <div class="card-body overview-body">

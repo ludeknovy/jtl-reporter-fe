@@ -95,7 +95,7 @@
                     [ngClass]="(perfAnalysis.onePerc.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
                   Slowest responses</div>
                 <div *ngIf="perfAnalysis.onePerc.failed===false" class="perf-analaysis-desc text-secondary">
-                  The 1% of slowest responses do not have big deviation from the average response time.
+                  The 1% of slowest responses do not have a significant deviation from the average response time.
                 </div>
                 <div *ngIf="perfAnalysis.onePerc.failed===true" class="perf-analaysis-desc text-secondary">
                   The 1% of response times shows up to {{ perfAnalysis.onePerc.value }}x slower response times than the
@@ -112,7 +112,7 @@
                   Increased variability between the fastest and the average response time was detected (up to {{perfAnalysis.variability.value}}x). The SUT might have been overloaded.
                 </div>
                 <div *ngIf="perfAnalysis.variability.failed===false" class="perf-analaysis-desc text-secondary">
-                  The SUT was providing balanced response times.
+                  The SUT was providing balanced response times across all labels.
                 </div>
               </div>
             </div>

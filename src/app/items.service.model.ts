@@ -32,7 +32,7 @@ export interface ItemDetail {
     throughput: number
   };
   reportStatus: ReportStatus;
-  monitoringData: { cpu: [], mem: [], maxCpu?: number, maxMem?: number};
+  monitoringData: { cpu: [], mem: [], maxCpu?: number, maxMem?: number };
   baseId: string;
   testName: string;
   note: string;
@@ -55,16 +55,30 @@ export interface ItemDetail {
     threads: any;
 
   };
-  statistics: any;
+  statistics: ItemStatistics[];
   attachements: [];
   thresholds?: {
     passed: boolean,
     diff: {
       errorRateDiff: number,
-     percentileRateDiff: number,
-     throughputRateDiff: number
+      percentileRateDiff: number,
+      throughputRateDiff: number
     }
   };
+}
+
+export interface ItemStatistics {
+  avgResponseTime: number;
+  bytes: number;
+  errorRate: number;
+  label: string;
+  maxResponseTime: number;
+  minResponseTime: number;
+  n0: number;
+  n5: number;
+  n9: number;
+  samples: number;
+  throughput: number;
 }
 
 interface MonitoringData {

@@ -254,9 +254,26 @@ thead .hd {
 }
 
 .perf-issue {
-  border-left: 2px solid #e74c3c;
+  border-left: 4px solid #e74c3c;
 }
 
 .perf-issue .card-body h6 {
   font-size: 1rem !important;
+}
+
+.perf-analysis-check {
+  margin-top: 10px;
+}
+
+.perf-analaysis-desc {
+  margin-left: 20px;
+}
+
+.performance-analysis-warning{
+  border-left: 4px solid #ffc107;
+
+}
+
+.performance-analysis-success{
+  border-left: 4px solid #28a745;
 }

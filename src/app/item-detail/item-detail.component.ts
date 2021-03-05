@@ -242,4 +242,8 @@ export class ItemDetailComponent implements OnInit {
   private roundNumberTwoDecimals = number => {
     return Math.round(number * 100) / 100;
   }
+
+  bytesToMbps(bytes) {
+    return this.roundNumberTwoDecimals(bytes / Math.pow(1024, 2));
+}
 }

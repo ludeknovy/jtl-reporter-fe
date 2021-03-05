@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ItemsApiService } from '../items-api.service';
-import { ItemDetail } from '../items.service.model';
+import { ItemDetail, ItemStatistics } from '../items.service.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DecimalPipe } from '@angular/common';
 import * as Highcharts from 'highcharts';
@@ -57,6 +57,7 @@ export class ItemDetailComponent implements OnInit {
   comparisonWarning = [];
   token: string;
   isAnonymous = false;
+  perfAnalysis = { variability: null, onePerc: null };
 
   constructor(
     private route: ActivatedRoute,
@@ -87,8 +88,8 @@ export class ItemDetailComponent implements OnInit {
       this.itemParams.projectName,
       this.itemParams.scenarioName,
       this.itemParams.id,
-      { token: this.token}
-      )
+      { token: this.token }
+    )
       .pipe(catchError(r => {
         this.spinner.hide();
         return of(r);
@@ -97,6 +98,7 @@ export class ItemDetailComponent implements OnInit {
         this.itemData = results;
         this.labelsData = this.itemData.statistics;
         this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
+        this.performanceAnalaysis();
         this.monitoringAlerts();
         this.generateCharts();
         this.spinner.hide();
@@ -243,7 +245,39 @@ export class ItemDetailComponent implements OnInit {
     return Math.round(number * 100) / 100;
   }
 
+  private performanceAnalaysis() {
+    const output = [];
+    this.itemData.statistics.forEach(_ => {
+      const variability =  this.roundNumberTwoDecimals(_.avgResponseTime / _.minResponseTime);
+      const onePerc = this.roundNumberTwoDecimals(_.n9 / _.avgResponseTime);
+      output.push({
+        variability,
+        onePerc,
+        minResponseTime: _.minResponseTime,
+        avgResponseTime: _.avgResponseTime,
+        label: _.label
+      });
+    });
+
+    const variabilitySorted = output.sort((a, b) => b.variablity - a.variablity);
+    const onePercSorted = output.sort((a, b) => b.onePerc - a.onePerc);
+
+    this.perfAnalysis = {
+      variability: {
+        value: variabilitySorted[0].variability,
+        avgResponseTime: variabilitySorted[0].avgResponseTime,
+        minResponseTime:  variabilitySorted[0].minResponseTime,
+        failed: variabilitySorted[0].variability > 2.5
+      },
+      onePerc: {
+        value: onePercSorted[0].onePerc,
+        avgResponseTime: onePercSorted[0].onePerc.avgResponseTime,
+        failed: onePercSorted[0].onePerc > 2.5
+      },
+    };
+  }
+
   bytesToMbps(bytes) {
     return this.roundNumberTwoDecimals(bytes / Math.pow(1024, 2));
-}
+  }
 }

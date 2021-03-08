@@ -44,8 +44,10 @@ export class ItemDetailComponent implements OnInit {
   };
   responseTimeChartOptions;
   throughputChartOptions;
+  overallChart;
   overallChartOptions;
   overallResponseTimeChart;
+  updateChartFlag = false;
   monitoringChart;
   overallThroughput;
   itemParams;
@@ -57,7 +59,14 @@ export class ItemDetailComponent implements OnInit {
   comparisonWarning = [];
   token: string;
   isAnonymous = false;
-  perfAnalysis = { variability: null, onePerc: null, throughputVariability: null };
+  perfAnalysis = {
+    variability: null, onePerc: null, throughputVariability: {
+      failed: null,
+      value: null,
+      bandValues: null,
+    }
+  };
+
 
   constructor(
     private route: ActivatedRoute,
@@ -102,6 +111,8 @@ export class ItemDetailComponent implements OnInit {
         this.monitoringAlerts();
         this.generateCharts();
         this.spinner.hide();
+        Highcharts.chart('container', this.throughputChartOptions);
+
       });
   }
 
@@ -267,7 +278,15 @@ export class ItemDetailComponent implements OnInit {
     const { maxVu, throughput } = this.itemData.overview;
     const rampUpIndex = threads.map(_ => _[1]).indexOf(maxVu);
 
-    const minThroughput = Math.min(...overallThroughput.data.slice(rampUpIndex, -2).map(_ => _[1]));
+    const throughputValues = overallThroughput.data.slice(rampUpIndex, -2).map(_ => _[1]);
+    const minThroughput = Math.min(...throughputValues);
+    const minThroughputIndex = throughputValues.indexOf(minThroughput);
+    const maxBandIndex = throughputValues.length;
+    const bandTo = minThroughputIndex + 5 <= maxBandIndex ? minThroughputIndex + 3 : maxBandIndex;
+    const throughputBandValues = [
+      overallThroughput.data.slice(rampUpIndex)[minThroughputIndex - 3][0],
+      overallThroughput.data.slice(rampUpIndex)[bandTo][0]
+    ]
     const throughputVariability = this.roundNumberTwoDecimals(100 - (minThroughput / throughput) * 100);
 
     this.perfAnalysis = {
@@ -285,12 +304,25 @@ export class ItemDetailComponent implements OnInit {
       throughputVariability: {
         value: throughputVariability,
         failed: throughputVariability > 20,
+        bandValues: throughputBandValues
       }
     };
-
   }
 
   bytesToMbps(bytes) {
     return this.roundNumberTwoDecimals(bytes / Math.pow(1024, 2));
+  }
+
+  show() {
+    console.log("CLICKED")
+    console.log(this.perfAnalysis.throughputVariability.bandValues[0][0])
+    const chart = this.overallChart;
+    console.log(this.overallChartOptions)
+    this.overallChartOptions.xAxis.plotBands = {
+      color: "#e74c3c4f",
+      from: this.perfAnalysis.throughputVariability.bandValues[0],
+      to: this.perfAnalysis.throughputVariability.bandValues[1]
+    }
+    this.updateChartFlag = true
   }
 }

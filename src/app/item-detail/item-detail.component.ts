@@ -66,6 +66,7 @@ export class ItemDetailComponent implements OnInit {
       bandValues: null,
     }
   };
+  toggleThroughputBandFlag = false;
 
 
   constructor(
@@ -107,9 +108,9 @@ export class ItemDetailComponent implements OnInit {
         this.itemData = results;
         this.labelsData = this.itemData.statistics;
         this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
-        this.performanceAnalaysis();
         this.monitoringAlerts();
         this.generateCharts();
+        this.performanceAnalaysis();
         this.spinner.hide();
         Highcharts.chart('container', this.throughputChartOptions);
 
@@ -313,16 +314,26 @@ export class ItemDetailComponent implements OnInit {
     return this.roundNumberTwoDecimals(bytes / Math.pow(1024, 2));
   }
 
-  show() {
-    console.log("CLICKED")
-    console.log(this.perfAnalysis.throughputVariability.bandValues[0][0])
-    const chart = this.overallChart;
-    console.log(this.overallChartOptions)
-    this.overallChartOptions.xAxis.plotBands = {
-      color: "#e74c3c4f",
-      from: this.perfAnalysis.throughputVariability.bandValues[0],
-      to: this.perfAnalysis.throughputVariability.bandValues[1]
+  toggleThroughputBand() {
+    this.overallChartOptions.series.forEach(serie => {
+      if (['response time', 'errors'].includes(serie.name)) {
+        serie.visible = this.toggleThroughputBandFlag;
+      }
+    });
+
+    if (!this.toggleThroughputBandFlag) {
+      this.overallChartOptions.xAxis.plotBands = {
+        color: '#e74c3c4f',
+        from: this.perfAnalysis.throughputVariability.bandValues[0],
+        to: this.perfAnalysis.throughputVariability.bandValues[1]
+      };
+      console.log(this.overallChartOptions.xAxis.plotBands)
+      this.toggleThroughputBandFlag = true;
+    } else {
+      this.overallChartOptions.xAxis.plotBands = null;
+      this.toggleThroughputBandFlag = false;
     }
-    this.updateChartFlag = true
+    this.updateChartFlag = true;
+
   }
 }

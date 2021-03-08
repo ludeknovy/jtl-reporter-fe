@@ -126,7 +126,7 @@
                   class="perf-analaysis-desc text-secondary">
                   Significant drops in throughput performance were detected (up to
                   {{perfAnalysis.throughputVariability.value}}%). The SUT might have been overloaded. <button
-                    class="btn btn-link" (click)="show()">show</button>
+                    class="btn btn-link" (click)="toggleThroughputBand()">toggle</button>
                 </div>
                 <div *ngIf="perfAnalysis.throughputVariability.failed===false"
                   class="perf-analaysis-desc text-secondary">

@@ -268,7 +268,7 @@ export class ItemDetailComponent implements OnInit {
     const rampUpIndex = threads.map(_ => _[1]).indexOf(maxVu);
 
     const minThroughput = Math.min(...overallThroughput.data.slice(rampUpIndex, -2).map(_ => _[1]));
-    const throughputVariability = 100 - this.roundNumberTwoDecimals((minThroughput / throughput) * 100);
+    const throughputVariability = this.roundNumberTwoDecimals(100 - (minThroughput / throughput) * 100);
 
     this.perfAnalysis = {
       variability: {

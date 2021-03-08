@@ -87,7 +87,7 @@
 
       <div class="row">
         <div class="col">
-          <div class="card" [ngClass]="(perfAnalysis.onePerc.failed || perfAnalysis.variability.failed) ? 'performance-analysis-warning' : 'performance-analysis-success'">
+          <div class="card" [ngClass]="(perfAnalysis.onePerc.failed || perfAnalysis.variability.failed || perfAnalysis.throughputVariability.failed) ? 'performance-analysis-warning' : 'performance-analysis-success'">
             <div class="card-body">
               <h6 class="overview-body">Performance Analysis</h6>
               <div>
@@ -107,12 +107,24 @@
               <div class="perf-analysis-check">
                 <div><i
                     [ngClass]="(perfAnalysis.variability.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
-                  Steady performance</div>
+                  Steady response time performance</div>
                 <div *ngIf="perfAnalysis.variability.failed===true" class="perf-analaysis-desc text-secondary">
                   Increased variability between the fastest and the average response time was detected (up to {{perfAnalysis.variability.value}}x). The SUT might have been overloaded.
                 </div>
                 <div *ngIf="perfAnalysis.variability.failed===false" class="perf-analaysis-desc text-secondary">
                   The SUT was providing balanced response times across all labels.
+                </div>
+              </div>
+
+              <div class="perf-analysis-check">
+                <div><i
+                    [ngClass]="(perfAnalysis.throughputVariability.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
+                  Steady throughput performance</div>
+                <div *ngIf="perfAnalysis.throughputVariability.failed===true" class="perf-analaysis-desc text-secondary">
+                  Significant drops in throughput performance were detected (up to {{perfAnalysis.throughputVariability.value}}%). The SUT might have been overloaded.
+                </div>
+                <div *ngIf="perfAnalysis.throughputVariability.failed===false" class="perf-analaysis-desc text-secondary">
+                  The SUT was providing balanced throughput.
                 </div>
               </div>
             </div>

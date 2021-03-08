@@ -57,7 +57,7 @@ export class ItemDetailComponent implements OnInit {
   comparisonWarning = [];
   token: string;
   isAnonymous = false;
-  perfAnalysis = { variability: null, onePerc: null };
+  perfAnalysis = { variability: null, onePerc: null, throughputVariability: null };
 
   constructor(
     private route: ActivatedRoute,
@@ -116,7 +116,8 @@ export class ItemDetailComponent implements OnInit {
     this.throughputChartOptions = { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine], ...logScaleButton };
     this.overallChartOptions = {
       ...overallChartSettings('ms'), series: [
-        threadLine, overallTimeResponse, throughputLine, errorLine],
+        threadLine, overallTimeResponse, throughputLine, errorLine,
+      ],
     };
   }
 
@@ -248,7 +249,7 @@ export class ItemDetailComponent implements OnInit {
   private performanceAnalaysis() {
     const output = [];
     this.itemData.statistics.forEach(_ => {
-      const variability =  this.roundNumberTwoDecimals(_.avgResponseTime / _.minResponseTime);
+      const variability = this.roundNumberTwoDecimals(_.avgResponseTime / _.minResponseTime);
       const onePerc = this.roundNumberTwoDecimals(_.n9 / _.avgResponseTime);
       output.push({
         variability,
@@ -262,11 +263,18 @@ export class ItemDetailComponent implements OnInit {
     const variabilitySorted = output.sort((a, b) => b.variablity - a.variablity);
     const onePercSorted = output.sort((a, b) => b.onePerc - a.onePerc);
 
+    const { overallThroughput, threads } = this.itemData.plot;
+    const { maxVu, throughput } = this.itemData.overview;
+    const rampUpIndex = threads.map(_ => _[1]).indexOf(maxVu);
+
+    const minThroughput = Math.min(...overallThroughput.data.slice(rampUpIndex, -2).map(_ => _[1]));
+    const throughputVariability = 100 - this.roundNumberTwoDecimals((minThroughput / throughput) * 100);
+
     this.perfAnalysis = {
       variability: {
         value: variabilitySorted[0].variability,
         avgResponseTime: variabilitySorted[0].avgResponseTime,
-        minResponseTime:  variabilitySorted[0].minResponseTime,
+        minResponseTime: variabilitySorted[0].minResponseTime,
         failed: variabilitySorted[0].variability > 2.5
       },
       onePerc: {
@@ -274,7 +282,12 @@ export class ItemDetailComponent implements OnInit {
         avgResponseTime: onePercSorted[0].onePerc.avgResponseTime,
         failed: onePercSorted[0].onePerc > 2.5
       },
+      throughputVariability: {
+        value: throughputVariability,
+        failed: throughputVariability > 20,
+      }
     };
+
   }
 
   bytesToMbps(bytes) {

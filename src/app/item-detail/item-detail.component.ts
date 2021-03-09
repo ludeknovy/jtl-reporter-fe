@@ -272,10 +272,8 @@ export class ItemDetailComponent implements OnInit {
       });
     });
 
-    const variabilitySorted = output.sort((a, b) => b.variablity - a.variablity);
-    const onePercSorted = output.sort((a, b) => b.onePerc - a.onePerc);
-
-
+    const variabilitySorted = [...output].sort((a, b) =>  b.variability - a.variability);
+    const onePercSorted = [...output].sort((a, b) => b.onePerc - a.onePerc);
 
     this.perfAnalysis = {
       variability: {

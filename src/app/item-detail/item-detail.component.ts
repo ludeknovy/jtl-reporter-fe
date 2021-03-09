@@ -275,20 +275,7 @@ export class ItemDetailComponent implements OnInit {
     const variabilitySorted = output.sort((a, b) => b.variablity - a.variablity);
     const onePercSorted = output.sort((a, b) => b.onePerc - a.onePerc);
 
-    const { overallThroughput, threads } = this.itemData.plot;
-    const { maxVu, throughput } = this.itemData.overview;
-    const rampUpIndex = threads.map(_ => _[1]).indexOf(maxVu);
 
-    const throughputValues = overallThroughput.data.slice(rampUpIndex, -2).map(_ => _[1]);
-    const minThroughput = Math.min(...throughputValues);
-    const minThroughputIndex = throughputValues.indexOf(minThroughput);
-    const maxBandIndex = throughputValues.length;
-    const bandTo = minThroughputIndex + 5 <= maxBandIndex ? minThroughputIndex + 3 : maxBandIndex;
-    const throughputBandValues = [
-      overallThroughput.data.slice(rampUpIndex)[minThroughputIndex - 3][0],
-      overallThroughput.data.slice(rampUpIndex)[bandTo][0]
-    ];
-    const throughputVariability = this.roundNumberTwoDecimals(100 - (minThroughput / throughput) * 100);
 
     this.perfAnalysis = {
       variability: {
@@ -302,12 +289,38 @@ export class ItemDetailComponent implements OnInit {
         avgResponseTime: onePercSorted[0].onePerc.avgResponseTime,
         failed: onePercSorted[0].onePerc > 2.5
       },
-      throughputVariability: {
+      throughputVariability: this.calculateThroughputVariability()
+    };
+  }
+
+  private calculateThroughputVariability() {
+    const { overallThroughput, threads } = this.itemData.plot;
+    const { maxVu, throughput } = this.itemData.overview;
+    const rampUpIndex = threads.map(_ => _[1]).indexOf(maxVu);
+
+    const throughputValues = overallThroughput.data.slice(rampUpIndex, -2).map(_ => _[1]);
+    if (throughputValues.length === 0) {
+      return {
+        value: null,
+        failed: false,
+        bandValues: []
+      };
+    }
+    const minThroughput = Math.min(...throughputValues);
+    const minThroughputIndex = throughputValues.indexOf(minThroughput);
+    const maxBandIndex = throughputValues.length;
+    const bandTo = minThroughputIndex + 5 <= maxBandIndex ? minThroughputIndex + 3 : maxBandIndex;
+    const throughputBandValues = [
+      overallThroughput.data.slice(rampUpIndex)[minThroughputIndex - 3][0],
+      overallThroughput.data.slice(rampUpIndex)[bandTo][0]
+    ];
+    const throughputVariability = this.roundNumberTwoDecimals(100 - (minThroughput / throughput) * 100);
+
+    return {
         value: throughputVariability,
         failed: throughputVariability > 20,
         bandValues: throughputBandValues
-      }
-    };
+    }
   }
 
   bytesToMbps(bytes) {

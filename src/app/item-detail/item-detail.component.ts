@@ -320,7 +320,7 @@ export class ItemDetailComponent implements OnInit {
         value: throughputVariability,
         failed: throughputVariability > 20,
         bandValues: throughputBandValues
-    }
+    };
   }
 
   bytesToMbps(bytes) {

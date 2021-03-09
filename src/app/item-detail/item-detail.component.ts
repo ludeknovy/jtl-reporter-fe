@@ -287,7 +287,7 @@ export class ItemDetailComponent implements OnInit {
     const throughputBandValues = [
       overallThroughput.data.slice(rampUpIndex)[minThroughputIndex - 3][0],
       overallThroughput.data.slice(rampUpIndex)[bandTo][0]
-    ]
+    ];
     const throughputVariability = this.roundNumberTwoDecimals(100 - (minThroughput / throughput) * 100);
 
     this.perfAnalysis = {
@@ -314,7 +314,7 @@ export class ItemDetailComponent implements OnInit {
     return this.roundNumberTwoDecimals(bytes / Math.pow(1024, 2));
   }
 
-  toggleThroughputBand() {
+  toggleThroughputBand(element) {
     this.overallChartOptions.series.forEach(serie => {
       if (['response time', 'errors'].includes(serie.name)) {
         serie.visible = this.toggleThroughputBandFlag;
@@ -322,14 +322,15 @@ export class ItemDetailComponent implements OnInit {
     });
 
     if (!this.toggleThroughputBandFlag) {
+      element.textContent = 'Hide in chart';
       this.overallChartOptions.xAxis.plotBands = {
         color: '#e74c3c4f',
         from: this.perfAnalysis.throughputVariability.bandValues[0],
         to: this.perfAnalysis.throughputVariability.bandValues[1]
       };
-      console.log(this.overallChartOptions.xAxis.plotBands)
       this.toggleThroughputBandFlag = true;
     } else {
+      element.textContent = 'Display in chart';
       this.overallChartOptions.xAxis.plotBands = null;
       this.toggleThroughputBandFlag = false;
     }

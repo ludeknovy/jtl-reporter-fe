@@ -87,7 +87,8 @@
 
       <div class="row">
         <div class="col">
-          <div class="card" [ngClass]="(perfAnalysis.onePerc.failed || perfAnalysis.variability.failed || perfAnalysis.throughputVariability.failed) ? 'performance-analysis-warning' : 'performance-analysis-success'">
+          <div class="card"
+            [ngClass]="(perfAnalysis.onePerc.failed || perfAnalysis.variability.failed || perfAnalysis.throughputVariability.failed) ? 'performance-analysis-warning' : 'performance-analysis-success'">
             <div class="card-body">
               <h6 class="overview-body">Performance Analysis</h6>
               <div>
@@ -109,7 +110,8 @@
                     [ngClass]="(perfAnalysis.variability.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
                   Steady response time performance</div>
                 <div *ngIf="perfAnalysis.variability.failed===true" class="perf-analaysis-desc text-secondary">
-                  Increased variability between the fastest and the average response time was detected (up to {{perfAnalysis.variability.value}}x). The SUT might have been overloaded.
+                  Increased variability between the fastest and the average response time was detected (up to
+                  {{perfAnalysis.variability.value}}x). The SUT might have been overloaded.
                 </div>
                 <div *ngIf="perfAnalysis.variability.failed===false" class="perf-analaysis-desc text-secondary">
                   The SUT was providing balanced response times across all labels.
@@ -120,10 +122,14 @@
                 <div><i
                     [ngClass]="(perfAnalysis.throughputVariability.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
                   Steady throughput performance</div>
-                <div *ngIf="perfAnalysis.throughputVariability.failed===true" class="perf-analaysis-desc text-secondary">
-                  Significant drops in throughput performance were detected (up to {{perfAnalysis.throughputVariability.value}}%). The SUT might have been overloaded.
+                <div *ngIf="perfAnalysis.throughputVariability.failed===true"
+                  class="perf-analaysis-desc text-secondary">
+                  Significant drops in throughput performance were detected (up to
+                  {{perfAnalysis.throughputVariability.value}}%). The SUT might have been overloaded. <button
+                    class="btn btn-sm btn-link-custom jtl-no-glow text-primary" (click)="toggleThroughputBand($event.target)">Display in chart</button>
                 </div>
-                <div *ngIf="perfAnalysis.throughputVariability.failed===false" class="perf-analaysis-desc text-secondary">
+                <div *ngIf="perfAnalysis.throughputVariability.failed===false"
+                  class="perf-analaysis-desc text-secondary">
                   The SUT was providing balanced throughput.
                 </div>
               </div>
@@ -313,8 +319,10 @@
             <h6 class="card-header bg-transparent">Overall Chart</h6>
             <div class="card-body">
               <div class="chart">
-                <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions"
-                  style="width: 100%; height: 350px; display: block;"></highcharts-chart>
+                <highcharts-chart [Highcharts]="Highcharts"
+                  [options]="overallChartOptions" [(update)]="updateChartFlag"
+                  style="width: 100%; height: 350px; display: block;">
+                </highcharts-chart>
               </div>
             </div>
           </div>

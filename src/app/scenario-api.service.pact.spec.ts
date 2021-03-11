@@ -144,7 +144,14 @@ describe('Scenario', () => {
             method: 'PUT',
             path: '/projects/test-project/scenarios/test-scenario',
             body: Matchers.somethingLike({
-              scenarioName: 'new-scenario-name'
+              scenarioName: 'new-scenario-name',
+              analysisEnabled: true,
+              thresholds: {
+                throughput: 1,
+                percentile: 1,
+                errorRate: 1,
+                enabled: false,
+              }
             }),
             headers: {
               'Content-Type': 'application/json'

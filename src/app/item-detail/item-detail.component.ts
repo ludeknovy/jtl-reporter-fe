@@ -41,6 +41,7 @@ export class ItemDetailComponent implements OnInit {
     testName: null,
     attachements: [],
     monitoringData: { mem: [], maxCpu: 0, maxMem: 0, cpu: [] },
+    analysisEnabled: null,
   };
   responseTimeChartOptions;
   throughputChartOptions;
@@ -259,6 +260,9 @@ export class ItemDetailComponent implements OnInit {
   }
 
   private performanceAnalaysis() {
+    if (!this.itemData.analysisEnabled) {
+      return;
+    }
     const output = [];
     this.itemData.statistics.forEach(_ => {
       const variability = this.roundNumberTwoDecimals(_.avgResponseTime / _.minResponseTime);

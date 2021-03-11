@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScenarioComponent } from './scenario.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { AddNewItemComponent } from './add-new-item/add-new-item.component';
-import { EditScenarioComponent } from './edit-scenario/edit-scenario.component';
+import { SettingsScenarioComponent } from './scenario-settings/scenario-settings.component';
 import { DeleteScenarioComponent } from './delete-scenario/delete-scenario.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 import { ScenarioGraphComponent } from './graphs/scenario-graph.component';
@@ -25,7 +25,7 @@ describe('ScenarioComponent', () => {
         ScenarioComponent,
         BreadcrumbComponent,
         AddNewItemComponent,
-        EditScenarioComponent,
+        SettingsScenarioComponent,
         DeleteScenarioComponent,
         ControlPanelComponent,
         ScenarioGraphComponent,

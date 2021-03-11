@@ -25,7 +25,7 @@ import { ScenariosGraphComponent } from './scenarios/graph/scenarios-graph.compo
 import { ScenarioGraphComponent } from './scenario/graphs/scenario-graph.component';
 import { EditItemComponent } from './item-detail/edit-item/edit-item.component';
 import { AddNewScenarioComponent } from './scenarios/new-scenario/add-new.scenario.component';
-import { EditScenarioComponent } from './scenario/edit-scenario/edit-scenario.component';
+import { SettingsScenarioComponent } from './scenario/scenario-settings/scenario-settings.component';
 import { DeleteScenarioComponent } from './scenario/delete-scenario/delete-scenario.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StatsCompareComponent } from './item-detail/stats-compare/stats-compare.component';
@@ -59,7 +59,6 @@ import { ItemControlsComponent } from './scenario/item-controls/item-controls.co
 import { ShareComponent } from './item-detail/share/share.component';
 import { CreateNewShareLinkComponent } from './item-detail/share/create-new-share-link/create-new-share-link.component';
 import { DeleteShareLinkComponent } from './item-detail/share/delete-share-link/delete-share-link.component';
-import { ThresholdComponent } from './scenario/threshold/threshold.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -114,7 +113,7 @@ const appRoutes: Routes = [
     ScenariosGraphComponent,
     ScenarioGraphComponent,
     AddNewScenarioComponent,
-    EditScenarioComponent,
+    SettingsScenarioComponent,
     DeleteScenarioComponent,
     StatsCompareComponent,
     AttachementsComponent,
@@ -139,7 +138,6 @@ const appRoutes: Routes = [
     ShareComponent,
     CreateNewShareLinkComponent,
     DeleteShareLinkComponent,
-    ThresholdComponent,
   ],
   imports: [
     RouterModule.forRoot(

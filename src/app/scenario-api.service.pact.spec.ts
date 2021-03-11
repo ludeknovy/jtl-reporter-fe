@@ -144,7 +144,14 @@ describe('Scenario', () => {
             method: 'PUT',
             path: '/projects/test-project/scenarios/test-scenario',
             body: Matchers.somethingLike({
-              scenarioName: 'new-scenario-name'
+              scenarioName: 'new-scenario-name',
+              analysisEnabled: true,
+              thresholds: {
+                throughput: 1,
+                percentile: 1,
+                errorRate: 1,
+                enabled: false,
+              }
             }),
             headers: {
               'Content-Type': 'application/json'
@@ -161,7 +168,15 @@ describe('Scenario', () => {
       it('should be able to update scenario ', (done) => {
         const scenarioService: ScenarioApiService = TestBed.get(ScenarioApiService);
         scenarioService.updateScenario('test-project', 'test-scenario',
-          { scenarioName: 'new-name' }).subscribe(response => {
+          {
+            scenarioName: 'new-name', analysisEnabled: true,
+            thresholds: {
+              throughput: 1,
+              percentile: 1,
+              errorRate: 1,
+              enabled: false,
+            }
+          }).subscribe(response => {
             // @ts-ignore
             expect(response.status).toEqual(204);
             done();

@@ -55,7 +55,7 @@
 
     <div class="overview-info">
 
-      <div class="row">
+      <div class="row" *ngIf="itemData.thresholds && !itemData.thresholds?.passed">
         <div class="col">
           <ng-template #tipContent>
             <p>90 percentile decrease toleration: {{itemData.thresholds.thresholds.percentile}} %
@@ -67,7 +67,7 @@
               Error rate increase toleration: {{itemData.thresholds.thresholds.errorRate}}%
             </p>
           </ng-template>
-          <div *ngIf="itemData.thresholds && !itemData.thresholds?.passed" class="card perf-issue">
+          <div class="card perf-issue">
             <div class="card-body">
               <h6 class="card-title text-alizarin">Performance regression issue detected! <i class="ttp text-secondary"
                   placement="bottom" [ngbTooltip]="tipContent"><i class="far fa-question-circle icon"></i></i></h6>

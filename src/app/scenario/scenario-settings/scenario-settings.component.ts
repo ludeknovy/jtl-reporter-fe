@@ -23,7 +23,7 @@ export class SettingsScenarioComponent implements OnInit {
     errorRate: null,
     throughput: null,
     enabled: null,
-  }
+  };
 
   params;
 
@@ -87,7 +87,7 @@ export class SettingsScenarioComponent implements OnInit {
 
   onSubmit() {
     if (this.scenarioSettingsForm.valid) {
-      console.log(this.scenarioSettingsForm.value)
+      console.log(this.scenarioSettingsForm.value);
 
       const {
         scenarioName, analysisEnabled,

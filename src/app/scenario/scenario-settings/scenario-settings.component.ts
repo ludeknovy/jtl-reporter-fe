@@ -87,7 +87,6 @@ export class SettingsScenarioComponent implements OnInit {
 
   onSubmit() {
     if (this.scenarioSettingsForm.valid) {
-      console.log(this.scenarioSettingsForm.value);
 
       const {
         scenarioName, analysisEnabled,

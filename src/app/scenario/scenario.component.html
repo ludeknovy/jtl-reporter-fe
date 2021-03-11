@@ -12,9 +12,8 @@
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
         <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
-          <app-edit-scenario [scenarioData]="items$"></app-edit-scenario>
+          <app-scenario-settings></app-scenario-settings>
           <app-external-notification></app-external-notification>
-          <app-threshold [params]=params></app-threshold>
           <app-delete-scenario [scenarioData]="params"></app-delete-scenario>
         </div>
       </div>

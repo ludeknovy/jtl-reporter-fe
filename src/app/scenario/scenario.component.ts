@@ -6,6 +6,7 @@ import { ProjectOverview, Items } from '../items.service.model';
 import { ItemsService } from '../items.service';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ScenarioService } from '../scenario.service';
+import { ScenarioApiService } from '../scenario-api.service';
 
 const LIMIT = 15;
 const OFFSET = 15;

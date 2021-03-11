@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {IScenarios, ScenarioNotifications} from './items.service.model';
+import { Scenario } from './scenario.service.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class ScenarioApiService {
 
   constructor(private http: HttpClient) {}
 
+  getScenario(projectName, scenarioName): Observable<Scenario> {
+    return this.http.get<Scenario>(`projects/${projectName}/scenarios/${scenarioName}`);
+  }
   updateScenario(projectName, scenarioName, body): Observable<{}> {
     return this.http.put(`projects/${projectName}/scenarios/${scenarioName}`, body, { observe: 'response'});
   }

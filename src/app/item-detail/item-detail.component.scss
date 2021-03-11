@@ -269,18 +269,17 @@ thead .hd {
   margin-left: 20px;
 }
 
-.performance-analysis-warning{
-  border-left: 4px solid #ffc107;
-
-}
-
 .performance-analysis-success{
   border-left: 4px solid #28a745;
 }
 
 .btn-link-custom {
   font-size: 0.775rem;
-  padding: 0.25rem 0.5rem;
-  line-height: 1.5;
+  padding: 0;
+  padding-bottom: 1px;
   border-radius: 0.2rem;
+}
+
+.perf-analysis {
+  padding-bottom: 10px;
 }

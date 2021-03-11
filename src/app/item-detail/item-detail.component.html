@@ -90,18 +90,18 @@
           <div class="card"
             [ngClass]="(perfAnalysis.onePerc.failed || perfAnalysis.variability.failed || perfAnalysis.throughputVariability.failed) ? 'performance-analysis-warning' : 'performance-analysis-success'">
             <div class="card-body">
-              <h6 class="overview-body">Performance Analysis</h6>
+              <h6 class="overview-body perf-analysis">Performance Analysis</h6>
               <div>
                 <div><i
                     [ngClass]="(perfAnalysis.onePerc.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
                   Slowest responses</div>
                 <div *ngIf="perfAnalysis.onePerc.failed===false" class="perf-analaysis-desc text-secondary">
-                  The 1% of slowest responses do not have a significant deviation from the average response time.
+                  <small>1% of slowest responses do not have a significant deviation from the average response time.</small>
                 </div>
                 <div *ngIf="perfAnalysis.onePerc.failed===true" class="perf-analaysis-desc text-secondary">
-                  The 1% of response times shows up to {{ perfAnalysis.onePerc.value }}x slower response times than the
-                  average. This might mean a performance issue for some clients and indicates that SUT might have been
-                  overloaded.
+                  <small>The 1% of response times shows up to {{ perfAnalysis.onePerc.value }}x slower response times than the
+                    average. This might mean a performance issue for some clients and indicates that SUT might have been
+                    overloaded.</small>
                 </div>
               </div>
 
@@ -110,11 +110,11 @@
                     [ngClass]="(perfAnalysis.variability.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
                   Steady response time performance</div>
                 <div *ngIf="perfAnalysis.variability.failed===true" class="perf-analaysis-desc text-secondary">
-                  Increased variability between the fastest and the average response time was detected (up to
-                  {{perfAnalysis.variability.value}}x). The SUT might have been overloaded.
+                  <small>Increased variability between the fastest and the average response time was detected (up to
+                    {{perfAnalysis.variability.value}}x). The SUT might have been overloaded.</small>
                 </div>
                 <div *ngIf="perfAnalysis.variability.failed===false" class="perf-analaysis-desc text-secondary">
-                  The SUT was providing balanced response times across all labels.
+                  <small>The SUT was providing balanced response times across all labels.</small>
                 </div>
               </div>
 
@@ -124,13 +124,13 @@
                   Steady throughput performance</div>
                 <div *ngIf="perfAnalysis.throughputVariability.failed===true"
                   class="perf-analaysis-desc text-secondary">
-                  Significant drops in throughput performance were detected (up to
-                  {{perfAnalysis.throughputVariability.value}}%). The SUT might have been overloaded. <button
-                    class="btn btn-sm btn-link-custom jtl-no-glow text-primary" (click)="toggleThroughputBand($event.target)">Display in chart</button>
+                  <small>Significant drops in throughput performance were detected (up to
+                    {{perfAnalysis.throughputVariability.value}}%). The SUT might have been overloaded.<button
+                      class="btn btn-sm btn-link-custom jtl-no-glow text-primary" (click)="toggleThroughputBand($event.target)">Display in chart</button></small>
                 </div>
                 <div *ngIf="perfAnalysis.throughputVariability.failed===false"
                   class="perf-analaysis-desc text-secondary">
-                  The SUT was providing balanced throughput.
+                  <small>SUT was providing balanced throughput.</small>
                 </div>
               </div>
             </div>

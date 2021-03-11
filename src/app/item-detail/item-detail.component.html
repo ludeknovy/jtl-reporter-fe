@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" *ngIf="itemData.analysisEnabled">
         <div class="col">
           <div class="card"
             [ngClass]="(perfAnalysis.onePerc.failed || perfAnalysis.variability.failed || perfAnalysis.throughputVariability.failed) ? 'performance-analysis-warning' : 'performance-analysis-success'">

@@ -31,6 +31,7 @@ export interface ItemDetail {
     startDate: string
     throughput: number
   };
+  analysisEnabled: boolean;
   reportStatus: ReportStatus;
   monitoringData: { cpu: [], mem: [], maxCpu?: number, maxMem?: number };
   baseId: string;

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationMessage } from 'src/app/notification/notification-messages';
 import { ScenarioApiService } from 'src/app/scenario-api.service';
@@ -96,7 +96,7 @@ export class SettingsScenarioComponent implements OnInit {
       const { projectName, scenarioName: currentScenarioName } = this.params;
 
       const body = {
-        name: scenarioName,
+        scenarioName,
         analysisEnabled,
         thresholds: {
           enabled: thresholdEnabled,

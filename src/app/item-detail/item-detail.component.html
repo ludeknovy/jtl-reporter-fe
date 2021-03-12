@@ -107,16 +107,22 @@
               <div>
                 <div><i
                     [ngClass]="(perfAnalysis.onePerc.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
-                  Slowest responses</div>
+                  Slowest 1% of responses</div>
                 <div *ngIf="perfAnalysis.onePerc.failed===false" class="perf-analaysis-desc text-secondary">
-                  <small>1% of slowest responses do not have a significant deviation from the average response
+                  <small>The 1% of the slowest responses do not have a significant deviation from the average response
                     time.</small>
                 </div>
                 <div *ngIf="perfAnalysis.onePerc.failed===true" class="perf-analaysis-desc text-secondary">
                   <small>The 1% of response times shows up to {{ perfAnalysis.onePerc.value }}x slower response times
                     than the
-                    average. This might mean a performance issue for some clients and indicates that SUT might have been
-                    overloaded.</small>
+                    average. This might mean a performance issue for some clients and indicates that SUT was most likely
+                    overloaded. </small> <button class="btn btn-sm btn-link-custom jtl-no-glow text-primary" (click)="toggleFoldBottom($event.target)">Show more</button>
+                    <div class="response-time-variability" [@panelState]="foldedBottom">
+                      <div><small>Labels with the highest difference from the average:</small></div>
+                      <div *ngFor="let _ of perfAnalysis.onePerc.failingLabels">
+                        <li><small><strong>{{_.label}}</strong> 1% of the responses were <strong>{{_.onePerc}}x</strong> slower then the average. The 1% of the response time were <strong>{{_.p99}}ms</strong> and slower, while the average was <strong>{{_.avgResponseTime}}ms</strong>.</small></li>
+                      </div>
+                    </div>
                 </div>
               </div>
 
@@ -129,9 +135,9 @@
                     {{perfAnalysis.variability.value}}x). The SUT might have been overloaded. </small> <button class="btn btn-sm btn-link-custom jtl-no-glow text-primary" (click)="toggleFoldRT($event.target)">Show more</button>
 
                     <div class="response-time-variability" [@panelState]="folded">
-                      <div><small>Labels with highest variability:</small></div>
+                      <div><small>Labels with the highest variability:</small></div>
                       <div *ngFor="let _ of perfAnalysis.variability.failingLabels">
-                        <li><small><strong>{{_.label}}</strong> shows <strong>{{_.variability}}x</strong> variability, while the minimum reponse time measured was <strong>{{_.minResponseTime}}ms</strong> and the average <strong>{{_.avgResponseTime}}ms</strong>.</small></li>
+                        <li><small><strong>{{_.label}}</strong> shows <strong>{{_.variability}}x</strong> variability. The minimum reponse time measured was <strong>{{_.minResponseTime}}ms</strong> and the average <strong>{{_.avgResponseTime}}ms</strong>.</small></li>
                       </div>
                     </div>
 

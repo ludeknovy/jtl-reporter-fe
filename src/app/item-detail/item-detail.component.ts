@@ -20,11 +20,19 @@ import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemStatusValue } from './item-detail.model';
 import { logScaleButton } from '../graphs/log-scale-button';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-item-detail',
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
+  animations : [
+    trigger('panelState', [
+      state('closed', style({ height: 0, overflow: 'hidden' })),
+      state('open', style({ height: '*' })),
+      transition('closed <=> open', animate('300ms ease-in-out')),
+    ]),
+  ],
   providers: [DecimalPipe]
 })
 export class ItemDetailComponent implements OnInit {
@@ -68,6 +76,7 @@ export class ItemDetailComponent implements OnInit {
     }
   };
   toggleThroughputBandFlag = false;
+  folded = 'closed';
 
 
   constructor(
@@ -284,7 +293,8 @@ export class ItemDetailComponent implements OnInit {
         value: variabilitySorted[0].variability,
         avgResponseTime: variabilitySorted[0].avgResponseTime,
         minResponseTime: variabilitySorted[0].minResponseTime,
-        failed: variabilitySorted[0].variability > 2.5
+        failed: variabilitySorted[0].variability > 2.5,
+        failingLabels: variabilitySorted.filter(_ => _.variability > 2.5)
       },
       onePerc: {
         value: onePercSorted[0].onePerc,
@@ -362,6 +372,16 @@ export class ItemDetailComponent implements OnInit {
       this.toggleThroughputBandFlag = false;
     }
     this.updateChartFlag = true;
+  }
+
+  toggleFoldRT(element) {
+    if (this.folded === 'open') {
+      this.folded = 'closed';
+      element.textContent = 'Show more';
+      return;
+    }
+    this.folded = 'open';
+    element.textContent = 'Show less';
 
   }
 }

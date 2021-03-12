@@ -77,6 +77,7 @@ export class ItemDetailComponent implements OnInit {
   };
   toggleThroughputBandFlag = false;
   folded = 'closed';
+  foldedBottom = 'closed';
 
 
   constructor(
@@ -281,6 +282,7 @@ export class ItemDetailComponent implements OnInit {
         onePerc,
         minResponseTime: _.minResponseTime,
         avgResponseTime: _.avgResponseTime,
+        p99: _.n9,
         label: _.label
       });
     });
@@ -299,7 +301,8 @@ export class ItemDetailComponent implements OnInit {
       onePerc: {
         value: onePercSorted[0].onePerc,
         avgResponseTime: onePercSorted[0].onePerc.avgResponseTime,
-        failed: onePercSorted[0].onePerc > 2.5
+        failed: onePercSorted[0].onePerc > 2.5,
+        failingLabels: onePercSorted.filter(_ => _.onePerc > 2.5)
       },
       throughputVariability: this.calculateThroughputVariability()
     };
@@ -382,6 +385,15 @@ export class ItemDetailComponent implements OnInit {
     }
     this.folded = 'open';
     element.textContent = 'Show less';
+  }
 
+  toggleFoldBottom(element) {
+    if (this.foldedBottom === 'open') {
+      this.foldedBottom = 'closed';
+      element.textContent = 'Show more';
+      return;
+    }
+    this.foldedBottom = 'open';
+    element.textContent = 'Show less';
   }
 }

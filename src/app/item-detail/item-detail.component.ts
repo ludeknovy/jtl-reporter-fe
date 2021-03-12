@@ -336,6 +336,16 @@ export class ItemDetailComponent implements OnInit {
       if (['response time', 'errors'].includes(serie.name)) {
         serie.visible = this.toggleThroughputBandFlag;
       }
+      if (serie.name === 'throughput') {
+        if (this.toggleThroughputBandFlag) {
+          serie.zones = [];
+          return;
+        }
+        serie.zones = [{
+            value: this.itemData.overview.throughput,
+            color: '#e74c3c'
+          }];
+      }
     });
 
     if (!this.toggleThroughputBandFlag) {

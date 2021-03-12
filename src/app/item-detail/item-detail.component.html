@@ -126,7 +126,16 @@
                   Steady response time performance</div>
                 <div *ngIf="perfAnalysis.variability.failed===true" class="perf-analaysis-desc text-secondary">
                   <small>Increased variability between the fastest and the average response time was detected (up to
-                    {{perfAnalysis.variability.value}}x). The SUT might have been overloaded.</small>
+                    {{perfAnalysis.variability.value}}x). The SUT might have been overloaded. </small> <button class="btn btn-sm btn-link-custom jtl-no-glow text-primary" (click)="toggleFoldRT($event.target)">Show more</button>
+
+                    <div class="response-time-variability" [@panelState]="folded">
+                      <div><small>Labels with highest variability:</small></div>
+                      <div *ngFor="let _ of perfAnalysis.variability.failingLabels">
+                        <li><small><strong>{{_.label}}</strong> shows <strong>{{_.variability}}x</strong> variability, while the minimum reponse time measured was <strong>{{_.minResponseTime}}ms</strong> and the average <strong>{{_.avgResponseTime}}ms</strong>.</small></li>
+                      </div>
+                    </div>
+
+
                 </div>
                 <div *ngIf="perfAnalysis.variability.failed===false" class="perf-analaysis-desc text-secondary">
                   <small>The SUT was providing balanced response times across all labels.</small>

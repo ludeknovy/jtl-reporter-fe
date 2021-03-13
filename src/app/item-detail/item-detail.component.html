@@ -57,115 +57,14 @@
 
       <div class="row" *ngIf="itemData.thresholds && !itemData.thresholds?.passed">
         <div class="col">
-          <ng-template #tipContent>
-            <p>90 percentile decrease toleration: {{itemData.thresholds.thresholds.percentile}} %
-            </p>
-            <p>
-              Througput decrease toleration: {{itemData.thresholds.thresholds.throughput}}%
-            </p>
-            <p>
-              Error rate increase toleration: {{itemData.thresholds.thresholds.errorRate}}%
-            </p>
-          </ng-template>
-          <div class="card perf-issue">
-            <div class="card-body">
-              <h6 class="card-title text-alizarin">Performance regression issue detected! <i class="ttp text-secondary"
-                  placement="bottom" [ngbTooltip]="tipContent"><i class="far fa-question-circle icon"></i></i></h6>
-              <div>
-                <div class="perf-issue-check" *ngIf="!itemData.thresholds.result.percentile.passed"> <i
-                    class="fas fa-exclamation-triangle text-danger"></i> 90 percentile response time
-                  <div class="perf-analaysis-desc text-secondary"><small>
-                      90 percentile response time is about {{Math.round(itemData.thresholds.result.percentile.diffValue - 100) }}% slower than in the previous reports.
-                    </small></div>
-                </div>
-                <div class="perf-issue-check" *ngIf="!itemData.thresholds.result.errorRate.passed"><i
-                    class="fas fa-exclamation-triangle text-danger"></i> Error rate
-                  <div class="perf-analaysis-desc text-secondary">
-                    Error rate is about {{
-                    Math.round(100 - itemData.thresholds.result.errorRate.diffValue) }}% higher than the average.
-                  </div>
-                </div>
-                <div class="perf-issue-check" *ngIf="!itemData.thresholds.result.throughput.passed"><i
-                    class="fas fa-exclamation-triangle text-danger"></i> Throughput
-                  <div class="perf-analaysis-desc text-secondary"><small> Throughput is about {{
-                      Math.round(100 - itemData.thresholds.result.throughput.diffValue ) }}% lower than in the previous reports.</small>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+          <app-regression-alert [itemData]="itemData"></app-regression-alert>
         </div>
       </div>
 
+
       <div class="row" *ngIf="itemData.analysisEnabled">
         <div class="col">
-          <div class="card"
-            [ngClass]="(perfAnalysis.onePerc.failed || perfAnalysis.variability.failed || perfAnalysis.throughputVariability.failed) ? 'performance-analysis-warning' : 'performance-analysis-success'">
-            <div class="card-body">
-              <h6 class="overview-body perf-analysis">Performance Analysis</h6>
-              <div>
-                <div><i
-                    [ngClass]="(perfAnalysis.onePerc.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
-                  Slowest 1% of responses</div>
-                <div *ngIf="perfAnalysis.onePerc.failed===false" class="perf-analaysis-desc text-secondary">
-                  <small>The 1% of the slowest responses do not have a significant deviation from the average response
-                    time.</small>
-                </div>
-                <div *ngIf="perfAnalysis.onePerc.failed===true" class="perf-analaysis-desc text-secondary">
-                  <small>The 1% of response times shows up to {{ perfAnalysis.onePerc.value }}x slower response times
-                    than the
-                    average. This might mean a performance issue for some clients and indicates that SUT was most likely
-                    overloaded. </small> <button class="btn btn-sm btn-link-custom jtl-no-glow text-primary" (click)="toggleFoldBottom($event.target)">Show more</button>
-                    <div class="response-time-variability" [@panelState]="foldedBottom">
-                      <div><small>Labels with the highest difference from the average:</small></div>
-                      <div *ngFor="let _ of perfAnalysis.onePerc.failingLabels">
-                        <li><small><strong>{{_.label}}</strong> 1% of the responses were <strong>{{_.onePerc}}x</strong> slower then the average. The 1% of the response time were <strong>{{_.p99}}ms</strong> and slower, while the average was <strong>{{_.avgResponseTime}}ms</strong>.</small></li>
-                      </div>
-                    </div>
-                </div>
-              </div>
-
-              <div class="perf-analysis-check">
-                <div><i
-                    [ngClass]="(perfAnalysis.variability.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
-                  Steady response time performance</div>
-                <div *ngIf="perfAnalysis.variability.failed===true" class="perf-analaysis-desc text-secondary">
-                  <small>Increased variability between the fastest and the average response time was detected (up to
-                    {{perfAnalysis.variability.value}}x). The SUT might have been overloaded. </small> <button class="btn btn-sm btn-link-custom jtl-no-glow text-primary" (click)="toggleFoldRT($event.target)">Show more</button>
-
-                    <div class="response-time-variability" [@panelState]="folded">
-                      <div><small>Labels with the highest variability:</small></div>
-                      <div *ngFor="let _ of perfAnalysis.variability.failingLabels">
-                        <li><small><strong>{{_.label}}</strong> shows <strong>{{_.variability}}x</strong> variability. The minimum reponse time measured was <strong>{{_.minResponseTime}}ms</strong> and the average <strong>{{_.avgResponseTime}}ms</strong>.</small></li>
-                      </div>
-                    </div>
-
-
-                </div>
-                <div *ngIf="perfAnalysis.variability.failed===false" class="perf-analaysis-desc text-secondary">
-                  <small>The SUT was providing balanced response times across all labels.</small>
-                </div>
-              </div>
-
-              <div class="perf-analysis-check">
-                <div><i
-                    [ngClass]="(perfAnalysis.throughputVariability.failed===true) ? 'fas fa-exclamation-triangle text-warning' : 'far fa-check-circle text-success'"></i>
-                  Steady throughput performance</div>
-                <div *ngIf="perfAnalysis.throughputVariability.failed===true"
-                  class="perf-analaysis-desc text-secondary">
-                  <small>Significant drops in throughput performance were detected (up to
-                    {{perfAnalysis.throughputVariability.value}}%). The SUT might have been overloaded. <button
-                      class="btn btn-sm btn-link-custom jtl-no-glow text-primary"
-                      (click)="toggleThroughputBand($event.target)">Display in chart</button></small>
-                </div>
-                <div *ngIf="perfAnalysis.throughputVariability.failed===false"
-                  class="perf-analaysis-desc text-secondary">
-                  <small>SUT was providing balanced throughput.</small>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-performance-analysis [itemData]="itemData" (overallChartChange)="toggleThroughputBand($event)"></app-performance-analysis>
         </div>
 
       </div>

@@ -5,7 +5,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   selector: 'app-performance-analysis',
   templateUrl: './performance-analysis.component.html',
   styleUrls: ['./performance-analysis.component.css', '../item-detail.component.scss'],
-    animations : [
+  animations: [
     trigger('panelState', [
       state('closed', style({ height: 0, overflow: 'hidden' })),
       state('open', style({ height: '*' })),
@@ -20,7 +20,18 @@ export class PerformanceAnalysisComponent implements OnInit {
 
 
   perfAnalysis = {
-    variability: null, onePerc: null, throughputVariability: {
+    variability: {
+      value: null,
+      avgResponseTime: null,
+      minResponseTime: null,
+      failed: null,
+      failingLabels: null,
+    }, onePerc: {
+      value: null,
+      failed: null,
+      avgResponseTime: null,
+      failingLabels: null,
+    }, throughputVariability: {
       failed: null,
       value: null,
       bandValues: null,
@@ -33,7 +44,7 @@ export class PerformanceAnalysisComponent implements OnInit {
   constructor() {
     this.Math = Math;
 
-   }
+  }
 
   ngOnInit() {
     this.performanceAnalaysis();
@@ -57,7 +68,7 @@ export class PerformanceAnalysisComponent implements OnInit {
       });
     });
 
-    const variabilitySorted = [...output].sort((a, b) =>  b.variability - a.variability);
+    const variabilitySorted = [...output].sort((a, b) => b.variability - a.variability);
     const onePercSorted = [...output].sort((a, b) => b.onePerc - a.onePerc);
 
     this.perfAnalysis = {

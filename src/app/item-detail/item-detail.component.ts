@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ItemsApiService } from '../items-api.service';
-import { ItemDetail, ItemStatistics } from '../items.service.model';
+import { ItemDetail } from '../items.service.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DecimalPipe } from '@angular/common';
 import * as Highcharts from 'highcharts';
@@ -20,19 +20,11 @@ import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemStatusValue } from './item-detail.model';
 import { logScaleButton } from '../graphs/log-scale-button';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-item-detail',
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
-  animations : [
-    trigger('panelState', [
-      state('closed', style({ height: 0, overflow: 'hidden' })),
-      state('open', style({ height: '*' })),
-      transition('closed <=> open', animate('300ms ease-in-out')),
-    ]),
-  ],
   providers: [DecimalPipe]
 })
 export class ItemDetailComponent implements OnInit {
@@ -68,17 +60,7 @@ export class ItemDetailComponent implements OnInit {
   comparisonWarning = [];
   token: string;
   isAnonymous = false;
-  perfAnalysis = {
-    variability: null, onePerc: null, throughputVariability: {
-      failed: null,
-      value: null,
-      bandValues: null,
-    }
-  };
   toggleThroughputBandFlag = false;
-  folded = 'closed';
-  foldedBottom = 'closed';
-
 
   constructor(
     private route: ActivatedRoute,
@@ -121,7 +103,6 @@ export class ItemDetailComponent implements OnInit {
         this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
         this.monitoringAlerts();
         this.generateCharts();
-        this.performanceAnalaysis();
         this.spinner.hide();
         Highcharts.chart('container', this.throughputChartOptions);
 
@@ -269,82 +250,11 @@ export class ItemDetailComponent implements OnInit {
     return Math.round(number * 100) / 100;
   }
 
-  private performanceAnalaysis() {
-    if (!this.itemData.analysisEnabled) {
-      return;
-    }
-    const output = [];
-    this.itemData.statistics.forEach(_ => {
-      const variability = this.roundNumberTwoDecimals(_.avgResponseTime / _.minResponseTime);
-      const onePerc = this.roundNumberTwoDecimals(_.n9 / _.avgResponseTime);
-      output.push({
-        variability,
-        onePerc,
-        minResponseTime: _.minResponseTime,
-        avgResponseTime: _.avgResponseTime,
-        p99: _.n9,
-        label: _.label
-      });
-    });
-
-    const variabilitySorted = [...output].sort((a, b) =>  b.variability - a.variability);
-    const onePercSorted = [...output].sort((a, b) => b.onePerc - a.onePerc);
-
-    this.perfAnalysis = {
-      variability: {
-        value: variabilitySorted[0].variability,
-        avgResponseTime: variabilitySorted[0].avgResponseTime,
-        minResponseTime: variabilitySorted[0].minResponseTime,
-        failed: variabilitySorted[0].variability > 2.5,
-        failingLabels: variabilitySorted.filter(_ => _.variability > 2.5)
-      },
-      onePerc: {
-        value: onePercSorted[0].onePerc,
-        avgResponseTime: onePercSorted[0].onePerc.avgResponseTime,
-        failed: onePercSorted[0].onePerc > 2.5,
-        failingLabels: onePercSorted.filter(_ => _.onePerc > 2.5)
-      },
-      throughputVariability: this.calculateThroughputVariability()
-    };
-  }
-
-  private calculateThroughputVariability() {
-    try {
-      const { overallThroughput, threads } = this.itemData.plot;
-      const { maxVu, throughput } = this.itemData.overview;
-      const rampUpIndex = threads.map(_ => _[1]).indexOf(maxVu);
-
-      const throughputValues = overallThroughput.data.slice(rampUpIndex, -2).map(_ => _[1]);
-      const minThroughput = Math.min(...throughputValues);
-      const minThroughputIndex = throughputValues.indexOf(minThroughput);
-      const maxBandIndex = throughputValues.length;
-      const bandTo = minThroughputIndex + 5 <= maxBandIndex ? minThroughputIndex + 3 : maxBandIndex;
-      const throughputBandValues = [
-        overallThroughput.data.slice(rampUpIndex)[minThroughputIndex - 3][0],
-        overallThroughput.data.slice(rampUpIndex)[bandTo][0]
-      ];
-      const throughputVariability = this.roundNumberTwoDecimals(100 - (minThroughput / throughput) * 100);
-
-      return {
-        value: throughputVariability,
-        failed: throughputVariability > 20,
-        bandValues: throughputBandValues
-      };
-    } catch (error) {
-      return {
-        value: null,
-        failed: false,
-        bandValues: []
-      };
-    }
-
-  }
-
   bytesToMbps(bytes) {
     return this.roundNumberTwoDecimals(bytes / Math.pow(1024, 2));
   }
 
-  toggleThroughputBand(element) {
+  toggleThroughputBand({ element, perfAnalysis }) {
     this.overallChartOptions.series.forEach(serie => {
       if (['response time', 'errors'].includes(serie.name)) {
         serie.visible = this.toggleThroughputBandFlag;
@@ -355,9 +265,9 @@ export class ItemDetailComponent implements OnInit {
           return;
         }
         serie.zones = [{
-            value: this.itemData.overview.throughput,
-            color: '#e74c3c'
-          }];
+          value: this.itemData.overview.throughput,
+          color: '#e74c3c'
+        }];
       }
     });
 
@@ -365,8 +275,8 @@ export class ItemDetailComponent implements OnInit {
       element.textContent = 'Hide in chart';
       this.overallChartOptions.xAxis.plotBands = {
         color: '#e74c3c4f',
-        from: this.perfAnalysis.throughputVariability.bandValues[0],
-        to: this.perfAnalysis.throughputVariability.bandValues[1]
+        from: perfAnalysis.throughputVariability.bandValues[0],
+        to: perfAnalysis.throughputVariability.bandValues[1]
       };
       this.toggleThroughputBandFlag = true;
     } else {
@@ -377,23 +287,4 @@ export class ItemDetailComponent implements OnInit {
     this.updateChartFlag = true;
   }
 
-  toggleFoldRT(element) {
-    if (this.folded === 'open') {
-      this.folded = 'closed';
-      element.textContent = 'Show more';
-      return;
-    }
-    this.folded = 'open';
-    element.textContent = 'Show less';
-  }
-
-  toggleFoldBottom(element) {
-    if (this.foldedBottom === 'open') {
-      this.foldedBottom = 'closed';
-      element.textContent = 'Show more';
-      return;
-    }
-    this.foldedBottom = 'open';
-    element.textContent = 'Show less';
-  }
 }

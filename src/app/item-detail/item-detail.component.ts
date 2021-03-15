@@ -251,7 +251,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   bytesToMbps(bytes) {
-    return this.roundNumberTwoDecimals(bytes / Math.pow(1024, 2));
+    return this.roundNumberTwoDecimals(bytes * 8.0E-6);
   }
 
   toggleThroughputBand({ element, perfAnalysis }) {

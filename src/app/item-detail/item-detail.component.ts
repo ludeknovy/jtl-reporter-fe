@@ -10,7 +10,7 @@ import exporting from 'highcharts/modules/exporting';
 exporting(Highcharts);
 
 import {
-  commonGraphSettings, threadLineSettings,
+  threadLineSettings,
   errorLineSettings, overallChartSettings,
   throughputLineSettings,
   networkLineSettings,
@@ -20,7 +20,7 @@ import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemStatusValue } from './item-detail.model';
-import { logScaleButton } from '../graphs/log-scale-button';
+import { bytesToMbps, roundNumberTwoDecimals } from '../calculations';
 
 @Component({
   selector: 'app-item-detail',
@@ -44,8 +44,6 @@ export class ItemDetailComponent implements OnInit {
     monitoringData: { mem: [], maxCpu: 0, maxMem: 0, cpu: [] },
     analysisEnabled: null,
   };
-  responseTimeChartOptions;
-  throughputChartOptions;
   overallChart;
   overallChartOptions;
   overallResponseTimeChart;
@@ -105,28 +103,22 @@ export class ItemDetailComponent implements OnInit {
         this.monitoringAlerts();
         this.generateCharts();
         this.spinner.hide();
-        Highcharts.chart('container', this.throughputChartOptions);
-
       });
   }
 
   private generateCharts() {
-    const { responseTime, throughput, threads, overallTimeResponse,
+    const { threads, overallTimeResponse,
       overallThroughput, overAllFailRate, overallNetwork } = this.itemData.plot;
     const threadLine = { ...threadLineSettings, name: 'virtual users', data: threads };
     const errorLine = { ...errorLineSettings, ...overAllFailRate };
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
-    this.responseTimeChartOptions = {
-      ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine], ...logScaleButton
-    };
-    this.throughputChartOptions = { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine], ...logScaleButton };
     const oveallChartSeries = [
       threadLine, overallTimeResponse, throughputLine, errorLine,
     ];
 
     if (overallNetwork) {
       const networkMbps = overallNetwork.data.map((_) => {
-        return [_[0], this.bytesToMbps(_[1])];
+        return [_[0], bytesToMbps(_[1])];
 
       });
       const networkLine = { ...networkLineSettings, data: networkMbps };
@@ -162,8 +154,8 @@ export class ItemDetailComponent implements OnInit {
           n0Diff: (_.n0 - labelToBeCompared.n0),
           n5Diff: (_.n5 - labelToBeCompared.n5),
           n9Diff: (_.n9 - labelToBeCompared.n9),
-          errorRateDiff: this.roundNumberTwoDecimals((_.errorRate - labelToBeCompared.errorRate)),
-          throughputDiff: this.roundNumberTwoDecimals((_.throughput - labelToBeCompared.throughput))
+          errorRateDiff: roundNumberTwoDecimals((_.errorRate - labelToBeCompared.errorRate)),
+          throughputDiff: roundNumberTwoDecimals((_.throughput - labelToBeCompared.throughput))
         };
       } else {
         this.comparisonWarning.push(`${_.label} label not found`);
@@ -258,14 +250,6 @@ export class ItemDetailComponent implements OnInit {
       }));
   }
 
-  private roundNumberTwoDecimals = number => {
-    return Math.round(number * 100) / 100;
-  }
-
-  bytesToMbps(bytes) {
-    return this.roundNumberTwoDecimals(bytes * 8.0E-6);
-  }
-
   toggleThroughputBand({ element, perfAnalysis }) {
     this.overallChartOptions.series.forEach(serie => {
       if (['response time', 'errors'].includes(serie.name)) {
@@ -299,4 +283,7 @@ export class ItemDetailComponent implements OnInit {
     this.updateChartFlag = true;
   }
 
+  convertBytesToMbps(bytes) {
+    return bytesToMbps(bytes);
+  }
 }

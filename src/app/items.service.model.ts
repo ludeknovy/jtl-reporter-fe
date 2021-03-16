@@ -39,24 +39,7 @@ export interface ItemDetail {
   note: string;
   hostname: string;
   environment: string;
-  plot: {
-    responseTime: [{
-      name: string,
-      data: any[],
-      type: any;
-    }],
-    throughput: [{
-      name: string,
-      data: any[],
-      type: any;
-    }],
-    overallNetwork: any,
-    overallTimeResponse: any,
-    overallThroughput: any
-    overAllFailRate: any
-    threads: any;
-
-  };
+  plot: ItemDataPlot;
   statistics: ItemStatistics[];
   attachements: [];
   thresholds?: {
@@ -68,6 +51,29 @@ export interface ItemDetail {
     }
   };
 }
+
+export interface ItemDataPlot {
+  responseTime: [{
+    name: string,
+    data: any[],
+    type: any;
+  }],
+  throughput: [{
+    name: string,
+    data: any[],
+    type: any;
+  }],
+  network: [{
+    name: string;
+    data: any[];
+  }];
+  overallNetwork: any,
+  overallTimeResponse: any,
+  overallThroughput: any
+  overAllFailRate: any
+  threads: any;
+
+};
 
 export interface ItemStatistics {
   avgResponseTime: number;

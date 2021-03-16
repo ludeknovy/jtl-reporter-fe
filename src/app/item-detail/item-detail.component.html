@@ -162,7 +162,7 @@
                 <div class="col-sm" *ngIf="itemData.overview.bytesPerSecond && itemData.overview.bytesPerSecond !== 0">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title text-latency">{{bytesToMbps(itemData.overview.bytesPerSecond)}} <span
+                      <h2 class="card-title text-latency">{{convertBytesToMbps(itemData.overview.bytesPerSecond)}} <span
                           class="unit-desc">Mbps</span>
                       </h2>
                     </div>
@@ -257,30 +257,9 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row charts">
         <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header bg-transparent">Response Time</h6>
-            <div class="card-body">
-              <div class="chart">
-                <highcharts-chart [Highcharts]="Highcharts" [options]="responseTimeChartOptions"
-                  style="width: 100%; height: 350px; display: block;"></highcharts-chart>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header bg-transparent">Throughput</h6>
-            <div class="card-body">
-              <div class="chart">
-                <highcharts-chart [Highcharts]="Highcharts" [options]="throughputChartOptions"
-                  style="width: 100%; height: 350px; display: block;"></highcharts-chart>
-              </div>
-            </div>
-          </div>
+          <app-label-chart [plot]="itemData.plot"></app-label-chart>
         </div>
       </div>
     </div>
@@ -383,7 +362,7 @@
                     <td>{{_.throughput || "n/a"}} <sup
                         [className]="_.throughputDiff < 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.throughputDiff">{{_.throughputDiff}}</sup></td>
-                    <td>{{bytesToMbps(_.bytes * _.throughput) || "n/a"}} <sup
+                    <td>{{convertBytesToMbps(_.bytes * _.throughput) || "n/a"}} <sup
                         [className]="_.bytesDiff < 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.bytesDiff && bytesDiff !== 0">{{_.bytesDiff}}</sup></td>
                     <td>{{_.errorRate}} % <sup [className]="_.errorRateDiff > 0 ? 'value-positive' : 'value-negative'"

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { bytesToMbps } from 'src/app/calculations';
+import { bytesToMbps } from 'src/app/item-detail/calculations';
 import { commonGraphSettings, threadLineSettings } from 'src/app/graphs/item-detail';
 import { logScaleButton } from 'src/app/graphs/log-scale-button';
 import { ItemDataPlot } from 'src/app/items.service.model';

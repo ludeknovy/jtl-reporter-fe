@@ -20,7 +20,7 @@ import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemStatusValue } from './item-detail.model';
-import { bytesToMbps, roundNumberTwoDecimals } from '../calculations';
+import { bytesToMbps, roundNumberTwoDecimals } from './calculations';
 
 @Component({
   selector: 'app-item-detail',

@@ -14,6 +14,7 @@ export class LabelChartComponent implements OnInit {
 
   @Input() plot: ItemDataPlot;
   Highcharts: typeof Highcharts = Highcharts;
+  HighchartsCompare: typeof Highcharts = Highcharts;
   chartConstructor = 'chart';
 
 
@@ -37,7 +38,10 @@ export class LabelChartComponent implements OnInit {
         _.data = _.data.map(__ => [__[0], bytesToMbps(__[1])]);
         return _;
       });
-      const networkChartOptions = { ...commonGraphSettings('mbps'), series: [...networkMbps, ...threadLine], ...logScaleButton }
+      const networkChartOptions = {
+        ...commonGraphSettings('mbps'),
+        series: [...networkMbps, ...threadLine], ...logScaleButton
+      };
       this.chartMap.set('Network', networkChartOptions);
     }
 
@@ -87,7 +91,4 @@ export class LabelChartComponent implements OnInit {
     this.labelCompareChartMetric = target;
     this.labelCompareChartOptions = JSON.parse(JSON.stringify(this.chartMap.get(target)));
   }
-
-
-
 }

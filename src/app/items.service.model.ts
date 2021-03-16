@@ -57,33 +57,32 @@ export interface ItemDataPlot {
     name: string,
     data: any[],
     type: any;
-  }],
+  }];
   minResponseTime: [{
     name: string,
     data: any[],
     type: any;
-  }],
+  }];
   maxResponseTime: [{
     name: string,
     data: any[],
     type: any;
-  }],
+  }];
   throughput: [{
     name: string,
     data: any[],
     type: any;
-  }],
+  }];
   network: [{
     name: string;
     data: any[];
   }];
-  overallNetwork: any,
-  overallTimeResponse: any,
-  overallThroughput: any
-  overAllFailRate: any
+  overallNetwork: any;
+  overallTimeResponse: any;
+  overallThroughput: any;
+  overAllFailRate: any;
   threads: any;
-
-};
+}
 
 export interface ItemStatistics {
   avgResponseTime: number;

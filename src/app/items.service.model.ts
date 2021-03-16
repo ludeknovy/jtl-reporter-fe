@@ -56,22 +56,18 @@ export interface ItemDataPlot {
   responseTime: [{
     name: string,
     data: any[],
-    type: any;
   }];
   minResponseTime: [{
     name: string,
     data: any[],
-    type: any;
   }];
   maxResponseTime: [{
     name: string,
     data: any[],
-    type: any;
   }];
   throughput: [{
     name: string,
     data: any[],
-    type: any;
   }];
   network: [{
     name: string;

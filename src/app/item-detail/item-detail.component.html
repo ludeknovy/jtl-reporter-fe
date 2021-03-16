@@ -353,7 +353,7 @@
                       <mfDefaultSorter by="throughput">requests/s</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
-                      <mfDefaultSorter by="bytes">size [KB]</mfDefaultSorter>
+                      <mfDefaultSorter by="bytes">mbps</mfDefaultSorter>
                     </th>
                     <th scope="col" class="hd">
                       <mfDefaultSorter by="errorRate">error rate</mfDefaultSorter>
@@ -383,7 +383,7 @@
                     <td>{{_.throughput || "n/a"}} <sup
                         [className]="_.throughputDiff < 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.throughputDiff">{{_.throughputDiff}}</sup></td>
-                    <td>{{(_.bytes / 1024).toFixed(2) || "n/a"}} <sup
+                    <td>{{bytesToMbps(_.bytes * _.throughput) || "n/a"}} <sup
                         [className]="_.bytesDiff < 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.bytesDiff && bytesDiff !== 0">{{_.bytesDiff}}</sup></td>
                     <td>{{_.errorRate}} % <sup [className]="_.errorRateDiff > 0 ? 'value-positive' : 'value-negative'"

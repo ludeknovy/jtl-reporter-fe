@@ -112,5 +112,12 @@ export const throughputLineSettings: any = {
   yAxis: 2
 };
 
+export const networkLineSettings: any = {
+  color: 'grey',
+  yAxis: 3,
+  visible: false,
+  name: 'network'
+};
+
 export const responseTimeLineSettings: any = {
 };

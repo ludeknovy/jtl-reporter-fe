@@ -12,7 +12,8 @@ exporting(Highcharts);
 import {
   commonGraphSettings, threadLineSettings,
   errorLineSettings, overallChartSettings,
-  throughputLineSettings
+  throughputLineSettings,
+  networkLineSettings,
 } from '../graphs/item-detail';
 import { catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -110,7 +111,8 @@ export class ItemDetailComponent implements OnInit {
   }
 
   private generateCharts() {
-    const { responseTime, throughput, threads, overallTimeResponse, overallThroughput, overAllFailRate } = this.itemData.plot;
+    const { responseTime, throughput, threads, overallTimeResponse,
+      overallThroughput, overAllFailRate, overallNetwork } = this.itemData.plot;
     const threadLine = { ...threadLineSettings, name: 'virtual users', data: threads };
     const errorLine = { ...errorLineSettings, ...overAllFailRate };
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
@@ -118,10 +120,20 @@ export class ItemDetailComponent implements OnInit {
       ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine], ...logScaleButton
     };
     this.throughputChartOptions = { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine], ...logScaleButton };
+    const oveallChartSeries = [
+      threadLine, overallTimeResponse, throughputLine, errorLine,
+    ];
+
+    if (overallNetwork) {
+      const networkMbps = overallNetwork.data.map((_) => {
+        return [_[0], this.bytesToMbps(_[1])];
+
+      });
+      const networkLine = { ...networkLineSettings, data: networkMbps };
+      oveallChartSeries.push(networkLine);
+    }
     this.overallChartOptions = {
-      ...overallChartSettings('ms'), series: [
-        threadLine, overallTimeResponse, throughputLine, errorLine,
-      ],
+      ...overallChartSettings('ms'), series: oveallChartSeries
     };
   }
 

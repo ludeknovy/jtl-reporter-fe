@@ -50,6 +50,7 @@ export interface ItemDetail {
       data: any[],
       type: any;
     }],
+    overallNetwork: any,
     overallTimeResponse: any,
     overallThroughput: any
     overAllFailRate: any

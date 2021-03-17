@@ -279,3 +279,20 @@ thead .hd {
   margin-left: 10px;
 }
 
+.overview-chart-card {
+  margin-top: 20px;
+}
+
+.nav-link {
+  color: black;
+  border: none;
+}
+
+.nav-link.active {
+  color: #4b7cf3;
+  border-bottom: 1px solid #4b7cf3;
+}
+
+.nav-tabs {
+  border:none;
+}

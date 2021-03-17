@@ -64,7 +64,8 @@
 
       <div class="row" *ngIf="itemData.analysisEnabled">
         <div class="col">
-          <app-performance-analysis [itemData]="itemData" (overallChartChange)="toggleThroughputBand($event)"></app-performance-analysis>
+          <app-performance-analysis [itemData]="itemData" (overallChartChange)="toggleThroughputBand($event)">
+          </app-performance-analysis>
         </div>
 
       </div>
@@ -242,27 +243,53 @@
       </div>
     </div>
 
-    <div class="charts">
-      <div class="row charts">
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header bg-transparent">Overall Chart</h6>
-            <div class="card-body">
-              <div class="chart">
-                <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions" [(update)]="updateChartFlag"
-                  style="width: 100%; height: 350px; display: block;">
-                </highcharts-chart>
+
+
+    <div class="row">
+      <div class="col">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+          <li ngbNavItem>
+            <a ngbNavLink class="nav-link bg-transparent">Overview charts</a>
+            <ng-template ngbNavContent>
+              <div class="charts">
+                <div class="row charts">
+                  <div class="col-sm">
+                    <div class="card overview-chart-card">
+                      <h6 class="card-header bg-transparent">Overall Chart</h6>
+                      <div class="card-body">
+                        <div class="chart">
+                          <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions" [(update)]="updateChartFlag"
+                            style="width: 100%; height: 350px; display: block;">
+                          </highcharts-chart>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row charts">
+                  <div class="col-sm">
+                    <app-label-chart [labels]="chartLines.labels"></app-label-chart>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row charts">
-        <div class="col-sm">
-          <app-label-chart [plot]="itemData.plot"></app-label-chart>
-        </div>
+            </ng-template>
+          </li>
+          <li ngbNavItem>
+            <a ngbNavLink class="nav-link bg-transparent">Analyze charts</a>
+            <ng-template ngbNavContent>
+              <div class="row charts">
+                <div class="col-sm">
+                  <app-analyze-charts [chartLines]="chartLines"></app-analyze-charts>
+                </div>
+              </div>
+
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav"></div>
       </div>
     </div>
+
 
     <div class="row">
       <div class="col">

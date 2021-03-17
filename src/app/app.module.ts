@@ -62,6 +62,8 @@ import { DeleteShareLinkComponent } from './item-detail/share/delete-share-link/
 import { ThresholdsAlertComponent } from './item-detail/thresholds-alert/thresholds-alert.component';
 import { PerformanceAnalysisComponent } from './item-detail/performance-analysis/performance-analysis.component';
 import { LabelChartComponent } from './item-detail/label-chart/label-chart.component';
+import { AnalyzeChartsComponent } from './item-detail/analyze-charts/analyze-charts.component';
+import { AddMetricComponent } from './item-detail/analyze-charts/add-metric/add-metric.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -144,6 +146,8 @@ const appRoutes: Routes = [
     ThresholdsAlertComponent,
     PerformanceAnalysisComponent,
     LabelChartComponent,
+    AnalyzeChartsComponent,
+    AddMetricComponent,
   ],
   imports: [
     RouterModule.forRoot(

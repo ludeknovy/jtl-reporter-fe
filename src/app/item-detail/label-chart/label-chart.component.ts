@@ -20,8 +20,7 @@ export class LabelChartComponent implements OnInit {
 
   labelChartMetric = 'Throughput';
   labelCompareChartMetric;
-  labelChartOptions = commonGraphSettings('hits/s')
-  labelCompareChartOptions;
+  labelChartOptions = commonGraphSettings('hits/s');
   updateLabelChartFlag = false;
   chartKeys;
 
@@ -44,20 +43,4 @@ export class LabelChartComponent implements OnInit {
     this.updateLabelChartFlag = true;
   }
 
-  changeCompareChart(event) {
-    const target = event.target.innerText;
-    this.labelCompareChartMetric = target;
-    this.labelCompareChartOptions = this.labels.get(target);
-    this.updateLabelChartFlag = true;
-  }
-
-  removeCompareChart() {
-    this.labelCompareChartOptions = null;
-  }
-
-  addComparisonChart(event) {
-    const target = event.target.innerText;
-    this.labelCompareChartMetric = target;
-    this.labelCompareChartOptions = JSON.parse(JSON.stringify(this.labels.get(target)));
-  }
 }

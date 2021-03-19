@@ -164,6 +164,7 @@ export const customChartSettings = () => {
   {
     gridLineColor: '#f2f2f2',
     lineWidth: 0,
+    opposite: true,
     title: {
       text: 'VU'
     },
@@ -190,14 +191,12 @@ export const customChartSettings = () => {
 
 
 export const threadLineSettings: any = {
-  color: '#000000',
-  dashStyle: 'shortDot',
+  color: 'grey',
   yAxis: 1
 };
 
 export const errorLineSettings: any = {
   color: '#e74c3c',
-  dashStyle: 'shortDot',
   yAxis: 3
 };
 
@@ -209,7 +208,6 @@ export const throughputLineSettings: any = {
 export const networkLineSettings: any = {
   color: 'grey',
   yAxis: 3,
-  visible: false,
   name: 'network'
 };
 

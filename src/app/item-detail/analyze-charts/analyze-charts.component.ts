@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { commonGraphSettings, customChartSettings } from 'src/app/graphs/item-detail';
+import { customChartSettings } from 'src/app/graphs/item-detail';
 import * as Highcharts from 'highcharts';
 
 @Component({
@@ -53,12 +53,8 @@ export class AnalyzeChartsComponent implements OnInit {
         };
         chartSeries.push(line);
       }
-    })
-    console.log(event)
-    console.log(chartSeries)
-
-
-    this.customChartsOptions.series = chartSeries;
+    });
+    this.customChartsOptions.series = JSON.parse(JSON.stringify(chartSeries));
     this.updateLabelChartFlag = true;
   }
 }

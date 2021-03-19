@@ -7,17 +7,22 @@ import { ControlPanelComponent } from 'src/app/control-panel/control-panel.compo
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
 
 
 
-xdescribe('UsersComponent', () => {
+describe('UsersComponent', () => {
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule],
-      declarations: [UsersComponent, NavigationComponent, AddUserComponent, ControlPanelComponent, ]
+      declarations: [
+        UsersComponent, NavigationComponent,
+        AddUserComponent, ControlPanelComponent,
+        DeleteUserComponent,
+      ]
     })
       .compileComponents();
   }));

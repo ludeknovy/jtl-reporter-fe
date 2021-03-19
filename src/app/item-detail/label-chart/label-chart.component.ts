@@ -20,7 +20,7 @@ export class LabelChartComponent implements OnInit {
 
   labelChartMetric = 'Throughput';
   labelCompareChartMetric;
-  labelChartOptions;
+  labelChartOptions = commonGraphSettings('hits/s')
   labelCompareChartOptions;
   updateLabelChartFlag = false;
   chartKeys;
@@ -28,7 +28,6 @@ export class LabelChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
 
     this.labelChartOptions = JSON.parse(JSON.stringify(this.labels.get('Throughput')));
     this.getChartsKey();

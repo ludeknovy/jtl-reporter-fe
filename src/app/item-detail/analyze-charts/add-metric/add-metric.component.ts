@@ -1,41 +1,45 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-metric',
   templateUrl: './add-metric.component.html',
-  styleUrls: ['./add-metric.component.css']
+  styleUrls: ['./add-metric.component.scss']
 })
 export class AddMetricComponent implements OnInit {
 
   @Input() chartLines;
+  @Output() chartUpdate = new EventEmitter<{}>();
+
   overallChartLines;
   labelsChartLines;
-  metricForm: FormGroup;
+  labels: string[];
+  metrics = {};
 
   constructor(
     private modalService: NgbModal,
-    private formBuilder: FormBuilder,
   ) {
   }
 
-  private addCheckboxes() {
-    this.overallChartLines.forEach(() => this.metricsFormArray.push(new FormControl(false)));
-  }
-
-  get metricsFormArray() {
-    return this.metricForm.controls.metrics as FormArray;
-  }
-
   ngOnInit() {
-    this.overallChartLines = Array.from(this.chartLines.overall.keys())
-    console.log(this.overallChartLines)
-
-    this.metricForm = this.formBuilder.group({
-      metrics: new FormArray([])
+    const labelsLines = Array.from(this.chartLines.labels.keys());
+    const overallLines = Array.from(this.chartLines.overall.keys());
+    const { value: firstItem } = this.chartLines.labels.values().next();
+    const labels = firstItem.map(_ => ({ name: _.name, isChecked: false }));
+    overallLines.forEach((_) => {
+      this.metrics[_] = [{ name: 'overall', isChecked: false }]
     });
-    this.addCheckboxes();
+    labelsLines.forEach((_) => {
+      const labelsArray = [...JSON.parse(JSON.stringify(labels))]
+      this.metrics.hasOwnProperty(_)
+        ? this.metrics[_].push(...labelsArray)
+        : this.metrics[_] = labelsArray;
+    });
+
+    this.overallChartLines = Array.from(this.chartLines.overall.keys())
+    this.labelsChartLines = Array.from(this.chartLines.labels.keys())
+
+
   }
 
   open(content) {
@@ -43,11 +47,22 @@ export class AddMetricComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.metricForm.value)
-    const selectedMetrics = this.metricForm.value.metrics
-      .map((checked, i) => checked ? this.overallChartLines[i] : null)
-      .filter(v => v !== null);
-    console.log(selectedMetrics)
+    const checked = [];
+    // tslint:disable-next-line: forin
+    for (const key in this.metrics) {
+      const metric = this.metrics[key];
+      const checkedMetric = metric.filter((_) => _.isChecked === true).map((_ ) => ({ name: _.name, metric: key }))
+      if (checkedMetric.length > 0) {
+        checked.push(...checkedMetric);
+      }
+    }
+    this.chartUpdate.emit(checked);
+
+
+    this.modalService.dismissAll();
+
   }
+
+
 
 }

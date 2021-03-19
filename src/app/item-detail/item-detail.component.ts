@@ -62,7 +62,8 @@ export class ItemDetailComponent implements OnInit {
   chartLines = {
     overall: new Map(),
     labels: new Map(),
-  }
+  };
+  labelCharts = new Map();
 
   constructor(
     private route: ActivatedRoute,
@@ -127,7 +128,7 @@ export class ItemDetailComponent implements OnInit {
       this.chartLines.overall.set('Network', networkLine);
     }
 
-    this.chartLines.overall.set('Response time [avg]', overallTimeResponse)
+    this.chartLines.overall.set('Response Time [avg]', overallTimeResponse)
     this.chartLines.overall.set('Threads', threadLine);
     this.chartLines.overall.set('Error rate', errorLine);
     this.chartLines.overall.set('Throughput', throughputLine);
@@ -141,24 +142,27 @@ export class ItemDetailComponent implements OnInit {
         ...commonGraphSettings('mbps'),
         series: [...networkMbps, ...threadLine], ...logScaleButton
       };
-      this.chartLines.labels.set('Network', networkChartOptions);
+      this.chartLines.labels.set('Network', networkMbps);
+      this.labelCharts.set('Network', networkChartOptions);
     }
 
     if (minResponseTime) {
-      const minResponseTimeChartOptions = { ...commonGraphSettings('ms'), series: [...minResponseTime, ...threadLine], ...logScaleButton };
-      this.chartLines.labels.set('Response Time [min]', minResponseTimeChartOptions);
+      this.chartLines.labels.set('Response Time [min]', minResponseTime);
+      this.labelCharts.set('Response Time [min]', { ...commonGraphSettings('ms'), series: [...minResponseTime, ...threadLine]});
     }
     if (maxResponseTime) {
-      const maxResponseTimeChartOptions = { ...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine], ...logScaleButton };
-      this.chartLines.labels.set('Response Time [max]', maxResponseTimeChartOptions);
+      this.chartLines.labels.set('Response Time [max]', maxResponseTime);
+      this.labelCharts.set('Response Time [max]', { ...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine]});
+
     }
 
-    this.chartLines.labels.set('Response Time [avg]', {
-      ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine], ...logScaleButton
-    });
+    this.chartLines.labels.set('Response Time [avg]', responseTime);
+    this.labelCharts.set('Response Time [avg]', { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine]});
 
-    this.chartLines.labels.set('Throughput',
-      { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine], ...logScaleButton });
+
+    this.chartLines.labels.set('Throughput', throughput);
+    this.labelCharts.set('Throughput', { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
+
 
   }
 

@@ -1,36 +1,30 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="modal-basic-title">Add metrics</h5>
-    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" style="outline: none;" class="close" aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
-
-  <form [formGroup]="metricForm" (ngSubmit)="submit()">
-    <div  class="modal-body">
-
-      <div class="form-check"  formArrayName="metrics"  *ngFor="let order of metricsFormArray.controls; let i = index">
-        <input class="form-check-input" type="checkbox" value="" [formControlName]="i" id="flexCheck_i">
-        <label class="form-check-label" for="flexCheck_i">
-          {{overallChartLines[i]}}
-        </label>
-      </div>
-
-      <!-- <label formArrayName="metrics">
-        <input type="checkbox" [formControlName]="i">
-      </label> -->
-    </div>
-
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-
-  </form>
+  <div class="modal-body">
+    <ul class="metric-ul"  *ngFor="let item of metrics | keyvalue">
+      <div class="metric">{{item.key}}</div>
+      <li class="label" *ngFor="let _ of item.value">
+        <input class="form-check-input" type="checkbox" name="list_name_child" [(ngModel)]="_.isChecked">
+        <label class="form-check-label" for="flexRadioDefault1">{{_.name}}</label>
+      </li>
+    </ul>
+  </div>
 
 
+
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="submit()">Add</button>
+  </div>
 
 
 </ng-template>
 
-<button class="btn btn-sm jtl-btn-light" (click)="open(content)" ngbDropdownItem>Add metric</button>
+<button class="btn btn-sm jtl-btn-light" (click)="open(content)" ngbDropdownItem>Edit metrics</button>

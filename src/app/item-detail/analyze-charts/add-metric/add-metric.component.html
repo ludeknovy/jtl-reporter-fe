@@ -1,0 +1,30 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Add metrics</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <ul class="metric-ul"  *ngFor="let item of metrics | keyvalue">
+      <div class="metric">{{item.key}}</div>
+      <li class="label" *ngFor="let _ of item.value">
+        <input class="form-check-input" id="{{item.key}}{{_.name}}" type="checkbox" name="list_name_child" [(ngModel)]="_.isChecked">
+        <label class="form-check-label" for="{{item.key}}{{_.name}}">{{_.name}}</label>
+      </li>
+    </ul>
+  </div>
+
+
+
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="submit()">Submit</button>
+  </div>
+
+
+</ng-template>
+
+<button class="jtl-no-glow add-item jtl-btn-light btn btn-sm" (click)="open(content)" ngbDropdownItem>Edit metrics</button>

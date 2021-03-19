@@ -20,7 +20,8 @@ describe('LabelChartComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LabelChartComponent);
     component = fixture.componentInstance;
-    component.labels = new Map();
+    component.labels = new Map([
+      ['Throughput', {}]]);
     fixture.detectChanges();
   });
 

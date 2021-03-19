@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { AddMetricComponent } from './add-metric.component';
 
@@ -8,14 +9,20 @@ describe('AddMetricComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddMetricComponent ]
+      declarations: [AddMetricComponent],
+      imports: [FormsModule,
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AddMetricComponent);
     component = fixture.componentInstance;
+    component.chartLines = {
+      labels: new Map([['test', [{ name: 'test' }]]]),
+      overall: new Map()
+    };
     fixture.detectChanges();
   });
 

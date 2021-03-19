@@ -14,6 +14,7 @@ import {
   errorLineSettings, overallChartSettings,
   throughputLineSettings,
   networkLineSettings,
+  commonGraphSettings,
 } from '../graphs/item-detail';
 import { catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -21,6 +22,7 @@ import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemStatusValue } from './item-detail.model';
 import { bytesToMbps, roundNumberTwoDecimals } from './calculations';
+import { logScaleButton } from '../graphs/log-scale-button';
 
 @Component({
   selector: 'app-item-detail',
@@ -44,12 +46,9 @@ export class ItemDetailComponent implements OnInit {
     monitoringData: { mem: [], maxCpu: 0, maxMem: 0, cpu: [] },
     analysisEnabled: null,
   };
-  overallChart;
   overallChartOptions;
-  overallResponseTimeChart;
   updateChartFlag = false;
   monitoringChart;
-  overallThroughput;
   itemParams;
   hasErrorsAttachment;
   comparedData;
@@ -60,6 +59,11 @@ export class ItemDetailComponent implements OnInit {
   token: string;
   isAnonymous = false;
   toggleThroughputBandFlag = false;
+  chartLines = {
+    overall: new Map(),
+    labels: new Map(),
+  };
+  labelCharts = new Map();
 
   constructor(
     private route: ActivatedRoute,
@@ -106,24 +110,66 @@ export class ItemDetailComponent implements OnInit {
       });
   }
 
-  private generateCharts() {
+  private getChartLines() {
     const { threads, overallTimeResponse,
-      overallThroughput, overAllFailRate, overallNetwork } = this.itemData.plot;
+      overallThroughput, overAllFailRate, overallNetwork,
+      responseTime, throughput, network, minResponseTime, maxResponseTime
+    } = this.itemData.plot;
+
     const threadLine = { ...threadLineSettings, name: 'virtual users', data: threads };
     const errorLine = { ...errorLineSettings, ...overAllFailRate };
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
-    const oveallChartSeries = [
-      threadLine, overallTimeResponse, throughputLine, errorLine,
-    ];
 
     if (overallNetwork) {
       const networkMbps = overallNetwork.data.map((_) => {
         return [_[0], bytesToMbps(_[1])];
-
       });
       const networkLine = { ...networkLineSettings, data: networkMbps };
-      oveallChartSeries.push(networkLine);
+      this.chartLines.overall.set('Network', networkLine);
     }
+
+    this.chartLines.overall.set('Response Time [avg]', overallTimeResponse);
+    this.chartLines.overall.set('Threads', threadLine);
+    this.chartLines.overall.set('Error rate', errorLine);
+    this.chartLines.overall.set('Throughput', throughputLine);
+
+    if (network) {
+      const networkMbps = network.map((_) => {
+        _.data = _.data.map(__ => [__[0], bytesToMbps(__[1])]);
+        return _;
+      });
+      const networkChartOptions = {
+        ...commonGraphSettings('mbps'),
+        series: [...networkMbps, ...threadLine], ...logScaleButton
+      };
+      this.chartLines.labels.set('Network', networkMbps);
+      this.labelCharts.set('Network', networkChartOptions);
+    }
+
+    if (minResponseTime) {
+      this.chartLines.labels.set('Response Time [min]', minResponseTime);
+      this.labelCharts.set('Response Time [min]', { ...commonGraphSettings('ms'), series: [...minResponseTime, ...threadLine]});
+    }
+    if (maxResponseTime) {
+      this.chartLines.labels.set('Response Time [max]', maxResponseTime);
+      this.labelCharts.set('Response Time [max]', { ...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine]});
+
+    }
+
+    this.chartLines.labels.set('Response Time [avg]', responseTime);
+    this.labelCharts.set('Response Time [avg]', { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine]});
+
+
+    this.chartLines.labels.set('Throughput', throughput);
+    this.labelCharts.set('Throughput', { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
+
+
+  }
+
+  private generateCharts() {
+    this.getChartLines();
+    const oveallChartSeries = Array.from(this.chartLines.overall.values());
+
     this.overallChartOptions = {
       ...overallChartSettings('ms'), series: oveallChartSeries
     };

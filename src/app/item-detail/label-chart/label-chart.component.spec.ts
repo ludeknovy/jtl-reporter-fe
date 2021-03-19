@@ -20,18 +20,8 @@ describe('LabelChartComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LabelChartComponent);
     component = fixture.componentInstance;
-    component.plot = {
-      responseTime: [{ data: [], name: 'test' }],
-      minResponseTime: [{ data: [], name: 'test' }],
-      maxResponseTime: [{ data: [], name: 'test' }],
-      throughput: [{ data: [], name: 'test' }],
-      network: [{ data: [], name: 'test' }],
-      threads: [{ data: [], name: 'test' }],
-      overallNetwork: [{ data: [], name: 'test' }],
-      overallThroughput: [{ data: [], name: 'test' }],
-      overallTimeResponse: [{ data: [], name: 'test' }],
-      overAllFailRate: [{ data: [], name: 'test' }],
-    };
+    component.labels = new Map([
+      ['Throughput', {}]]);
     fixture.detectChanges();
   });
 

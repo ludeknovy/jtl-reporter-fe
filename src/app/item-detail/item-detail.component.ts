@@ -128,7 +128,7 @@ export class ItemDetailComponent implements OnInit {
       this.chartLines.overall.set('Network', networkLine);
     }
 
-    this.chartLines.overall.set('Response Time [avg]', overallTimeResponse)
+    this.chartLines.overall.set('Response Time [avg]', overallTimeResponse);
     this.chartLines.overall.set('Threads', threadLine);
     this.chartLines.overall.set('Error rate', errorLine);
     this.chartLines.overall.set('Throughput', throughputLine);

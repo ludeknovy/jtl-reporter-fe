@@ -48,7 +48,7 @@ export class AddMetricComponent implements OnInit {
     const checked = [];
     for (const key of Object.keys(this.metrics)) {
       const metric = this.metrics[key];
-      const checkedMetric = metric.filter((_) => _.isChecked === true).map((_ ) => ({ name: _.name, metric: key }))
+      const checkedMetric = metric.filter((_) => _.isChecked === true).map((_ ) => ({ name: _.name, metric: key }));
       if (checkedMetric.length > 0) {
         checked.push(...checkedMetric);
       }

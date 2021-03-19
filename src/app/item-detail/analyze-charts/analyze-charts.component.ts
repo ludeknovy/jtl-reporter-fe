@@ -45,7 +45,7 @@ export class AnalyzeChartsComponent implements OnInit {
         chartSeries.push(line);
       } else {
         const labelMetric = this.chartLines.labels.get(metric)
-          .find((_) => _.name === name);
+          .find(__ => __.name === name);
         const line: Line = {
           name: `${metric}: ${name}`,
           data: labelMetric.data,

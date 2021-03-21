@@ -1,4 +1,4 @@
-FROM node:12.14.0-alpine3.9 as builder
+FROM node:14.16.0-alpine3.12 as builder
 
 WORKDIR /src/fe
 

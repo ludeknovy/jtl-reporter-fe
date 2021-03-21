@@ -160,12 +160,12 @@ export class ItemDetailComponent implements OnInit {
       this.labelCharts.set('Response Time [P90]', { ...commonGraphSettings('ms'), series: [...percentile90, ...threadLine]});
     }
     if (percentile95) {
-      this.chartLines.labels.set('Response Time [P90]', percentile90);
-      this.labelCharts.set('Response Time [P90]', { ...commonGraphSettings('ms'), series: [...percentile95, ...threadLine]});
+      this.chartLines.labels.set('Response Time [P95]', percentile95);
+      this.labelCharts.set('Response Time [P95]', { ...commonGraphSettings('ms'), series: [...percentile95, ...threadLine]});
     }
     if (percentile99) {
-      this.chartLines.labels.set('Response Time [P90]', percentile90);
-      this.labelCharts.set('Response Time [P90]', { ...commonGraphSettings('ms'), series: [...percentile99, ...threadLine]});
+      this.chartLines.labels.set('Response Time [P99]', percentile99);
+      this.labelCharts.set('Response Time [P99]', { ...commonGraphSettings('ms'), series: [...percentile99, ...threadLine]});
     }
 
     this.chartLines.labels.set('Response Time [avg]', responseTime);

@@ -56,8 +56,11 @@ export class PerformanceAnalysisComponent implements OnInit {
     }
     const output = [];
     this.itemData.statistics.forEach(_ => {
-      const variability = this.roundNumberTwoDecimals(_.avgResponseTime / _.minResponseTime);
-      const onePerc = this.roundNumberTwoDecimals(_.n9 / _.avgResponseTime);
+      _.avgResponseTime = parseInt(_.avgResponseTime, 10);
+      const variability = _.minResponseTime === 0 || _.avgResponseTime === 0
+        ? 0
+        : this.roundNumberTwoDecimals(_.avgResponseTime / _.minResponseTime);
+      const onePerc = _.n9 === 0 || _.avgResponseTime === 0 ? 0 : this.roundNumberTwoDecimals(_.n9 / _.avgResponseTime);
       output.push({
         variability,
         onePerc,

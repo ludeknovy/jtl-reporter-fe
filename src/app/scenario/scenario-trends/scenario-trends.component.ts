@@ -24,11 +24,11 @@ export class ScenarioTrendsComponent implements OnInit {
     ...customScenarioTrends(), series: []
   };
   chartDataMapping = new Map([
-    ['percentil', { name: Series.ResponseTimeP90, onLoad: true }],
+    ['percentil', { name: Series.ResponseTimeP90, onLoad: true, color: 'rgb(17,122,139, 0.8)' }],
     ['avgResponseTime', { name: Series.ResponseTimeAvg, onLoad: false }],
     ['avgLatency', { name: Series.LatencyAvg, onLoad: false }],
     ['avgConnect', { name: Series.ConnetcAvg, onLoad: false }],
-    ['throughput', { name: Series.Throughput, yAxis: 2, onLoad: true }],
+    ['throughput', { name: Series.Throughput, yAxis: 2, onLoad: true, color: 'rgb(41,128,187, 0.8)' }],
     ['maxVu', { name: 'vu', yAxis: 1, onLoad: true }],
   ]);
 
@@ -65,7 +65,7 @@ export class ScenarioTrendsComponent implements OnInit {
         series.push({
           name: chartSerieSettings.name,
           data: seriesData[key],
-          type: 'spline', color: '#b7b7b717',
+          type: 'spline', color: 'grey',
           yAxis: chartSerieSettings.yAxis
         });
       }
@@ -74,6 +74,7 @@ export class ScenarioTrendsComponent implements OnInit {
         data: seriesData[key],
         yAxis: chartSerieSettings && chartSerieSettings.yAxis || 0,
         visible: chartSerieSettings && chartSerieSettings.onLoad || false,
+        color: chartSerieSettings && chartSerieSettings.color,
       });
 
     }

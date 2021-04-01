@@ -88,122 +88,86 @@ const options = ({ data, projectId, scenarioId }, yUnit) => {
 
 export const customScenarioTrends = () => {
   return {
-   chart: {
-     type: 'column',
-     zoomType: 'x',
-     marginTop: 50,
-     className: 'chart-sync',
-   },
-   time: {
-     getTimezoneOffset: function (timestamp) {
-       const d = new Date();
-       const timezoneOffset = d.getTimezoneOffset();
-       return timezoneOffset;
-     }
-   },
-   exporting: {
-     buttons: {
-       contextButton: {
-         enabled: false
-       },
-     }
-   },
-   title: {
-     text: ''
-   },
-   colors: ['#5DADE2', '#2ECC71', '#F4D03F', '#D98880',
-     '#707B7C', '#7DCEA0', '#21618C', '#873600', '#AF7AC5', '#B7950B'],
-   tooltip: {
-     split: true,
-     crosshairs: [true]
-   },
-   plotOptions: {
-     series: {
-       connectNulls: true,
-     },
-     line: {
-       lineWidth: 1.5,
-       states: {
-         hover: {
-           lineWidth: 1.5
-         }
-       },
-       marker: {
-         enabled: false
-       },
-     }
-   },
-   xAxis: {
-     lineWidth: 0,
-     type: 'datetime',
-     crosshair: true,
-   },
-   yAxis: [{
-     gridLineColor: '#f2f2f2',
-     lineWidth: 0,
-     title: {
-       text: 'hits/s'
-     },
-   },
-   {
-     gridLineColor: '#f2f2f2',
-     lineWidth: 0,
-     title: {
-       text: 'ms'
-     },
-   },
-   {
-     gridLineColor: '#f2f2f2',
-     lineWidth: 0,
-     opposite: true,
-     title: {
-       text: 'VU'
-     },
-   },
-   {
-     gridLineColor: '#f2f2f2',
-     lineWidth: 0,
-     opposite: true,
-     title: {
-       text: '%'
-     },
-   },
-   {
-     gridLineColor: '#f2f2f2',
-     lineWidth: 0,
-     opposite: true,
-     title: {
-       text: 'mbps'
-     },
-   }
- ],
+    chart: {
+      type: 'column',
+      zoomType: 'x',
+      marginTop: 50,
+      className: 'chart-sync',
+    },
+    time: {
+      getTimezoneOffset: function (timestamp) {
+        const d = new Date();
+        const timezoneOffset = d.getTimezoneOffset();
+        return timezoneOffset;
+      }
+    },
+    exporting: {
+      buttons: {
+        contextButton: {
+          enabled: false
+        },
+      }
+    },
+    title: {
+      text: ''
+    },
+    colors: ['#5DADE2', '#2ECC71', '#F4D03F', '#D98880',
+      '#707B7C', '#7DCEA0', '#21618C', '#873600', '#AF7AC5', '#B7950B'],
+    tooltip: {
+      split: true,
+      crosshairs: [true]
+    },
+    plotOptions: {
+      line: {
+        lineWidth: 1.5,
+        states: {
+          hover: {
+            lineWidth: 1.5
+          }
+        },
+        marker: {
+          enabled: false
+        },
+      }
+    },
+    xAxis: {
+      lineWidth: 0,
+      type: 'datetime',
+      crosshair: true,
+      labels: {
+        enabled: false
+      }
+    },
+    yAxis: [
+      {
+        gridLineColor: '#f2f2f2',
+        lineWidth: 0,
+        title: {
+          text: 'ms'
+        },
+      },
+      {
+        gridLineColor: '#f2f2f2',
+        lineWidth: 0,
+        opposite: true,
+        title: {
+          text: 'VU'
+        },
+      },
+      {
+        gridLineColor: '#f2f2f2',
+        lineWidth: 0,
+        title: {
+          text: 'hits/s'
+        },
+      }
+    ],
   };
- };
+};
 
 
 export const scenarioHistoryGraphs = (historyData: ScenarioTrendsData[], projectId, scenarioId) => {
   const dates = historyData.map(_ => moment(_.overview.startDate).format('DD. MM. YYYY HH:mm'));
-  const series = []
-  const seriesData = historyData.reduce((acc, current) => {
-    for (const key of Object.keys(current.overview)) {
-
-      if (!['startDate', 'endDate', 'duration'].includes(key)) {
-        if (!acc[key]) {
-          acc[key] = [[current.overview.startDate, current.overview[key]]];
-        } else {
-          acc[key].push([current.overview.startDate, current.overview[key]]);
-        }
-      }
-    }
-    return acc;
-  }, {});
-  for (const key of Object.keys(seriesData)) {
-    series.push({ name: key, data: seriesData[key] });
-  }
-
-
-
-
   const intervals = [
     { name: 'avgResponseTime', color: 'rgb(87,95,207, 0.8)', unit: 'ms' },
     { name: 'throughput', color: 'rgb(41,128,187, 0.8)', unit: 'hit/s' },
@@ -264,6 +228,5 @@ export const scenarioHistoryGraphs = (historyData: ScenarioTrendsData[], project
     throughputHistoryChart: intervals.find(_ => _.name === 'throughput').data,
     errorRateHistoryChart: intervals.find(_ => _.name === 'errorRate').data,
     ninetyHistoryChart: intervals.find(_ => _.name === 'percentil').data,
-    series
   };
 };

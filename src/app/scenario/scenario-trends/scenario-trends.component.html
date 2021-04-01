@@ -1,19 +1,17 @@
 <div class="card scenario-custom-chart">
   <h6 class="card-header bg-transparent">
-    Scenario Custom Chart
+    Scenario Response Times
     <span class="float-right">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="">
-        <!-- <app-add-metric [chartLines]="chartLines" (chartUpdate)="chartUpdated($event)"></app-add-metric> -->
       </div>
     </span>
   </h6>
   <div class="card-body">
     <div class="chart">
-      <highcharts-chart [Highcharts]="Highcharts" [options]="customScenarioChartOptions" [(update)]="updateLabelChartFlag" [oneToOne]="true"
+      <highcharts-chart [Highcharts]="Highcharts" [options]="customScenarioTimeChartOption" [(update)]="updateLabelChartFlag" [oneToOne]="true"
 
         style="width: 100%; height: 450px; display: block;"></highcharts-chart>
     </div>
   </div>
-
 </div>

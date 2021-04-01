@@ -1,5 +1,4 @@
 .scenario-custom-chart{
-  padding-top: 10px;
   margin-top: 0px;
 }
 
@@ -9,4 +8,5 @@
 
 .card {
   border: none;
+  margin-bottom: 20px;
 }

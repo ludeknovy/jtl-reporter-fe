@@ -3,5 +3,7 @@ export enum Series {
   ResponseTimeP90 = 'Response Time [P90]',
   LatencyAvg = 'Latency [avg]',
   ConnetcAvg = 'Connection [avg]',
-  Throughput = 'Throughput'
+  Throughput = 'Throughput',
+  ErrorRate = 'Error Rate',
+  Network = 'Network'
  }

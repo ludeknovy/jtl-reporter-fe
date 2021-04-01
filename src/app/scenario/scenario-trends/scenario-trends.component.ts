@@ -3,6 +3,7 @@ import * as Highcharts from 'highcharts';
 import * as moment from 'moment';
 import { customScenarioTrends } from 'src/app/graphs/scenario-trends';
 import { Series } from 'src/app/graphs/series.model';
+import { bytesToMbps } from 'src/app/item-detail/calculations';
 import { ScenarioTrendsData } from 'src/app/items.service.model';
 import { ScenarioApiService } from 'src/app/scenario-api.service';
 
@@ -14,7 +15,6 @@ import { ScenarioApiService } from 'src/app/scenario-api.service';
 export class ScenarioTrendsComponent implements OnInit {
 
   @Input() params;
-  chartSeries;
   Highcharts: typeof Highcharts = Highcharts;
   updateLabelChartFlag = false;
   customScenarioTimeChartOption = {
@@ -23,13 +23,20 @@ export class ScenarioTrendsComponent implements OnInit {
   customScenarioThroughputChartOption = {
     ...customScenarioTrends(), series: []
   };
+  networkTransform = (data) => {
+    const network = data.map(_ => bytesToMbps(_))
+    return network;
+  }
+
   chartDataMapping = new Map([
     ['percentil', { name: Series.ResponseTimeP90, onLoad: true, color: 'rgb(17,122,139, 0.8)' }],
     ['avgResponseTime', { name: Series.ResponseTimeAvg, onLoad: false }],
     ['avgLatency', { name: Series.LatencyAvg, onLoad: false }],
     ['avgConnect', { name: Series.ConnetcAvg, onLoad: false }],
     ['throughput', { name: Series.Throughput, yAxis: 2, onLoad: true, color: 'rgb(41,128,187, 0.8)' }],
-    ['maxVu', { name: 'vu', yAxis: 1, onLoad: true }],
+    ['maxVu', { name: 'vu', yAxis: 1, onLoad: true, type: 'spline', color: 'grey' }],
+    ['errorRate', { name: Series.ErrorRate, yAxis: 3, onLoad: false, color: 'rgb(231,76,60, 0.8)' }],
+    ['bytesPerSecond', { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform }]
   ]);
 
   constructor(private scenarioApiService: ScenarioApiService) {
@@ -59,31 +66,23 @@ export class ScenarioTrendsComponent implements OnInit {
       return acc;
     }, {});
 
+    console.log(seriesData)
+
     for (const key of Object.keys(seriesData)) {
       const chartSerieSettings = this.chartDataMapping.get(key);
-      if (key === 'maxVu') {
-        series.push({
-          name: chartSerieSettings.name,
-          data: seriesData[key],
-          type: 'spline', color: 'grey',
-          yAxis: chartSerieSettings.yAxis
-        });
+      if (!chartSerieSettings) {
+        continue;
       }
       series.push({
-        name: chartSerieSettings && chartSerieSettings.name || key,
-        data: seriesData[key],
-        yAxis: chartSerieSettings && chartSerieSettings.yAxis || 0,
-        visible: chartSerieSettings && chartSerieSettings.onLoad || false,
-        color: chartSerieSettings && chartSerieSettings.color,
+        name: chartSerieSettings.name || key,
+        data: chartSerieSettings.transform ? chartSerieSettings.transform(seriesData[key]) : seriesData[key],
+        yAxis: chartSerieSettings.yAxis || 0,
+        visible: chartSerieSettings.onLoad || false,
+        color: chartSerieSettings.color,
+        type: chartSerieSettings.type,
       });
-
     }
-    this.chartSeries = series;
-    const threads = series.find((_) => _.name === 'vu');
-    const throughput = series.find((_) => _.name === Series.Throughput);
-    const timeSeries = series.filter((_ => [Series.ConnetcAvg, Series.LatencyAvg,
-    Series.ResponseTimeAvg, Series.ResponseTimeP90].includes(_.name)));
-    this.customScenarioTimeChartOption.series = JSON.parse(JSON.stringify([...timeSeries, threads, throughput]));
+    this.customScenarioTimeChartOption.series = JSON.parse(JSON.stringify(series));
     this.customScenarioTimeChartOption.xAxis['categories'] = dates;
 
     this.updateLabelChartFlag = true;

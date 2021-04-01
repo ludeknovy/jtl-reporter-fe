@@ -160,6 +160,22 @@ export const customScenarioTrends = () => {
         title: {
           text: 'hits/s'
         },
+      },
+      {
+        gridLineColor: '#f2f2f2',
+        lineWidth: 0,
+        opposite: true,
+        title: {
+          text: '%'
+        },
+      },
+      {
+        gridLineColor: '#f2f2f2',
+        lineWidth: 0,
+        opposite: true,
+        title: {
+          text: 'mbps'
+        },
       }
     ],
   };

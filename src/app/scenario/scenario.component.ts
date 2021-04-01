@@ -87,5 +87,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     this.router.navigate([`./project/${this.params.projectName}/scenarios`]);
   }
 
+  generateTrendsChartLines(data) {
 
+  }
 }

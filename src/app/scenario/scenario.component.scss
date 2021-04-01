@@ -1,6 +1,6 @@
 .items-overview {
   padding-left: 200px;
-  padding-right: 200px;
+  padding-right: 225px;
   background-color: #f0f1f4;
   padding-top: 20px;
   min-height: 100%;
@@ -10,7 +10,6 @@
 
 .items-overview  [class*='col'] {
   padding-left: 10px;
-  padding-right: 10px;
 }
 
 .items {
@@ -154,4 +153,23 @@ tbody tr:hover {
 .performance-issue {
   margin-left: 10px;
   font-size: 19px;
+}
+
+.nav-link {
+  color: black;
+  border: none;
+  margin-right: 10px;
+}
+.nav-link:hover {
+  border-bottom: 2px solid grey;
+}
+
+.nav-link.active {
+  color: #4b7cf3;
+  border-bottom: 2px solid #4b7cf3;
+}
+
+.nav-tabs {
+  border:none;
+  padding-top: 10px;
 }

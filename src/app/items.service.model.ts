@@ -98,8 +98,19 @@ interface MonitoringData {
 }
 
 export interface ScenarioTrendsData {
-  overview: any;
-  start_time: string;
+  overview: {
+    avgConnect: number;
+    avgLatency: number;
+    avgResponseTime: number;
+    bytesPerSecond: number;
+    duration: number;
+    endData: Date;
+    errorRate: number;
+    maxVu: number;
+    percentil: number;
+    startDate: Date;
+    throughput: number;
+  };
   id: string;
 }
 

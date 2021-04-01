@@ -40,6 +40,7 @@ export class AnalyzeChartsComponent implements OnInit {
         const metricLine = this.chartLines.overall.get(metric);
         const line: Line = {
           ...metricLine,
+          id: name,
           yAxis
         };
         chartSeries.push(line);
@@ -49,6 +50,7 @@ export class AnalyzeChartsComponent implements OnInit {
         const line: Line = {
           name: `${metric}: ${name}`,
           data: labelMetric.data,
+          id: `${metric}: ${name}`,
           yAxis
         };
         chartSeries.push(line);
@@ -63,6 +65,7 @@ interface Line {
   data: [];
   name: string;
   yAxis: number;
+  id: number | string;
 }
 
 interface ChartLines {

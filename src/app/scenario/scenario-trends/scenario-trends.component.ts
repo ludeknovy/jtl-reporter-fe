@@ -13,33 +13,25 @@ import { ScenarioApiService } from 'src/app/scenario-api.service';
   styleUrls: ['./scenario-trends.component.css']
 })
 export class ScenarioTrendsComponent implements OnInit {
-
   @Input() params;
   Highcharts: typeof Highcharts = Highcharts;
   updateLabelChartFlag = false;
   customScenarioTimeChartOption = {
     ...customScenarioTrends(), series: []
   };
-  customScenarioThroughputChartOption = {
-    ...customScenarioTrends(), series: []
-  };
-  networkTransform = (data) => {
-    const network = data.map(_ => bytesToMbps(_))
-    return network;
-  }
-
-  chartDataMapping = new Map([
-    ['percentil', { name: Series.ResponseTimeP90, onLoad: true, color: 'rgb(17,122,139, 0.8)' }],
-    ['avgResponseTime', { name: Series.ResponseTimeAvg, onLoad: false }],
-    ['avgLatency', { name: Series.LatencyAvg, onLoad: false }],
-    ['avgConnect', { name: Series.ConnetcAvg, onLoad: false }],
-    ['throughput', { name: Series.Throughput, yAxis: 2, onLoad: true, color: 'rgb(41,128,187, 0.8)' }],
-    ['maxVu', { name: 'vu', yAxis: 1, onLoad: true, type: 'spline', color: 'grey' }],
-    ['errorRate', { name: Series.ErrorRate, yAxis: 3, onLoad: false, color: 'rgb(231,76,60, 0.8)' }],
-    ['bytesPerSecond', { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform }]
-  ]);
+  chartDataMapping;
 
   constructor(private scenarioApiService: ScenarioApiService) {
+    this.chartDataMapping = new Map([
+      ['percentil', { name: Series.ResponseTimeP90, onLoad: true, color: 'rgb(17,122,139, 0.8)' }],
+      ['avgResponseTime', { name: Series.ResponseTimeAvg, onLoad: false }],
+      ['avgLatency', { name: Series.LatencyAvg, onLoad: false }],
+      ['avgConnect', { name: Series.ConnetcAvg, onLoad: false }],
+      ['throughput', { name: Series.Throughput, yAxis: 2, onLoad: true, color: 'rgb(41,128,187, 0.8)' }],
+      ['maxVu', { name: 'vu', yAxis: 1, onLoad: true, type: 'spline', color: 'grey' }],
+      ['errorRate', { name: Series.ErrorRate, yAxis: 3, onLoad: false, color: 'rgb(231,76,60, 0.8)' }],
+      ['bytesPerSecond', { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform }]
+    ]);
   }
 
   ngOnInit() {
@@ -66,8 +58,6 @@ export class ScenarioTrendsComponent implements OnInit {
       return acc;
     }, {});
 
-    console.log(seriesData)
-
     for (const key of Object.keys(seriesData)) {
       const chartSerieSettings = this.chartDataMapping.get(key);
       if (!chartSerieSettings) {
@@ -86,6 +76,11 @@ export class ScenarioTrendsComponent implements OnInit {
     this.customScenarioTimeChartOption.xAxis['categories'] = dates;
 
     this.updateLabelChartFlag = true;
+  }
+
+  private networkTransform = (data) => {
+    const network = data.map(_ => bytesToMbps(_));
+    return network;
   }
 
 }

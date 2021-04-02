@@ -4,7 +4,7 @@
     <span class="float-right">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="">
-        <app-add-metric [chartLines]="chartLines" (chartUpdate)="chartUpdated($event)"></app-add-metric>
+        <app-add-metric [chartLines]="chartLines" [preloadedSeries]="preloadedSeries" (chartUpdate)="chartUpdated($event)"></app-add-metric>
       </div>
     </span>
   </h6>

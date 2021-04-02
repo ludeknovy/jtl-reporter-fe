@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ItemDetail, Items } from './items.service.model';
+import { ItemDetail, Items, UpsertItemChartSettings } from './items.service.model';
 
 @Injectable({
   providedIn: 'root'
@@ -93,5 +93,14 @@ export class ItemsApiService {
   deleteItemShareToken(projectName, scenarioName, itemId, id): Observable<HttpResponse<{}>> {
     return this.http.delete<{}>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/share-tokens/${id}`,
       { observe: 'response' });
+  }
+
+
+  upsertItemChartSettings(projectName, scenarioName, itemId, body: UpsertItemChartSettings) {
+    return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/custom-chart-settings`, body, { observe: 'response' });
+  }
+
+  fetchItemChartSettings(projectName, scenarioName, itemId) {
+    return this.http.get(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/custom-chart-settings`);
   }
 }

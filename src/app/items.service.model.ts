@@ -203,3 +203,9 @@ export interface ScenarioNotifications {
   type: string;
 }
 
+export interface UpsertItemChartSettings {
+  series: [{
+    name: string;
+    data: [number, number];
+  }]
+}

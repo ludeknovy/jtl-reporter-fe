@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,7 +17,8 @@ describe('AnalyzeChartsComponent', () => {
       imports: [
         HighchartsChartModule,
         NgbModule,
-        FormsModule
+        FormsModule,
+        HttpClientModule
       ]
     })
     .compileComponents();
@@ -26,6 +28,7 @@ describe('AnalyzeChartsComponent', () => {
     fixture = TestBed.createComponent(AnalyzeChartsComponent);
     component = fixture.componentInstance;
     component.chartLines = { labels: new Map([['test', [{ name: 'test', data: []}]]]), overall: new Map() };
+    component.params = { projectName: "test", scenarioName: "test", id: "id" }
     fixture.detectChanges();
   });
 

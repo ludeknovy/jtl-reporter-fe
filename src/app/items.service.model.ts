@@ -207,5 +207,5 @@ export interface UpsertItemChartSettings {
   series: [{
     name: string;
     data: [number, number];
-  }]
+  }];
 }

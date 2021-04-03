@@ -49,7 +49,9 @@ export class AnalyzeChartsComponent implements OnInit {
 
   private updateChart(series) {
     const chartSeries: Line[] = [];
-    if (!Array.isArray(series)) return;
+    if (!Array.isArray(series)) {
+      return;
+    }
     series.forEach(_ => {
       const { name, metric } = _;
       const yAxis = this.yAxisId.get(metric.includes('Response Time') ? 'Response Time' : metric);

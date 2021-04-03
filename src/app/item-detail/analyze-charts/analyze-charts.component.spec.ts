@@ -28,7 +28,7 @@ describe('AnalyzeChartsComponent', () => {
     fixture = TestBed.createComponent(AnalyzeChartsComponent);
     component = fixture.componentInstance;
     component.chartLines = { labels: new Map([['test', [{ name: 'test', data: []}]]]), overall: new Map() };
-    component.params = { projectName: "test", scenarioName: "test", id: "id" }
+    component.params = { projectName: 'test', scenarioName: 'test', id: 'id' };
     fixture.detectChanges();
   });
 

@@ -95,9 +95,9 @@ export class ItemsApiService {
       { observe: 'response' });
   }
 
-
   upsertItemChartSettings(projectName, scenarioName, itemId, body: UpsertItemChartSettings) {
-    return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/custom-chart-settings`, body, { observe: 'response' });
+    return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/custom-chart-settings`,
+      body, { observe: 'response' });
   }
 
   fetchItemChartSettings(projectName, scenarioName, itemId) {

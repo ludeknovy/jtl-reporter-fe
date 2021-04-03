@@ -6,18 +6,30 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { ControlPanelComponent } from 'src/app/control-panel/control-panel.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpRequestInterceptorMock } from 'src/app/_interceptors/mock-interceptior';
 
 
 
-xdescribe('UsersComponent', () => {
+describe('UsersComponent', () => {
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule],
-      declarations: [UsersComponent, NavigationComponent, AddUserComponent, ControlPanelComponent, ]
+      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientTestingModule],
+      declarations: [
+        UsersComponent, NavigationComponent,
+        AddUserComponent, ControlPanelComponent,
+        DeleteUserComponent,
+      ],
+      providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: HttpRequestInterceptorMock,
+        multi: true
+      }]
     })
       .compileComponents();
   }));

@@ -11,10 +11,12 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataTableModule } from '@rushvora/ng-datatable';
 import { ExternalNotificationComponent } from './external-notification/external-notification.component';
 import { ScenarioTrendsComponent } from './scenario-trends/scenario-trends.component';
+import { HttpRequestInterceptorMock } from '../_interceptors/mock-interceptior';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ScenarioComponent', () => {
   let component: ScenarioComponent;
@@ -40,8 +42,13 @@ describe('ScenarioComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         FormsModule,
-        HttpClientModule
-      ]
+        HttpClientTestingModule
+      ],
+      providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: HttpRequestInterceptorMock,
+        multi: true
+      }]
     })
       .compileComponents();
   }));

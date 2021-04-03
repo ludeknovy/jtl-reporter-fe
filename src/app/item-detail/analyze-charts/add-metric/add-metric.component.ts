@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -6,9 +6,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './add-metric.component.html',
   styleUrls: ['./add-metric.component.scss']
 })
-export class AddMetricComponent implements OnInit {
+export class AddMetricComponent implements OnInit, OnChanges {
 
   @Input() chartLines;
+  @Input() preloadedSeries;
   @Output() chartUpdate = new EventEmitter<{}>();
 
   overallChartLines;
@@ -54,12 +55,22 @@ export class AddMetricComponent implements OnInit {
       }
     }
     this.chartUpdate.emit(checked);
-
-
     this.modalService.dismissAll();
-
   }
 
-
-
+  ngOnChanges(changes) {
+    // update checkboxes with pre-loaded settings
+    if (changes.preloadedSeries) {
+      const preloadedSeries = changes.preloadedSeries.currentValue;
+      if (!Array.isArray(preloadedSeries)) {
+        return;
+      }
+      preloadedSeries.forEach(_ => {
+        if (this.metrics[_.metric]) {
+          const item = this.metrics[_.metric].find(__ => __.name === _.name);
+          item.isChecked = true;
+        }
+      });
+    }
+  }
 }

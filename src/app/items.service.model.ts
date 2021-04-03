@@ -53,31 +53,24 @@ export interface ItemDetail {
 }
 
 export interface ItemDataPlot {
-  responseTime: [{
-    name: string,
-    data: any[],
-  }];
-  minResponseTime: [{
-    name: string,
-    data: any[],
-  }];
-  maxResponseTime: [{
-    name: string,
-    data: any[],
-  }];
-  throughput: [{
-    name: string,
-    data: any[],
-  }];
-  network: [{
-    name: string;
-    data: any[];
-  }];
+  responseTime: LabelSeries[];
+  minResponseTime: LabelSeries[];
+  maxResponseTime: LabelSeries[];
+  throughput: LabelSeries[];
+  network: LabelSeries[];
+  percentile90?: LabelSeries[];
+  percentile95?: LabelSeries[];
+  percentile99?: LabelSeries[];
   overallNetwork: any;
   overallTimeResponse: any;
   overallThroughput: any;
   overAllFailRate: any;
   threads: any;
+}
+
+interface LabelSeries {
+  name: string;
+  data: any[];
 }
 
 export interface ItemStatistics {
@@ -105,8 +98,19 @@ interface MonitoringData {
 }
 
 export interface ScenarioTrendsData {
-  overview: any;
-  start_time: string;
+  overview: {
+    avgConnect: number;
+    avgLatency: number;
+    avgResponseTime: number;
+    bytesPerSecond: number;
+    duration: number;
+    endData: Date;
+    errorRate: number;
+    maxVu: number;
+    percentil: number;
+    startDate: Date;
+    throughput: number;
+  };
   id: string;
 }
 
@@ -199,3 +203,9 @@ export interface ScenarioNotifications {
   type: string;
 }
 
+export interface UpsertItemChartSettings {
+  series: [{
+    name: string;
+    data: [number, number];
+  }];
+}

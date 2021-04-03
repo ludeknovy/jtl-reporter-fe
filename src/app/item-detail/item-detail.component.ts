@@ -113,7 +113,8 @@ export class ItemDetailComponent implements OnInit {
   private getChartLines() {
     const { threads, overallTimeResponse,
       overallThroughput, overAllFailRate, overallNetwork,
-      responseTime, throughput, network, minResponseTime, maxResponseTime
+      responseTime, throughput, network, minResponseTime, maxResponseTime, percentile90,
+      percentile95, percentile99,
     } = this.itemData.plot;
 
     const threadLine = { ...threadLineSettings, name: 'virtual users', data: threads };
@@ -153,7 +154,18 @@ export class ItemDetailComponent implements OnInit {
     if (maxResponseTime) {
       this.chartLines.labels.set('Response Time [max]', maxResponseTime);
       this.labelCharts.set('Response Time [max]', { ...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine]});
-
+    }
+    if (percentile90) {
+      this.chartLines.labels.set('Response Time [P90]', percentile90);
+      this.labelCharts.set('Response Time [P90]', { ...commonGraphSettings('ms'), series: [...percentile90, ...threadLine]});
+    }
+    if (percentile95) {
+      this.chartLines.labels.set('Response Time [P95]', percentile95);
+      this.labelCharts.set('Response Time [P95]', { ...commonGraphSettings('ms'), series: [...percentile95, ...threadLine]});
+    }
+    if (percentile99) {
+      this.chartLines.labels.set('Response Time [P99]', percentile99);
+      this.labelCharts.set('Response Time [P99]', { ...commonGraphSettings('ms'), series: [...percentile99, ...threadLine]});
     }
 
     this.chartLines.labels.set('Response Time [avg]', responseTime);

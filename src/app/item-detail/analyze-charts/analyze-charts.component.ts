@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { customChartSettings } from 'src/app/graphs/item-detail';
 import * as Highcharts from 'highcharts';
+import { ItemsApiService } from 'src/app/items-api.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-analyze-charts',
@@ -9,6 +11,7 @@ import * as Highcharts from 'highcharts';
 })
 export class AnalyzeChartsComponent implements OnInit {
 
+  @Input() params: { projectName: string, scenarioName: string, id: string };
   @Input() chartLines: ChartLines;
   Highcharts: typeof Highcharts = Highcharts;
   customChartsOptions = {
@@ -23,23 +26,40 @@ export class AnalyzeChartsComponent implements OnInit {
     ['Error Rate', 3],
     ['Network', 4]
   ]);
+  preloadedSeries;
 
-  constructor() {
+  constructor(
+    private itemApiService: ItemsApiService
+  ) {
   }
 
   ngOnInit() {
+    this.itemApiService
+      .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
+      .subscribe(_ => {
+        this.updateChart(_);
+        this.preloadedSeries = _;
+      });
   }
 
   chartUpdated(event: [{ name: string, metric: string }]) {
-    const chartSeries: Line[] = [];
+    this.updateChart(event);
+    this.saveChartSettings(event);
+  }
 
-    event.forEach(_ => {
+  private updateChart(series) {
+    const chartSeries: Line[] = [];
+    if (!Array.isArray(series)) {
+      return;
+    }
+    series.forEach(_ => {
       const { name, metric } = _;
       const yAxis = this.yAxisId.get(metric.includes('Response Time') ? 'Response Time' : metric);
       if (name === 'overall') {
         const metricLine = this.chartLines.overall.get(metric);
         const line: Line = {
           ...metricLine,
+          id: `${metric}: ${name}`,
           yAxis
         };
         chartSeries.push(line);
@@ -49,6 +69,7 @@ export class AnalyzeChartsComponent implements OnInit {
         const line: Line = {
           name: `${metric}: ${name}`,
           data: labelMetric.data,
+          id: `${metric}: ${name}`,
           yAxis
         };
         chartSeries.push(line);
@@ -57,15 +78,23 @@ export class AnalyzeChartsComponent implements OnInit {
     this.customChartsOptions.series = JSON.parse(JSON.stringify(chartSeries));
     this.updateLabelChartFlag = true;
   }
+
+  private saveChartSettings(event) {
+    this.itemApiService.upsertItemChartSettings(
+      this.params.projectName,
+      this.params.scenarioName,
+      this.params.id, event).subscribe(_ => _);
+  }
 }
 
 interface Line {
   data: [];
   name: string;
   yAxis: number;
+  id: number | string;
 }
 
 interface ChartLines {
   labels: Map<string, [{ data: [], name: string }]>;
-  overall: Map<string, { name: string, data: []}>;
+  overall: Map<string, { name: string, data: [] }>;
 }

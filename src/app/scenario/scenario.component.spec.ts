@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DataTableModule } from '@rushvora/ng-datatable';
 import { ExternalNotificationComponent } from './external-notification/external-notification.component';
+import { ScenarioTrendsComponent } from './scenario-trends/scenario-trends.component';
 
 describe('ScenarioComponent', () => {
   let component: ScenarioComponent;
@@ -30,6 +31,7 @@ describe('ScenarioComponent', () => {
         ControlPanelComponent,
         ScenarioGraphComponent,
         ExternalNotificationComponent,
+        ScenarioTrendsComponent,
       ],
       imports: [
         NgxSpinnerModule,

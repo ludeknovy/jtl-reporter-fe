@@ -17,12 +17,13 @@ export class HttpRequestInterceptorMock implements HttpInterceptor {
     if (request.url && request.url.includes('projects/test-project/scenarios/test-scenario/items/test-item/share-tokens')) {
       return of(new HttpResponse({ status: 200, body: [] }));
     }
-    if (request.url && request.url.includes('users')) {
+    if (request.url && request.url.includes('api-tokens')) {
       return of(new HttpResponse({ status: 200, body: [] }));
     }
     if (request.url && request.url.includes('projects/test-project/scenarios/test-scenario/items/test-item/custom-chart-settings')) {
       return of(new HttpResponse({ status: 200 }));
     }
+
 
     return next.handle(request);
   }

@@ -209,5 +209,47 @@ describe('Scenario', () => {
         });
       });
     });
+    describe('GET /project/:projectName/scenarios/:scenarioName/trends', () => {
+      beforeAll((done) => {
+        provider.addInteraction({
+          state: 'there is existing project with at least one scenario and test runs',
+          uponReceiving: 'a request for scenario trends',
+          withRequest: {
+            method: 'GET',
+            path: '/projects/test-project/scenarios/test-scenario/trends',
+          },
+          willRespondWith: {
+            status: 200,
+            body: Matchers.eachLike({
+              id: 'e3d1cde2-6079-4b01-8592-4bde15ae6ed7',
+              overview: Matchers.somethingLike({
+                avgLatency: 372,
+                avgResponseTime: 373,
+                duration: 11.99,
+                endDate: Matchers.term({ generate: '2019-07-24T13:12:20.807Z', matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z' }),
+                errorRate: 0.48,
+                maxVu: 10,
+                percentil: 658,
+                startDate: Matchers.term({ generate: '2019-07-24T12:00:21.156Z', matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z' }),
+                throughput: 24.81,
+                avgConnect: 10,
+                bytesPerSecond: 1000,
+              })
+            })
+          },
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(done, e => done.fail(e));
+      });
+      it('should be able to fetch scenario trends', (done) => {
+        const scenarioService: ScenarioApiService = TestBed.get(ScenarioApiService);
+        scenarioService.fetchScenarioTrend('test-project', 'test-scenario').subscribe(response => {
+          // @ts-ignore
+          console.log(response);
+          done();
+        });
+      });
+    })
   });
 });

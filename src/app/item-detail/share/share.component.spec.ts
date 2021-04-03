@@ -1,7 +1,9 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DataTableModule } from '@rushvora/ng-datatable';
+import { HttpRequestInterceptorMock } from 'src/app/_interceptors/mock-interceptior';
 import { CreateNewShareLinkComponent } from './create-new-share-link/create-new-share-link.component';
 import { DeleteShareLinkComponent } from './delete-share-link/delete-share-link.component';
 
@@ -20,9 +22,14 @@ describe('ShareComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         DataTableModule
-      ]
+      ],
+      providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: HttpRequestInterceptorMock,
+        multi: true
+      }]
     })
     .compileComponents();
   }));
@@ -30,7 +37,7 @@ describe('ShareComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ShareComponent);
     component = fixture.componentInstance;
-    component.params = { projectName: 'project', scenarioName: 'scenario', 'id': 'id'};
+    component.params = { projectName: 'test-project', scenarioName: 'test-scenario', 'id': 'test-item'};
     fixture.detectChanges();
   });
 

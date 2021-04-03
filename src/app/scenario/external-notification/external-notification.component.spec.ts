@@ -1,8 +1,10 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataTableModule } from '@rushvora/ng-datatable';
+import { HttpRequestInterceptorMock } from 'src/app/_interceptors/mock-interceptior';
 import { AddNewExternalNotificationComponent } from './add-new-external-notification/add-new-external-notification.component';
 import { DeleteExternalNotificationComponent } from './delete-external-notification/delete-external-notification.component';
 
@@ -17,7 +19,12 @@ describe('ExternalNotificationComponent', () => {
       declarations: [ExternalNotificationComponent,
         AddNewExternalNotificationComponent,
         DeleteExternalNotificationComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule, DataTableModule],
+      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientTestingModule, DataTableModule],
+      providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: HttpRequestInterceptorMock,
+        multi: true
+      }]
 
     })
       .compileComponents();
@@ -26,6 +33,7 @@ describe('ExternalNotificationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExternalNotificationComponent);
     component = fixture.componentInstance;
+    component.params = { projectName: "test-project" }
     fixture.detectChanges();
   });
 

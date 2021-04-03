@@ -33,7 +33,7 @@ describe('ExternalNotificationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExternalNotificationComponent);
     component = fixture.componentInstance;
-    component.params = { projectName: "test-project" }
+    component.params = { projectName: 'test-project' };
     fixture.detectChanges();
   });
 

@@ -10,17 +10,20 @@ export class HttpRequestInterceptorMock implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
-      console.log(request.url)
-    if (request.url && request.url.includes(`projects/test-project/scenarios/test-scenario/notification`)) {
+    if (request.url &&
+      request.url.includes(`projects/test-project/scenarios/test-scenario/notification`)) {
       return of(new HttpResponse({ status: 200, body: [] }));
     }
-    if (request.url && request.url.includes('projects/test-project/scenarios/test-scenario/items/test-item/share-tokens')) {
+    if (request.url &&
+      request.url.includes('projects/test-project/scenarios/test-scenario/items/test-item/share-tokens')) {
       return of(new HttpResponse({ status: 200, body: [] }));
     }
-    if (request.url && request.url.includes('api-tokens')) {
+    if (request.url &&
+      request.url.includes('api-tokens')) {
       return of(new HttpResponse({ status: 200, body: [] }));
     }
-    if (request.url && request.url.includes('projects/test-project/scenarios/test-scenario/items/test-item/custom-chart-settings')) {
+    if (request.url &&
+      request.url.includes('projects/test-project/scenarios/test-scenario/items/test-item/custom-chart-settings')) {
       return of(new HttpResponse({ status: 200 }));
     }
 

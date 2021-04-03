@@ -226,11 +226,17 @@ describe('Scenario', () => {
                 avgLatency: 372,
                 avgResponseTime: 373,
                 duration: 11.99,
-                endDate: Matchers.term({ generate: '2019-07-24T13:12:20.807Z', matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z' }),
+                endDate: Matchers.term({
+                  generate: '2019-07-24T13:12:20.807Z',
+                  matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z'
+                }),
                 errorRate: 0.48,
                 maxVu: 10,
                 percentil: 658,
-                startDate: Matchers.term({ generate: '2019-07-24T12:00:21.156Z', matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z' }),
+                startDate: Matchers.term({
+                  generate: '2019-07-24T12:00:21.156Z',
+                  matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z'
+                }),
                 throughput: 24.81,
                 avgConnect: 10,
                 bytesPerSecond: 1000,
@@ -250,6 +256,6 @@ describe('Scenario', () => {
           done();
         });
       });
-    })
+    });
   });
 });

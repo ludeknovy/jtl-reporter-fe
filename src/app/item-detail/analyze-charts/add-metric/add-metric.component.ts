@@ -62,10 +62,7 @@ export class AddMetricComponent implements OnInit {
     // update checkboxes with loaded settings
     if (changes.preloadedSeries) {
       const preloadedSeries = changes.preloadedSeries.currentValue;
-      console.log(preloadedSeries)
-      console.log(this.metrics)
       preloadedSeries.forEach(_ => {
-        console.log(_.metric)
         if (this.metrics[_.metric]) {
           const item = this.metrics[_.metric].find(__ => __.name === _.name)
           item.isChecked = true;

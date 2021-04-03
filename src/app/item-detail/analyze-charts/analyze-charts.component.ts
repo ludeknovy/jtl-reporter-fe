@@ -48,7 +48,6 @@ export class AnalyzeChartsComponent implements OnInit {
   }
 
   private updateChart(series) {
-    console.log(series)
     const chartSeries: Line[] = [];
     series.forEach(_ => {
       const { name, metric } = _;

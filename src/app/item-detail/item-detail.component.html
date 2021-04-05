@@ -160,10 +160,10 @@
                   </div>
                 </div>
 
-                <div class="col-sm" *ngIf="itemData.overview.bytesPerSecond && itemData.overview.bytesPerSecond !== 0">
+                <div class="col-sm" *ngIf="itemData.overview.bytesPerSecond && itemData.overview.bytesSentPerSecond && itemData.overview.bytesPerSecond !== 0">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title text-latency">{{convertBytesToMbps(itemData.overview.bytesPerSecond)}} <span
+                      <h2 class="card-title text-latency">{{convertBytesToMbps(itemData.overview.bytesPerSecond +  itemData.overview.bytesSentPerSecond)}} <span
                           class="unit-desc">Mbps</span>
                       </h2>
                     </div>
@@ -387,7 +387,7 @@
                     <td>{{_.throughput || "n/a"}} <sup
                         [className]="_.throughputDiff < 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.throughputDiff">{{_.throughputDiff}}</sup></td>
-                    <td>{{convertBytesToMbps(_.bytes * _.throughput) || "n/a"}} <sup
+                    <td>{{convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) || "n/a"}} <sup
                         [className]="_.bytesDiff < 0 ? 'value-positive' : 'value-negative'"
                         *ngIf="_.bytesDiff && bytesDiff !== 0">{{_.bytesDiff}}</sup></td>
                     <td>{{_.errorRate}} % <sup [className]="_.errorRateDiff > 0 ? 'value-positive' : 'value-negative'"

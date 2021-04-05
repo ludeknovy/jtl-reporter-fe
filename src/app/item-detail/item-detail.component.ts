@@ -112,8 +112,8 @@ export class ItemDetailComponent implements OnInit {
 
   private getChartLines() {
     const { threads, overallTimeResponse,
-      overallThroughput, overAllFailRate, overallNetwork,
-      responseTime, throughput, network, minResponseTime, maxResponseTime, percentile90,
+      overallThroughput, overAllFailRate, overAllNetworkV2,
+      responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
       percentile95, percentile99,
     } = this.itemData.plot;
 
@@ -121,8 +121,8 @@ export class ItemDetailComponent implements OnInit {
     const errorLine = { ...errorLineSettings, ...overAllFailRate };
     const throughputLine = { ...throughputLineSettings, ...overallThroughput };
 
-    if (overallNetwork) {
-      const networkMbps = overallNetwork.data.map((_) => {
+    if (overAllNetworkV2) {
+      const networkMbps = overAllNetworkV2.data.map((_) => {
         return [_[0], bytesToMbps(_[1])];
       });
       const networkLine = { ...networkLineSettings, data: networkMbps };
@@ -134,8 +134,8 @@ export class ItemDetailComponent implements OnInit {
     this.chartLines.overall.set('Error rate', errorLine);
     this.chartLines.overall.set('Throughput', throughputLine);
 
-    if (network) {
-      const networkMbps = network.map((_) => {
+    if (networkV2) {
+      const networkMbps = networkV2.map((_) => {
         _.data = _.data.map(__ => [__[0], bytesToMbps(__[1])]);
         return _;
       });

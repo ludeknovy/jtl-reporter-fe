@@ -56,7 +56,7 @@ describe('Scenario', () => {
               name: 'test-scenario',
               id: 'e3d1cde2-6079-4b01-8592-4bde15ae6ed7',
               data: Matchers.eachLike({
-                avgLatency: '372',
+                avgLatency: 372,
                 avgResponseTime: 373,
                 duration: 11.99,
                 // tslint:disable-next-line:max-line-length
@@ -86,7 +86,7 @@ describe('Scenario', () => {
             expect(_.name.length).toBeGreaterThan(0);
             expect(_.data).toEqual(jasmine.any(Array));
             _.data.forEach((d) => {
-              expect(d.avgLatency).toEqual(jasmine.any(String));
+              expect(d.avgLatency).toEqual(jasmine.any(Number));
               expect(d.avgResponseTime).toEqual(jasmine.any(Number));
               expect(d.duration).toEqual(jasmine.any(Number));
               expect(d.errorRate).toEqual(jasmine.any(Number));

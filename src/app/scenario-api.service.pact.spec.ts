@@ -212,7 +212,7 @@ describe('Scenario', () => {
     describe('GET /project/:projectName/scenarios/:scenarioName/trends', () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'there is existing project with at least one scenario and test runs',
+          state: 'there is at least one existing test item',
           uponReceiving: 'a request for scenario trends',
           withRequest: {
             method: 'GET',

@@ -123,8 +123,12 @@ thead {
 .request-stats {
   margin-bottom: 20px;
 }
-.request-stats .card-header {
+.table-stats .card-header {
   border-bottom: none;
+}
+
+.middle-control {
+  margin-bottom: -20px;
 }
 
 .errors-list {

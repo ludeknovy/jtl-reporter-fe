@@ -245,7 +245,7 @@
 
 
 
-    <div class="row">
+    <div class="row middle-control">
       <div class="col">
         <ul ngbNav #nav="ngbNav" class="nav-tabs justify-content-center" [destroyOnHide]="false">
           <li ngbNavItem>
@@ -288,10 +288,68 @@
       </div>
     </div>
 
+    <div class="row" *ngIf="itemData.sutOverview">
+      <div class="col">
+        <div class="card table-stats">
+          <h6 class="card-header bg-transparent">SUT Statistics <span class="compare">
+            </span></h6>
+          <div class="card-body card-body-request-stats">
+            <div class="labels-detail table-responsive">
+              <table class="table" [mfData]="itemData.sutOverview" #mf="mfDataTable">
+                <thead>
+                  <tr>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="sutHostname">SUT</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
+                    </th>
+
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="percentile">P90 [ms]</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="throughput">requests/s</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="bytesPerSecond">mbps</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                      <mfDefaultSorter by="errorRate">error rate</mfDefaultSorter>
+                    </th>
+                    <th scope="col" class="hd">
+                    </th>
+                    <th scope="col" class="hd">
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let _ of mf.data">
+                    <td>{{_.sutHostname || "other"}}
+                      <i *ngIf="!_.sutHostname" placement="bottom"
+                        ngbTooltip="All samples for which we could not parse the hostname."><i
+                          class="far fa-question-circle icon"></i></i>
+                    </td>
+                    <td>{{_.avgResponseTime}}</td>
+                    <td>{{_.percentile}}</td>
+                    <td>{{_.throughput || "n/a"}} </td>
+                    <td>{{convertBytesToMbps(_.bytesPerSecond) || "n/a"}}</td>
+                    <td>{{_.errorRate}} % </td>
+                    <td></td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col">
-        <div class="card request-stats">
+        <div class="card table-stats request-stats">
 
           <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
 

@@ -57,11 +57,15 @@ export interface ItemDataPlot {
   minResponseTime: LabelSeries[];
   maxResponseTime: LabelSeries[];
   throughput: LabelSeries[];
-  network: LabelSeries[];
+  networkV2: LabelSeries[];
+  networkUp: LabelSeries[];
+  networkDown:  LabelSeries[];
   percentile90?: LabelSeries[];
   percentile95?: LabelSeries[];
   percentile99?: LabelSeries[];
-  overallNetwork: any;
+  overAllNetworkV2: any;
+  overallNetworkUp: any;
+  overallNetworkDown: any;
   overallTimeResponse: any;
   overallThroughput: any;
   overAllFailRate: any;

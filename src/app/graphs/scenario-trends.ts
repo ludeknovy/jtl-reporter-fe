@@ -118,6 +118,9 @@ export const customScenarioTrends = () => {
       crosshairs: [true]
     },
     plotOptions: {
+      series: {
+        cursor: 'pointer',
+      },
       line: {
         lineWidth: 1.5,
         states: {

@@ -21,7 +21,7 @@ export class ScenarioTrendsComponent implements OnInit {
     ...customScenarioTrends(), series: []
   };
   chartDataMapping;
-  itemIds
+  itemIds;
 
   constructor(private scenarioApiService: ScenarioApiService, private router: Router,
   ) {
@@ -45,7 +45,7 @@ export class ScenarioTrendsComponent implements OnInit {
   }
 
   generateChartLines(data: ScenarioTrendsData[]) {
-    this.itemIds = data.map(_ => _.id)
+    this.itemIds = data.map(_ => _.id);
     const dates = data.map(_ => moment(_.overview.startDate).format('DD. MM. YYYY HH:mm:ss'));
     const series = [];
     const seriesData = data.reduce((acc, current) => {
@@ -84,8 +84,7 @@ export class ScenarioTrendsComponent implements OnInit {
 
   onPointSelect(event) {
     if (event && event.point && event.point) {
-      const itemId = this.itemIds[event.point.index]
-      console.log(itemId)
+      const itemId = this.itemIds[event.point.index];
       const { projectName, scenarioName } = this.params;
       this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
     }

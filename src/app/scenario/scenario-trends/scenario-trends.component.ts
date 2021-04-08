@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 import * as moment from 'moment';
 import { customScenarioTrends } from 'src/app/graphs/scenario-trends';
@@ -20,8 +21,10 @@ export class ScenarioTrendsComponent implements OnInit {
     ...customScenarioTrends(), series: []
   };
   chartDataMapping;
+  itemIds
 
-  constructor(private scenarioApiService: ScenarioApiService) {
+  constructor(private scenarioApiService: ScenarioApiService, private router: Router,
+  ) {
     this.chartDataMapping = new Map([
       ['percentil', { name: Series.ResponseTimeP90, onLoad: true, color: 'rgb(17,122,139, 0.8)' }],
       ['avgResponseTime', { name: Series.ResponseTimeAvg, onLoad: false }],
@@ -42,6 +45,7 @@ export class ScenarioTrendsComponent implements OnInit {
   }
 
   generateChartLines(data: ScenarioTrendsData[]) {
+    this.itemIds = data.map(_ => _.id)
     const dates = data.map(_ => moment(_.overview.startDate).format('DD. MM. YYYY HH:mm:ss'));
     const series = [];
     const seriesData = data.reduce((acc, current) => {
@@ -76,6 +80,15 @@ export class ScenarioTrendsComponent implements OnInit {
     this.customScenarioTimeChartOption.xAxis['categories'] = dates;
 
     this.updateLabelChartFlag = true;
+  }
+
+  onPointSelect(event) {
+    if (event && event.point && event.point) {
+      const itemId = this.itemIds[event.point.index]
+      console.log(itemId)
+      const { projectName, scenarioName } = this.params;
+      this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
+    }
   }
 
   private networkTransform = (data) => {

@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighchartsChartModule } from 'highcharts-angular';
 
@@ -16,6 +17,7 @@ describe('ScenarioTrendsComponent', () => {
         HighchartsChartModule,
         NgbModule,
         HttpClientTestingModule,
+        RouterTestingModule,
       ]
     })
       .compileComponents();

@@ -1,22 +1,10 @@
-<!-- <nav class="navbar navbar-expand-lg" id="top-panel">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ng-content></ng-content>
-
-  </div>
-</nav> -->
-
-<nav class="navbar navbar-expand-lg navbar-light py-1" style="background-color: white;" id="top-panel">
+<nav class="navbar navbar-expand-lg navbar-light py-1 content-container" id="top-panel">
   <button class="navbar-toggler text-primary" type="button" (click)="toggleNavbar()">
     <i class="fas fa-ellipsis-h"></i>
   </button>
 
 
   <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
-    <!-- <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          test
-        </li>
-      </ul> -->
     <ng-content></ng-content>
   </div>
 </nav>

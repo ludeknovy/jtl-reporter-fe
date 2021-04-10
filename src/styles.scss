@@ -126,6 +126,15 @@ a:hover {
   color: #4b7cf3;
 }
 
+.jtl-btn-primary {
+  color: white;
+  background-color: #4b7cf3;
+}
+.jtl-btn-primary:hover{
+  background-color: #5f88ee;
+  color: white;
+}
+
 .modal-footer {
   border-top: none;
 }
@@ -135,5 +144,9 @@ a:hover {
 }
 
 .hamburger-menu:hover{
+  color: #4b7cf3;
+}
+
+.jtl-primary-color {
   color: #4b7cf3;
 }

@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedMainBarService } from '../shared-main-bar.service';
-import { ViewType } from './scenario.component.model';
+import { ViewType } from './project.component.model';
 
 @Component({
-  selector: 'app-scenarios',
-  templateUrl: './scenarios.component.html',
-  styleUrls: ['./scenarios.component.css', '../shared-styles.css']
+  selector: 'app-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.css', '../shared-styles.css']
 })
-export class ScenariosComponent implements OnInit {
+export class ProjectComponent implements OnInit {
 
   scenarios;
   filteredScenarios;

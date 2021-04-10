@@ -1,6 +1,4 @@
 .scenarios-overview {
-  padding-left: 200px;
-  padding-right: 200px;
   background-color: #f0f1f4;
   padding-top: 20px;
   min-height: 100%;
@@ -15,13 +13,13 @@
   margin-bottom: 30px;
 }
 
-#scenario-filter, #basic-addon1, .scenario-order {
-  height: 33px;
+#scenario-filter, .scenario-filter, #basic-addon1, .scenario-order {
+  height: 30px;
 }
 
 .scenario-order {
   margin-left: 10px
-} 
+}
 
 .scenario-order:focus {
   outline: 0 !important;

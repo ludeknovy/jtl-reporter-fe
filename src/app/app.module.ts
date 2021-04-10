@@ -20,11 +20,11 @@ import { AddNewProjectComponent } from './administration/projects/add-project/ad
 import { EditProjectComponent } from './administration/projects/edit-project/edit-project.component';
 import { DeleteProjectComponent } from './administration/projects/delete-project/delete-project.component';
 import { DeleteItemComponent } from './item-detail/delete-item/delete-item.component';
-import { ScenariosComponent } from './scenarios/scenarios.component';
-import { ScenariosGraphComponent } from './scenarios/graph/scenarios-graph.component';
+import { ProjectComponent } from './project/project.component';
+import { ScenariosGraphComponent } from './project/graph/scenarios-graph.component';
 import { ScenarioGraphComponent } from './scenario/graphs/scenario-graph.component';
 import { EditItemComponent } from './item-detail/edit-item/edit-item.component';
-import { AddNewScenarioComponent } from './scenarios/new-scenario/add-new.scenario.component';
+import { AddNewScenarioComponent } from './project/new-scenario/add-new.scenario.component';
 import { SettingsScenarioComponent } from './scenario/scenario-settings/scenario-settings.component';
 import { DeleteScenarioComponent } from './scenario/delete-scenario/delete-scenario.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -90,7 +90,7 @@ const appRoutes: Routes = [
     runGuardsAndResolvers: 'always', canActivate: [AuthGuard],
   },
   {
-    path: 'project/:projectName/scenarios', component: ScenariosComponent,
+    path: 'project/:projectName/scenarios', component: ProjectComponent,
     runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
   },
   { path: 'login', component: LoginComponent },
@@ -115,7 +115,7 @@ const appRoutes: Routes = [
     EditProjectComponent,
     DeleteProjectComponent,
     DeleteItemComponent,
-    ScenariosComponent,
+    ProjectComponent,
     ScenariosGraphComponent,
     ScenarioGraphComponent,
     AddNewScenarioComponent,

@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">Add new test item</h5>
+    <h5 class="modal-title" id="modal-basic-title">Add test run</h5>
     <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -72,10 +72,10 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn jtl-btn-primary">Submit</button>
     </div>
   </form>
 
 </ng-template>
 
-<button type="button" class="jtl-no-glow add-item jtl-btn-light btn btn-sm" (click)="open(content)"> Add Test Run</button>
+<button type="button" class="jtl-no-glow add-item jtl-btn-primary btn btn-sm" (click)="open(content)"> Add test run</button>

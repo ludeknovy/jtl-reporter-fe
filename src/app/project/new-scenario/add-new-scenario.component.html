@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">Create test item</h5>
+    <h5 class="modal-title" id="modal-basic-title">Add new scenario</h5>
     <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -22,11 +22,11 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn jtl-btn-primary">Submit</button>
     </div>
   </form>
 
 </ng-template>
 
-<button class="btn btn-sm jtl-btn-light jtl-no-glow" (click)="open(content)">
+<button class="btn btn-sm jtl-btn-primary jtl-no-glow" id="add-new-scenario" (click)="open(content)">
   Add new scenario</button>

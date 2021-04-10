@@ -7,7 +7,7 @@
         </div>
         <input class="form-control" id="scenario-filter" type="search" placeholder="scenario name"
           (keyup)='search($event.target.value)'>
-        <div class="input-group-append">
+        <div class="input-group-append scenario-filter">
           <button class="btn view-settings" (click)="changeView('list')"><i class="fas fa-list"></i></button>
           <button class="btn view-settings" (click)="changeView('cards')"><i class="fas fa-th"></i></button>
         </div>

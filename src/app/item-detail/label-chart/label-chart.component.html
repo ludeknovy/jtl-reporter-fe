@@ -1,8 +1,10 @@
 <div class="card" *ngIf="labelChartOptions">
   <h6 class="card-header bg-transparent">
     Label Chart - {{labelChartMetric}}
-
     <span *ngIf="!labelCompareChartOptions" class="float-right">
+
+      <button class="jtl-no-glow add-item jtl-btn-light btn btn-sm" (click)="toggleSeriesVisibility($event)">{{seriesVisibilityToggleText}}</button>
+
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="">
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>

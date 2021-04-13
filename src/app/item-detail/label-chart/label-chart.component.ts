@@ -1,9 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { bytesToMbps } from 'src/app/item-detail/calculations';
 import { commonGraphSettings, threadLineSettings } from 'src/app/graphs/item-detail';
-import { logScaleButton } from 'src/app/graphs/log-scale-button';
-import { ItemDataPlot } from 'src/app/items.service.model';
 
 @Component({
   selector: 'app-label-chart',
@@ -16,13 +13,13 @@ export class LabelChartComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   HighchartsCompare: typeof Highcharts = Highcharts;
   chartConstructor = 'chart';
-
-
   labelChartMetric = 'Throughput';
   labelCompareChartMetric;
   labelChartOptions = commonGraphSettings('hits/s');
   updateLabelChartFlag = false;
   chartKeys;
+  seriesVisibilityToggle = true;
+  seriesVisibilityToggleText = 'Hide all';
 
   constructor() { }
 
@@ -39,8 +36,16 @@ export class LabelChartComponent implements OnInit {
   changeChart(event) {
     const target = event.target.innerText;
     this.labelChartMetric = target;
-    this.labelChartOptions = this.labels.get(target);
+    this.labelChartOptions = JSON.parse(JSON.stringify(this.labels.get(target)));
     this.updateLabelChartFlag = true;
+  }
+
+  toggleSeriesVisibility(event) {
+    this.labelChartOptions.series.map(_ => _.visible = !this.seriesVisibilityToggle);
+    this.seriesVisibilityToggleText = this.seriesVisibilityToggle ? 'Show all' : 'Hide all';
+    this.seriesVisibilityToggle = !this.seriesVisibilityToggle;
+    this.updateLabelChartFlag = true;
+
   }
 
 }

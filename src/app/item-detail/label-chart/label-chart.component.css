@@ -21,3 +21,10 @@
 .compare-card {
   margin-top: 20px;;
 }
+
+.jtl-ico-btn-light{
+  color: #4b7cf3;
+}
+.jtl-ico-btn-light:hover{
+  color: grey;
+}

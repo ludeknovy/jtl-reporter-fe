@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { customChartSettings } from 'src/app/graphs/item-detail';
 import * as Highcharts from 'highcharts';
 import { ItemsApiService } from 'src/app/items-api.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-analyze-charts',
@@ -13,6 +12,7 @@ export class AnalyzeChartsComponent implements OnInit {
 
   @Input() params: { projectName: string, scenarioName: string, id: string };
   @Input() chartLines: ChartLines;
+  @Input() isAnonymous: boolean;
   Highcharts: typeof Highcharts = Highcharts;
   customChartsOptions = {
     ...customChartSettings(), series: []
@@ -34,12 +34,15 @@ export class AnalyzeChartsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.isAnonymous) {
+      return;
+    }
     this.itemApiService
-      .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
-      .subscribe(_ => {
-        this.updateChart(_);
-        this.preloadedSeries = _;
-      });
+    .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
+    .subscribe(_ => {
+      this.updateChart(_);
+      this.preloadedSeries = _;
+    });
   }
 
   chartUpdated(event: [{ name: string, metric: string }]) {
@@ -80,6 +83,9 @@ export class AnalyzeChartsComponent implements OnInit {
   }
 
   private saveChartSettings(event) {
+    if (this.isAnonymous) {
+      return;
+    }
     this.itemApiService.upsertItemChartSettings(
       this.params.projectName,
       this.params.scenarioName,

@@ -85,7 +85,7 @@ export class AnalyzeChartsComponent implements OnInit {
   private saveChartSettings(event) {
     if (this.isAnonymous) {
       return;
-    };
+    }
     this.itemApiService.upsertItemChartSettings(
       this.params.projectName,
       this.params.scenarioName,

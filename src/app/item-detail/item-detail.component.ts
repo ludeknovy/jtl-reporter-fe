@@ -20,9 +20,9 @@ import { catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
-import { ItemStatusValue } from './item-detail.model';
 import { bytesToMbps, roundNumberTwoDecimals } from './calculations';
 import { logScaleButton } from '../graphs/log-scale-button';
+import { ItemStatusValue } from './item-detail.model';
 
 @Component({
   selector: 'app-item-detail',
@@ -51,11 +51,7 @@ export class ItemDetailComponent implements OnInit {
   monitoringChart;
   itemParams;
   hasErrorsAttachment;
-  comparedData;
-  comparedMetadata;
-  labelsData;
   Math: any;
-  comparisonWarning = [];
   token: string;
   isAnonymous = false;
   toggleThroughputBandFlag = false;
@@ -102,7 +98,6 @@ export class ItemDetailComponent implements OnInit {
       }))
       .subscribe((results) => {
         this.itemData = results;
-        this.labelsData = this.itemData.statistics;
         this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
         this.monitoringAlerts();
         this.generateCharts();
@@ -193,64 +188,6 @@ export class ItemDetailComponent implements OnInit {
     this.itemData.hostname = hostname;
   }
 
-  itemToCompare(data) {
-    this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
-    if (data.maxVu !== this.itemData.overview.maxVu) {
-      this.comparisonWarning.push(`VU do differ ${this.itemData.overview.maxVu} vs. ${data.maxVu}`);
-    }
-
-    this.comparedData = this.labelsData.map((_) => {
-      const labelToBeCompared = data.statistics.find((__) => __.label === _.label);
-      if (labelToBeCompared) {
-        return {
-          ..._,
-          avgDiff: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
-          minDiff: (_.minResponseTime - labelToBeCompared.minResponseTime),
-          maxDiff: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
-          // @ts-ignore
-          bytesDiff: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
-          n0Diff: (_.n0 - labelToBeCompared.n0),
-          n5Diff: (_.n5 - labelToBeCompared.n5),
-          n9Diff: (_.n9 - labelToBeCompared.n9),
-          errorRateDiff: roundNumberTwoDecimals((_.errorRate - labelToBeCompared.errorRate)),
-          throughputDiff: roundNumberTwoDecimals((_.throughput - labelToBeCompared.throughput))
-        };
-      } else {
-        this.comparisonWarning.push(`${_.label} label not found`);
-        return {
-          ..._,
-          avgDiff: null,
-          minDiff: null,
-          maxDiff: null,
-          n0Diff: null,
-          n5Diff: null,
-          n9Diff: null,
-          errorRateDiff: null,
-          throughputDiff: null
-        };
-      }
-    });
-    if (data.environment !== this.itemData.environment) {
-      this.comparisonWarning.push('Environments do differ');
-    }
-    this.labelsData = this.comparedData;
-
-    if (this.comparisonWarning.length) {
-      this.showComparisonWarnings();
-    }
-  }
-
-  showComparisonWarnings() {
-    this.toastr.warning(this.comparisonWarning.join('<br>'), 'Comparison Warning!',
-      {
-        closeButton: true,
-        enableHtml: true,
-        timeOut: 15000,
-        positionClass: 'toast-bottom-right'
-      });
-    this.comparisonWarning = [];
-  }
-
   monitoringAlerts() {
     const alertMessages = [];
     const { maxCpu, maxMem } = this.itemData.monitoringData;
@@ -269,23 +206,6 @@ export class ItemDetailComponent implements OnInit {
           enableHtml: true,
         });
     }
-
-  }
-
-  resetStatsData() {
-    this.comparedData = null;
-    this.labelsData = this.itemData.statistics;
-  }
-
-  search(term: string) {
-    const dataToFilter = this.comparedData || this.itemData.statistics;
-    if (term) {
-      this.labelsData = dataToFilter.filter(x =>
-        x.label.trim().toLowerCase().includes(term.trim().toLowerCase())
-      );
-    } else {
-      this.labelsData = dataToFilter;
-    }
   }
 
   getTextStatus(status) {
@@ -294,18 +214,6 @@ export class ItemDetailComponent implements OnInit {
         return k;
       }
     }
-  }
-
-  quickBaseComparison(id) {
-    this.itemsService.fetchItemDetail(
-      this.itemParams.projectName,
-      this.itemParams.scenarioName,
-      id).subscribe(_ => this.itemToCompare({
-        statistics: _.statistics,
-        maxVu: _.overview.maxVu,
-        environment: _.environment,
-        id
-      }));
   }
 
   toggleThroughputBand({ element, perfAnalysis }) {
@@ -344,4 +252,5 @@ export class ItemDetailComponent implements OnInit {
   convertBytesToMbps(bytes) {
     return bytesToMbps(bytes);
   }
+
 }

@@ -1,0 +1,111 @@
+<div class="card table-stats request-stats">
+
+  <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
+
+      <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
+        {{comparedMetadata.maxVu}} VU</span>
+      <button class="remove-comparison btn btn-sm jtl-btn-light" *ngIf="comparedData"
+        (click)="resetStatsData()"><span class="compare-desc-btn">Remove</span>
+      </button>
+
+      <div *ngIf="!isAnonymous" class="btn-group mr-3">
+        <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown
+          role="group" aria-label="Button group with nested dropdown">
+          <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
+              class="fas fa-bars"></i></button>
+          <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+            <button class="quick-base-comparison btn btn-sm btn-outline-dark"
+              *ngIf="(itemData.baseId && itemData.baseId !== params.id)"
+              (click)="quickBaseComparison(itemData.baseId)" ngbDropdownItem><span class="compare-desc-btn">
+                Compare to base run</span></button>
+            <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+          </div>
+        </div>
+      </div>
+
+    </span></h6>
+  <div class="card-body card-body-request-stats">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+      </div>
+      <input class="form-control" id="label-filter" type="search" placeholder="label"
+        (keyup)='search($event.target.value)'>
+    </div>
+    <div class="labels-detail table-responsive">
+      <table class="table" [mfData]="labelsData" #mf="mfDataTable">
+        <thead>
+          <tr>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="label">label</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="samples">samples</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="maxResponseTime">max [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="n0">P90 [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="n5">P95 [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="n9">P99 [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="throughput">requests/s</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="bytes">mbps</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+              <mfDefaultSorter by="errorRate">error rate</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd">
+            </th>
+            <th scope="col" class="hd">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let _ of mf.data">
+            <td>{{_.label}}</td>
+            <td>{{_.samples}}</td>
+            <td><span [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime}}</span></td>
+            <td><span [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime}}</span></td>
+            <td><span [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime}}</span></td>
+            <td><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0}}</span></td>
+            <td><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5}}</span></td>
+            <td><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9}}</span></td>
+            <td>
+              <span [className]="comparedData ? _.throughput > 0 ?  'value-negative' : 'value-positive' : ''">{{_.throughput}}</span>
+           </td>
+            <td>
+              <span [className]="comparedData ? convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) > 0 ? 'value-positive' : 'value-negative' : ''">{{convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) || 0 }}</span>
+            </td>
+            <td>
+              <span [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate}}</span>
+            </td>
+            <td>
+              <app-label-error *ngIf="!isAnonymous && _.errorRate > 0 && hasErrorsAttachment"
+                [labelInput]="{ labelName: _.label, params: params}"></app-label-error>
+            </td>
+            <td>
+              <app-label-trend *ngIf="!isAnonymous"
+                [trendInput]="{ environment: itemData.environment, labelName: _.label }">
+              </app-label-trend>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

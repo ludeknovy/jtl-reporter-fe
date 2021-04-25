@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ItemsApiService } from 'src/app/items-api.service';
 import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
 import { bytesToMbps, roundNumberTwoDecimals } from '../calculations';
@@ -20,7 +21,10 @@ export class RequestStatsCompareComponent implements OnInit {
   comparisonWarning = [];
   comparedMetadata;
 
-  constructor(private itemsService: ItemsApiService) {
+  constructor(
+    private itemsService: ItemsApiService,
+    private toastr: ToastrService
+    ) {
   }
 
   ngOnInit() {

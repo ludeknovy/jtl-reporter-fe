@@ -2,10 +2,15 @@
 
   <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
 
-      <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
-        {{comparedMetadata.maxVu}} VU</span>
+      <span class="comparison-desc text-primary" *ngIf="!comparisonMs"><i class="fas fa-info-circle"></i> The values shown are in %.</span>
+      <span class="comparison-desc" *ngIf="comparedData">Comparing to test: <a>{{comparedMetadata.id}} with
+        {{comparedMetadata.maxVu}} VU</a></span>
       <button class="remove-comparison btn btn-sm jtl-btn-light" *ngIf="comparedData"
         (click)="resetStatsData()"><span class="compare-desc-btn">Remove</span>
+      </button>
+      <button class="remove-comparison btn btn-sm jtl-btn-light jtl-no-glow" *ngIf="comparedData"
+        (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
+          <i class="fa" [ngClass]="{'fa-percent': comparisonMs, 'fa-stopwatch': !comparisonMs}"></i></span>
       </button>
 
       <div *ngIf="!isAnonymous" class="btn-group mr-3">
@@ -43,7 +48,7 @@
               <mfDefaultSorter by="samples">samples</mfDefaultSorter>
             </th>
             <th scope="col" class="hd">
-              <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
+              <mfDefaultSorter by="avgResponseTime">avg [{{getUnit()}}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd">
               <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>

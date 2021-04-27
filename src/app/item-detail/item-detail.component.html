@@ -160,11 +160,12 @@
                   </div>
                 </div>
 
-                <div class="col-sm" *ngIf="itemData.overview.bytesPerSecond && itemData.overview.bytesSentPerSecond && itemData.overview.bytesPerSecond !== 0">
+                <div class="col-sm"
+                  *ngIf="itemData.overview.bytesPerSecond && itemData.overview.bytesSentPerSecond && itemData.overview.bytesPerSecond !== 0">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title text-latency">{{convertBytesToMbps(itemData.overview.bytesPerSecond +  itemData.overview.bytesSentPerSecond)}} <span
-                          class="unit-desc">Mbps</span>
+                      <h2 class="card-title text-latency">{{convertBytesToMbps(itemData.overview.bytesPerSecond +
+                        itemData.overview.bytesSentPerSecond)}} <span class="unit-desc">Mbps</span>
                       </h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Network data</div>
@@ -346,126 +347,9 @@
         </div>
       </div>
     </div>
-
-    <div class="row">
+    <div class="row" *ngIf="itemData">
       <div class="col">
-        <div class="card table-stats request-stats">
-
-          <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
-
-              <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
-                {{comparedMetadata.maxVu}} VU</span>
-              <button class="remove-comparison btn btn-sm jtl-btn-light" *ngIf="comparedData"
-                (click)="resetStatsData()"><span class="compare-desc-btn">Remove</span>
-              </button>
-
-              <div *ngIf="!isAnonymous" class="btn-group mr-3">
-                <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown
-                  role="group" aria-label="Button group with nested dropdown">
-                  <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
-                      class="fas fa-bars"></i></button>
-                  <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
-                    <button class="quick-base-comparison btn btn-sm btn-outline-dark"
-                      *ngIf="(itemData.baseId && itemData.baseId !== itemParams.id)"
-                      (click)="quickBaseComparison(itemData.baseId)" ngbDropdownItem><span class="compare-desc-btn">
-                        Compare to base run</span></button>
-                    <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
-                  </div>
-                </div>
-              </div>
-
-            </span></h6>
-          <div class="card-body card-body-request-stats">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-              </div>
-              <input class="form-control" id="label-filter" type="search" placeholder="label"
-                (keyup)='search($event.target.value)'>
-            </div>
-            <div class="labels-detail table-responsive">
-              <table class="table" [mfData]="labelsData" #mf="mfDataTable">
-                <thead>
-                  <tr>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="label">label</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="samples">samples</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="maxResponseTime">max [ms]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="n0">P90 [ms]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="n5">P95 [ms]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="n9">P99 [ms]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="throughput">requests/s</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="bytes">mbps</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="errorRate">error rate</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                    </th>
-                    <th scope="col" class="hd">
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let _ of mf.data">
-                    <td>{{_.label}}</td>
-                    <td>{{_.samples}}</td>
-                    <td>{{_.avgResponseTime}} <sup [className]="_.avgDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.avgDiff">{{_.avgDiff}}</sup></td>
-                    <td>{{_.minResponseTime}} <sup [className]="_.minDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.minDiff">{{_.minDiff}}</sup></td>
-                    <td>{{_.maxResponseTime}} <sup [className]="_.maxDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.maxDiff">{{_.maxDiff}}</sup></td>
-                    <td>{{_.n0}} <sup [ngClass]="_.n0Diff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.n0Diff">{{_.n0Diff}}</sup></td>
-                    <td>{{_.n5}} <sup [className]="_.n5Diff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.n5Diff">{{_.n5Diff}}</sup></td>
-                    <td>{{_.n9}} <sup [className]="_.n9Diff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.n9Diff">{{_.n9Diff}}</sup></td>
-                    <td>{{_.throughput || "n/a"}} <sup
-                        [className]="_.throughputDiff < 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.throughputDiff">{{_.throughputDiff}}</sup></td>
-                    <td>{{convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) || "n/a"}} <sup
-                        [className]="_.bytesDiff < 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.bytesDiff && bytesDiff !== 0">{{_.bytesDiff}}</sup></td>
-                    <td>{{_.errorRate}} % <sup [className]="_.errorRateDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.errorRateDiff">{{_.errorRateDiff}}</sup>
-                    </td>
-                    <td>
-                      <app-label-error *ngIf="!isAnonymous && _.errorRate > 0 && hasErrorsAttachment"
-                        [labelInput]="{ labelName: _.label, params: itemParams }"></app-label-error>
-                    </td>
-                    <td>
-                      <app-label-trend *ngIf="!isAnonymous"
-                        [trendInput]="{ environment: itemData.environment, labelName: _.label }">
-                      </app-label-trend>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams"></app-request-stats-compare>
       </div>
     </div>
   </div>

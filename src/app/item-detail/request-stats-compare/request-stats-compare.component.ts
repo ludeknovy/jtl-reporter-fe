@@ -28,7 +28,7 @@ export class RequestStatsCompareComponent implements OnInit {
   constructor(
     private itemsService: ItemsApiService,
     private toastr: ToastrService
-    ) {
+  ) {
   }
 
   ngOnInit() {
@@ -181,10 +181,10 @@ export class RequestStatsCompareComponent implements OnInit {
   }
 
   getUnit() {
-    if (this.comparisonMs){
-      return 'ms'
+    if (this.comparisonMs) {
+      return 'ms';
     }
-    return '%'
+    return '%';
   }
 
 }

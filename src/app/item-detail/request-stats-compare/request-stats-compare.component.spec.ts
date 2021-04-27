@@ -1,4 +1,13 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableModule } from '@rushvora/ng-datatable';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { ToastrModule } from 'ngx-toastr';
+import { LabelErrorComponent } from '../label-error/label-error.component';
+import { LabelTrendComponent } from '../label-trend/label-trend.component';
+import { StatsCompareComponent } from '../stats-compare/stats-compare.component';
 
 import { RequestStatsCompareComponent } from './request-stats-compare.component';
 
@@ -8,18 +17,71 @@ describe('RequestStatsCompareComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestStatsCompareComponent ]
+      declarations: [
+        RequestStatsCompareComponent,
+        StatsCompareComponent,
+        LabelErrorComponent,
+        LabelTrendComponent,
+      ],
+      imports: [
+        DataTableModule,
+        NgbModule,
+        ToastrModule.forRoot(),
+        HighchartsChartModule,
+        HttpClientModule,
+        RouterTestingModule,
+
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RequestStatsCompareComponent);
     component = fixture.componentInstance;
+    component.itemData = {
+      overview: {
+        maxVu: 100
+      },
+      statistics: [{
+        avgResponseTime: 10,
+        bytes: 758,
+        errorRate: 0,
+        label: '02 - Click_Log_In-22',
+        maxResponseTime: 38,
+        minResponseTime: 8,
+        n0: 33,
+        n5: 34,
+        n9: 37,
+        samples: 200,
+        throughput: 0.17,
+      }]
+    };
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should call resetStatsData when itemToCompare triggered', () => {
+    const spy = spyOn(component, 'resetStatsData').and.callThrough();
+    component.itemToCompare({
+      maxVu: 100,
+      id: '123-123',
+      statistics: [{
+        avgResponseTime: 109,
+        bytes: 7587,
+        errorRate: 0,
+        label: '02 - Click_Log_In-22',
+        maxResponseTime: 380,
+        minResponseTime: 81,
+        n0: 330,
+        n5: 344,
+        n9: 372,
+        samples: 200,
+        throughput: 0.17,
+      }]
+    });
+    expect(spy).toHaveBeenCalled();
   });
 });

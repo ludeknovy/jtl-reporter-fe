@@ -31,7 +31,6 @@ describe('ItemDetailComponent', () => {
         DeleteItemComponent,
         ControlPanelComponent,
         StatsCompareComponent,
-        LabelTrendComponent,
       ],
       imports: [
         DataTableModule,

@@ -38,6 +38,7 @@ export class RequestStatsCompareComponent implements OnInit {
   resetStatsData() {
     this.comparedData = null;
     this.labelsData = this.itemData.statistics;
+    this.comparisonMs = true;
   }
 
   search(term: string) {
@@ -52,6 +53,7 @@ export class RequestStatsCompareComponent implements OnInit {
   }
 
   itemToCompare(data) {
+    this.resetStatsData();
     this.comparingData = data;
     this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
     if (data.maxVu !== this.itemData.overview.maxVu) {

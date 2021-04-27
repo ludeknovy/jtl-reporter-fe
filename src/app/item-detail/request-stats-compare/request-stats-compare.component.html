@@ -2,7 +2,7 @@
 
   <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
 
-      <span class="comparison-desc text-primary" *ngIf="!comparisonMs"><i class="fas fa-info-circle"></i> The values shown are in %.</span>
+      <span class="comparison-desc text-primary" *ngIf="comparedData && !comparisonMs"><i class="fas fa-info-circle"></i> The values shown are in %.</span>
       <span class="comparison-desc" *ngIf="comparedData">Comparing to test: <a href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}">{{comparedMetadata.id}} with
         {{comparedMetadata.maxVu}} VU</a></span>
       <button class="remove-comparison btn btn-sm jtl-btn-light" *ngIf="comparedData"

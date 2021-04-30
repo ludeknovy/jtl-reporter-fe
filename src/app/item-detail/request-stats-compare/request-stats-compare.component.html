@@ -105,7 +105,7 @@
             </td>
             <td>
               <app-label-trend *ngIf="!isAnonymous"
-                [trendInput]="{ environment: itemData.environment, labelName: _.label }">
+                [trendInput]="{ environment: itemData.environment, labelName: _.label }" [params]="params">
               </app-label-trend>
             </td>
           </tr>

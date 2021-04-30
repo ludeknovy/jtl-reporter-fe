@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
 import { ProjectsListing } from '../project-api.service.model';
 import { Observable } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { AuthenticationService } from '../_services/authentication.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-top-panel',
@@ -23,22 +24,29 @@ export class TopPanelComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private sharedMainBarService: SharedMainBarService,
-    private authService: AuthenticationService
-    ) {
+    private authService: AuthenticationService,
+    private cdr: ChangeDetectorRef
+  ) {
     this.projectsState$ = this.projectService.state$;
-    this.sharedMainBarService.project$.subscribe(_ => this.selectedProject = _);
   }
 
   ngOnInit() {
+    this.sharedMainBarService.project$.subscribe(_ => {
+      this.selectedProject = _;
+      this.cdr.detectChanges();
+      return;
+    }
+    );
     this.isLoggedIn$ = this.authService.isLoggedIn;
-    this.authService.isLoggedIn.subscribe((_) =>  {
+    this.authService.isLoggedIn.subscribe((_) => {
       if (_ === true) {
         this.projectService.loadProjects();
-        const { username } = JSON.parse(localStorage.getItem('currentUser'));
+        const { username } = JSON.parse(localStorage.getItem('currentUser'));
         this.username = username;
       }
     });
   }
+
 
 
   toggleNavbar() {
@@ -46,6 +54,6 @@ export class TopPanelComponent implements OnInit {
   }
 
   changeSelectedProject(projectName) {
-    this.selectedProject = projectName;
+    this.sharedMainBarService.setProjectName(projectName);
   }
 }

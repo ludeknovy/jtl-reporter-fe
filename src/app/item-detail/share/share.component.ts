@@ -30,7 +30,6 @@ export class ShareComponent implements OnInit {
   ngOnInit() {
     this.selfUrl = window.location.href;
     this.createForm();
-    this.itemService.fetchItemShareTokens(this.params.projectName, this.params.scenarioName, this.params.id);
   }
 
   createForm() {
@@ -38,6 +37,7 @@ export class ShareComponent implements OnInit {
   }
 
   open(content) {
+    this.itemService.fetchItemShareTokens(this.params.projectName, this.params.scenarioName, this.params.id);
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' as any });
   }
 

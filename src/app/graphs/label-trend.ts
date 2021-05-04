@@ -7,6 +7,9 @@ export const labelTrendChartOptions = (_) => {
     subtitle: {
       text: ''
     },
+    exporting: {
+      enabled: false
+    },
     xAxis: [{
       lineWidth: 0,
       crosshair: true,

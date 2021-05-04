@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
 import { labelTrendChartOptions, emptyChart } from 'src/app/graphs/label-trend';
 import { LabelApiService } from 'src/app/label-api.service';
 import * as Highcharts from 'highcharts';
+import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
 
 
 @Component({
@@ -12,12 +12,13 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./label-trend.component.css']
 })
 export class LabelTrendComponent implements OnInit {
+  @Input() params: ItemParams;
+
   Highcharts: typeof Highcharts = Highcharts;
   chart;
   chartConstructor = 'chart';
   chartCallback;
   updateFlag = false;
-  params;
   labelChartOption;
   vuFilters;
 
@@ -25,7 +26,6 @@ export class LabelTrendComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private route: ActivatedRoute,
     private labelApiService: LabelApiService,
 
   ) {
@@ -42,25 +42,17 @@ export class LabelTrendComponent implements OnInit {
     // @ts-ignore
     this.modalService.open(content, { size: 'xl' }).result
       .then((_) => { this.labelChartOption = null; }, () => { this.labelChartOption = null; });
-    this.route.params.subscribe(_ => {
-      this.params = _;
-      this.fetchTrendData();
+    this.fetchTrendData();
 
-      this.labelApiService.fetchLabelMaxVu(
-        this.params.projectName,
-        this.params.scenarioName,
-        this.params.id,
-        this.trendInput.labelName,
-        { environment: this.trendInput.environment }
-      )
-        .subscribe(__ => {
-          this.vuFilters = __.result.filter((r) => r.count >= 2).map((r) => r.maxVu);
-        });
+    this.labelApiService.fetchLabelMaxVu(
+      this.params.projectName,
+      this.params.scenarioName,
+      this.params.id,
+      this.trendInput.labelName,
+      { environment: this.trendInput.environment }
+    ).subscribe(__ => {
+      this.vuFilters = __.result.filter((r) => r.count >= 2).map((r) => r.maxVu);
     });
-  }
-
-  updateData() {
-    this.updateFlag = true;
   }
 
   filterByVu(event) {
@@ -80,7 +72,7 @@ export class LabelTrendComponent implements OnInit {
       }
     ).subscribe((_) => {
       this.labelChartOption = _.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
-      this.updateData();
+      this.updateFlag = true;
     });
   }
 }

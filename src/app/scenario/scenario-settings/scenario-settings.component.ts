@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
@@ -14,6 +14,8 @@ import { ScenarioApiService } from 'src/app/scenario-api.service';
 })
 
 export class SettingsScenarioComponent implements OnInit {
+
+  @Output() scenarioNameChangeEvent = new EventEmitter<string>();
 
   scenarioSettingsForm: FormGroup;
   formControls = {
@@ -31,7 +33,7 @@ export class SettingsScenarioComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private scenarioApiService: ScenarioApiService,
-    private notification: NotificationMessage
+    private notification: NotificationMessage,
   ) { }
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
@@ -86,6 +88,7 @@ export class SettingsScenarioComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('UPDATE')
     if (this.scenarioSettingsForm.valid) {
 
       const {
@@ -112,7 +115,16 @@ export class SettingsScenarioComponent implements OnInit {
           return this.scenarioApiService.setData(message);
         });
       this.modalService.dismissAll();
+
+      if (this.scenarioNameChanged) {
+        console.log("scenario change")
+        this.scenarioNameChangeEvent.emit(scenarioName);
+      }
     }
+  }
+
+  private scenarioNameChanged(name): boolean {
+    return name === this.params.scenarioName;
   }
 
 }

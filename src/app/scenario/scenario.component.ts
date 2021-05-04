@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Observable, Subscription } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
@@ -6,7 +6,6 @@ import { ProjectOverview, Items } from '../items.service.model';
 import { ItemsService } from '../items.service';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ScenarioService } from '../scenario.service';
-import { ScenarioApiService } from '../scenario-api.service';
 
 const LIMIT = 15;
 const OFFSET = 15;
@@ -17,7 +16,6 @@ const OFFSET = 15;
   styleUrls: ['./scenario.component.scss', '../shared-styles.css'],
 })
 export class ScenarioComponent implements OnInit, OnDestroy {
-  projectName: string;
   overview$: Observable<ProjectOverview>;
   items$: Observable<Items>;
   trends$: Observable<{}>;
@@ -49,11 +47,10 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     this.route.params.pipe<any>(
       switchMap(routeParams => {
         this.params = routeParams;
-        this.projectName = routeParams.projectName;
-        this.sharedMainBarService.setProjectName(this.projectName);
-        this.itemsService.fetchItems(this.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
-        this.scenarioService.fetchScenarioTrends(this.projectName, this.params.scenarioName);
-        this.itemsService.processingItemsInterval(this.projectName, this.params.scenarioName);
+        this.sharedMainBarService.setProjectName(this.params.projectName);
+        this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
+        this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
+        this.itemsService.processingItemsInterval(this.params.projectName, this.params.scenarioName);
         return new Observable().pipe(catchError(err => of([])));
       })
     ).subscribe(_ => {
@@ -65,7 +62,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
         const processingItems = inprogress.map((item) => item.id);
         const reloadItems = !this.currentProcessingItems.every((id) => processingItems.includes(id));
         if (reloadItems) {
-          this.itemsService.fetchItems(this.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
+          this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
         }
         return this.currentProcessingItems = inprogress.map((item) => item.id);
       }
@@ -75,7 +72,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
 
   loadMore() {
     const offset = (this.page - 1) * OFFSET;
-    this.itemsService.fetchItems(this.projectName, this.params.scenarioName, { limit: LIMIT, offset });
+    this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset });
   }
 
   open(itemId) {
@@ -85,5 +82,10 @@ export class ScenarioComponent implements OnInit, OnDestroy {
 
   navigateBack() {
     this.router.navigate([`./project/${this.params.projectName}/scenarios`]);
+  }
+
+  updateScenarioName(scenarioName: string) {
+    this.router.navigate(
+      ['.', 'project', this.params.projectName, 'scenario', scenarioName, 'items'] );
   }
 }

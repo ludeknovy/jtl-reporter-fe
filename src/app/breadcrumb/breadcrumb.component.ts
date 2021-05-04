@@ -16,6 +16,7 @@ export class BreadcrumbComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(_ => {
+      this.urls = [];
       const { projectName = null, scenarioName = null, id = null} = _;
       const _length = Object.keys(_).length;
       if (projectName) {

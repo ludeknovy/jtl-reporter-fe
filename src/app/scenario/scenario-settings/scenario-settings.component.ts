@@ -88,7 +88,6 @@ export class SettingsScenarioComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('UPDATE')
     if (this.scenarioSettingsForm.valid) {
 
       const {
@@ -117,7 +116,6 @@ export class SettingsScenarioComponent implements OnInit {
       this.modalService.dismissAll();
 
       if (this.scenarioNameChanged) {
-        console.log("scenario change")
         this.scenarioNameChangeEvent.emit(scenarioName);
       }
     }

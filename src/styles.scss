@@ -154,3 +154,11 @@ a:hover {
 .jtl-primary-color {
   color: #4b7cf3;
 }
+
+.jtl-table tr td:first-child {
+  padding-left: 2.5rem;
+}
+
+.jtl-table tr th:first-child {
+  padding-left: 2.5rem;
+}

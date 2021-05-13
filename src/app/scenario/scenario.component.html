@@ -35,7 +35,7 @@
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-4">
-                  <div class="card">
+                  <div class="card card-shadow">
                     <h6 class="card-header bg-transparent">90% response time</h6>
                     <div class="card-body">
                       <div class="graph">
@@ -46,7 +46,7 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="card">
+                  <div class="card card-shadow">
                     <h6 class="card-header bg-transparent">Throughput</h6>
                     <div class="card-body">
                       <div class="graph">
@@ -57,7 +57,7 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="card">
+                  <div class="card card-shadow">
                     <h6 class="card-header bg-transparent">Error rate</h6>
                     <div class="card-body">
                       <div class="graph">
@@ -70,7 +70,7 @@
               </div>
               <div class="row rr">
                 <div class="col" *ngIf="items$ | async; let items">
-                  <div class="card recent-runs">
+                  <div class="card recent-runs card-shadow">
                     <h6 class="card-header bg-transparent">Test Runs
                       <span title="Total ready items" class="text-secondary total">{{items.total}} <i
                           class="far fa-check-circle"></i></span>

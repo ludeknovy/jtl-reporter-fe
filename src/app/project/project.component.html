@@ -35,7 +35,7 @@
     </div>
     <div class="row" *ngIf="filteredScenarios && viewType === 'cards'">
       <div class="col-md-3" *ngFor="let _ of filteredScenarios">
-        <div class="card card-scenario">
+        <div class="card card-scenario card-shadow">
           <h6 class="card-header bg-transparent">
             <a routerLink="/project/{{projectName}}/scenario/{{_.name}}/items">{{_.name}}</a>
           </h6>
@@ -55,17 +55,17 @@
     </div>
     <div class="row" *ngIf="filteredScenarios && viewType === 'list'">
       <div class="col">
-        <div class="card card-list">
-          <h6 class="card-header">Scenarios</h6>
+        <div class="card card-list card-shadow">
+          <h6 class="card-header bg-transparent">Scenarios</h6>
           <div class="card-body">
             <div class="labels-detail table-responsive">
-              <table class="table" [mfData]="filteredScenarios" #mf="mfDataTable">
+              <table class="table jtl-table" [mfData]="filteredScenarios" #mf="mfDataTable">
                 <thead>
                   <tr>
-                    <th scope="col" class="hd">
+                    <th scope="col" class="hd jtl-head">
                       <mfDefaultSorter by="name">name</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd">
+                    <th scope="col" class="hd jtl-head">
                       <mfDefaultSorter by="data[0].startDate">last run</mfDefaultSorter>
                     </th>
                   </tr>

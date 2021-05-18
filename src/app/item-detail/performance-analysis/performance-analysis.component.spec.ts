@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PerformanceAnalysisComponent } from './performance-analysis.component';
+import {DataTableModule} from '@rushvora/ng-datatable';
 
 describe('PerformanceAnalysisComponent', () => {
   let component: PerformanceAnalysisComponent;
@@ -10,7 +11,7 @@ describe('PerformanceAnalysisComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PerformanceAnalysisComponent],
-      imports: [NgbModule]
+      imports: [NgbModule, DataTableModule]
     })
       .compileComponents();
   }));

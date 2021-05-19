@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Metrics} from '../metrics';
 
 @Component({
   selector: 'app-performance-analysis',
@@ -16,7 +17,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class PerformanceAnalysisComponent implements OnInit {
 
   @Input() itemData;
+  @Input() labelsChartLines;
   @Output() overallChartChange = new EventEmitter<{}>();
+  @Output() analyzeChartChange = new EventEmitter<{}>();
 
 
   perfAnalysis = {
@@ -67,7 +70,8 @@ export class PerformanceAnalysisComponent implements OnInit {
         minResponseTime: _.minResponseTime,
         avgResponseTime: _.avgResponseTime,
         p99: _.n9,
-        label: _.label
+        label: _.label,
+        hasChartLines: this.hasLabelChart([Metrics.ResponseTimeMin, Metrics.ResponseTimeAvg, Metrics.ResponseTimeP99], _.label)
       });
     });
 
@@ -153,5 +157,24 @@ export class PerformanceAnalysisComponent implements OnInit {
 
   }
 
+  showSteadyResponseTimeInChart(label: string) {
+    this.showLabelInChart([Metrics.ResponseTimeAvg, Metrics.ResponseTimeMin], label);
 
+  }
+
+  showOnePercResponseTimeInChart(label: string) {
+    this.showLabelInChart([Metrics.ResponseTimeAvg, Metrics.ResponseTimeP99], label);
+  }
+
+
+  private showLabelInChart(metrics: Metrics[], label: string) {
+    this.analyzeChartChange.emit({ label, metrics });
+  }
+
+  private hasLabelChart(metrics: Metrics[], label: string) {
+    return metrics.every(_ => {
+      const chartMetric = this.labelsChartLines.get(_);
+      return chartMetric.find(__ => __.name === label);
+    });
+  }
 }

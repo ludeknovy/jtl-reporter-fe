@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { customChartSettings } from 'src/app/graphs/item-detail';
 import * as Highcharts from 'highcharts';
 import { ItemsApiService } from 'src/app/items-api.service';
@@ -8,11 +8,12 @@ import { ItemsApiService } from 'src/app/items-api.service';
   templateUrl: './analyze-charts.component.html',
   styleUrls: ['./analyze-charts.component.css', '../item-detail.component.scss']
 })
-export class AnalyzeChartsComponent implements OnInit {
+export class AnalyzeChartsComponent implements OnInit, OnChanges {
 
   @Input() params: { projectName: string, scenarioName: string, id: string };
   @Input() chartLines: ChartLines;
   @Input() isAnonymous: boolean;
+  @Input() showPerformanceAnalysisLines;
   Highcharts: typeof Highcharts = Highcharts;
   customChartsOptions = {
     ...customChartSettings(), series: []
@@ -43,6 +44,14 @@ export class AnalyzeChartsComponent implements OnInit {
       this.updateChart(_);
       this.preloadedSeries = _;
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.showPerformanceAnalysisLines && changes.showPerformanceAnalysisLines.currentValue) {
+      const { label, metrics } = changes.showPerformanceAnalysisLines.currentValue;
+      const chartLines = metrics.map(_ => ({ name: label, metric: _ }));
+      this.updateChart(chartLines);
+    }
   }
 
   chartUpdated(event: [{ name: string, metric: string }]) {

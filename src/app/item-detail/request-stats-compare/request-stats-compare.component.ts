@@ -1,16 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { ItemsApiService } from 'src/app/items-api.service';
-import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
-import { bytesToMbps, roundNumberTwoDecimals } from '../calculations';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
+import {ItemsApiService} from 'src/app/items-api.service';
+import {ItemParams} from 'src/app/scenario/item-controls/item-controls.model';
+import {bytesToMbps, roundNumberTwoDecimals} from '../calculations';
 
 @Component({
   selector: 'app-request-stats-compare',
   templateUrl: './request-stats-compare.component.html',
   styleUrls: ['./request-stats-compare.component.css', '../item-detail.component.scss']
 })
-export class RequestStatsCompareComponent implements OnInit {
+export class RequestStatsCompareComponent implements OnInit, OnChanges {
 
+  @Input() externalSearchTerm: string;
   @Input() itemData;
   @Input() isAnonymous: boolean;
   @Input() params: ItemParams;
@@ -35,6 +36,12 @@ export class RequestStatsCompareComponent implements OnInit {
     this.labelsData = this.itemData.statistics;
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.externalSearchTerm) {
+      this.search(changes.externalSearchTerm.currentValue);
+    }
+  }
+
   resetStatsData() {
     this.comparedData = null;
     this.labelsData = this.itemData.statistics;
@@ -55,7 +62,7 @@ export class RequestStatsCompareComponent implements OnInit {
   itemToCompare(data) {
     this.resetStatsData();
     this.comparingData = data;
-    this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
+    this.comparedMetadata = {id: data.id, maxVu: data.maxVu};
     if (data.maxVu !== this.itemData.overview.maxVu) {
       this.comparisonWarning.push(`VU do differ ${this.itemData.overview.maxVu} vs. ${data.maxVu}`);
     }
@@ -108,11 +115,11 @@ export class RequestStatsCompareComponent implements OnInit {
       this.params.projectName,
       this.params.scenarioName,
       id).subscribe(_ => this.itemToCompare({
-        statistics: _.statistics,
-        maxVu: _.overview.maxVu,
-        environment: _.environment,
-        id
-      }));
+      statistics: _.statistics,
+      maxVu: _.overview.maxVu,
+      environment: _.environment,
+      id
+    }));
   }
 
   showComparisonWarnings() {

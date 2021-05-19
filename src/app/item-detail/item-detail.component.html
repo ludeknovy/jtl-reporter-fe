@@ -64,7 +64,7 @@
 
       <div class="row" *ngIf="itemData.analysisEnabled">
         <div class="col">
-          <app-performance-analysis [itemData]="itemData" (overallChartChange)="toggleThroughputBand($event)">
+          <app-performance-analysis [itemData]="itemData" [labelsChartLines]="chartLines.labels" (overallChartChange)="toggleThroughputBand($event)" (analyzeChartChange)="focusOnLabel($event)">
           </app-performance-analysis>
         </div>
 
@@ -248,8 +248,8 @@
 
     <div class="row middle-control">
       <div class="col">
-        <ul ngbNav #nav="ngbNav" class="nav-tabs justify-content-center" [destroyOnHide]="false">
-          <li ngbNavItem>
+        <ul ngbNav #nav="ngbNav" class="nav-tabs justify-content-center" [destroyOnHide]="false" [(activeId)]="activeId" >
+          <li ngbNavItem [ngbNavItem]="1">
             <a ngbNavLink class="nav-link bg-transparent">Overview charts</a>
             <ng-template ngbNavContent>
               <div class="row charts chart-fix">
@@ -273,12 +273,12 @@
               </div>
             </ng-template>
           </li>
-          <li ngbNavItem>
+          <li ngbNavItem [ngbNavItem]="2">
             <a ngbNavLink class="nav-link bg-transparent">Analyze charts</a>
             <ng-template ngbNavContent>
               <div class="row chart-fix charts">
                 <div class="col">
-                  <app-analyze-charts [chartLines]="chartLines" [params]="itemParams" [isAnonymous]="isAnonymous"></app-analyze-charts>
+                  <app-analyze-charts [chartLines]="chartLines" [params]="itemParams" [isAnonymous]="isAnonymous" [showPerformanceAnalysisLines]="performanceAnalysisLines"></app-analyze-charts>
                 </div>
               </div>
 
@@ -349,7 +349,7 @@
     </div>
     <div class="row" *ngIf="itemData">
       <div class="col">
-        <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams"></app-request-stats-compare>
+        <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams" [externalSearchTerm]="externalSearchTerm"></app-request-stats-compare>
       </div>
     </div>
   </div>

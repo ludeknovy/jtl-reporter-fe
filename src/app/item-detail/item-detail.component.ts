@@ -23,6 +23,7 @@ import { ToastrService } from 'ngx-toastr';
 import { bytesToMbps, roundNumberTwoDecimals } from './calculations';
 import { logScaleButton } from '../graphs/log-scale-button';
 import { ItemStatusValue } from './item-detail.model';
+import {Metrics} from './metrics';
 
 @Component({
   selector: 'app-item-detail',
@@ -60,6 +61,9 @@ export class ItemDetailComponent implements OnInit {
     labels: new Map(),
   };
   labelCharts = new Map();
+  activeId = 1;
+  performanceAnalysisLines = null;
+  externalSearchTerm = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -121,13 +125,13 @@ export class ItemDetailComponent implements OnInit {
         return [_[0], bytesToMbps(_[1])];
       });
       const networkLine = { ...networkLineSettings, data: networkMbps };
-      this.chartLines.overall.set('Network', networkLine);
+      this.chartLines.overall.set(Metrics.Network, networkLine);
     }
 
-    this.chartLines.overall.set('Response Time [avg]', overallTimeResponse);
-    this.chartLines.overall.set('Threads', threadLine);
-    this.chartLines.overall.set('Error rate', errorLine);
-    this.chartLines.overall.set('Throughput', throughputLine);
+    this.chartLines.overall.set(Metrics.ResponseTimeAvg, overallTimeResponse);
+    this.chartLines.overall.set(Metrics.Threads, threadLine);
+    this.chartLines.overall.set(Metrics.ErrorRate, errorLine);
+    this.chartLines.overall.set(Metrics.Throughput, throughputLine);
 
     if (networkV2) {
       const networkMbps = networkV2.map((_) => {
@@ -138,37 +142,37 @@ export class ItemDetailComponent implements OnInit {
         ...commonGraphSettings('mbps'),
         series: [...networkMbps, ...threadLine], ...logScaleButton
       };
-      this.chartLines.labels.set('Network', networkMbps);
-      this.labelCharts.set('Network', networkChartOptions);
+      this.chartLines.labels.set(Metrics.Network, networkMbps);
+      this.labelCharts.set(Metrics.Network, networkChartOptions);
     }
 
     if (minResponseTime) {
-      this.chartLines.labels.set('Response Time [min]', minResponseTime);
-      this.labelCharts.set('Response Time [min]', { ...commonGraphSettings('ms'), series: [...minResponseTime, ...threadLine]});
+      this.chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime);
+      this.labelCharts.set(Metrics.ResponseTimeMin, { ...commonGraphSettings('ms'), series: [...minResponseTime, ...threadLine]});
     }
     if (maxResponseTime) {
-      this.chartLines.labels.set('Response Time [max]', maxResponseTime);
-      this.labelCharts.set('Response Time [max]', { ...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine]});
+      this.chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime);
+      this.labelCharts.set(Metrics.ResponseTimeMax, { ...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine]});
     }
     if (percentile90) {
-      this.chartLines.labels.set('Response Time [P90]', percentile90);
-      this.labelCharts.set('Response Time [P90]', { ...commonGraphSettings('ms'), series: [...percentile90, ...threadLine]});
+      this.chartLines.labels.set(Metrics.ResponseTimeP90, percentile90);
+      this.labelCharts.set(Metrics.ResponseTimeP90, { ...commonGraphSettings('ms'), series: [...percentile90, ...threadLine]});
     }
     if (percentile95) {
-      this.chartLines.labels.set('Response Time [P95]', percentile95);
-      this.labelCharts.set('Response Time [P95]', { ...commonGraphSettings('ms'), series: [...percentile95, ...threadLine]});
+      this.chartLines.labels.set(Metrics.ResponseTimeP95, percentile95);
+      this.labelCharts.set(Metrics.ResponseTimeP95, { ...commonGraphSettings('ms'), series: [...percentile95, ...threadLine]});
     }
     if (percentile99) {
-      this.chartLines.labels.set('Response Time [P99]', percentile99);
-      this.labelCharts.set('Response Time [P99]', { ...commonGraphSettings('ms'), series: [...percentile99, ...threadLine]});
+      this.chartLines.labels.set(Metrics.ResponseTimeP99, percentile99);
+      this.labelCharts.set(Metrics.ResponseTimeP99, { ...commonGraphSettings('ms'), series: [...percentile99, ...threadLine]});
     }
 
-    this.chartLines.labels.set('Response Time [avg]', responseTime);
-    this.labelCharts.set('Response Time [avg]', { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine]});
+    this.chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime);
+    this.labelCharts.set(Metrics.ResponseTimeAvg, { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine]});
 
 
-    this.chartLines.labels.set('Throughput', throughput);
-    this.labelCharts.set('Throughput', { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
+    this.chartLines.labels.set(Metrics.Throughput, throughput);
+    this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
 
 
   }
@@ -253,4 +257,9 @@ export class ItemDetailComponent implements OnInit {
     return bytesToMbps(bytes);
   }
 
+  focusOnLabel($event: { label: string, metrics: Metrics[]}) {
+    this.activeId = 2;
+    this.performanceAnalysisLines = $event;
+    this.externalSearchTerm = $event.label;
+  }
 }

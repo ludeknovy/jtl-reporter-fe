@@ -2,6 +2,8 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
 import { bytesToMbps, roundNumberTwoDecimals } from '../calculations';
 import { AnalyzeChartService } from '../../analyze-chart.service';
+import { ItemsApiService } from 'src/app/items-api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-request-stats-compare',
@@ -24,6 +26,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   externalSearchTerm = '';
 
   constructor(
+    private itemsService: ItemsApiService,
+    private toastr: ToastrService,
     private analyzeChartService: AnalyzeChartService
   ) {
   }
@@ -39,7 +43,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("destroy")
     this.analyzeChartService.changeMessage(null);
   }
 

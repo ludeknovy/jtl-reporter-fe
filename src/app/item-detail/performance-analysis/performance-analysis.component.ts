@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Metrics} from '../metrics';
+import {AnalyzeChartService} from '../../analyze-chart.service';
 
 @Component({
   selector: 'app-performance-analysis',
@@ -19,7 +20,6 @@ export class PerformanceAnalysisComponent implements OnInit {
   @Input() itemData;
   @Input() labelsChartLines;
   @Output() overallChartChange = new EventEmitter<{}>();
-  @Output() analyzeChartChange = new EventEmitter<{}>();
 
 
   perfAnalysis = {
@@ -44,7 +44,7 @@ export class PerformanceAnalysisComponent implements OnInit {
   foldedBottom = 'closed';
   Math: any;
 
-  constructor() {
+  constructor(private analyzeChartService: AnalyzeChartService) {
     this.Math = Math;
 
   }
@@ -168,7 +168,7 @@ export class PerformanceAnalysisComponent implements OnInit {
 
 
   private showLabelInChart(metrics: Metrics[], label: string) {
-    this.analyzeChartChange.emit({ label, metrics });
+    this.analyzeChartService.changeMessage({ metrics, label });
   }
 
   private hasLabelChart(metrics: Metrics[], label: string) {

@@ -36,6 +36,9 @@
       </div>
       <input class="form-control" id="label-filter" type="search" placeholder="label"
         (keyup)='search($event.target.value)' [value]="externalSearchTerm">
+      <button type="button" class="btn bg-transparent jtl-no-glow" style="margin-left: -40px; z-index: 100;" (click)="clearSearch()">
+        <i class="fa fa-times"></i></button>
+
     </div>
     <div class="labels-detail table-responsive">
       <table class="table" [mfData]="labelsData" #mf="mfDataTable">
@@ -82,7 +85,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let _ of mf.data">
-            <td>{{_.label}}</td>
+            <td>{{_.label}} </td>
             <td>{{_.samples}}</td>
             <td><span [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime}}</span></td>
             <td><span [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime}}</span></td>
@@ -107,6 +110,8 @@
               <app-label-trend *ngIf="!isAnonymous"
                 [trendInput]="{ environment: itemData.environment, labelName: _.label }" [params]="params">
               </app-label-trend>
+
+              <a class="jtl-a-primary label-focus" (click)="focusLabel(_.label)"><i class="fas fa-search-location fa-sm"></i></a>
             </td>
           </tr>
         </tbody>

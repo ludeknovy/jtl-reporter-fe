@@ -2,13 +2,14 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import { customChartSettings } from 'src/app/graphs/item-detail';
 import * as Highcharts from 'highcharts';
 import { ItemsApiService } from 'src/app/items-api.service';
+import {AnalyzeChartService} from '../../analyze-chart.service';
 
 @Component({
   selector: 'app-analyze-charts',
   templateUrl: './analyze-charts.component.html',
   styleUrls: ['./analyze-charts.component.css', '../item-detail.component.scss']
 })
-export class AnalyzeChartsComponent implements OnInit, OnChanges {
+export class AnalyzeChartsComponent implements OnInit {
 
   @Input() params: { projectName: string, scenarioName: string, id: string };
   @Input() chartLines: ChartLines;
@@ -30,7 +31,8 @@ export class AnalyzeChartsComponent implements OnInit, OnChanges {
   preloadedSeries;
 
   constructor(
-    private itemApiService: ItemsApiService
+    private itemApiService: ItemsApiService,
+    private analyzeChartService: AnalyzeChartService
   ) {
   }
 
@@ -44,14 +46,27 @@ export class AnalyzeChartsComponent implements OnInit, OnChanges {
       this.updateChart(_);
       this.preloadedSeries = _;
     });
-  }
+    this.analyzeChartService.currentData.subscribe(data => {
+      let chartLines;
+      if (data) {
+        const { label, metrics } = data;
+        if (metrics && metrics.length > 0) {
+          chartLines = metrics.map(_ => ({ name: label, metric: _ }));
+        } else  {
+          // add all available lines
+          const labelLines = [];
+          this.chartLines.labels.forEach((value, key) => {
+            const labelFound = value.find((_) => _.name === data.label);
+            if (labelFound) {
+              labelLines.push({ name: data.label, metric: key });
+            }
+          });
+          chartLines = labelLines;
+        }
+        this.updateChart(chartLines);
+      }
+    });
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.showPerformanceAnalysisLines && changes.showPerformanceAnalysisLines.currentValue) {
-      const { label, metrics } = changes.showPerformanceAnalysisLines.currentValue;
-      const chartLines = metrics.map(_ => ({ name: label, metric: _ }));
-      this.updateChart(chartLines);
-    }
   }
 
   chartUpdated(event: [{ name: string, metric: string }]) {

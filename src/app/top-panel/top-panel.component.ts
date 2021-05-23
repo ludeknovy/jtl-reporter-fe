@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../project.service';
 import { ProjectsListing } from '../project-api.service.model';
 import { Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-top-panel',
   templateUrl: './top-panel.component.html',
-  styleUrls: ['./top-panel.component.scss']
+  styleUrls: ['./top-panel.component.scss', '../shared-styles.css']
 })
 export class TopPanelComponent implements OnInit {
 

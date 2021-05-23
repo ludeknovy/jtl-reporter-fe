@@ -13,40 +13,32 @@
         <div ngbDropdown class="d-inline-block">
           <button class="btn text-white" id="dropdownBasic1" ngbDropdownToggle>{{selectedProject || "Project"}}</button>
           <div class="drop-area drop-area-left dropdowncustom-area dropdown-static" ngbDropdownMenu
-            aria-labelledby="dropdownBasic1" *ngIf="projectsState$ | async; let projects">
-            <li *ngFor="let _ of projects">
-              <a ngbDropdownItem class="btn btn-block text-left" routerLink="/project/{{_.projectName}}/scenarios"
-                routerLinkActive="active" (click)="changeSelectedProject(_.projectName)">{{_.projectName}}</a>
-            </li>
-            <li>
-              <app-add-project [topMenu]="true">New Project</app-add-project>
-            </li>
+               aria-labelledby="dropdownBasic1" *ngIf="projectsState$ | async; let projects">
+            <a *ngFor="let _ of projects" ngbDropdownItem class="btn btn-block text-left text-white" routerLink="/project/{{_.projectName}}/scenarios"
+               routerLinkActive="active" (click)="changeSelectedProject(_.projectName)">{{_.projectName}}</a>
+            <app-add-project [topMenu]="true">New Project</app-add-project>
           </div>
         </div>
       </li>
     </ul>
-  <div>
-    <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" ngbDropdown class="d-inline-block">
-      <button class="btn text-white" id="dropdownSettings" ngbDropdownToggle> <i class="fas fa-user"></i> {{username}}
-      </button>
-      <div class="drop-area drop-area-left dropdowncustom-area dropdown-dynamic" ngbDropdownMenu
-        aria-labelledby="dropdownSettings">
-        <li>
-          <a ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/administration/projects']"><i
-              class="fas fa-cog icon"></i>Administrate</a>
-        </li>
-        <li>
-          <a ngbDropdownItem class="btn btn-block text-left" href="/api-docs" target="_blank"><i
-              class="far fa-question-circle icon"></i>Api docs</a>
-        </li>
-        <li>
-          <a ngbDropdownItem class="btn btn-block text-left" [routerLink]="['/login']"><i
-              class="fas fa-sign-out-alt icon"></i>
+    <div>
+      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" ngbDropdown class="d-inline-block">
+        <button class="btn text-white" id="dropdownSettings" ngbDropdownToggle> <i class="fas fa-user"></i> {{username}}
+        </button>
+        <div class="drop-area drop-area-left dropdowncustom-area dropdown-dynamic" ngbDropdownMenu
+             aria-labelledby="dropdownSettings">
+          <a ngbDropdownItem class="btn btn-block text-left text-white" [routerLink]="['/administration/projects']"><i
+            class="fas fa-cog icon"></i>Administrate</a>
+
+          <a ngbDropdownItem class="btn btn-block text-left text-white" href="/api-docs" target="_blank"><i
+            class="far fa-question-circle icon"></i>Api docs</a>
+
+          <a ngbDropdownItem class="btn btn-block text-left text-white" [routerLink]="['/login']"><i
+            class="fas fa-sign-out-alt icon"></i>
             Logout</a>
-        </li>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </nav>
 

@@ -1,13 +1,13 @@
 
 .top-bar {
-  padding-left: 210px;
-  padding-right: 210px;
+  padding-left: 120px;
+  padding-right: 120px;
 }
 
 @media (max-width: 1550px) {
   .top-bar {
-    padding-left: 110px;
-    padding-right: 110px;
+    padding-left: 80px;
+    padding-right: 80px;
   }
 }
 
@@ -28,12 +28,11 @@
 .drop {
   color: white;
   background-color: #2f353a;
-  border: 0px;
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 15px;
   display: block;
-  border-color: #2f353a;
+  border: 0 #2f353a;
   cursor: pointer;
 }
 
@@ -98,15 +97,6 @@ a {
 
 .drop-area .btn {
   color: black
-}
-
-.drop-area-left li a {
-  color: white;
-}
-
-.dropdown-menu {
-  padding-top: 0px;
-  padding-bottom: 0px;
 }
 
 .navbar-toggler {

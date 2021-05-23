@@ -28,12 +28,11 @@
 .drop {
   color: white;
   background-color: #2f353a;
-  border: 0px;
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 15px;
   display: block;
-  border-color: #2f353a;
+  border: 0 #2f353a;
   cursor: pointer;
 }
 
@@ -100,13 +99,9 @@ a {
   color: black
 }
 
-.drop-area-left li a {
-  color: white;
-}
-
 .dropdown-menu {
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .navbar-toggler {

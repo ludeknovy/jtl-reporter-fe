@@ -35,7 +35,7 @@
               </thead>
               <tbody>
                 <tr class="d-flex" *ngFor="let _ of mf.data">
-                  <td class="border-0 col-4">{{_.label}} <a class="jtl-a-primary" *ngIf="_.hasChartLines" (click)="showOnePercResponseTimeInChart(_.label)"><i class="fas fa-search-plus fa-lg"></i></a></td>
+                  <td class="border-0 col-4">{{_.label}} <a class="jtl-a-primary" *ngIf="_.hasChartLines" (click)="showOnePercResponseTimeInChart(_.label, 'analyzeChartAnchor')"><i class="fas fa-search-location fa-lg"></i></a></td>
                   <td class="border-0 col-3">{{_.onePerc}}</td>
                   <td class="border-0 col-3">{{_.p99}}</td>
                   <td class="border-0 col-2">{{_.avgResponseTime}}</td>
@@ -74,7 +74,7 @@
             </thead>
             <tbody>
               <tr class="d-flex" *ngFor="let _ of mf.data">
-                <td class="border-0 col-4">{{_.label}} <a class="jtl-a-primary" *ngIf="_.hasChartLines" (click)="showSteadyResponseTimeInChart(_.label)"><i class="fas fa-search-plus fa-lg"></i></a></td>
+                <td class="border-0 col-4">{{_.label}} <a class="jtl-a-primary" *ngIf="_.hasChartLines" (click)="showSteadyResponseTimeInChart(_.label, 'analyzeChartAnchor')"><i class="fas fa-search-location fa-lg"></i></a></td>
                 <td class="border-0 col-3">{{_.variability}}</td>
                 <td class="border-0 col-3">{{_.minResponseTime}}</td>
                 <td class="border-0 col-2">{{_.avgResponseTime}}</td>

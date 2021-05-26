@@ -1,17 +1,17 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
-import {ItemsApiService} from 'src/app/items-api.service';
-import {ItemParams} from 'src/app/scenario/item-controls/item-controls.model';
-import {bytesToMbps, roundNumberTwoDecimals} from '../calculations';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
+import { bytesToMbps, roundNumberTwoDecimals } from '../calculations';
+import { AnalyzeChartService } from '../../analyze-chart.service';
+import { ItemsApiService } from 'src/app/items-api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-request-stats-compare',
   templateUrl: './request-stats-compare.component.html',
   styleUrls: ['./request-stats-compare.component.css', '../item-detail.component.scss']
 })
-export class RequestStatsCompareComponent implements OnInit, OnChanges {
+export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
-  @Input() externalSearchTerm: string;
   @Input() itemData;
   @Input() isAnonymous: boolean;
   @Input() params: ItemParams;
@@ -19,27 +19,31 @@ export class RequestStatsCompareComponent implements OnInit, OnChanges {
   comparingData;
   comparedData;
   comparedDataMs;
-  compareMode = false;
   labelsData;
   comparisonWarning = [];
   comparedMetadata;
   comparisonMs = true;
-  unitDesc = 'ms';
+  externalSearchTerm = '';
 
   constructor(
     private itemsService: ItemsApiService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private analyzeChartService: AnalyzeChartService
   ) {
   }
 
   ngOnInit() {
     this.labelsData = this.itemData.statistics;
+    this.analyzeChartService.currentData.subscribe(data => {
+      if (data && data.label) {
+        this.search(data.label);
+        this.externalSearchTerm = data.label;
+      }
+    });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.externalSearchTerm) {
-      this.search(changes.externalSearchTerm.currentValue);
-    }
+  ngOnDestroy() {
+    this.analyzeChartService.changeMessage(null);
   }
 
   resetStatsData() {
@@ -59,10 +63,16 @@ export class RequestStatsCompareComponent implements OnInit, OnChanges {
     }
   }
 
+  clearSearch() {
+    const dataToFilter = this.comparedData || this.itemData.statistics;
+    this.labelsData = dataToFilter;
+    this.externalSearchTerm = '';
+  }
+
   itemToCompare(data) {
     this.resetStatsData();
     this.comparingData = data;
-    this.comparedMetadata = {id: data.id, maxVu: data.maxVu};
+    this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
     if (data.maxVu !== this.itemData.overview.maxVu) {
       this.comparisonWarning.push(`VU do differ ${this.itemData.overview.maxVu} vs. ${data.maxVu}`);
     }
@@ -115,11 +125,11 @@ export class RequestStatsCompareComponent implements OnInit, OnChanges {
       this.params.projectName,
       this.params.scenarioName,
       id).subscribe(_ => this.itemToCompare({
-      statistics: _.statistics,
-      maxVu: _.overview.maxVu,
-      environment: _.environment,
-      id
-    }));
+        statistics: _.statistics,
+        maxVu: _.overview.maxVu,
+        environment: _.environment,
+        id
+      }));
   }
 
   showComparisonWarnings() {
@@ -194,4 +204,7 @@ export class RequestStatsCompareComponent implements OnInit, OnChanges {
     return '%';
   }
 
+  focusLabel(label: string) {
+    this.analyzeChartService.changeMessage({ label });
+  }
 }

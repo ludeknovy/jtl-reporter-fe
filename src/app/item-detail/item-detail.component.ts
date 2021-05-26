@@ -24,6 +24,7 @@ import { bytesToMbps, roundNumberTwoDecimals } from './calculations';
 import { logScaleButton } from '../graphs/log-scale-button';
 import { ItemStatusValue } from './item-detail.model';
 import {Metrics} from './metrics';
+import {AnalyzeChartService} from '../analyze-chart.service';
 
 @Component({
   selector: 'app-item-detail',
@@ -70,7 +71,8 @@ export class ItemDetailComponent implements OnInit {
     private itemsService: ItemsApiService,
     private spinner: NgxSpinnerService,
     private sharedMainBarService: SharedMainBarService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private analyzeChartService: AnalyzeChartService
   ) {
     this.Math = Math;
   }
@@ -107,6 +109,11 @@ export class ItemDetailComponent implements OnInit {
         this.generateCharts();
         this.spinner.hide();
       });
+    this.analyzeChartService.currentData.subscribe(data => {
+      if (data) {
+        this.activeId = 2;
+      }
+    });
   }
 
   private getChartLines() {

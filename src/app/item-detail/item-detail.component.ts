@@ -113,7 +113,7 @@ export class ItemDetailComponent implements OnInit {
       if (data) {
         this.activeId = 2;
       }
-    })
+    });
   }
 
   private getChartLines() {

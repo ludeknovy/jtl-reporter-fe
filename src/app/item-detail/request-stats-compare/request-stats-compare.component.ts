@@ -66,7 +66,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   clearSearch() {
     const dataToFilter = this.comparedData || this.itemData.statistics;
     this.labelsData = dataToFilter;
-    this.externalSearchTerm = "";
+    this.externalSearchTerm = '';
   }
 
   itemToCompare(data) {

@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Metrics} from '../metrics';
 import {AnalyzeChartService} from '../../analyze-chart.service';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-performance-analysis',
@@ -157,13 +158,20 @@ export class PerformanceAnalysisComponent implements OnInit {
 
   }
 
-  showSteadyResponseTimeInChart(label: string) {
+  showSteadyResponseTimeInChart(label: string, anchorElement: string) {
     this.showLabelInChart([Metrics.ResponseTimeAvg, Metrics.ResponseTimeMin], label);
-
+    const el = document.getElementById(anchorElement);
+    setTimeout(() => {
+      el.scrollIntoView({behavior: 'smooth'});
+    });
   }
 
-  showOnePercResponseTimeInChart(label: string) {
+  showOnePercResponseTimeInChart(label: string, anchorElement: string) {
     this.showLabelInChart([Metrics.ResponseTimeAvg, Metrics.ResponseTimeP99], label);
+    const el = document.getElementById(anchorElement);
+    setTimeout(() => {
+      el.scrollIntoView({behavior: 'smooth'});
+    });
   }
 
 

@@ -63,6 +63,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
         const reloadItems = !this.currentProcessingItems.every((id) => processingItems.includes(id));
         if (reloadItems) {
           this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
+          this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
         }
         return this.currentProcessingItems = inprogress.map((item) => item.id);
       }

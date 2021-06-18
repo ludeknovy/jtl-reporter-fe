@@ -120,6 +120,7 @@ export const customScenarioTrends = () => {
     plotOptions: {
       series: {
         cursor: 'pointer',
+        pointWidth: 20,
       },
       line: {
         lineWidth: 1.5,

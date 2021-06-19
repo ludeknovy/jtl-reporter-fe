@@ -22,7 +22,6 @@ import { DeleteProjectComponent } from './administration/projects/delete-project
 import { DeleteItemComponent } from './item-detail/delete-item/delete-item.component';
 import { ProjectComponent } from './project/project.component';
 import { ScenariosGraphComponent } from './project/graph/scenarios-graph.component';
-import { ScenarioGraphComponent } from './scenario/graphs/scenario-graph.component';
 import { EditItemComponent } from './item-detail/edit-item/edit-item.component';
 import { AddNewScenarioComponent } from './project/new-scenario/add-new.scenario.component';
 import { SettingsScenarioComponent } from './scenario/scenario-settings/scenario-settings.component';
@@ -118,7 +117,6 @@ const appRoutes: Routes = [
     DeleteItemComponent,
     ProjectComponent,
     ScenariosGraphComponent,
-    ScenarioGraphComponent,
     AddNewScenarioComponent,
     SettingsScenarioComponent,
     DeleteScenarioComponent,

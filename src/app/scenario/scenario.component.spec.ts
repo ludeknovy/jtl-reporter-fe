@@ -6,7 +6,6 @@ import { AddNewItemComponent } from './add-new-item/add-new-item.component';
 import { SettingsScenarioComponent } from './scenario-settings/scenario-settings.component';
 import { DeleteScenarioComponent } from './delete-scenario/delete-scenario.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
-import { ScenarioGraphComponent } from './graphs/scenario-graph.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -31,7 +30,6 @@ describe('ScenarioComponent', () => {
         SettingsScenarioComponent,
         DeleteScenarioComponent,
         ControlPanelComponent,
-        ScenarioGraphComponent,
         ExternalNotificationComponent,
         ScenarioTrendsComponent,
       ],

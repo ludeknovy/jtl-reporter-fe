@@ -92,7 +92,7 @@ export const customScenarioTrends = () => {
       type: 'column',
       zoomType: 'x',
       marginTop: 30,
-      className: 'chart-sync',
+      className: 'hg-chart',
     },
     time: {
       getTimezoneOffset: function (timestamp) {
@@ -258,5 +258,108 @@ export const scenarioHistoryGraphs = (historyData: ScenarioTrendsData[], project
     throughputHistoryChart: intervals.find(_ => _.name === 'throughput').data,
     errorRateHistoryChart: intervals.find(_ => _.name === 'errorRate').data,
     ninetyHistoryChart: intervals.find(_ => _.name === 'percentil').data,
+  };
+};
+
+export const scenarioResponseTime = () => {
+  return {
+    chart: {
+      type: 'column',
+      zoomType: 'x',
+      marginTop: 30,
+      className: 'chart-sync',
+    },
+    legend: false,
+    time: {
+      getTimezoneOffset: function (timestamp) {
+        const d = new Date();
+        const timezoneOffset = d.getTimezoneOffset();
+        return timezoneOffset;
+      }
+    },
+    responsive: {
+      rules: [{
+        condition: {
+          maxWidth: 400,
+          maxHeight: 200,
+        },
+        // Make the labels less space demanding on mobile
+        chartOptions: {
+          xAxis: {
+            labels: {
+              formatter: function () {
+                return this.value.charAt(0);
+              }
+            }
+          },
+          yAxis: {
+            labels: {
+              align: 'left',
+              x: 0,
+              y: -2
+            },
+            title: {
+              text: ''
+            }
+          }
+        }
+      }]
+    },
+    exporting: {
+      buttons: {
+        contextButton: {
+          enabled: false
+        },
+      }
+    },
+    title: {
+      text: ''
+    },
+    colors: ['#5DADE2', '#2ECC71', '#F4D03F', '#D98880',
+      '#707B7C', '#7DCEA0', '#21618C', '#873600', '#AF7AC5', '#B7950B'],
+    tooltip: {
+      split: false,
+      crosshairs: [true],
+      shared: true
+    },
+    plotOptions: {
+      series: {
+        cursor: 'pointer',
+        pointWidth: 20,
+      },
+      line: {
+        lineWidth: 1.5,
+        states: {
+          hover: {
+            lineWidth: 1.5
+          }
+        },
+        marker: {
+          enabled: false
+        },
+      }
+    },
+    xAxis: {
+      min: 0,
+      max: 15,
+      lineWidth: 0,
+      type: 'datetime',
+      crosshair: {
+        snap: true
+      },
+      labels: {
+        enabled: false
+      }
+    },
+    yAxis: [
+      {
+        gridLineColor: '#f2f2f2',
+        lineWidth: 0,
+        showEmpty: false,
+        title: {
+          text: 'ms'
+        },
+      },
+    ],
   };
 };

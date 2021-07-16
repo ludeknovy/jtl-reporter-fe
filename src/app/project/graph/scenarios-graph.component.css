@@ -28,3 +28,9 @@ app-scenarios-graph {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+
+.hg-chart {
+ position: absolute;
+  width: 100% !important;
+ }

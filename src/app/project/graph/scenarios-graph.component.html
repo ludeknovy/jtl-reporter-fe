@@ -1,1 +1,3 @@
-<canvas #graphCanvasRef></canvas>
+<highcharts-chart [Highcharts]="Highcharts" [options]="customScenarioTimeChartOption" [(update)]="updateLabelChartFlag"
+  [oneToOne]="true" (click)="onPointSelect($event)" (chartInstance)="logChartInstance($event)" style="height: 250px">
+</highcharts-chart>

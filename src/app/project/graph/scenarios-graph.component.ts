@@ -1,16 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  HostBinding,
   Input,
-  OnDestroy,
-  ViewChild,
   ViewEncapsulation,
+  OnInit,
   AfterViewInit,
 } from '@angular/core';
-import { Chart } from 'chart.js';
+import * as Highcharts from 'highcharts';
+import { customScenarioTrends, scenarioResponseTime } from 'src/app/graphs/scenario-trends';
 import { scenarioHistory } from 'src/app/graphs/scenarios';
+import { ScenarioChartInputData } from './scenario-graph.component.model';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-scenarios-graph',
@@ -19,72 +20,52 @@ import { scenarioHistory } from 'src/app/graphs/scenarios';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class ScenariosGraphComponent implements AfterViewInit, OnDestroy {
+export class ScenariosGraphComponent implements OnInit, AfterViewInit {
 
-  @Input() graphData: any;
-  @ViewChild('graphCanvasRef', { static: true }) chartCanvas: ElementRef;
-  @HostBinding('class.chart') htmlCardClass = true;
+  @Input() graphData: ScenarioChartInputData[];
+  customScenarioTimeChartOption = {
+    ...scenarioResponseTime(), series: []
+  };
 
-  private chart: Chart;
+  Highcharts: typeof Highcharts = Highcharts;
+  updateLabelChartFlag = false;
+  chart: Highcharts.Chart;
 
-  ngAfterViewInit(): void {
-    this.destroyChart();
-    let length = 1;
 
-    Chart.pluginService.register({
+  ngOnInit(): void {
+    console.log(this.graphData)
+    this.generateChartLines(this.graphData);
+  }
 
-      // before the update ..
-      beforeUpdate: function(chart) {
-        if (chart.config.data.datasets.length === 0) {
-          return;
-        }
-        const data = chart.config.data;
-        for (let i = data.labels.length; i < data.maxBarNumber; i++) {
-          length = (length === -1) ? i : length;
-          // populates both arrays with default values, you can put anything though
-          data.labels[i] = i;
-          data.datasets[0].data[i] = 0;
-        }
-      },
-      // after the update ..
-      afterUpdate: function(chart) {
-        const data = chart.config.data;
-        if (length === -1) { return; }
-        // prevents new charts to be drawn
-        // for (let i = length; i < data.maxBarNumber; i++) {
-        //   data.datasets[0]._meta[0].data[i].draw = function() {
-        //     return;
-        //   };
-        // }
-      },
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit called');
+    window.dispatchEvent(new Event('resize'));
+    this.chart.reflow();
+  }
 
-      afterDraw: function(chart) {
-        if (chart.data.datasets.length === 0) {
-          // No data is present
-          const ctx = chart.chart.ctx;
-          const width = chart.chart.width;
-          const height = chart.chart.height;
-          chart.clear();
+  logChartInstance(chart: Highcharts.Chart) {
+    console.log('logChartInstance called');
+    this.chart = chart;
+    this.chart.reflow();
+  }
 
-          ctx.save();
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.font = '20px normal \'Helvetica Nueue\'';
-          ctx.fillText('No data to display', width / 2, height / 2);
-          ctx.restore();
-        }
-      }
+  private generateChartLines(data: ScenarioChartInputData[]) {
+    const responseTimes = data.map(_ => _.percentil);
+    const dates = data.map(_ => moment(_.startDate).format('DD. MM. YYYY HH:mm:ss'));
+    const series = [];
+    series.push({
+      name: '90%tile',
+      data: responseTimes,
+      yAxis: 0,
+      visible: true,
+      // type: chartSerieSettings.type,
     });
-    this.chart = new Chart(this.chartCanvas.nativeElement, scenarioHistory(this.graphData));
-  }
 
-  ngOnDestroy(): void {
-    this.destroyChart();
-  }
 
-  private destroyChart(): void {
-    // tslint:disable-next-line:no-unused-expression
-    this.chart && this.chart.destroy();
+    this.customScenarioTimeChartOption.series = JSON.parse(JSON.stringify(series));
+    this.customScenarioTimeChartOption.xAxis['categories'] = dates;
   }
 
 }
+
+

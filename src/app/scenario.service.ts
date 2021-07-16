@@ -23,7 +23,7 @@ export class ScenarioService {
 
   fetchScenarioTrends(projectName, scenarioName) {
     this.scenarioApiService.fetchScenarioTrend(projectName, scenarioName)
-      .subscribe(_ => this.trends.next(scenarioHistoryGraphs(_, projectName, scenarioName)));
+      .subscribe(_ => this.trends.next(_));
   }
 
   fetchScenarioNotifications(projectName, scenarioName) {

@@ -7,6 +7,7 @@ import { Series } from 'src/app/graphs/series.model';
 import { bytesToMbps } from 'src/app/item-detail/calculations';
 import { ScenarioTrendsData } from 'src/app/items.service.model';
 import { ScenarioApiService } from 'src/app/scenario-api.service';
+import { ScenarioService } from 'src/app/scenario.service';
 
 @Component({
   selector: 'app-scenario-trends',
@@ -23,7 +24,7 @@ export class ScenarioTrendsComponent implements OnInit {
   chartDataMapping;
   itemIds;
 
-  constructor(private scenarioApiService: ScenarioApiService, private router: Router,
+  constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
     this.chartDataMapping = new Map([
       ['percentil', { name: Series.ResponseTimeP90, onLoad: true, color: 'rgb(17,122,139, 0.8)' }],
@@ -38,13 +39,13 @@ export class ScenarioTrendsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.scenarioApiService.fetchScenarioTrend(
-      this.params.projectName,
-      this.params.scenarioName)
-      .subscribe(_ => this.generateChartLines(_));
+    this.scenarioService.trends$.subscribe((_: ScenarioTrendsData[]) => this.generateChartLines(_));
   }
 
   generateChartLines(data: ScenarioTrendsData[]) {
+    if (!Array.isArray(data)) {
+      return;
+    }
     this.itemIds = data.map(_ => _.id);
     const dates = data.map(_ => moment(_.overview.startDate).format('DD. MM. YYYY HH:mm:ss'));
     const series = [];

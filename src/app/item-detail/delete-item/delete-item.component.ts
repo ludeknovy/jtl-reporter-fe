@@ -9,6 +9,7 @@ import { ProjectService } from 'src/app/project.service';
 import { ItemsApiService } from 'src/app/items-api.service';
 import { Router } from '@angular/router';
 import { ItemsService } from 'src/app/items.service';
+import { ScenarioService } from 'src/app/scenario.service';
 
 @Component({
   selector: 'app-delete-item',
@@ -21,12 +22,14 @@ export class DeleteItemComponent implements OnInit {
   deleteCheck;
 
   @Input() itemData: any;
+  @Input() remoteDelete: boolean;
 
   constructor(
     private modalService: NgbModal,
     private itemsService: ItemsService,
     private itemApiService: ItemsApiService,
     private notification: NotificationMessage,
+    private scenarioService: ScenarioService,
     private router: Router
   ) {
 
@@ -59,8 +62,12 @@ export class DeleteItemComponent implements OnInit {
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           if (_.status >= 200 && _.status < 300) {
-            this.itemsService.fetchItems(this.itemData.projectName, this.itemData.scenarioName);
             const message = this.notification.itemDeleted(_);
+            // if deleted from other component than item detail
+            if (this.remoteDelete) {
+              this.itemsService.fetchItems(this.itemData.projectName, this.itemData.scenarioName);
+              this.scenarioService.fetchScenarioTrends(this.itemData.projectName, this.itemData.scenarioName);
+            }
             this.itemApiService.setData(message);
             this.redirect();
           }

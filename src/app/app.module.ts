@@ -65,6 +65,7 @@ import { AnalyzeChartsComponent } from './item-detail/analyze-charts/analyze-cha
 import { AddMetricComponent } from './item-detail/analyze-charts/add-metric/add-metric.component';
 import { ScenarioTrendsComponent } from './scenario/scenario-trends/scenario-trends.component';
 import { RequestStatsCompareComponent } from './item-detail/request-stats-compare/request-stats-compare.component';
+import { StatsConfigComponent } from './item-detail/request-stats-compare/stats-config/stats-config.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -150,6 +151,7 @@ const appRoutes: Routes = [
     AddMetricComponent,
     ScenarioTrendsComponent,
     RequestStatsCompareComponent,
+    StatsConfigComponent,
   ],
   imports: [
     RouterModule.forRoot(

@@ -7,7 +7,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { LabelErrorComponent } from '../label-error/label-error.component';
 import { LabelTrendComponent } from '../label-trend/label-trend.component';
-import { StatsCompareComponent } from '../stats-compare/stats-compare.component';
+import { StatsCompareComponent } from './stats-compare/stats-compare.component';
 
 import { RequestStatsCompareComponent } from './request-stats-compare.component';
 

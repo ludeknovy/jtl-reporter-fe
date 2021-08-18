@@ -26,7 +26,7 @@ export class MonitoringStatsComponent implements OnInit {
     };
   }
 
-  @Input() data: any;
+  @Input() data: [{ name: string, timestemp: Date, avgCpu: number }];
 
   ngOnInit() {
   }
@@ -37,10 +37,17 @@ export class MonitoringStatsComponent implements OnInit {
     this.modalService.open(content, { size: 'xl' }).result
       .then((_) => { this.monitoringChartOptions = null; }, () => { this.monitoringChartOptions = null; });
 
+    console.log(this.data)
+    const workers = Array.from(new Set(this.data.map(data => data.name)));
+    const series = workers.map((worker) => this.data.filter(data => data.name === worker).reduce((acc, current) => {
+      acc.data.push([current.timestemp, current.avgCpu]);
+      acc.name = current.name;
+      return acc;
+    }, { data: [], name: null }))
+
     from(new Promise(resolve => setTimeout(resolve, 50))).subscribe((val: any) => {
       this.monitoringChartOptions = {
-        ...monitoringGraphSettings(), series: [
-          { data: this.data.cpu, name: 'cpu' }, { data: this.data.mem, name: 'mem' }]
+        ...monitoringGraphSettings(), series: series
       };
       this.updateFlag = true;
     });

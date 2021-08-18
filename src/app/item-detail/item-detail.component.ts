@@ -44,8 +44,7 @@ export class ItemDetailComponent implements OnInit {
     hostname: null,
     statistics: [],
     testName: null,
-    attachements: [],
-    monitoringData: { mem: [], maxCpu: 0, maxMem: 0, cpu: [] },
+    monitoring: { maxCpu: 0, maxMem: 0, data: [] },
     analysisEnabled: null,
   };
   overallChartOptions;
@@ -104,8 +103,9 @@ export class ItemDetailComponent implements OnInit {
       }))
       .subscribe((results) => {
         this.itemData = results;
-        this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
+        console.log("HERE 0")
         this.monitoringAlerts();
+        console.log("HERE 1")
         this.generateCharts();
         this.spinner.hide();
       });
@@ -117,6 +117,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   private getChartLines() {
+    console.log("chart lines")
     const { threads, overallTimeResponse,
       overallThroughput, overAllFailRate, overAllNetworkV2,
       responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
@@ -181,10 +182,11 @@ export class ItemDetailComponent implements OnInit {
     this.chartLines.labels.set(Metrics.Throughput, throughput);
     this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
 
-
+    console.log(this.chartLines)
   }
 
   private generateCharts() {
+    console.log("GENERATE")
     this.getChartLines();
     const oveallChartSeries = Array.from(this.chartLines.overall.values());
 
@@ -201,7 +203,7 @@ export class ItemDetailComponent implements OnInit {
 
   monitoringAlerts() {
     const alertMessages = [];
-    const { maxCpu, maxMem } = this.itemData.monitoringData;
+    const { maxCpu, maxMem } = this.itemData.monitoring;
     if (maxCpu > 90) {
       alertMessages.push(`High CPU usage`);
     }

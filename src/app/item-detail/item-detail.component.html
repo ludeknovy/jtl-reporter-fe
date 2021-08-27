@@ -227,14 +227,10 @@
 
 
         <div class="col-sm" *ngIf="itemData.monitoring.data.length > 0">
-          <!-- <div class="date top">
+          <div class="date top">
             <span class="text-secondary">max cpu usage:</span>
             <span class="small-text">{{itemData.monitoringData.maxCpu}}%</span>
           </div>
-          <div class="date" *ngIf="itemData.status">
-            <span class="text-secondary">max memory usage:</span>
-            <span class="small-text">{{itemData.monitoringData.maxMem}}%</span>
-          </div> -->
           <div class="date">
             <app-monitoring-stats [data]="itemData.monitoring.data">
             </app-monitoring-stats>

@@ -44,7 +44,7 @@ export class ItemDetailComponent implements OnInit {
     hostname: null,
     statistics: [],
     testName: null,
-    monitoring: { maxCpu: 0, maxMem: 0, data: [] },
+    monitoring: { maxCpu: 0, data: [] },
     analysisEnabled: null,
   };
   overallChartOptions;

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { commonGraphSettings } from 'src/app/graphs/item-detail';
-import * as deepmerge from 'deepmerge'
+import * as deepmerge from 'deepmerge';
 
 @Component({
   selector: 'app-label-chart',

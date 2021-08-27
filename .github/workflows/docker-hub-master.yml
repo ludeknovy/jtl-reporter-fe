@@ -31,3 +31,5 @@ jobs:
           context: .
           push: true
           labels: novyl/jtl-reporter-fe:latest
+          tags: novyl/jtl-reporter-fe:latest
+

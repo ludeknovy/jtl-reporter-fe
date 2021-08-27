@@ -226,13 +226,13 @@
 
 
 
-        <div class="col-sm" *ngIf="itemData.monitoring.data.length > 0">
+        <div class="col-sm" *ngIf="itemData.monitoring.cpu.data.length > 0">
           <div class="date top">
             <span class="text-secondary">max cpu usage:</span>
-            <span class="small-text">{{itemData.monitoringData.maxCpu}}%</span>
+            <span class="small-text">{{itemData.monitoring.cpu.max}}%</span>
           </div>
           <div class="date">
-            <app-monitoring-stats [data]="itemData.monitoring.data">
+            <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
             </app-monitoring-stats>
           </div>
         </div>

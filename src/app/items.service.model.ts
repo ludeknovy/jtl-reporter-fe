@@ -33,7 +33,9 @@ export interface ItemDetail {
   };
   analysisEnabled: boolean;
   reportStatus: ReportStatus;
-  monitoring: { data: { name: string, cpu: number, timestamp: number }[], maxCpu?: number, maxMem?: number };
+  monitoring: {
+    cpu: { data: { name: string, cpu: number, timestamp: number }[], max?: number }
+  };
   baseId: string;
   testName: string;
   note: string;

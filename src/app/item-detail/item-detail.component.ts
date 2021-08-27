@@ -20,7 +20,7 @@ import { catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
-import { bytesToMbps, roundNumberTwoDecimals } from './calculations';
+import { bytesToMbps } from './calculations';
 import { logScaleButton } from '../graphs/log-scale-button';
 import { ItemStatusValue } from './item-detail.model';
 import {Metrics} from './metrics';
@@ -44,7 +44,9 @@ export class ItemDetailComponent implements OnInit {
     hostname: null,
     statistics: [],
     testName: null,
-    monitoring: { maxCpu: 0, data: [] },
+    monitoring: { cpu: {
+      max: 0, data: []
+    } },
     analysisEnabled: null,
   };
   overallChartOptions;
@@ -103,9 +105,7 @@ export class ItemDetailComponent implements OnInit {
       }))
       .subscribe((results) => {
         this.itemData = results;
-        console.log("HERE 0")
         this.monitoringAlerts();
-        console.log("HERE 1")
         this.generateCharts();
         this.spinner.hide();
       });
@@ -117,7 +117,6 @@ export class ItemDetailComponent implements OnInit {
   }
 
   private getChartLines() {
-    console.log("chart lines")
     const { threads, overallTimeResponse,
       overallThroughput, overAllFailRate, overAllNetworkV2,
       responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
@@ -181,12 +180,9 @@ export class ItemDetailComponent implements OnInit {
 
     this.chartLines.labels.set(Metrics.Throughput, throughput);
     this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
-
-    console.log(this.chartLines)
   }
 
   private generateCharts() {
-    console.log("GENERATE")
     this.getChartLines();
     const oveallChartSeries = Array.from(this.chartLines.overall.values());
 
@@ -203,12 +199,9 @@ export class ItemDetailComponent implements OnInit {
 
   monitoringAlerts() {
     const alertMessages = [];
-    const { maxCpu, maxMem } = this.itemData.monitoring;
+    const { max: maxCpu } = this.itemData.monitoring.cpu;
     if (maxCpu > 90) {
       alertMessages.push(`High CPU usage`);
-    }
-    if (maxMem > 90) {
-      alertMessages.push(`High memory usage`);
     }
 
     if (alertMessages.length > 0) {

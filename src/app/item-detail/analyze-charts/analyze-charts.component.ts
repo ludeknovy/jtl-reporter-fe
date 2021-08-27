@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit } from '@angular/core';
 import { customChartSettings } from 'src/app/graphs/item-detail';
 import * as Highcharts from 'highcharts';
 import { ItemsApiService } from 'src/app/items-api.service';

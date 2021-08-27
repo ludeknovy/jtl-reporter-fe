@@ -7,11 +7,12 @@ import { Series } from 'src/app/graphs/series.model';
 import { bytesToMbps } from 'src/app/item-detail/calculations';
 import { ScenarioTrendsData } from 'src/app/items.service.model';
 import { ScenarioApiService } from 'src/app/scenario-api.service';
+import { ScenarioService } from 'src/app/scenario.service';
 
 @Component({
   selector: 'app-scenario-trends',
   templateUrl: './scenario-trends.component.html',
-  styleUrls: ['./scenario-trends.component.css']
+  styleUrls: ['./scenario-trends.component.scss']
 })
 export class ScenarioTrendsComponent implements OnInit {
   @Input() params;
@@ -23,7 +24,7 @@ export class ScenarioTrendsComponent implements OnInit {
   chartDataMapping;
   itemIds;
 
-  constructor(private scenarioApiService: ScenarioApiService, private router: Router,
+  constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
     this.chartDataMapping = new Map([
       ['percentil', { name: Series.ResponseTimeP90, onLoad: true, color: 'rgb(17,122,139, 0.8)' }],
@@ -32,19 +33,19 @@ export class ScenarioTrendsComponent implements OnInit {
       ['avgConnect', { name: Series.ConnetcAvg, onLoad: false }],
       ['throughput', { name: Series.Throughput, yAxis: 2, onLoad: true, color: 'rgb(41,128,187, 0.8)' }],
       ['maxVu', { name: 'vu', yAxis: 1, onLoad: true, type: 'spline', color: 'grey' }],
-      ['errorRate', { name: Series.ErrorRate, yAxis: 3, onLoad: false, color: 'rgb(231,76,60, 0.8)' }],
+      ['errorRate', { name: Series.ErrorRate, yAxis: 3, onLoad: true, color: 'rgb(231,76,60, 0.8)' }],
       ['bytesPerSecond', { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform }]
     ]);
   }
 
   ngOnInit() {
-    this.scenarioApiService.fetchScenarioTrend(
-      this.params.projectName,
-      this.params.scenarioName)
-      .subscribe(_ => this.generateChartLines(_));
+    this.scenarioService.trends$.subscribe((_: ScenarioTrendsData[]) => this.generateChartLines(_));
   }
 
   generateChartLines(data: ScenarioTrendsData[]) {
+    if (!Array.isArray(data)) {
+      return;
+    }
     this.itemIds = data.map(_ => _.id);
     const dates = data.map(_ => moment(_.overview.startDate).format('DD. MM. YYYY HH:mm:ss'));
     const series = [];

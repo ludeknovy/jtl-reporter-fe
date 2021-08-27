@@ -91,7 +91,7 @@ export const customScenarioTrends = () => {
     chart: {
       type: 'column',
       zoomType: 'x',
-      marginTop: 50,
+      marginTop: 30,
       className: 'chart-sync',
     },
     time: {
@@ -114,12 +114,14 @@ export const customScenarioTrends = () => {
     colors: ['#5DADE2', '#2ECC71', '#F4D03F', '#D98880',
       '#707B7C', '#7DCEA0', '#21618C', '#873600', '#AF7AC5', '#B7950B'],
     tooltip: {
-      split: true,
-      crosshairs: [true]
+      split: false,
+      crosshairs: [true],
+      shared: true
     },
     plotOptions: {
       series: {
         cursor: 'pointer',
+        pointWidth: 20,
       },
       line: {
         lineWidth: 1.5,
@@ -134,9 +136,13 @@ export const customScenarioTrends = () => {
       }
     },
     xAxis: {
+      min: 0,
+      max: 15,
       lineWidth: 0,
       type: 'datetime',
-      crosshair: true,
+      crosshair: {
+        snap: true
+      },
       labels: {
         enabled: false
       }
@@ -145,6 +151,7 @@ export const customScenarioTrends = () => {
       {
         gridLineColor: '#f2f2f2',
         lineWidth: 0,
+        showEmpty: false,
         title: {
           text: 'ms'
         },
@@ -153,6 +160,7 @@ export const customScenarioTrends = () => {
         gridLineColor: '#f2f2f2',
         lineWidth: 0,
         opposite: true,
+        showEmpty: false,
         title: {
           text: 'VU'
         },
@@ -160,6 +168,7 @@ export const customScenarioTrends = () => {
       {
         gridLineColor: '#f2f2f2',
         lineWidth: 0,
+        showEmpty: false,
         title: {
           text: 'hits/s'
         },
@@ -168,6 +177,7 @@ export const customScenarioTrends = () => {
         gridLineColor: '#f2f2f2',
         lineWidth: 0,
         opposite: true,
+        showEmpty: false,
         title: {
           text: '%'
         },
@@ -176,6 +186,7 @@ export const customScenarioTrends = () => {
         gridLineColor: '#f2f2f2',
         lineWidth: 0,
         opposite: true,
+        showEmpty: false,
         title: {
           text: 'mbps'
         },

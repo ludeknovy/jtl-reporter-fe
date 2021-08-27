@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { commonGraphSettings, threadLineSettings } from 'src/app/graphs/item-detail';
+import { commonGraphSettings } from 'src/app/graphs/item-detail';
+import * as deepmerge from 'deepmerge'
 
 @Component({
   selector: 'app-label-chart',
@@ -25,8 +26,8 @@ export class LabelChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
-    this.labelChartOptions = JSON.parse(JSON.stringify(this.labels.get('Throughput')));
+    this.labelChartOptions = deepmerge(this.labels.get(this.labelChartMetric), {});
+    this.updateLabelChartFlag = true;
     this.getChartsKey();
   }
 
@@ -35,9 +36,10 @@ export class LabelChartComponent implements OnInit {
   }
 
   changeChart(event) {
-    const target = event.target.innerText;
-    this.labelChartMetric = target;
-    this.labelChartOptions = JSON.parse(JSON.stringify(this.labels.get(target)));
+    this.labelChartMetric = event.target.innerText;
+
+    this.labelChartOptions = deepmerge(this.labels.get(this.labelChartMetric), {});
+
     this.updateLabelChartFlag = true;
   }
 

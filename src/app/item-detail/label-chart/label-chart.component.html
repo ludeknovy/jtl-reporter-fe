@@ -10,13 +10,6 @@
       <button class="jtl-no-glow btn btn-sm jtl-ico-btn-light" (click)="collapseChart($event)"><i class="fa"
           [ngClass]="{'fa-compress-alt': chartShouldExpand, 'fa-expand-alt': !chartShouldExpand}"> </i></button>
 
-      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
-        aria-label="">
-        <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
-          <button class="btn btn-sm" *ngFor="let _ of chartKeys" ngbDropdownItem
-            (click)="addComparisonChart($event)">{{_}}</button>
-        </div>
-      </div>
     </span>
     <span class="float-right">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"

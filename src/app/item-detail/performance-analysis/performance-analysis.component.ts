@@ -2,7 +2,6 @@ import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/c
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Metrics} from '../metrics';
 import {AnalyzeChartService} from '../../analyze-chart.service';
-import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-performance-analysis',

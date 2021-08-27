@@ -15,7 +15,6 @@
           <app-edit-item *ngIf="itemData.environment"
             [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
             (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
-          <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
           <app-share [params]=itemParams></app-share>
           <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
         </div>
@@ -227,17 +226,13 @@
 
 
 
-        <div class="col-sm" *ngIf="itemData.monitoringData.cpu.length > 0">
+        <div class="col-sm" *ngIf="itemData.monitoring.cpu.data.length > 0">
           <div class="date top">
             <span class="text-secondary">max cpu usage:</span>
-            <span class="small-text">{{itemData.monitoringData.maxCpu}}%</span>
-          </div>
-          <div class="date" *ngIf="itemData.status">
-            <span class="text-secondary">max memory usage:</span>
-            <span class="small-text">{{itemData.monitoringData.maxMem}}%</span>
+            <span class="small-text">{{itemData.monitoring.cpu.max}}%</span>
           </div>
           <div class="date">
-            <app-monitoring-stats [data]="itemData.monitoringData">
+            <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
             </app-monitoring-stats>
           </div>
         </div>

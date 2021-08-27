@@ -28,7 +28,6 @@ import { SettingsScenarioComponent } from './scenario/scenario-settings/scenario
 import { DeleteScenarioComponent } from './scenario/delete-scenario/delete-scenario.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StatsCompareComponent } from './item-detail/stats-compare/stats-compare.component';
-import { AttachementsComponent } from './item-detail/attachements/attachements.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -121,7 +120,6 @@ const appRoutes: Routes = [
     SettingsScenarioComponent,
     DeleteScenarioComponent,
     StatsCompareComponent,
-    AttachementsComponent,
     ControlPanelComponent,
     BreadcrumbComponent,
     LabelTrendComponent,

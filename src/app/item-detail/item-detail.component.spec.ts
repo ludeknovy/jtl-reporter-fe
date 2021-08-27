@@ -3,11 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ItemDetailComponent } from './item-detail.component';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
-import { AttachementsComponent } from './attachements/attachements.component';
 import { DeleteItemComponent } from './delete-item/delete-item.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 import { StatsCompareComponent } from './stats-compare/stats-compare.component';
-import { LabelTrendComponent } from './label-trend/label-trend.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +25,6 @@ describe('ItemDetailComponent', () => {
         ItemDetailComponent,
         BreadcrumbComponent,
         EditItemComponent,
-        AttachementsComponent,
         DeleteItemComponent,
         ControlPanelComponent,
         StatsCompareComponent,

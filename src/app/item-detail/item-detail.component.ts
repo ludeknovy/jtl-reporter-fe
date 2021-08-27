@@ -20,7 +20,7 @@ import { catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ToastrService } from 'ngx-toastr';
-import { bytesToMbps, roundNumberTwoDecimals } from './calculations';
+import { bytesToMbps } from './calculations';
 import { logScaleButton } from '../graphs/log-scale-button';
 import { ItemStatusValue } from './item-detail.model';
 import {Metrics} from './metrics';
@@ -44,8 +44,9 @@ export class ItemDetailComponent implements OnInit {
     hostname: null,
     statistics: [],
     testName: null,
-    attachements: [],
-    monitoringData: { mem: [], maxCpu: 0, maxMem: 0, cpu: [] },
+    monitoring: { cpu: {
+      max: 0, data: []
+    } },
     analysisEnabled: null,
   };
   overallChartOptions;
@@ -104,7 +105,6 @@ export class ItemDetailComponent implements OnInit {
       }))
       .subscribe((results) => {
         this.itemData = results;
-        this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
         this.monitoringAlerts();
         this.generateCharts();
         this.spinner.hide();
@@ -180,8 +180,6 @@ export class ItemDetailComponent implements OnInit {
 
     this.chartLines.labels.set(Metrics.Throughput, throughput);
     this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
-
-
   }
 
   private generateCharts() {
@@ -201,12 +199,9 @@ export class ItemDetailComponent implements OnInit {
 
   monitoringAlerts() {
     const alertMessages = [];
-    const { maxCpu, maxMem } = this.itemData.monitoringData;
+    const { max: maxCpu } = this.itemData.monitoring.cpu;
     if (maxCpu > 90) {
       alertMessages.push(`High CPU usage`);
-    }
-    if (maxMem > 90) {
-      alertMessages.push(`High memory usage`);
     }
 
     if (alertMessages.length > 0) {

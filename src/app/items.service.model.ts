@@ -33,7 +33,9 @@ export interface ItemDetail {
   };
   analysisEnabled: boolean;
   reportStatus: ReportStatus;
-  monitoringData: { cpu: [], mem: [], maxCpu?: number, maxMem?: number };
+  monitoring: {
+    cpu: { data: { name: string, cpu: number, timestamp: number }[], max?: number }
+  };
   baseId: string;
   testName: string;
   note: string;
@@ -41,7 +43,6 @@ export interface ItemDetail {
   environment: string;
   plot: ItemDataPlot;
   statistics: ItemStatistics[];
-  attachements: [];
   thresholds?: {
     passed: boolean,
     diff: {

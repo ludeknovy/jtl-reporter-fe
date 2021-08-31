@@ -66,6 +66,7 @@ export class ItemDetailComponent implements OnInit {
   activeId = 1;
   performanceAnalysisLines = null;
   externalSearchTerm = null;
+  totalRequests = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -107,6 +108,7 @@ export class ItemDetailComponent implements OnInit {
         this.itemData = results;
         this.monitoringAlerts();
         this.generateCharts();
+        this.calculateTotalRequests();
         this.spinner.hide();
       });
     this.analyzeChartService.currentData.subscribe(data => {
@@ -114,6 +116,12 @@ export class ItemDetailComponent implements OnInit {
         this.activeId = 2;
       }
     });
+  }
+
+  private calculateTotalRequests() {
+    this.totalRequests = this.itemData.statistics.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.samples;
+    }, 0);
   }
 
   private getChartLines() {

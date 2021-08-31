@@ -48,14 +48,7 @@ export class ScenariosGraphComponent implements AfterViewInit, OnDestroy {
       },
       // after the update ..
       afterUpdate: function(chart) {
-        const data = chart.config.data;
         if (length === -1) { return; }
-        // prevents new charts to be drawn
-        // for (let i = length; i < data.maxBarNumber; i++) {
-        //   data.datasets[0]._meta[0].data[i].draw = function() {
-        //     return;
-        //   };
-        // }
       },
 
       afterDraw: function(chart) {

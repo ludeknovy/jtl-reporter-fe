@@ -61,7 +61,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     const terms = query.match(/(?:[^\s"]+|"[^"]*")+/g);
 
     let notTerm = null;
-    let andTerms = [];
+    let orTerms = [];
 
     if (terms && terms.length > 0) {
       if (terms[0] === 'not' && terms.length > 1) {
@@ -69,9 +69,9 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
         terms.splice(0, 1);
       }
 
-      if (terms.includes('and')) {
-        andTerms = terms.map((term, index, arr) => {
-          if (term.toLowerCase() === 'and') {
+      if (terms.includes('or')) {
+        orTerms = terms.map((term, index, arr) => {
+          if (term.toLowerCase() === 'or') {
             return this.trimTerm(arr[index + 1]);
           } else if (index === 0) {
             return this.trimTerm(term);
@@ -79,9 +79,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
         });
       }
 
-
       // search with operators
-      if (notTerm || andTerms.length > 0) {
+      if (notTerm || orTerms.length > 0) {
         this.labelsData = dataToFilter
           .filter(x => {
             if (notTerm) {
@@ -90,8 +89,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             return true;
           })
           .filter(x => {
-            if (andTerms.length > 0) {
-              return andTerms.includes(this.trimTerm(x.label));
+            if (orTerms.length > 0) {
+              return orTerms.includes(this.trimTerm(x.label));
             }
             return true;
           });

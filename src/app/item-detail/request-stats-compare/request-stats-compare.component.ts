@@ -4,6 +4,9 @@ import { bytesToMbps, roundNumberTwoDecimals } from '../calculations';
 import { AnalyzeChartService } from '../../analyze-chart.service';
 import { ItemsApiService } from 'src/app/items-api.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @Component({
   selector: 'app-request-stats-compare',
@@ -28,7 +31,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   constructor(
     private itemsService: ItemsApiService,
     private toastr: ToastrService,
-    private analyzeChartService: AnalyzeChartService
+    private analyzeChartService: AnalyzeChartService,
+    private modalService: NgbModal,
   ) {
   }
 
@@ -52,12 +56,48 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.comparisonMs = true;
   }
 
-  search(term: string) {
+  search(query: string) {
     const dataToFilter = this.comparedData || this.itemData.statistics;
-    if (term) {
-      this.labelsData = dataToFilter.filter(x =>
-        x.label.trim().toLowerCase().includes(term.trim().toLowerCase())
-      );
+    const terms = query.match(/(?:[^\s"]+|"[^"]*")+/g);
+
+    let notTerm = null;
+    let orTerms = [];
+
+    if (terms && terms.length > 0) {
+      if (terms[0] === 'not' && terms.length > 1) {
+        notTerm = terms[1];
+        terms.splice(0, 1);
+      }
+
+      if (terms.includes('or')) {
+        orTerms = terms.map((term, index, arr) => {
+          if (term.toLowerCase() === 'or') {
+            return this.trimTerm(arr[index + 1]);
+          } else if (index === 0) {
+            return this.trimTerm(term);
+          }
+        });
+      }
+
+      // search with operators
+      if (notTerm || orTerms.length > 0) {
+        this.labelsData = dataToFilter
+          .filter(x => {
+            if (notTerm) {
+              return this.trimTerm(x.label) !== this.trimTerm(notTerm);
+            }
+            return true;
+          })
+          .filter(x => {
+            if (orTerms.length > 0) {
+              return orTerms.includes(this.trimTerm(x.label));
+            }
+            return true;
+          });
+        return;
+      }
+      // fulltext search
+      this.labelsData = dataToFilter.filter(x => this.trimTerm(x.label).includes(this.trimTerm(terms[0])));
     } else {
       this.labelsData = dataToFilter;
     }
@@ -197,6 +237,16 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     return roundNumberTwoDecimals(percDiff);
   }
 
+  private trimTerm(term: string) {
+    if (!term) {
+      return;
+    }
+    return term
+      .trim()
+      .replace(/^"+|"+$/g, '')
+      .toLowerCase();
+  }
+
   getUnit() {
     if (this.comparisonMs) {
       return 'ms';
@@ -206,5 +256,9 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   focusLabel(label: string) {
     this.analyzeChartService.changeMessage({ label });
+  }
+
+  openSearchHelp(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 }

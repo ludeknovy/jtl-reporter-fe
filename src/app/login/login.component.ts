@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { first } from 'rxjs/operators';
+import { InitService } from '../_services/init.service';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import { first } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
+  initLoaded = false;
   submitted = false;
   returnUrl: string;
   error = null;
@@ -20,7 +22,9 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService,
+    private initService: InitService,
+    ) { }
 
   ngOnInit() {
     // reset login status
@@ -28,6 +32,13 @@ export class LoginComponent implements OnInit {
 
     // slow down to give top panel time to disappear
     new Promise(resolve => setTimeout(resolve, 0)).then();
+    this.initService.fetchInfo().subscribe((res) => {
+      if (res.initialized === false) {
+        this.router.navigate(['init']);
+      }
+      this.initLoaded = true;
+    });
+
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],

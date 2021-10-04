@@ -1,3 +1,4 @@
+
 export const statusCodesChart = (points) => {
   return {
     exporting: {
@@ -5,7 +6,6 @@ export const statusCodesChart = (points) => {
     },
     series: [{
       type: 'treemap',
-      // layoutAlgorithm: 'squarified',
       allowDrillToNode: false,
       animationLimit: 1000,
       dataLabels: {

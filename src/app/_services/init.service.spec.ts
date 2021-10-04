@@ -1,9 +1,12 @@
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import { InitService } from './init.service';
 
 describe('InitService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({
+    imports: [ HttpClientModule ]
+  }));
 
   it('should be created', () => {
     const service: InitService = TestBed.get(InitService);

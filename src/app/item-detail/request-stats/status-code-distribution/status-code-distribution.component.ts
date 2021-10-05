@@ -35,11 +35,8 @@ export class StatusCodeDistributionComponent implements OnInit {
   open(content) {
     // @ts-ignore
     this.modalService.open(content, { size: 'xl' });
-    const dataPoints = this.statusCodes.map((_) => ({
-      name: _.statusCode.toString(),
-      value: _.count
-    }));
-    this.labelChartOption = statusCodesChart(dataPoints);
+
+    this.labelChartOption = statusCodesChart(this.statusCodes);
     this.updateFlag = true;
   }
 

@@ -1,11 +1,18 @@
+import { StatusCodes } from '../item-detail/request-stats/status-code-distribution/status-code-distribution.component';
+import { colors } from './colors';
 
-export const statusCodesChart = (points) => {
+export const statusCodesChart = (data: StatusCodes[]) => {
   return {
     exporting: {
       enabled: false,
     },
+    colorAxis: {
+      minColor: '#FFFFFF',
+      maxColor: '#FFF'
+  },
     series: [{
       type: 'treemap',
+      layoutAlgorithm: 'squarified',
       allowDrillToNode: false,
       animationLimit: 1000,
       dataLabels: {
@@ -19,7 +26,11 @@ export const statusCodesChart = (points) => {
         },
         borderWidth: 3
       }],
-      data: points
+      data: data.map((_, index) => ({
+        name: _.statusCode.toString(),
+        value: _.count,
+        color: colors[index]
+      }))
     }],
     subtitle: {
       text: ''

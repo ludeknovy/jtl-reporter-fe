@@ -35,6 +35,10 @@ export class AuthenticationService {
     return this.http.post<any>('auth/change-password', body, { observe: 'response'});
   }
 
+  initUser(body) {
+    return this.http.post('auth/initialize-user', body);
+  }
+
   setLogin (value) {
     this.loggedIn.next(value);
   }

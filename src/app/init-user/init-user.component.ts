@@ -12,6 +12,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 export class InitUserComponent implements OnInit {
   initUserForm: FormGroup;
   submitted = false;
+  error;
 
 
   constructor(
@@ -43,7 +44,9 @@ export class InitUserComponent implements OnInit {
         data => {
           this.router.navigate(['/']);
         },
-        error => {});
+        error => {
+          this.error = error;
+        });
   }
 
 }

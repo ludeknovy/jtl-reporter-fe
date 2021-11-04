@@ -3,6 +3,13 @@ export const monitoringGraphSettings: any = () => {
     chart: {
       type: 'line',
     },
+    time: {
+      getTimezoneOffset: function (timestamp) {
+        const d = new Date();
+        const timezoneOffset = d.getTimezoneOffset();
+        return timezoneOffset;
+      }
+    },
     title: {
       text: ''
     },

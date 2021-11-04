@@ -2,8 +2,6 @@ export const monitoringGraphSettings: any = () => {
   return {
     chart: {
       type: 'line',
-      spacingRight: -7,
-      spacingLeft: -7
     },
     title: {
       text: ''
@@ -42,7 +40,7 @@ export const monitoringGraphSettings: any = () => {
       lineWidth: 0,
       opposite: true,
       title: {
-        text: 'threads'
+        text: ''
       }
     }],
   };

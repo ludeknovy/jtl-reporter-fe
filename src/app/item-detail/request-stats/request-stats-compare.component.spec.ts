@@ -80,7 +80,7 @@ describe('RequestStatsCompareComponent', () => {
         n9: 37,
         samples: 200,
         throughput: 0.17,
-      },]
+      }, ]
     };
     fixture.detectChanges();
   });

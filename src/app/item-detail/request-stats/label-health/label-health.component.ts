@@ -13,7 +13,7 @@ Tree(Highcharts);
 export class LabelHealthComponent implements OnInit {
 
   @Input() statusCodes: StatusCodes[];
-  @Input() responseFailures: ResponseMessageFailures[]
+  @Input() responseFailures: ResponseMessageFailures[];
   @Input() labelName: string;
   Highcharts: typeof Highcharts = Highcharts;
   labelChartOption;

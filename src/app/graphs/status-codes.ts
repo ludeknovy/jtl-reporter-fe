@@ -1,4 +1,4 @@
-import { StatusCodes } from '../item-detail/request-stats/status-code-distribution/status-code-distribution.component';
+import { StatusCodes } from '../item-detail/request-stats/label-health/label-health.component';
 import { colors } from './colors';
 
 export const statusCodesChart = (data: StatusCodes[]) => {

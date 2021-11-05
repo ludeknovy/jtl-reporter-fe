@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StatusCodeDistributionComponent } from './status-code-distribution.component';
+import { LabelHealthComponent } from './label-health.component';
 
 describe('StatusCodeDistributionComponent', () => {
-  let component: StatusCodeDistributionComponent;
-  let fixture: ComponentFixture<StatusCodeDistributionComponent>;
+  let component: LabelHealthComponent;
+  let fixture: ComponentFixture<LabelHealthComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusCodeDistributionComponent ]
+      declarations: [ LabelHealthComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StatusCodeDistributionComponent);
+    fixture = TestBed.createComponent(LabelHealthComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

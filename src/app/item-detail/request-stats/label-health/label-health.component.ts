@@ -6,13 +6,15 @@ import Tree from 'highcharts/modules/treemap';
 Tree(Highcharts);
 
 @Component({
-  selector: 'app-status-code-distribution',
-  templateUrl: './status-code-distribution.component.html',
-  styleUrls: ['./status-code-distribution.component.css']
+  selector: 'app-label-health',
+  templateUrl: './label-health.component.html',
+  styleUrls: ['./label-health.component.css']
 })
-export class StatusCodeDistributionComponent implements OnInit {
+export class LabelHealthComponent implements OnInit {
 
   @Input() statusCodes: StatusCodes[];
+  @Input() responseFailures: ResponseMessageFailures[]
+  @Input() labelName: string;
   Highcharts: typeof Highcharts = Highcharts;
   labelChartOption;
   updateFlag = false;
@@ -44,5 +46,10 @@ export class StatusCodeDistributionComponent implements OnInit {
 
 export interface StatusCodes {
   statusCode: number;
+  count: number;
+}
+
+export interface ResponseMessageFailures {
+  responseMessage: number;
   count: number;
 }

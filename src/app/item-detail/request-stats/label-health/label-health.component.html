@@ -1,0 +1,61 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Label Health - {{labelName}}</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-body">
+
+      <div class="card card-shadow border-0" *ngIf="labelChartOption">
+        <h6 class="card-header bg-white border-0">Response Codes</h6>
+
+        <div class="card-body">
+          <div *ngIf="labelChartOption">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="labelChartOption" [(update)]="updateFlag"
+              [constructorType]="chartConstructor" [callbackFunction]="chartCallback"
+              style="width: auto; height: 400px; display: block;"></highcharts-chart>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="card card-shadow  border-0 response-failures" *ngIf="responseFailures && responseFailures.length > 0">
+        <h6 class="card-header bg-white border-0">Response Message Failures</h6>
+        <div class="card-body">
+          <div class="labels-detail table-responsive">
+            <table class="table" [mfData]="responseFailures" #mf="mfDataTable">
+              <thead>
+                <tr>
+                  <th scope="col" class="hd jtl-head-color">
+                    <mfDefaultSorter by="responseMessage">response failure</mfDefaultSorter>
+                  </th>
+                  <th scope="col" class="hd jtl-head-color">
+                    <mfDefaultSorter by="count">occurrence</mfDefaultSorter>
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let _ of mf.data">
+                  <td>{{_.responseMessage}} </td>
+                  <td>{{_.count}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
+
+
+<a (click)="open(content)"><i class="fas fa-heartbeat icon-primary"></i></a>

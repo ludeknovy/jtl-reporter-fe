@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ItemsApiService } from '../items-api.service';
 import { ItemDetail } from '../items.service.model';
@@ -32,7 +32,7 @@ import {AnalyzeChartService} from '../analyze-chart.service';
   styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
   providers: [DecimalPipe]
 })
-export class ItemDetailComponent implements OnInit {
+export class ItemDetailComponent implements OnInit, OnDestroy {
   Highcharts: typeof Highcharts = Highcharts;
   itemData: ItemDetail = {
     overview: null,
@@ -116,6 +116,10 @@ export class ItemDetailComponent implements OnInit {
         this.activeId = 2;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.toastr.clear();
   }
 
   private calculateTotalRequests() {

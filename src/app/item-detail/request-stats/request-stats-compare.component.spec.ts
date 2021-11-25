@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { LabelErrorComponent } from '../label-error/label-error.component';
 import { LabelTrendComponent } from '../label-trend/label-trend.component';
 import { StatsCompareComponent } from '../stats-compare/stats-compare.component';
+import { LabelHealthComponent } from './label-health/label-health.component';
 
 import { RequestStatsCompareComponent } from './request-stats-compare.component';
 
@@ -22,6 +23,7 @@ describe('RequestStatsCompareComponent', () => {
         StatsCompareComponent,
         LabelErrorComponent,
         LabelTrendComponent,
+        LabelHealthComponent,
       ],
       imports: [
         DataTableModule,
@@ -55,6 +57,12 @@ describe('RequestStatsCompareComponent', () => {
         n9: 37,
         samples: 200,
         throughput: 0.17,
+        responseMessageFailures: [
+          { responseMessage: 'error', count: 1 }
+        ],
+        statusCodes: [{
+          statusCode: 200, count: 1
+        }],
       }, {
         avgResponseTime: 10,
         bytes: 758,
@@ -67,6 +75,12 @@ describe('RequestStatsCompareComponent', () => {
         n9: 37,
         samples: 200,
         throughput: 0.17,
+        responseMessageFailures: [
+          { responseMessage: 'error', count: 1 }
+        ],
+        statusCodes: [{
+          statusCode: 200, count: 1
+        }],
       },
       {
         avgResponseTime: 10,
@@ -80,7 +94,13 @@ describe('RequestStatsCompareComponent', () => {
         n9: 37,
         samples: 200,
         throughput: 0.17,
-      }, ]
+        responseMessageFailures: [
+          { responseMessage: 'error', count: 1 }
+        ],
+        statusCodes: [{
+          statusCode: 200, count: 1
+        }],
+      },]
     };
     fixture.detectChanges();
   });

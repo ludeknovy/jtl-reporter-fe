@@ -100,7 +100,7 @@ describe('RequestStatsCompareComponent', () => {
         statusCodes: [{
           statusCode: 200, count: 1
         }],
-      },]
+      }, ]
     };
     fixture.detectChanges();
   });

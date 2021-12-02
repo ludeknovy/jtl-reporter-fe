@@ -45,11 +45,7 @@ export class LabelHealthComponent implements OnInit {
   }
 
   private isBellowPrecisionError() {
-    const numberOfFailures = this.responseFailures.reduce((acc, nextValue) => {
-      acc += nextValue.count;
-      return acc;
-    }, 0);
-    return this.errorRate === 0 && numberOfFailures > 0;
+    return this.errorRate === 0 && this.responseFailures.length > 0;
   }
 
 }

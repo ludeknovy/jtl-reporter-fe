@@ -66,6 +66,7 @@ import { ScenarioTrendsComponent } from './scenario/scenario-trends/scenario-tre
 import { RequestStatsCompareComponent } from './item-detail/request-stats/request-stats-compare.component';
 import { InitUserComponent } from './init-user/init-user.component';
 import { LabelHealthComponent } from './item-detail/request-stats/label-health/label-health.component';
+import { ZeroErrorToleranceWarningComponent } from './item-detail/zero-error-tolerance-warning/zero-error-tolerance-warning.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -153,6 +154,7 @@ const appRoutes: Routes = [
     RequestStatsCompareComponent,
     InitUserComponent,
     LabelHealthComponent,
+    ZeroErrorToleranceWarningComponent,
   ],
   imports: [
     RouterModule.forRoot(

@@ -25,6 +25,7 @@ export class SettingsScenarioComponent implements OnInit {
     errorRate: null,
     throughput: null,
     enabled: null,
+    zeroErrorToleranceEnabled: null,
   };
 
   params;
@@ -70,6 +71,9 @@ export class SettingsScenarioComponent implements OnInit {
     this.formControls.analysisEnabled = new FormControl(settings.analysisEnabled, [
       Validators.required
     ]);
+    this.formControls.zeroErrorToleranceEnabled = new FormControl(settings.zeroErrorToleranceEnabled, [
+      Validators.required
+    ]);
   }
 
   createForm() {
@@ -79,7 +83,8 @@ export class SettingsScenarioComponent implements OnInit {
       thresholdPercentile: this.formControls.percentile,
       thresholdEnabled: this.formControls.enabled,
       thresholdThroughput: this.formControls.throughput,
-      thresholdErrorRate: this.formControls.errorRate
+      thresholdErrorRate: this.formControls.errorRate,
+      zeroErrorToleranceEnabled: this.formControls.zeroErrorToleranceEnabled,
     });
   }
 
@@ -93,12 +98,13 @@ export class SettingsScenarioComponent implements OnInit {
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
-        thresholdPercentile, thresholdThroughput } = this.scenarioSettingsForm.value;
+        thresholdPercentile, thresholdThroughput, zeroErrorToleranceEnabled } = this.scenarioSettingsForm.value;
       const { projectName, scenarioName: currentScenarioName } = this.params;
 
       const body = {
         scenarioName,
         analysisEnabled,
+        zeroErrorToleranceEnabled,
         thresholds: {
           enabled: thresholdEnabled,
           errorRate:  parseFloat(thresholdErrorRate),

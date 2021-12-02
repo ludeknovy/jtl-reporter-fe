@@ -6,6 +6,7 @@ import { ProjectOverview, Items } from '../items.service.model';
 import { ItemsService } from '../items.service';
 import { SharedMainBarService } from '../shared-main-bar.service';
 import { ScenarioService } from '../scenario.service';
+import {ScenarioApiService} from '../scenario-api.service';
 
 const LIMIT = 15;
 const OFFSET = 15;
@@ -26,10 +27,12 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   currentProcessingItems = [];
   processingItems;
   subscription: Subscription;
+  zeroErrorToleranceEnabled: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private scenarioService: ScenarioService,
+    private scenarioApiService: ScenarioApiService,
     private itemsService: ItemsService,
     private router: Router,
     private sharedMainBarService: SharedMainBarService,
@@ -50,6 +53,9 @@ export class ScenarioComponent implements OnInit, OnDestroy {
         this.sharedMainBarService.setProjectName(this.params.projectName);
         this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
         this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
+        this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
+          this.zeroErrorToleranceEnabled = _.zeroErrorToleranceEnabled;
+        });
         this.itemsService.processingItemsInterval(this.params.projectName, this.params.scenarioName);
         return new Observable().pipe(catchError(err => of([])));
       })
@@ -88,5 +94,9 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   updateScenarioName(scenarioName: string) {
     this.router.navigate(
       ['.', 'project', this.params.projectName, 'scenario', scenarioName, 'items'] );
+  }
+
+  showZeroErrorToleranceWarning(errorCount) {
+    return errorCount && errorCount > 0 && this.zeroErrorToleranceEnabled;
   }
 }

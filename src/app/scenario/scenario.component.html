@@ -113,7 +113,9 @@
                               class="far fa-circle text-secondary status-icon"></i></span>
 
                           <i *ngIf="_.thresholdPassed === false"
-                            class="fas fa-exclamation-circle text-alizarin performance-issue"></i>
+                            class="fas fa-exclamation-circle text-alizarin issue"></i>
+                          <i *ngIf="showZeroErrorToleranceWarning(_.errorCount)" placement="bottom"
+                             ngbTooltip="Errors occurred during the test run"><i class="fas fa-bug text-alizarin issue"></i></i>
 
                         </td>
                         <td class="text-right">

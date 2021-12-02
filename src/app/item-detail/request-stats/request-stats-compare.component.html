@@ -123,10 +123,7 @@
                 [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate}}</span>
             </td>
             <td>
-              <app-label-error *ngIf="!isAnonymous && _.errorRate > 0 && hasErrorsAttachment"
-                [labelInput]="{ labelName: _.label, params: params}"></app-label-error>
-
-                <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label">
+                <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label" [errorRate]="_.errorRate">
               </app-label-health>
             </td>
             <td>

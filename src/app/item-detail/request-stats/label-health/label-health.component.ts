@@ -15,10 +15,12 @@ export class LabelHealthComponent implements OnInit {
   @Input() statusCodes: StatusCodes[];
   @Input() responseFailures: ResponseMessageFailures[];
   @Input() labelName: string;
+  @Input() errorRate: number;
   Highcharts: typeof Highcharts = Highcharts;
   labelChartOption;
   updateFlag = false;
   chartConstructor = 'chart';
+  showBelowPrecisionWarning = false
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
         chart.reflow();
@@ -28,10 +30,10 @@ export class LabelHealthComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-  ) {
-   }
+  ) { }
 
   ngOnInit() {
+    this.showBelowPrecisionWarning = this.isBellowPrecisionError();
   }
 
   open(content) {
@@ -40,6 +42,14 @@ export class LabelHealthComponent implements OnInit {
 
     this.labelChartOption = statusCodesChart(this.statusCodes);
     this.updateFlag = true;
+  }
+
+  private isBellowPrecisionError() {
+    const numberOfFailures = this.responseFailures.reduce((acc, nextValue) => {
+      acc += nextValue.count;
+      return acc;
+    }, 0);
+    return this.errorRate === 0 && numberOfFailures > 0;
   }
 
 }

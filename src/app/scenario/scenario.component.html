@@ -49,10 +49,10 @@
                     <thead>
                       <tr>
                         <th scope="col" class="jtl-head vu">
-                          <mfDefaultSorter by="maxVu">virtual users</mfDefaultSorter>
+                          <mfDefaultSorter by="overview.maxVu">virtual users</mfDefaultSorter>
                         </th>
                         <th scope="col" class="jtl-head duration">
-                          <mfDefaultSorter by="duration">duration</mfDefaultSorter>
+                          <mfDefaultSorter by="overview.duration">duration</mfDefaultSorter>
                         </th>
                         <th scope="col" class="jtl-head environment">
                           <mfDefaultSorter by="environment">environment</mfDefaultSorter>
@@ -86,10 +86,10 @@
                     <tbody *ngIf="items.data.length > 0">
                       <tr *ngFor="let _ of mf.data">
                         <td (click)="open(_.id)">
-                          {{_.maxVu}}
+                          {{_.overview.maxVu}}
                         </td>
                         <td (click)="open(_.id)">
-                          {{_.duration}}
+                          {{_.overview.duration}}
                         </td>
                         <td class="ellipsis-environment" (click)="open(_.id)">
                           {{_.environment}}
@@ -114,8 +114,12 @@
 
                           <i *ngIf="_.thresholdPassed === false"
                             class="fas fa-exclamation-circle text-alizarin issue"></i>
-                          <i *ngIf="showZeroErrorToleranceWarning(_.errorCount)" placement="bottom"
+                          <i *ngIf="showZeroErrorToleranceWarning(_.errorCount, _.overview.errorRate) === true" placement="bottom"
                              ngbTooltip="Errors occurred during the test run"><i class="fas fa-bug text-alizarin issue"></i></i>
+                          <i *ngIf="!showZeroErrorToleranceWarning(_.errorCount, _.overview.errorRate)" placement="bottom"
+                             ngbTooltip="No errors were detected"><i class="fas fa-check-square text-success issue"></i></i>
+                          <i *ngIf="showZeroErrorToleranceWarning(_.errorCount, _.overview.errorRate) === 'unknown'" placement="bottom"
+                          ngbTooltip="Not all required data are available"><i class="far fa-question-circle issue"></i></i>
 
                         </td>
                         <td class="text-right">

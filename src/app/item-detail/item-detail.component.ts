@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ItemsApiService } from '../items-api.service';
-import { ItemDetail } from '../items.service.model';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { DecimalPipe } from '@angular/common';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {ItemsApiService} from '../items-api.service';
+import {ItemDetail} from '../items.service.model';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {DecimalPipe} from '@angular/common';
 import * as Highcharts from 'highcharts';
 import exporting from 'highcharts/modules/exporting';
 
@@ -16,15 +16,16 @@ import {
   networkLineSettings,
   commonGraphSettings,
 } from '../graphs/item-detail';
-import { catchError, withLatestFrom } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { SharedMainBarService } from '../shared-main-bar.service';
-import { ToastrService } from 'ngx-toastr';
-import { bytesToMbps } from './calculations';
-import { logScaleButton } from '../graphs/log-scale-button';
-import { ItemStatusValue } from './item-detail.model';
+import {catchError, withLatestFrom} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {SharedMainBarService} from '../shared-main-bar.service';
+import {ToastrService} from 'ngx-toastr';
+import {bytesToMbps} from './calculations';
+import {logScaleButton} from '../graphs/log-scale-button';
+import {ItemStatusValue} from './item-detail.model';
 import {Metrics} from './metrics';
 import {AnalyzeChartService} from '../analyze-chart.service';
+import {showZeroErrorWarning} from '../utils/showZeroErrorTolerance';
 
 @Component({
   selector: 'app-item-detail',
@@ -44,9 +45,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     hostname: null,
     statistics: [],
     testName: null,
-    monitoring: { cpu: {
-      max: 0, data: []
-    } },
+    monitoring: {
+      cpu: {
+        max: 0, data: []
+      }
+    },
     analysisEnabled: null,
     zeroErrorToleranceEnabled: null,
   };
@@ -99,7 +102,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.itemParams.projectName,
       this.itemParams.scenarioName,
       this.itemParams.id,
-      { token: this.token }
+      {token: this.token}
     )
       .pipe(catchError(r => {
         this.spinner.hide();
@@ -130,21 +133,22 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   private getChartLines() {
-    const { threads, overallTimeResponse,
+    const {
+      threads, overallTimeResponse,
       overallThroughput, overAllFailRate, overAllNetworkV2,
       responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
       percentile95, percentile99,
     } = this.itemData.plot;
 
-    const threadLine = { ...threadLineSettings, name: 'virtual users', data: threads };
-    const errorLine = { ...errorLineSettings, ...overAllFailRate };
-    const throughputLine = { ...throughputLineSettings, ...overallThroughput };
+    const threadLine = {...threadLineSettings, name: 'virtual users', data: threads};
+    const errorLine = {...errorLineSettings, ...overAllFailRate};
+    const throughputLine = {...throughputLineSettings, ...overallThroughput};
 
     if (overAllNetworkV2) {
       const networkMbps = overAllNetworkV2.data.map((_) => {
         return [_[0], bytesToMbps(_[1])];
       });
-      const networkLine = { ...networkLineSettings, data: networkMbps };
+      const networkLine = {...networkLineSettings, data: networkMbps};
       this.chartLines.overall.set(Metrics.Network, networkLine);
     }
 
@@ -168,31 +172,31 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
     if (minResponseTime) {
       this.chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime);
-      this.labelCharts.set(Metrics.ResponseTimeMin, { ...commonGraphSettings('ms'), series: [...minResponseTime, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeMin, {...commonGraphSettings('ms'), series: [...minResponseTime, ...threadLine]});
     }
     if (maxResponseTime) {
       this.chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime);
-      this.labelCharts.set(Metrics.ResponseTimeMax, { ...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeMax, {...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine]});
     }
     if (percentile90) {
       this.chartLines.labels.set(Metrics.ResponseTimeP90, percentile90);
-      this.labelCharts.set(Metrics.ResponseTimeP90, { ...commonGraphSettings('ms'), series: [...percentile90, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP90, {...commonGraphSettings('ms'), series: [...percentile90, ...threadLine]});
     }
     if (percentile95) {
       this.chartLines.labels.set(Metrics.ResponseTimeP95, percentile95);
-      this.labelCharts.set(Metrics.ResponseTimeP95, { ...commonGraphSettings('ms'), series: [...percentile95, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP95, {...commonGraphSettings('ms'), series: [...percentile95, ...threadLine]});
     }
     if (percentile99) {
       this.chartLines.labels.set(Metrics.ResponseTimeP99, percentile99);
-      this.labelCharts.set(Metrics.ResponseTimeP99, { ...commonGraphSettings('ms'), series: [...percentile99, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP99, {...commonGraphSettings('ms'), series: [...percentile99, ...threadLine]});
     }
 
     this.chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime);
-    this.labelCharts.set(Metrics.ResponseTimeAvg, { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine]});
+    this.labelCharts.set(Metrics.ResponseTimeAvg, {...commonGraphSettings('ms'), series: [...responseTime, ...threadLine]});
 
 
     this.chartLines.labels.set(Metrics.Throughput, throughput);
-    this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
+    this.labelCharts.set(Metrics.Throughput, {...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
   }
 
   private generateCharts() {
@@ -204,7 +208,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     };
   }
 
-  itemDetailChanged({ note, environment, hostname }) {
+  itemDetailChanged({note, environment, hostname}) {
     this.itemData.note = note;
     this.itemData.environment = environment;
     this.itemData.hostname = hostname;
@@ -212,7 +216,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   monitoringAlerts() {
     const alertMessages = [];
-    const { max: maxCpu } = this.itemData.monitoring.cpu;
+    const {max: maxCpu} = this.itemData.monitoring.cpu;
     if (maxCpu > 90) {
       alertMessages.push(`High CPU usage`);
     }
@@ -235,7 +239,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleThroughputBand({ element, perfAnalysis }) {
+  toggleThroughputBand({element, perfAnalysis}) {
     this.overallChartOptions.series.forEach(serie => {
       if (['response time', 'errors'].includes(serie.name)) {
         serie.visible = this.toggleThroughputBandFlag;
@@ -272,11 +276,15 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     return bytesToMbps(bytes);
   }
 
-  showZeroErrorTolerationWarning(): boolean {
-    return this.itemData.zeroErrorToleranceEnabled && this.itemData.overview.errorCount > 0;
+  showZeroErrorToleranceWarning(): boolean | string {
+    if (this.itemData.zeroErrorToleranceEnabled) {
+      return showZeroErrorWarning(this.itemData.overview.errorRate,
+        this.itemData.overview.errorCount);
+    }
+    return false;
   }
 
-  focusOnLabel($event: { label: string, metrics: Metrics[]}) {
+  focusOnLabel($event: { label: string, metrics: Metrics[] }) {
     this.activeId = 2;
     this.performanceAnalysisLines = $event;
     this.externalSearchTerm = $event.label;

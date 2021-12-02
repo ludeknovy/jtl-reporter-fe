@@ -5,6 +5,7 @@ export interface ItemsListing {
   environment: string;
   startTime: string;
   status: string;
+  overview: ItemOverview;
 }
 
 export interface Items {
@@ -20,18 +21,7 @@ export enum ReportStatus {
 }
 
 export interface ItemDetail {
-  overview: {
-    avgLatency: number
-    avgResponseTime: number
-    duration: number
-    endDate: string
-    errorRate: number
-    maxVu: number
-    percentil: number
-    startDate: string
-    throughput: number
-    errorCount?: number
-  };
+  overview: ItemOverview;
   analysisEnabled: boolean;
   zeroErrorToleranceEnabled: boolean;
   reportStatus: ReportStatus;
@@ -55,6 +45,19 @@ export interface ItemDetail {
   };
 }
 
+interface ItemOverview {
+  avgLatency: number;
+  avgResponseTime: number;
+  duration: number;
+  endDate: string;
+  errorRate: number;
+  maxVu: number;
+  percentil: number;
+  startDate: string;
+  throughput: number;
+  errorCount?: number;
+}
+
 export interface ItemDataPlot {
   responseTime: LabelSeries[];
   minResponseTime: LabelSeries[];
@@ -62,7 +65,7 @@ export interface ItemDataPlot {
   throughput: LabelSeries[];
   networkV2: LabelSeries[];
   networkUp: LabelSeries[];
-  networkDown:  LabelSeries[];
+  networkDown: LabelSeries[];
   percentile90?: LabelSeries[];
   percentile95?: LabelSeries[];
   percentile99?: LabelSeries[];

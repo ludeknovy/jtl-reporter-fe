@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="row" *ngIf="itemData.analysisEnabled">
+      <div class="row" *ngIf="showZeroErrorTolerationWarning()">
         <div class="col">
           <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
         </div>

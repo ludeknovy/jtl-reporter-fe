@@ -48,6 +48,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       max: 0, data: []
     } },
     analysisEnabled: null,
+    zeroErrorToleranceEnabled: null,
   };
   overallChartOptions;
   updateChartFlag = false;
@@ -269,6 +270,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   convertBytesToMbps(bytes) {
     return bytesToMbps(bytes);
+  }
+
+  showZeroErrorTolerationWarning(): boolean {
+    return this.itemData.zeroErrorToleranceEnabled && this.itemData.overview.errorCount > 0;
   }
 
   focusOnLabel($event: { label: string, metrics: Metrics[]}) {

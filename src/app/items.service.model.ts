@@ -30,8 +30,10 @@ export interface ItemDetail {
     percentil: number
     startDate: string
     throughput: number
+    errorCount?: number
   };
   analysisEnabled: boolean;
+  zeroErrorToleranceEnabled: boolean;
   reportStatus: ReportStatus;
   monitoring: {
     cpu: { data: { name: string, cpu: number, timestamp: number }[], max?: number }
@@ -90,6 +92,12 @@ export interface ItemStatistics {
   n9: number;
   samples: number;
   throughput: number;
+  responseMessageFailures?: ResponseMessageFailure[];
+}
+
+interface ResponseMessageFailure {
+  count: number;
+  responseMessage: string;
 }
 
 interface MonitoringData {

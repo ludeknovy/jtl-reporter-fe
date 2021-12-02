@@ -20,7 +20,7 @@ export class LabelHealthComponent implements OnInit {
   labelChartOption;
   updateFlag = false;
   chartConstructor = 'chart';
-  showBelowPrecisionWarning = false
+  showBelowPrecisionWarning = false;
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
         chart.reflow();

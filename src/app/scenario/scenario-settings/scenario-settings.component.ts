@@ -26,6 +26,7 @@ export class SettingsScenarioComponent implements OnInit {
     throughput: null,
     enabled: null,
     zeroErrorToleranceEnabled: null,
+    deleteSamples: null,
   };
 
   params;
@@ -74,6 +75,9 @@ export class SettingsScenarioComponent implements OnInit {
     this.formControls.zeroErrorToleranceEnabled = new FormControl(settings.zeroErrorToleranceEnabled, [
       Validators.required
     ]);
+    this.formControls.deleteSamples = new FormControl(settings.deleteSamples, [
+      Validators.required
+    ]);
   }
 
   createForm() {
@@ -85,6 +89,7 @@ export class SettingsScenarioComponent implements OnInit {
       thresholdThroughput: this.formControls.throughput,
       thresholdErrorRate: this.formControls.errorRate,
       zeroErrorToleranceEnabled: this.formControls.zeroErrorToleranceEnabled,
+      deleteSamples: this.formControls.deleteSamples,
     });
   }
 
@@ -98,13 +103,14 @@ export class SettingsScenarioComponent implements OnInit {
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
-        thresholdPercentile, thresholdThroughput, zeroErrorToleranceEnabled } = this.scenarioSettingsForm.value;
+        thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled } = this.scenarioSettingsForm.value;
       const { projectName, scenarioName: currentScenarioName } = this.params;
 
       const body = {
         scenarioName,
         analysisEnabled,
         zeroErrorToleranceEnabled,
+        deleteSamples,
         thresholds: {
           enabled: thresholdEnabled,
           errorRate:  parseFloat(thresholdErrorRate),

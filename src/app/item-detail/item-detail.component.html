@@ -15,7 +15,6 @@
           <app-edit-item *ngIf="itemData.environment"
             [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
             (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
-          <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
           <app-share [params]=itemParams></app-share>
           <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
         </div>
@@ -61,20 +60,24 @@
         </div>
       </div>
 
+      <div class="row" *ngIf="showZeroErrorToleranceWarning() === true">
+        <div class="col">
+          <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
+        </div>
+      </div>
 
       <div class="row" *ngIf="itemData.analysisEnabled">
         <div class="col">
           <app-performance-analysis [itemData]="itemData" [labelsChartLines]="chartLines.labels" (overallChartChange)="toggleThroughputBand($event)">
           </app-performance-analysis>
         </div>
-
       </div>
 
       <div class="row">
         <div class="col-sm">
-          <div class="card">
-            <div class="card-body performance-overview-card card-shadow">
-
+          <div class="card card-shadow">
+            <h6 class="card-header bg-white border-0">Overview <span class="total-samples"> requests: {{totalRequests | number}}</span></h6>
+            <div class="card-body performance-overview-card">
               <div class="row">
                 <div class="col-sm" *ngIf="itemData.topMetricsSettings.virtualUsers">
                   <div class="card">
@@ -232,17 +235,13 @@
 
 
 
-        <div class="col-sm" *ngIf="itemData.monitoringData.cpu.length > 0">
+        <div class="col-sm" *ngIf="itemData.monitoring.cpu.data.length > 0">
           <div class="date top">
             <span class="text-secondary">max cpu usage:</span>
-            <span class="small-text">{{itemData.monitoringData.maxCpu}}%</span>
-          </div>
-          <div class="date" *ngIf="itemData.status">
-            <span class="text-secondary">max memory usage:</span>
-            <span class="small-text">{{itemData.monitoringData.maxMem}}%</span>
+            <span class="small-text">{{itemData.monitoring.cpu.max}}%</span>
           </div>
           <div class="date">
-            <app-monitoring-stats [data]="itemData.monitoringData">
+            <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
             </app-monitoring-stats>
           </div>
         </div>

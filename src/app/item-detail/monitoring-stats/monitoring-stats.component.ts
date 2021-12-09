@@ -26,21 +26,31 @@ export class MonitoringStatsComponent implements OnInit {
     };
   }
 
-  @Input() data: any;
+  @Input() data: [{ name: string, timestamp: Date, avgCpu: number, avgMem: number }];
 
   ngOnInit() {
   }
 
 
   open(content) {
-    // @ts-ignore
     this.modalService.open(content, { size: 'xl' }).result
       .then((_) => { this.monitoringChartOptions = null; }, () => { this.monitoringChartOptions = null; });
 
+    const workers = Array.from(new Set(this.data.map(data => data.name)));
+    const series = workers.map((worker) => this.data
+      .filter(data => data.name === worker)
+      .reduce((acc, current) => {
+        acc.data.cpu.push([current.timestamp, current.avgCpu]);
+        acc.data.mem.push([current.timestamp, current.avgMem]);
+        acc.name = current.name;
+        return acc;
+      }, { data: { cpu: [], mem: [] }, name: null }))
+      .map((worker) => [{ data: worker.data.cpu, name: worker.name + ' - cpu' }, { data: worker.data.mem, name: worker.name + ' - mem' }])
+      .flat();
+
     from(new Promise(resolve => setTimeout(resolve, 50))).subscribe((val: any) => {
       this.monitoringChartOptions = {
-        ...monitoringGraphSettings(), series: [
-          { data: this.data.cpu, name: 'cpu' }, { data: this.data.mem, name: 'mem' }]
+        ...monitoringGraphSettings(), series: series
       };
       this.updateFlag = true;
     });

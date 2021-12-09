@@ -70,6 +70,9 @@ export class DeleteItemComponent implements OnInit {
             }
             this.itemApiService.setData(message);
             this.redirect();
+          } else {
+            const message = this.notification.itemDeleted(_);
+            this.itemApiService.setData(message);
           }
         });
       this.myform.reset();

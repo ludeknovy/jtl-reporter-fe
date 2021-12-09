@@ -27,7 +27,6 @@ import { SettingsScenarioComponent } from './scenario/scenario-settings/scenario
 import { DeleteScenarioComponent } from './scenario/delete-scenario/delete-scenario.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StatsCompareComponent } from './item-detail/stats-compare/stats-compare.component';
-import { AttachementsComponent } from './item-detail/attachements/attachements.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -64,6 +63,10 @@ import { AnalyzeChartsComponent } from './item-detail/analyze-charts/analyze-cha
 import { AddMetricComponent } from './item-detail/analyze-charts/add-metric/add-metric.component';
 import { ScenarioTrendsComponent } from './scenario/scenario-trends/scenario-trends.component';
 import { ProjectSettingsComponent } from './project/project-settings/project-settings.component';
+import { RequestStatsCompareComponent } from './item-detail/request-stats/request-stats-compare.component';
+import { InitUserComponent } from './init-user/init-user.component';
+import { LabelHealthComponent } from './item-detail/request-stats/label-health/label-health.component';
+import { ZeroErrorToleranceWarningComponent } from './item-detail/zero-error-tolerance-warning/zero-error-tolerance-warning.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -93,6 +96,7 @@ const appRoutes: Routes = [
     runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'init', component: InitUserComponent }
 ];
 
 
@@ -119,7 +123,6 @@ const appRoutes: Routes = [
     SettingsScenarioComponent,
     DeleteScenarioComponent,
     StatsCompareComponent,
-    AttachementsComponent,
     ControlPanelComponent,
     BreadcrumbComponent,
     LabelTrendComponent,
@@ -148,6 +151,10 @@ const appRoutes: Routes = [
     AddMetricComponent,
     ScenarioTrendsComponent,
     ProjectSettingsComponent,
+    RequestStatsCompareComponent,
+    InitUserComponent,
+    LabelHealthComponent,
+    ZeroErrorToleranceWarningComponent,
   ],
   imports: [
     RouterModule.forRoot(

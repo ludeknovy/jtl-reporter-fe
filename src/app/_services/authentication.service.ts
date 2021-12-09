@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ApiKey } from './api-token.model';
 
 
 @Injectable({
@@ -34,6 +33,10 @@ export class AuthenticationService {
 
   changePassword(body): Observable<any> {
     return this.http.post<any>('auth/change-password', body, { observe: 'response'});
+  }
+
+  initUser(body) {
+    return this.http.post('auth/initialize-user', body);
   }
 
   setLogin (value) {

@@ -34,7 +34,7 @@ export class ScenarioTrendsComponent implements OnInit {
       ['throughput', { name: Series.Throughput, yAxis: 2, onLoad: true, color: 'rgb(41,128,187, 0.8)' }],
       ['maxVu', { name: 'vu', yAxis: 1, onLoad: true, type: 'spline', color: 'grey' }],
       ['errorRate', { name: Series.ErrorRate, yAxis: 3, onLoad: true, color: 'rgb(231,76,60, 0.8)' }],
-      ['bytesPerSecond', { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform }]
+      ['network', { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform }],
     ]);
   }
 

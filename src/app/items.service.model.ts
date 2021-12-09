@@ -5,6 +5,7 @@ export interface ItemsListing {
   environment: string;
   startTime: string;
   status: string;
+  overview: ItemOverview;
 }
 
 export interface Items {
@@ -20,20 +21,13 @@ export enum ReportStatus {
 }
 
 export interface ItemDetail {
-  overview: {
-    avgLatency: number
-    avgResponseTime: number
-    duration: number
-    endDate: string
-    errorRate: number
-    maxVu: number
-    percentil: number
-    startDate: string
-    throughput: number
-  };
+  overview: ItemOverview;
   analysisEnabled: boolean;
+  zeroErrorToleranceEnabled: boolean;
   reportStatus: ReportStatus;
-  monitoringData: { cpu: [], mem: [], maxCpu?: number, maxMem?: number };
+  monitoring: {
+    cpu: { data: { name: string, cpu: number, timestamp: number }[], max?: number }
+  };
   baseId: string;
   testName: string;
   note: string;
@@ -41,7 +35,6 @@ export interface ItemDetail {
   environment: string;
   plot: ItemDataPlot;
   statistics: ItemStatistics[];
-  attachements: [];
   thresholds?: {
     passed: boolean,
     diff: {
@@ -78,6 +71,19 @@ interface ItemOverview {
   errorCount?: number;
 }
 
+interface ItemOverview {
+  avgLatency: number;
+  avgResponseTime: number;
+  duration: number;
+  endDate: string;
+  errorRate: number;
+  maxVu: number;
+  percentil: number;
+  startDate: string;
+  throughput: number;
+  errorCount?: number;
+}
+
 export interface ItemDataPlot {
   responseTime: LabelSeries[];
   minResponseTime: LabelSeries[];
@@ -85,7 +91,7 @@ export interface ItemDataPlot {
   throughput: LabelSeries[];
   networkV2: LabelSeries[];
   networkUp: LabelSeries[];
-  networkDown:  LabelSeries[];
+  networkDown: LabelSeries[];
   percentile90?: LabelSeries[];
   percentile95?: LabelSeries[];
   percentile99?: LabelSeries[];
@@ -115,6 +121,12 @@ export interface ItemStatistics {
   n9: number;
   samples: number;
   throughput: number;
+  responseMessageFailures?: ResponseMessageFailure[];
+}
+
+interface ResponseMessageFailure {
+  count: number;
+  responseMessage: string;
 }
 
 interface MonitoringData {

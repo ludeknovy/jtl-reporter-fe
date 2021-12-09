@@ -111,14 +111,13 @@
                               class="fas fa-minus-circle text-danger status-icon"></i></span>
                           <span *ngIf="_.status === '10'" title="Status not set"><i
                               class="far fa-circle text-secondary status-icon"></i></span>
-
                           <i *ngIf="_.thresholdPassed === false"
                             class="fas fa-exclamation-circle text-alizarin issue"></i>
-                          <i *ngIf="showZeroErrorToleranceWarning(_.errorCount, _.overview.errorRate) === true" placement="bottom"
+                          <i *ngIf="zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === true" placement="bottom"
                              ngbTooltip="Errors occurred during the test run"><i class="fas fa-bug text-alizarin issue"></i></i>
-                          <i *ngIf="!showZeroErrorToleranceWarning(_.errorCount, _.overview.errorRate)" placement="bottom"
+                          <i *ngIf="zeroErrorToleranceEnabled && !showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate)" placement="bottom"
                              ngbTooltip="No errors were detected"><i class="fas fa-check-square text-success issue"></i></i>
-                          <i *ngIf="showZeroErrorToleranceWarning(_.errorCount, _.overview.errorRate) === 'unknown'" placement="bottom"
+                          <i *ngIf="zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === 'unknown'" placement="bottom"
                           ngbTooltip="Not all required data are available"><i class="far fa-question-circle issue"></i></i>
 
                         </td>

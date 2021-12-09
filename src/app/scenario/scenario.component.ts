@@ -98,10 +98,8 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   }
 
   showZeroErrorToleranceWarning(errorCount, errorRate) {
-    if (this.zeroErrorToleranceEnabled) {
-      return showZeroErrorWarning(errorRate, errorCount);
-    }
-    return false;
+    return showZeroErrorWarning(errorRate, errorCount);
+
   }
 
 

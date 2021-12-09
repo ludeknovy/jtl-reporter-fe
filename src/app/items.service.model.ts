@@ -50,6 +50,32 @@ export interface ItemDetail {
       throughputRateDiff: number
     }
   };
+  topMetricsSettings: TopMetricsSettings;
+}
+
+interface TopMetricsSettings {
+  errorRate: boolean;
+  virtualUsers: boolean;
+  throughput: boolean;
+  network: boolean;
+  avgResponseTime: boolean;
+  avgConnectionTime: boolean;
+  avgLatency: boolean;
+  percentile: boolean;
+}
+
+interface ItemOverview {
+  avgLatency: number;
+  avgConnect: number;
+  avgResponseTime: number;
+  duration: number;
+  endDate: string;
+  errorRate: number;
+  maxVu: number;
+  percentil: number;
+  startDate: string;
+  throughput: number;
+  errorCount?: number;
 }
 
 export interface ItemDataPlot {

@@ -47,6 +47,8 @@ export class ItemDetailComponent implements OnInit {
     attachements: [],
     monitoringData: { mem: [], maxCpu: 0, maxMem: 0, cpu: [] },
     analysisEnabled: null,
+    zeroErrorToleranceEnabled: null,
+    topMetricsSettings: null
   };
   overallChartOptions;
   updateChartFlag = false;

@@ -17,7 +17,6 @@ import { ProjectsAdministrationComponent } from './administration/projects/admin
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { DataTableModule } from '@rushvora/ng-datatable';
 import { AddNewProjectComponent } from './administration/projects/add-project/add-project-modal.component';
-import { EditProjectComponent } from './administration/projects/edit-project/edit-project.component';
 import { DeleteProjectComponent } from './administration/projects/delete-project/delete-project.component';
 import { DeleteItemComponent } from './item-detail/delete-item/delete-item.component';
 import { ProjectComponent } from './project/project.component';
@@ -64,7 +63,7 @@ import { LabelChartComponent } from './item-detail/label-chart/label-chart.compo
 import { AnalyzeChartsComponent } from './item-detail/analyze-charts/analyze-charts.component';
 import { AddMetricComponent } from './item-detail/analyze-charts/add-metric/add-metric.component';
 import { ScenarioTrendsComponent } from './scenario/scenario-trends/scenario-trends.component';
-import { RequestStatsCompareComponent } from './item-detail/request-stats-compare/request-stats-compare.component';
+import { ProjectSettingsComponent } from './project/project-settings/project-settings.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -112,7 +111,6 @@ const appRoutes: Routes = [
     EditItemComponent,
     ProjectsAdministrationComponent,
     TimeAgoPipe,
-    EditProjectComponent,
     DeleteProjectComponent,
     DeleteItemComponent,
     ProjectComponent,
@@ -149,7 +147,7 @@ const appRoutes: Routes = [
     AnalyzeChartsComponent,
     AddMetricComponent,
     ScenarioTrendsComponent,
-    RequestStatsCompareComponent,
+    ProjectSettingsComponent,
   ],
   imports: [
     RouterModule.forRoot(

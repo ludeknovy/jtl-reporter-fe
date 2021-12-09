@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ProjectsListing, NewProjectBody } from './project-api.service.model';
 import { ItemsListing, IScenarios, ProjectsOverallStats } from './items.service.model';
@@ -28,12 +28,16 @@ export class ProjectApiService {
     return this.http.get<ItemsListing[]>('projects/latest-items');
   }
 
+  getProject(projectName): Observable<any> {
+    return this.http.get(`projects/${projectName}`, { observe: 'response' });
+  }
+
   deleteProject(projectName): Observable<any> {
     return this.http.delete(`projects/${projectName}`, { observe: 'response' });
   }
 
-  updateProject(projectName, body): Observable<any> {
-    return this.http.put(`projects/${projectName}`, body, { observe: 'response' });
+  updateProject(projectName, body):  Observable<HttpResponse<any>> {
+    return this.http.put<any>(`projects/${projectName}`, body, { observe: 'response' });
   }
 
   fetchOverallStats(): Observable<ProjectsOverallStats> {

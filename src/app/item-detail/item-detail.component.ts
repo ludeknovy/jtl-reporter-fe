@@ -52,6 +52,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     },
     analysisEnabled: null,
     zeroErrorToleranceEnabled: null,
+    topMetricsSettings: null
   };
   overallChartOptions;
   updateChartFlag = false;

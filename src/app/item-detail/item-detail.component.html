@@ -40,7 +40,7 @@
     <div class="row">
       <div class="col-sm">
         <div class="alert alert-danger" role="alert">
-          An error occured during processing test report.
+          An error occurred during processing test report.
         </div>
       </div>
     </div>
@@ -79,7 +79,7 @@
             <h6 class="card-header bg-white border-0">Overview <span class="total-samples"> requests: {{totalRequests | number}}</span></h6>
             <div class="card-body performance-overview-card">
               <div class="row">
-                <div class="col-sm">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.virtualUsers">
                   <div class="card">
                     <div class="card-body overview-body">
                       <h2 class="card-title">{{itemData.overview.maxVu}}</h2>
@@ -89,7 +89,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.throughput">
                   <div class="card">
                     <div class="card-body overview-body">
                       <h2 class="card-title">{{itemData.overview.throughput > 1000 ?
@@ -105,11 +105,11 @@
                   </div>
                 </div>
 
-                <div class="col-sm">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.percentile">
                   <div class="card">
                     <div class="card-body overview-body">
                       <h2 *ngIf="itemData.overview.percentil >= 1000" class="card-title">{{
-                        Math.round((itemData.overview.percentil / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+                        Math.round((itemData.overview.percentil / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
                       <h2 *ngIf="itemData.overview.percentil < 1000" class="card-title">{{
                         itemData.overview.percentil}} <span class="unit-desc">ms</span>
@@ -119,17 +119,27 @@
                   </div>
                 </div>
 
-                <div class="col-sm">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.avgResponseTime">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <!-- locust does not provide this metrics-->
-                      <h2 *ngIf="itemData.overview.avgLatency == 0" class="card-title">
-                        n/a
+                      <h2 *ngIf="itemData.overview.avgResponseTime >= 1000" class="card-title">{{
+                        Math.round((itemData.overview.avgResponseTime / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
+                      <h2 *ngIf="itemData.overview.avgResponseTime < 1000" class="card-title">{{
+                        itemData.overview.avgResponseTime}} <span class="unit-desc">ms</span>
+                      </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Avg. Response time</div>
+                  </div>
+                </div>
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.avgLatency">
+                  <div class="card">
+                    <div class="card-body overview-body">
                       <h2 *ngIf="itemData.overview.avgLatency >= 1000" class="card-title">{{
                         Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
-                      <h2 *ngIf="itemData.overview.avgLatency < 1000 && itemData.overview.avgLatency > 0"
+                      <h2 *ngIf="itemData.overview.avgLatency < 1000"
                         class="card-title">{{
                         itemData.overview.avgLatency}} <span class="unit-desc">ms</span>
                       </h2>
@@ -141,17 +151,13 @@
                   </div>
                 </div>
 
-                <div class="col-sm" *ngIf="!itemData.overview.bytesPerSecond || itemData.overview.bytesPerSecond === 0">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.avgConnectionTime">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <!-- locust does not provide this metrics-->
-                      <h2 *ngIf="itemData.overview.avgConnect == 0" class="card-title">
-                        n/a
-                      </h2>
                       <h2 *ngIf="itemData.overview.avgConnect >= 1000" class="card-title">{{
                         Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
-                      <h2 *ngIf="itemData.overview.avgConnect < 1000 && itemData.overview.avgConnect > 0"
+                      <h2 *ngIf="itemData.overview.avgConnect < 1000"
                         class="card-title">{{
                         itemData.overview.avgConnect}} <span class="unit-desc">ms</span>
                       </h2>
@@ -163,8 +169,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm"
-                  *ngIf="itemData.overview.bytesPerSecond && itemData.overview.bytesSentPerSecond && itemData.overview.bytesPerSecond !== 0">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.network">
                   <div class="card">
                     <div class="card-body overview-body">
                       <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesPerSecond +
@@ -175,7 +180,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.errorRate">
                   <div class="card">
                     <div class="card-body overview-body">
                       <h2 class="card-title">{{itemData.overview.errorRate}} <span

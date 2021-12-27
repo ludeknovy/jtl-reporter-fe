@@ -146,6 +146,8 @@ describe('Scenario', () => {
             body: Matchers.somethingLike({
               scenarioName: 'new-scenario-name',
               analysisEnabled: true,
+              zeroErrorToleranceEnabled: true,
+              deleteSamples: false,
               thresholds: {
                 throughput: 1,
                 percentile: 1,
@@ -169,7 +171,10 @@ describe('Scenario', () => {
         const scenarioService: ScenarioApiService = TestBed.get(ScenarioApiService);
         scenarioService.updateScenario('test-project', 'test-scenario',
           {
-            scenarioName: 'new-name', analysisEnabled: true,
+            scenarioName: 'new-name',
+            analysisEnabled: true,
+            zeroErrorToleranceEnabled: true,
+            deleteSamples: false,
             thresholds: {
               throughput: 1,
               percentile: 1,

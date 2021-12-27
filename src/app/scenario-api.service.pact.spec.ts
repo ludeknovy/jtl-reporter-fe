@@ -146,6 +146,8 @@ describe('Scenario', () => {
             body: Matchers.somethingLike({
               scenarioName: 'new-scenario-name',
               analysisEnabled: true,
+              zeroErrorToleranceEnabled: true,
+              deleteSamples: false,
               thresholds: {
                 throughput: 1,
                 percentile: 1,

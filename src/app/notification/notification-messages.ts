@@ -82,13 +82,13 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, 'Thresholds were updated');
   }
 
-  private statusCodeMessage(response, succesMessgae) {
+  private statusCodeMessage(response, successMessage) {
     let message = { success: false, message: `Something went wrong` };
     if (response.status >= 200 && response.status < 300) {
-      message = { success: true, message: succesMessgae };
+      message = { success: true, message: successMessage };
     } else if (response.status === 400) {
       try {
-        message = { success: false, message: response.error.message };
+        message = { success: false, message: response.message };
       } catch (e) {
       }
     }

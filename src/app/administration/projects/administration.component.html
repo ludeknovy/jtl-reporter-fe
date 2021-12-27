@@ -47,8 +47,19 @@
                         <span>{{_.latestRun | timeAgo}}</span>
                       </td>
                       <td class="edit text-right">
-                        <app-edit-project [projectDataInput]="{ projectName: _.projectName }"></app-edit-project>
-                        <app-delete-project [projectData]="{ projectName: _.projectName }"></app-delete-project>
+                        <div class="btn-group mr-3">
+                          <div display="dynamic" container="body" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
+                               aria-label="Button group with nested dropdown">
+                            <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
+                            <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+                              <app-project-settings [projectName]="_.projectName"></app-project-settings>
+
+                              <app-delete-project [projectData]="{ projectName: _.projectName }"></app-delete-project>
+
+                            </div>
+
+                          </div>
+                        </div>
                       </td>
                     </tr>
                   </tbody>

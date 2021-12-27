@@ -2,8 +2,13 @@ export const monitoringGraphSettings: any = () => {
   return {
     chart: {
       type: 'line',
-      spacingRight: -7,
-      spacingLeft: -7
+    },
+    time: {
+      getTimezoneOffset: function (timestamp) {
+        const d = new Date();
+        const timezoneOffset = d.getTimezoneOffset();
+        return timezoneOffset;
+      }
     },
     title: {
       text: ''
@@ -42,7 +47,7 @@ export const monitoringGraphSettings: any = () => {
       lineWidth: 0,
       opposite: true,
       title: {
-        text: 'threads'
+        text: ''
       }
     }],
   };

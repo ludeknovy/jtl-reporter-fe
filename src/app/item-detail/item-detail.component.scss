@@ -269,6 +269,10 @@ thead .hd {
   border-left: 4px solid #28a745;
 }
 
+.performance-analysis-warning{
+  border-left: 4px solid #ffc107;
+}
+
 .btn-link-custom {
   font-size: 0.775rem;
   padding: 0;
@@ -308,4 +312,9 @@ thead .hd {
 .chart-fix {
   margin-right: -10px;
     margin-left: -10px;
+}
+
+.total-samples {
+  font-size: 13px;
+  font-weight: normal;
 }

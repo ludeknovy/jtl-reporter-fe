@@ -22,7 +22,6 @@ export class AddNewItemComponent implements OnInit {
   closeResult: string;
   myform: FormGroup;
   kpiFile: FormControl;
-  errorFile: FormControl;
   monitoringFile: FormControl;
   environment: FormControl;
   note: FormControl;
@@ -51,7 +50,6 @@ export class AddNewItemComponent implements OnInit {
     this.kpiFile = new FormControl('', [
       Validators.required
     ]);
-    this.errorFile = new FormControl('', []);
     this.monitoringFile = new FormControl('', []);
     this.environment = new FormControl('', [
       Validators.required,
@@ -70,7 +68,6 @@ export class AddNewItemComponent implements OnInit {
   createForm() {
     this.myform = new FormGroup({
       kpiFile: this.kpiFile,
-      errorFile: this.errorFile,
       monitoringFile: this.monitoringFile,
       environment: this.environment,
       note: this.note,

@@ -17,7 +17,6 @@ import { ProjectsAdministrationComponent } from './administration/projects/admin
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { DataTableModule } from '@rushvora/ng-datatable';
 import { AddNewProjectComponent } from './administration/projects/add-project/add-project-modal.component';
-import { EditProjectComponent } from './administration/projects/edit-project/edit-project.component';
 import { DeleteProjectComponent } from './administration/projects/delete-project/delete-project.component';
 import { DeleteItemComponent } from './item-detail/delete-item/delete-item.component';
 import { ProjectComponent } from './project/project.component';
@@ -28,7 +27,6 @@ import { SettingsScenarioComponent } from './scenario/scenario-settings/scenario
 import { DeleteScenarioComponent } from './scenario/delete-scenario/delete-scenario.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StatsCompareComponent } from './item-detail/stats-compare/stats-compare.component';
-import { AttachementsComponent } from './item-detail/attachements/attachements.component';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -64,7 +62,11 @@ import { LabelChartComponent } from './item-detail/label-chart/label-chart.compo
 import { AnalyzeChartsComponent } from './item-detail/analyze-charts/analyze-charts.component';
 import { AddMetricComponent } from './item-detail/analyze-charts/add-metric/add-metric.component';
 import { ScenarioTrendsComponent } from './scenario/scenario-trends/scenario-trends.component';
-import { RequestStatsCompareComponent } from './item-detail/request-stats-compare/request-stats-compare.component';
+import { ProjectSettingsComponent } from './project/project-settings/project-settings.component';
+import { RequestStatsCompareComponent } from './item-detail/request-stats/request-stats-compare.component';
+import { InitUserComponent } from './init-user/init-user.component';
+import { LabelHealthComponent } from './item-detail/request-stats/label-health/label-health.component';
+import { ZeroErrorToleranceWarningComponent } from './item-detail/zero-error-tolerance-warning/zero-error-tolerance-warning.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -94,6 +96,7 @@ const appRoutes: Routes = [
     runGuardsAndResolvers: 'always', canActivate: [AuthGuard]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'init', component: InitUserComponent }
 ];
 
 
@@ -112,7 +115,6 @@ const appRoutes: Routes = [
     EditItemComponent,
     ProjectsAdministrationComponent,
     TimeAgoPipe,
-    EditProjectComponent,
     DeleteProjectComponent,
     DeleteItemComponent,
     ProjectComponent,
@@ -121,7 +123,6 @@ const appRoutes: Routes = [
     SettingsScenarioComponent,
     DeleteScenarioComponent,
     StatsCompareComponent,
-    AttachementsComponent,
     ControlPanelComponent,
     BreadcrumbComponent,
     LabelTrendComponent,
@@ -149,7 +150,11 @@ const appRoutes: Routes = [
     AnalyzeChartsComponent,
     AddMetricComponent,
     ScenarioTrendsComponent,
+    ProjectSettingsComponent,
     RequestStatsCompareComponent,
+    InitUserComponent,
+    LabelHealthComponent,
+    ZeroErrorToleranceWarningComponent,
   ],
   imports: [
     RouterModule.forRoot(

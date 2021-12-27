@@ -1,0 +1,12 @@
+.response-failures {
+  margin-top: 25px;
+}
+
+thead .hd {
+  font-size: 12px;
+  border: none;
+}
+
+.warn-icon {
+  margin-left: 5px;
+}

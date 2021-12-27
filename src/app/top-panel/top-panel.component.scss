@@ -109,17 +109,17 @@ a {
 
 .dropdown-item.active {
   color: white !important;
-  background-color: #343a40;
+  background-color: #243B55;
   border-radius: 0;
 }
 
 .dropdown-item:hover {
-  background-color: #5f6063 !important;
+  background-color: #5f6063  !important;
   border-radius: 0;
 }
 
 .dropdowncustom-area {
-  background-color: #343a40 !important;
+  background-color: #243B55 !important;
   color: white;
 }
 
@@ -133,4 +133,10 @@ a {
 
 .dropdown-toggle {
   box-shadow: none;
+}
+
+.bg-jtl-dark-gradient {
+  background: #141E30;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }

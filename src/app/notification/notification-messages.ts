@@ -83,13 +83,10 @@ export class NotificationMessage {
   }
 
   private statusCodeMessage(response, successMessage) {
-    console.log(response)
-
     let message = { success: false, message: `Something went wrong` };
     if (response.status >= 200 && response.status < 300) {
       message = { success: true, message: successMessage };
     } else if (response.status === 400) {
-      console.log(response)
       try {
         message = { success: false, message: response.message };
       } catch (e) {

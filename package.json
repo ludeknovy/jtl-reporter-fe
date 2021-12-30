@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^12.2.15",
     "@angular/router": "^12.2.15",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
-    "@pact-foundation/karma-pact": "^2.3.1",
+    "@pact-foundation/karma-pact": "^3.1.0",
     "@pact-foundation/pact-node": "^10.17.1",
     "@pact-foundation/pact-web": "^9.12.1",
     "@rushvora/ng-datatable": "^8.0.5",

@@ -26,7 +26,7 @@ export class AddMetricComponent implements OnInit, OnChanges {
     const labelsLines = Array.from(this.chartLines.labels.keys());
     const overallLines = Array.from(this.chartLines.overall.keys());
     const { value: firstItem } = this.chartLines.labels.values().next();
-    const labels = firstItem.map(_ => ({ name: _.name, isChecked: false }));
+    const labels = firstItem?.map(_ => ({ name: _.name, isChecked: false }));
     overallLines.forEach((_: string) => {
       this.metrics[_] = [{ name: 'overall', isChecked: false }];
     });

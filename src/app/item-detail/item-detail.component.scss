@@ -137,11 +137,11 @@ thead {
   margin-bottom: 20px;
 }
 
-.errors-list /deep/ .card {
+.errors-list ::ng-deep .card {
   border: none;
 }
 
-.errors-list /deep/ .card-header {
+.errors-list ::ng-deep .card-header {
   background-color: white;
   padding: 0px;
   border: none;

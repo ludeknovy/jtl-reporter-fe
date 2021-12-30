@@ -181,7 +181,7 @@ export class PerformanceAnalysisComponent implements OnInit {
   private hasLabelChart(metrics: Metrics[], label: string) {
     return metrics.every(_ => {
       const chartMetric = this.labelsChartLines.get(_);
-      return chartMetric.find(__ => __.name === label);
+      return chartMetric?.find(__ => __.name === label);
     });
   }
 }

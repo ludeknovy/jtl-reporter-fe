@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { StatsCompareComponent } from './stats-compare.component';
 import { BreadcrumbComponent } from 'src/app/breadcrumb/breadcrumb.component';
@@ -13,7 +13,7 @@ describe('StatsCompareComponent', () => {
   let component: StatsCompareComponent;
   let fixture: ComponentFixture<StatsCompareComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [StatsCompareComponent, BreadcrumbComponent, AddNewItemComponent],
       imports: [

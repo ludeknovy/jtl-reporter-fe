@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -9,7 +9,7 @@ describe('AddNewExternalNotificationComponent', () => {
   let component: AddNewExternalNotificationComponent;
   let fixture: ComponentFixture<AddNewExternalNotificationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AddNewExternalNotificationComponent ],
       imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule],

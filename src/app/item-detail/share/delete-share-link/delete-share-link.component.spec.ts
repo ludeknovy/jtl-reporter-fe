@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { DeleteShareLinkComponent } from './delete-share-link.component';
@@ -8,7 +8,7 @@ describe('DeleteShareLinkComponent', () => {
   let component: DeleteShareLinkComponent;
   let fixture: ComponentFixture<DeleteShareLinkComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DeleteShareLinkComponent ],
       imports: [

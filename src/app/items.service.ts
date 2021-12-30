@@ -13,7 +13,7 @@ export class ItemsService {
   private processingItems = new BehaviorSubject<[]>([]);
   public processingItems$ = this.processingItems.asObservable();
 
-  private items = new BehaviorSubject<Items>({ name, data: [], total: 0 });
+  private items = new BehaviorSubject<Items>({ name: undefined, data: [], total: 0 });
   public items$ = this.items.asObservable();
 
   private shareTokens = new BehaviorSubject<[]>([]);

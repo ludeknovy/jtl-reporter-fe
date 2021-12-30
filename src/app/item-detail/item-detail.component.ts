@@ -165,39 +165,42 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       });
       const networkChartOptions = {
         ...commonGraphSettings('mbps'),
-        series: [...networkMbps, ...threadLine], ...logScaleButton
+        series: [...networkMbps, threadLine], ...logScaleButton
       };
+
       this.chartLines.labels.set(Metrics.Network, networkMbps);
       this.labelCharts.set(Metrics.Network, networkChartOptions);
     }
 
     if (minResponseTime) {
       this.chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime);
-      this.labelCharts.set(Metrics.ResponseTimeMin, {...commonGraphSettings('ms'), series: [...minResponseTime, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeMin, {...commonGraphSettings('ms'), series: [...minResponseTime, threadLine]});
     }
+
     if (maxResponseTime) {
       this.chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime);
-      this.labelCharts.set(Metrics.ResponseTimeMax, {...commonGraphSettings('ms'), series: [...maxResponseTime, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeMax, {...commonGraphSettings('ms'), series: [...maxResponseTime, threadLine]});
     }
     if (percentile90) {
       this.chartLines.labels.set(Metrics.ResponseTimeP90, percentile90);
-      this.labelCharts.set(Metrics.ResponseTimeP90, {...commonGraphSettings('ms'), series: [...percentile90, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP90, {...commonGraphSettings('ms'), series: [...percentile90, threadLine]});
     }
     if (percentile95) {
       this.chartLines.labels.set(Metrics.ResponseTimeP95, percentile95);
-      this.labelCharts.set(Metrics.ResponseTimeP95, {...commonGraphSettings('ms'), series: [...percentile95, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP95, {...commonGraphSettings('ms'), series: [...percentile95, threadLine]});
     }
     if (percentile99) {
       this.chartLines.labels.set(Metrics.ResponseTimeP99, percentile99);
-      this.labelCharts.set(Metrics.ResponseTimeP99, {...commonGraphSettings('ms'), series: [...percentile99, ...threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP99, {...commonGraphSettings('ms'), series: [...percentile99, threadLine]});
     }
 
     this.chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime);
-    this.labelCharts.set(Metrics.ResponseTimeAvg, {...commonGraphSettings('ms'), series: [...responseTime, ...threadLine]});
+    this.labelCharts.set(Metrics.ResponseTimeAvg, {...commonGraphSettings('ms'), series: [...responseTime, threadLine]});
 
 
     this.chartLines.labels.set(Metrics.Throughput, throughput);
-    this.labelCharts.set(Metrics.Throughput, {...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine]});
+    this.labelCharts.set(Metrics.Throughput, {...commonGraphSettings('hits/s'), series: [...throughput, threadLine]});
+
   }
 
   private generateCharts() {

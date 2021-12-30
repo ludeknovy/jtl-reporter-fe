@@ -15,7 +15,7 @@ export class ProjectService {
   private state = new BehaviorSubject<ProjectsListing[]>([]);
   public state$ = this.state.asObservable();
 
-  private items = new BehaviorSubject<Items>({ name, data: [], total: 0 });
+  private items = new BehaviorSubject<Items>({ name: undefined, data: [], total: 0 });
   public items$ = this.items.asObservable();
 
   private scenarios = new BehaviorSubject<IScenarios[]>([]);

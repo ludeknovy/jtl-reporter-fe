@@ -21,10 +21,4 @@ export class LabelApiService {
     // tslint:disable-next-line:max-line-length
     return this.http.get<LabelMaxVu>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${encodedLabel}/virtual-users`, { params });
   }
-
-  fetchLabelErrors(projectName, scenarioName, itemId, label) {
-    const encodedLabel = encodeURIComponent(label);
-    return this.http.get<{ stat: any }>(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}/label/${encodedLabel}/errors`);
-
-  }
 }

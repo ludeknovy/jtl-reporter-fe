@@ -63,15 +63,6 @@ export class ItemsApiService {
       `projects/${projectName}/scenarios/${scenarioName}/items`, { params });
   }
 
-  downloadTestErrors(params) {
-    const { projectName, scenarioName, id } = params;
-    return this.http.get(
-      `projects/${projectName}/scenarios/${scenarioName}/items/${id}/errors`, {
-      responseType: 'blob',
-    }
-    );
-  }
-
   setData(data) {
     this.response.next(data);
   }

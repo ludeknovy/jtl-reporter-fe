@@ -5,7 +5,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from '@rushvora/ng-datatable';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { ToastrModule } from 'ngx-toastr';
-import { LabelErrorComponent } from '../label-error/label-error.component';
 import { LabelTrendComponent } from '../label-trend/label-trend.component';
 import { StatsCompareComponent } from '../stats-compare/stats-compare.component';
 import { LabelHealthComponent } from './label-health/label-health.component';
@@ -21,7 +20,6 @@ describe('RequestStatsCompareComponent', () => {
       declarations: [
         RequestStatsCompareComponent,
         StatsCompareComponent,
-        LabelErrorComponent,
         LabelTrendComponent,
         LabelHealthComponent,
       ],

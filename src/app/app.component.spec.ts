@@ -1,6 +1,6 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { TopPanelComponent } from './top-panel/top-panel.component';
+import { TopPanelComponent } from './shared/top-panel/top-panel.component';
 import { NotificationComponent } from './notification/notification.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxSpinnerModule } from 'ngx-spinner';

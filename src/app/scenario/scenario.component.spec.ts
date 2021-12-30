@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ScenarioComponent } from './scenario.component';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
 import { AddNewItemComponent } from './add-new-item/add-new-item.component';
 import { SettingsScenarioComponent } from './scenario-settings/scenario-settings.component';
 import { DeleteScenarioComponent } from './delete-scenario/delete-scenario.component';
-import { ControlPanelComponent } from '../control-panel/control-panel.component';
+import { ControlPanelComponent } from '../shared/control-panel/control-panel.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';

@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ItemDetailComponent } from './item-detail.component';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
 import { EditItemComponent } from './edit-item/edit-item.component';
 import { DeleteItemComponent } from './delete-item/delete-item.component';
-import { ControlPanelComponent } from '../control-panel/control-panel.component';
+import { ControlPanelComponent } from '../shared/control-panel/control-panel.component';
 import { StatsCompareComponent } from './stats-compare/stats-compare.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { RouterTestingModule } from '@angular/router/testing';

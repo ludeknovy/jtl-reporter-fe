@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { StatsCompareComponent } from './stats-compare.component';
-import { BreadcrumbComponent } from 'src/app/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from 'src/app/shared/breadcrumb/breadcrumb.component';
 import { AddNewItemComponent } from 'src/app/scenario/add-new-item/add-new-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';

@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DataTableModule } from '@rushvora/ng-datatable';
 import { HttpRequestInterceptorMock } from 'src/app/_interceptors/mock-interceptior';
@@ -16,7 +16,7 @@ describe('ShareComponent', () => {
 
 
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ShareComponent, CreateNewShareLinkComponent, DeleteShareLinkComponent ],
       imports: [

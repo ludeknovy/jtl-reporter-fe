@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { LabelTrendComponent } from '../label-trend/label-trend.component';
@@ -9,7 +9,7 @@ describe('RequestStatsCompareComponent', () => {
   let component: LabelTrendComponent;
   let fixture: ComponentFixture<LabelTrendComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         LabelTrendComponent,

@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataTableModule } from '@rushvora/ng-datatable';
@@ -14,7 +14,7 @@ describe('ExternalNotificationComponent', () => {
   let component: ExternalNotificationComponent;
   let fixture: ComponentFixture<ExternalNotificationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ExternalNotificationComponent,
         AddNewExternalNotificationComponent,

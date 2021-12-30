@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ProjectApiService } from './project-api.service';
 import { PactWeb, Matchers } from '@pact-foundation/pact-web';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,7 +25,7 @@ describe('Projects', () => {
     provider.finalize().then(done, e => done.fail(e));
   });
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule

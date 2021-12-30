@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { AddMetricComponent } from './add-metric.component';
@@ -7,7 +7,7 @@ describe('AddMetricComponent', () => {
   let component: AddMetricComponent;
   let fixture: ComponentFixture<AddMetricComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [AddMetricComponent],
       imports: [FormsModule,

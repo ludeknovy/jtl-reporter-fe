@@ -158,9 +158,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: true,
-        onSameUrlNavigation: 'reload'
-      }
+    enableTracing: true,
+    onSameUrlNavigation: 'reload',
+    relativeLinkResolution: 'legacy'
+}
     ),
     BrowserModule,
     FormsModule,

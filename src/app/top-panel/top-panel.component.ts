@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService } from '../../project.service';
-import { ProjectsListing } from '../../project-api.service.model';
+import { ProjectService } from '../project.service';
+import { ProjectsListing } from '../project-api.service.model';
 import { Observable } from 'rxjs';
-import { SharedMainBarService } from '../../shared-main-bar.service';
-import { AuthenticationService } from '../../_services/authentication.service';
+import { SharedMainBarService } from '../shared-main-bar.service';
+import { AuthenticationService } from '../_services/authentication.service';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-top-panel',
   templateUrl: './top-panel.component.html',
-  styleUrls: ['./top-panel.component.scss', '../../shared-styles.css'],
+  styleUrls: ['./top-panel.component.scss', '../shared-styles.css'],
 })
 export class TopPanelComponent implements OnInit {
 

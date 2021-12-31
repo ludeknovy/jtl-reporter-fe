@@ -12,6 +12,10 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from '../shared/shared.module';
 import {HighchartsChartModule} from 'highcharts-angular';
+import {ItemControlsComponent} from './item-controls/item-controls.component';
+import {SharedItemModule} from '../shared-item/shared-item.module';
+import {ReactiveFormsModule} from '@angular/forms';
+import {DataTableModule} from '@rushvora/ng-datatable';
 
 
 const routes: Routes = [
@@ -24,10 +28,15 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [ScenarioComponent, AddNewItemComponent, ScenarioTrendsComponent,
-    SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent],
-  imports: [
-    CommonModule, RouterModule.forRoot(routes), NgxSpinnerModule, NgbModule, SharedModule, HighchartsChartModule
+    SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
+    ItemControlsComponent,
   ],
-  exports: [RouterModule]
+  imports: [
+    CommonModule, RouterModule.forRoot(routes), NgxSpinnerModule, NgbModule, SharedModule, HighchartsChartModule,
+    SharedItemModule, ReactiveFormsModule, DataTableModule,
+  ],
+  exports: [ScenarioComponent, AddNewItemComponent, ScenarioTrendsComponent,
+    SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
+    ItemControlsComponent]
 })
 export class ScenarioModule { }

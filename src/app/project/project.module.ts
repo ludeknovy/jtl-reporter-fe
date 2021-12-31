@@ -6,9 +6,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '../auth.guard';
 import {AddNewScenarioComponent} from './new-scenario/add-new.scenario.component';
 import {ScenariosGraphComponent} from './graph/scenarios-graph.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from '../shared/shared.module';
+import {DataTableModule} from '@rushvora/ng-datatable';
 
 const routes: Routes = [  {
   path: 'project/:projectName/scenarios', component: ProjectComponent,
@@ -19,8 +20,8 @@ const routes: Routes = [  {
   declarations: [ProjectComponent, ProjectSettingsComponent,
     AddNewScenarioComponent, ScenariosGraphComponent],
   imports: [
-    CommonModule, RouterModule.forRoot(routes), FormsModule, NgbModule, SharedModule
+    CommonModule, RouterModule.forRoot(routes), FormsModule, NgbModule, SharedModule, DataTableModule, ReactiveFormsModule
   ],
-  exports: [RouterModule]
+  exports: [ProjectComponent, ProjectSettingsComponent, AddNewScenarioComponent, ScenariosGraphComponent]
 })
 export class ProjectModule { }

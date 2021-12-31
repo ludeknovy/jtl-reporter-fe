@@ -9,7 +9,8 @@ import {AuthGuard} from '../../auth.guard';
 import {SharedModule} from '../../shared/shared.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ProjectSettingsComponent} from '../../project/project-settings/project-settings.component';
+import {SharedProjectModule} from '../../shared/shared-project/shared-project.module';
+import {TimeagoModule} from 'ngx-timeago';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [ProjectsAdministrationComponent, AddNewProjectComponent, DeleteProjectComponent],
   imports: [
-    CommonModule, RouterModule.forRoot(routes), NavigationModule, SharedModule, NgbModule, ReactiveFormsModule
+    CommonModule, RouterModule.forRoot(routes), NavigationModule, SharedModule, NgbModule, ReactiveFormsModule,
+    SharedProjectModule, TimeagoModule
   ],
   exports: [ProjectsAdministrationComponent, AddNewProjectComponent, DeleteProjectComponent]
 })

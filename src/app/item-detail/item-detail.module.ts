@@ -8,7 +8,7 @@ import {PerformanceAnalysisComponent} from './performance-analysis/performance-a
 import {AuthGuard} from '../auth.guard';
 import {RouterModule, Routes} from '@angular/router';
 import {DataTableModule} from '@rushvora/ng-datatable';
-import {SharedItemModule} from '../shared-item/shared-item.module';
+import {SharedItemModule} from '../shared/shared-item/shared-item.module';
 import {SharedModule} from '../shared/shared.module';
 import {ZeroErrorToleranceWarningComponent} from './zero-error-tolerance-warning/zero-error-tolerance-warning.component';
 import {HighchartsChartModule} from 'highcharts-angular';
@@ -20,9 +20,9 @@ import {LabelTrendComponent} from './label-trend/label-trend.component';
 import {StatsCompareComponent} from './stats-compare/stats-compare.component';
 import {AddMetricComponent} from './analyze-charts/add-metric/add-metric.component';
 import {ShareComponent} from './share/share.component';
-import {DeleteItemComponent} from '../shared-item/delete-item/delete-item.component';
 import {DeleteShareLinkComponent} from './share/delete-share-link/delete-share-link.component';
 import {CreateNewShareLinkComponent} from './share/create-new-share-link/create-new-share-link.component';
+import {MonitoringStatsComponent} from './monitoring-stats/monitoring-stats.component';
 
 
 const routes: Routes = [  {
@@ -34,13 +34,12 @@ const routes: Routes = [  {
 @NgModule({
   declarations: [ItemDetailComponent, RequestStatsCompareComponent, ThresholdsAlertComponent,
     PerformanceAnalysisComponent, ZeroErrorToleranceWarningComponent, LabelChartComponent, AnalyzeChartsComponent,
-    LabelHealthComponent, LabelTrendComponent, StatsCompareComponent, AddMetricComponent, ShareComponent, DeleteShareLinkComponent, CreateNewShareLinkComponent ],
+    LabelHealthComponent, LabelTrendComponent, StatsCompareComponent, AddMetricComponent, ShareComponent, DeleteShareLinkComponent,
+    CreateNewShareLinkComponent, MonitoringStatsComponent ],
   imports: [
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
     ReactiveFormsModule
   ],
-  exports: [ItemDetailComponent, RequestStatsCompareComponent, ThresholdsAlertComponent,
-    PerformanceAnalysisComponent, ZeroErrorToleranceWarningComponent, LabelChartComponent, AnalyzeChartsComponent,
-    LabelHealthComponent, LabelTrendComponent]
+  exports: []
 })
 export class ItemDetailModule { }

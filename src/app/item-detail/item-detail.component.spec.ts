@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ItemDetailComponent } from './item-detail.component';
 import { BreadcrumbComponent } from '../shared/breadcrumb/breadcrumb.component';
-import { EditItemComponent } from '../shared-item/edit-item/edit-item.component';
-import { DeleteItemComponent } from '../shared-item/delete-item/delete-item.component';
+import { EditItemComponent } from '../shared/shared-item/edit-item/edit-item.component';
+import { DeleteItemComponent } from '../shared/shared-item/delete-item/delete-item.component';
 import { ControlPanelComponent } from '../shared/control-panel/control-panel.component';
 import { StatsCompareComponent } from './stats-compare/stats-compare.component';
 import { HighchartsChartModule } from 'highcharts-angular';

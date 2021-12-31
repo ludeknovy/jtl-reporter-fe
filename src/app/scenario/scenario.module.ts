@@ -13,9 +13,15 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from '../shared/shared.module';
 import {HighchartsChartModule} from 'highcharts-angular';
 import {ItemControlsComponent} from './item-controls/item-controls.component';
-import {SharedItemModule} from '../shared-item/shared-item.module';
+import {SharedItemModule} from '../shared/shared-item/shared-item.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DataTableModule} from '@rushvora/ng-datatable';
+import {
+  AddNewExternalNotificationComponent
+} from './external-notification/add-new-external-notification/add-new-external-notification.component';
+import {
+  DeleteExternalNotificationComponent
+} from './external-notification/delete-external-notification/delete-external-notification.component';
 
 
 const routes: Routes = [
@@ -29,7 +35,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [ScenarioComponent, AddNewItemComponent, ScenarioTrendsComponent,
     SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
-    ItemControlsComponent,
+    ItemControlsComponent, AddNewExternalNotificationComponent, DeleteExternalNotificationComponent
   ],
   imports: [
     CommonModule, RouterModule.forRoot(routes), NgxSpinnerModule, NgbModule, SharedModule, HighchartsChartModule,

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UsersComponent } from './users.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { AddUserComponent } from './add-user/add-user.component';
-import { ControlPanelComponent } from 'src/app/control-panel/control-panel.component';
+import { ControlPanelComponent } from 'src/app/shared/control-panel/control-panel.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';

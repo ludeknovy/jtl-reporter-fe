@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DataTableModule } from '@rushvora/ng-datatable';
+import {DataTableModule} from '@pascalhonegger/ng-datatable';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { ToastrModule } from 'ngx-toastr';
 import { LabelTrendComponent } from '../label-trend/label-trend.component';

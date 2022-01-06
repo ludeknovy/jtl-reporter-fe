@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ApiKeysComponent } from './api-keys.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { AddTokenComponent } from './add-token/add-token.component';
-import { ControlPanelComponent } from 'src/app/control-panel/control-panel.component';
+import { ControlPanelComponent } from 'src/app/shared/control-panel/control-panel.component';
 import { DeleteTokenComponent } from './delete-token/delete-token.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';

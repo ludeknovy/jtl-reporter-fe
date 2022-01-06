@@ -7,7 +7,7 @@ import { ViewType } from './project.component.model';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css', '../shared-styles.css']
+  styleUrls: ['./project.component.css', '../shared-styles.css'],
 })
 export class ProjectComponent implements OnInit {
 

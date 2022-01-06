@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { DataTableModule } from '@rushvora/ng-datatable';
+import {DataTableModule} from '@pascalhonegger/ng-datatable';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { LabelHealthComponent } from './label-health.component';
 

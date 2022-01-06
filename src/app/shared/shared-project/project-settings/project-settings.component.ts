@@ -3,9 +3,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {catchError} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {ProjectApiService} from '../../project-api.service';
-import {NotificationMessage} from '../../notification/notification-messages';
-import {ProjectService} from '../../project.service';
+import {ProjectApiService} from '../../../project-api.service';
+import {NotificationMessage} from '../../../notification/notification-messages';
+import {ProjectService} from '../../../project.service';
 
 @Component({
   selector: 'app-project-settings',

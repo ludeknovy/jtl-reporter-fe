@@ -9,7 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-top-panel',
   templateUrl: './top-panel.component.html',
-  styleUrls: ['./top-panel.component.scss', '../shared-styles.css']
+  styleUrls: ['./top-panel.component.scss', '../shared-styles.css'],
 })
 export class TopPanelComponent implements OnInit {
 

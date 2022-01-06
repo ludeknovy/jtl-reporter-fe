@@ -12,7 +12,6 @@ branches:
 install: npm install
 
 script:
-  - ng lint
   - npm run test:headless
   - node publish-pact.js
 

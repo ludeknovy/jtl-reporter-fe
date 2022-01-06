@@ -1,7 +1,7 @@
 export const scenarioHistory = (inputData) => {
   if (inputData.length === 0) {
     return {
-      type: 'bar',
+      type: "bar",
       data: {
         maxBarNumber: 15,
         labels: [],
@@ -14,14 +14,14 @@ export const scenarioHistory = (inputData) => {
     return { percentil: _.percentil, date: _.startDate };
   });
   return {
-    type: 'bar',
+    type: "bar",
     data: {
       maxBarNumber: 15,
       labels: dt.map(_ => _.date),
       datasets: [
         {
           data: dt.map(_ => _.percentil),
-          backgroundColor: 'rgb(17,122,139, 0.8)',
+          backgroundColor: "rgb(17,122,139, 0.8)",
           fill: true,
           borderWidth: 1,
         }
@@ -43,8 +43,8 @@ const options = {
     yAxes: [{
       stacked: true,
       gridLines: {
-        color: '#b7b7b717',
-        zeroLineColor: '#b7b7b717',
+        color: "#b7b7b717",
+        zeroLineColor: "#b7b7b717",
         drawBorder: false
       }
     }]

@@ -1,17 +1,17 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Metrics} from '../metrics';
-import {AnalyzeChartService} from '../../analyze-chart.service';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from "@angular/core";
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { Metrics } from "../metrics";
+import { AnalyzeChartService } from "../../analyze-chart.service";
 
 @Component({
-  selector: 'app-performance-analysis',
-  templateUrl: './performance-analysis.component.html',
-  styleUrls: ['./performance-analysis.component.css', '../item-detail.component.scss'],
+  selector: "app-performance-analysis",
+  templateUrl: "./performance-analysis.component.html",
+  styleUrls: ["./performance-analysis.component.css", "../item-detail.component.scss"],
   animations: [
-    trigger('panelState', [
-      state('closed', style({ height: 0, overflow: 'hidden' })),
-      state('open', style({ height: '*' })),
-      transition('closed <=> open', animate('300ms ease-in-out')),
+    trigger("panelState", [
+      state("closed", style({ height: 0, overflow: "hidden" })),
+      state("open", style({ height: "*" })),
+      transition("closed <=> open", animate("300ms ease-in-out")),
     ]),
   ],
 })
@@ -19,7 +19,7 @@ export class PerformanceAnalysisComponent implements OnInit {
 
   @Input() itemData;
   @Input() labelsChartLines;
-  @Output() overallChartChange = new EventEmitter<{}>();
+  @Output() overallChartChange = new EventEmitter<{ element, perfAnalysis}>();
 
 
   perfAnalysis = {
@@ -40,8 +40,8 @@ export class PerformanceAnalysisComponent implements OnInit {
       bandValues: null,
     }
   };
-  folded = 'closed';
-  foldedBottom = 'closed';
+  folded = "closed";
+  foldedBottom = "closed";
   Math: any;
 
   constructor(private analyzeChartService: AnalyzeChartService) {
@@ -133,23 +133,23 @@ export class PerformanceAnalysisComponent implements OnInit {
   }
 
   toggleFoldRT(element) {
-    if (this.folded === 'open') {
-      this.folded = 'closed';
-      element.textContent = 'Show more';
+    if (this.folded === "open") {
+      this.folded = "closed";
+      element.textContent = "Show more";
       return;
     }
-    this.folded = 'open';
-    element.textContent = 'Show less';
+    this.folded = "open";
+    element.textContent = "Show less";
   }
 
   toggleFoldBottom(element) {
-    if (this.foldedBottom === 'open') {
-      this.foldedBottom = 'closed';
-      element.textContent = 'Show more';
+    if (this.foldedBottom === "open") {
+      this.foldedBottom = "closed";
+      element.textContent = "Show more";
       return;
     }
-    this.foldedBottom = 'open';
-    element.textContent = 'Show less';
+    this.foldedBottom = "open";
+    element.textContent = "Show less";
   }
 
   toggleThroughputBand(element) {
@@ -161,7 +161,7 @@ export class PerformanceAnalysisComponent implements OnInit {
     this.showLabelInChart([Metrics.ResponseTimeAvg, Metrics.ResponseTimeMin], label);
     const el = document.getElementById(anchorElement);
     setTimeout(() => {
-      el.scrollIntoView({behavior: 'smooth'});
+      el.scrollIntoView({ behavior: "smooth" });
     });
   }
 
@@ -169,7 +169,7 @@ export class PerformanceAnalysisComponent implements OnInit {
     this.showLabelInChart([Metrics.ResponseTimeAvg, Metrics.ResponseTimeP99], label);
     const el = document.getElementById(anchorElement);
     setTimeout(() => {
-      el.scrollIntoView({behavior: 'smooth'});
+      el.scrollIntoView({ behavior: "smooth" });
     });
   }
 

@@ -1,18 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ItemsApiService } from 'src/app/items-api.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ItemInput } from 'src/app/scenario/item-controls/item-controls.model';
-import { ItemsService } from 'src/app/items.service';
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ItemsApiService } from "src/app/items-api.service";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ItemInput } from "src/app/scenario/item-controls/item-controls.model";
+import { ItemsService } from "src/app/items.service";
 
 @Component({
-  selector: 'app-edit-item',
-  templateUrl: './edit-item.component.html',
-  styleUrls: ['./edit-item.component.css'],
+  selector: "app-edit-item",
+  templateUrl: "./edit-item.component.html",
+  styleUrls: ["./edit-item.component.css"],
 })
 
 export class EditItemComponent implements OnInit {
@@ -27,7 +26,8 @@ export class EditItemComponent implements OnInit {
 
   @Input() reloadItems: boolean;
   @Input() itemDetailData: ItemInput;
-  @Output() itemDetailChange = new EventEmitter<{}>();
+  @Output() itemDetailChange = new EventEmitter<{
+    note: string, environment: string, hostname: string}>();
 
   constructor(
     private modalService: NgbModal,
@@ -67,7 +67,7 @@ export class EditItemComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {

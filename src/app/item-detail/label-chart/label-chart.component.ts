@@ -1,29 +1,27 @@
-import { Component, Input, OnInit } from '@angular/core';
-import * as Highcharts from 'highcharts';
-import { commonGraphSettings } from 'src/app/graphs/item-detail';
-import * as deepmerge from 'deepmerge';
+import { Component, Input, OnInit } from "@angular/core";
+import * as Highcharts from "highcharts";
+import { commonGraphSettings } from "src/app/graphs/item-detail";
+import * as deepmerge from "deepmerge";
 
 @Component({
-  selector: 'app-label-chart',
-  templateUrl: './label-chart.component.html',
-  styleUrls: ['./label-chart.component.css', '../item-detail.component.scss']
+  selector: "app-label-chart",
+  templateUrl: "./label-chart.component.html",
+  styleUrls: ["./label-chart.component.css", "../item-detail.component.scss"]
 })
 export class LabelChartComponent implements OnInit {
 
   @Input() labels: Map<string, object>;
   Highcharts: typeof Highcharts = Highcharts;
-  chartConstructor = 'chart';
-  labelChartMetric = 'Throughput';
+  chartConstructor = "chart";
+  labelChartMetric = "Throughput";
   labelCompareChartMetric;
-  labelChartOptions = commonGraphSettings('hits/s');
+  labelChartOptions = commonGraphSettings("hits/s");
   updateLabelChartFlag = false;
   chartKeys;
   seriesVisibilityToggle = true;
-  seriesVisibilityToggleText = 'Hide all';
+  seriesVisibilityToggleText = "Hide all";
   chartShouldExpand = false;
   chart;
-
-  constructor() { }
 
   ngOnInit() {
     this.labelChartOptions = deepmerge(this.labels.get(this.labelChartMetric), {});
@@ -45,7 +43,7 @@ export class LabelChartComponent implements OnInit {
 
   toggleSeriesVisibility() {
     this.labelChartOptions.series.map(_ => _.visible = !this.seriesVisibilityToggle);
-    this.seriesVisibilityToggleText = this.seriesVisibilityToggle ? 'Show all' : 'Hide all';
+    this.seriesVisibilityToggleText = this.seriesVisibilityToggle ? "Show all" : "Hide all";
     this.seriesVisibilityToggle = !this.seriesVisibilityToggle;
     this.updateLabelChartFlag = true;
   }

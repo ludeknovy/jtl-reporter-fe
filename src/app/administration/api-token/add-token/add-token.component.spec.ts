@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { AddTokenComponent } from './add-token.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { AddTokenComponent } from "./add-token.component";
+import { ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
-describe('AddTokenComponent', () => {
+describe("AddTokenComponent", () => {
   let component: AddTokenComponent;
   let fixture: ComponentFixture<AddTokenComponent>;
 
@@ -22,7 +22,7 @@ describe('AddTokenComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

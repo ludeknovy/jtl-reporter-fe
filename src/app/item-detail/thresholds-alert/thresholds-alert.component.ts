@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-regression-alert',
-  templateUrl: './thresholds-alert.component.html',
-  styleUrls: ['./thresholds-alert.component.css', '../item-detail.component.scss']
+  selector: "app-regression-alert",
+  templateUrl: "./thresholds-alert.component.html",
+  styleUrls: ["./thresholds-alert.component.css", "../item-detail.component.scss"]
 })
-export class ThresholdsAlertComponent implements OnInit {
+export class ThresholdsAlertComponent {
 
   @Input() itemData;
   Math: any;
@@ -13,8 +13,5 @@ export class ThresholdsAlertComponent implements OnInit {
   constructor() {
     this.Math = Math;
    }
-
-  ngOnInit() {
-  }
 
 }

@@ -8,22 +8,22 @@ import {
   ViewChild,
   ViewEncapsulation,
   AfterViewInit,
-} from '@angular/core';
-import { Chart } from 'chart.js';
-import { scenarioHistory } from 'src/app/graphs/scenarios';
+} from "@angular/core";
+import { Chart } from "chart.js";
+import { scenarioHistory } from "src/app/graphs/scenarios";
 
 @Component({
-  selector: 'app-scenarios-graph',
-  templateUrl: './scenarios-graph.component.html',
-  styleUrls: ['./scenarios-graph.component.css'],
+  selector: "app-scenarios-graph",
+  templateUrl: "./scenarios-graph.component.html",
+  styleUrls: ["./scenarios-graph.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class ScenariosGraphComponent implements AfterViewInit, OnDestroy {
 
   @Input() graphData: any;
-  @ViewChild('graphCanvasRef', { static: true }) chartCanvas: ElementRef;
-  @HostBinding('class.chart') htmlCardClass = true;
+  @ViewChild("graphCanvasRef", { static: true }) chartCanvas: ElementRef;
+  @HostBinding("class.chart") htmlCardClass = true;
 
   private chart: Chart;
 
@@ -60,10 +60,10 @@ export class ScenariosGraphComponent implements AfterViewInit, OnDestroy {
           chart.clear();
 
           ctx.save();
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.font = '20px normal \'Helvetica Nueue\'';
-          ctx.fillText('No data to display', width / 2, height / 2);
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.font = "20px normal 'Helvetica Nueue'";
+          ctx.fillText("No data to display", width / 2, height / 2);
           ctx.restore();
         }
       }

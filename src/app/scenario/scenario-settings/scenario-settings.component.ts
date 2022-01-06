@@ -1,16 +1,16 @@
-import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ScenarioApiService } from 'src/app/scenario-api.service';
+import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ScenarioApiService } from "src/app/scenario-api.service";
 
 @Component({
-  selector: 'app-scenario-settings',
-  templateUrl: './scenario-settings.component.html',
-  styleUrls: ['./scenario-settings.component.css'],
+  selector: "app-scenario-settings",
+  templateUrl: "./scenario-settings.component.html",
+  styleUrls: ["./scenario-settings.component.css"],
 })
 
 export class SettingsScenarioComponent implements OnInit {
@@ -94,7 +94,7 @@ export class SettingsScenarioComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" });
   }
 
   onSubmit() {

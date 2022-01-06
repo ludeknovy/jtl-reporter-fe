@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as Highcharts from 'highcharts';
-import { statusCodesChart } from 'src/app/graphs/status-codes';
-import Tree from 'highcharts/modules/treemap';
+import { Component, Input, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import * as Highcharts from "highcharts";
+import { statusCodesChart } from "src/app/graphs/status-codes";
+import Tree from "highcharts/modules/treemap";
 Tree(Highcharts);
 
 @Component({
-  selector: 'app-label-health',
-  templateUrl: './label-health.component.html',
-  styleUrls: ['./label-health.component.css']
+  selector: "app-label-health",
+  templateUrl: "./label-health.component.html",
+  styleUrls: ["./label-health.component.css"]
 })
 export class LabelHealthComponent implements OnInit {
 
@@ -19,7 +19,7 @@ export class LabelHealthComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   labelChartOption;
   updateFlag = false;
-  chartConstructor = 'chart';
+  chartConstructor = "chart";
   showBelowPrecisionWarning = false;
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
@@ -37,8 +37,7 @@ export class LabelHealthComponent implements OnInit {
   }
 
   open(content) {
-    // @ts-ignore
-    this.modalService.open(content, { size: 'xl' });
+    this.modalService.open(content, { size: "xl" });
 
     this.labelChartOption = statusCodesChart(this.statusCodes);
     this.updateFlag = true;

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { LabelTrend, LabelMaxVu } from './items.service.model';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { LabelTrend, LabelMaxVu } from "./items.service.model";
+import { HttpClient } from "@angular/common/http";
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LabelApiService {
 

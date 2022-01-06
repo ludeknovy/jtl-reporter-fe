@@ -1,13 +1,13 @@
-import {Component, Input, OnInit } from '@angular/core';
-import { customChartSettings } from 'src/app/graphs/item-detail';
-import * as Highcharts from 'highcharts';
-import { ItemsApiService } from 'src/app/items-api.service';
-import {AnalyzeChartService} from '../../analyze-chart.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { customChartSettings } from "src/app/graphs/item-detail";
+import * as Highcharts from "highcharts";
+import { ItemsApiService } from "src/app/items-api.service";
+import { AnalyzeChartService } from "../../analyze-chart.service";
 
 @Component({
-  selector: 'app-analyze-charts',
-  templateUrl: './analyze-charts.component.html',
-  styleUrls: ['./analyze-charts.component.css', '../item-detail.component.scss']
+  selector: "app-analyze-charts",
+  templateUrl: "./analyze-charts.component.html",
+  styleUrls: ["./analyze-charts.component.css", "../item-detail.component.scss"]
 })
 export class AnalyzeChartsComponent implements OnInit {
 
@@ -22,11 +22,11 @@ export class AnalyzeChartsComponent implements OnInit {
   updateLabelChartFlag = false;
   labels: string[];
   yAxisId = new Map([
-    ['Throughput', 0],
-    ['Response Time', 1],
-    ['Threads', 2],
-    ['Error Rate', 3],
-    ['Network', 4]
+    ["Throughput", 0],
+    ["Response Time", 1],
+    ["Threads", 2],
+    ["Error Rate", 3],
+    ["Network", 4]
   ]);
   preloadedSeries;
 
@@ -81,8 +81,8 @@ export class AnalyzeChartsComponent implements OnInit {
     }
     series.forEach(_ => {
       const { name, metric } = _;
-      const yAxis = this.yAxisId.get(metric.includes('Response Time') ? 'Response Time' : metric);
-      if (name === 'overall') {
+      const yAxis = this.yAxisId.get(metric.includes("Response Time") ? "Response Time" : metric);
+      if (name === "overall") {
         const metricLine = this.chartLines.overall.get(metric);
         const line: Line = {
           ...metricLine,

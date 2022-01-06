@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ProjectService } from '../project.service';
-import { ProjectsListing } from '../project-api.service.model';
-import { Observable } from 'rxjs';
-import { SharedMainBarService } from '../shared-main-bar.service';
-import { AuthenticationService } from '../_services/authentication.service';
-import { ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { ProjectService } from "../project.service";
+import { ProjectsListing } from "../project-api.service.model";
+import { Observable } from "rxjs";
+import { SharedMainBarService } from "../shared-main-bar.service";
+import { AuthenticationService } from "../_services/authentication.service";
+import { ChangeDetectorRef } from "@angular/core";
 
 @Component({
-  selector: 'app-top-panel',
-  templateUrl: './top-panel.component.html',
-  styleUrls: ['./top-panel.component.scss', '../shared-styles.css'],
+  selector: "app-top-panel",
+  templateUrl: "./top-panel.component.html",
+  styleUrls: ["./top-panel.component.scss", "../shared-styles.css"],
 })
 export class TopPanelComponent implements OnInit {
 
@@ -41,7 +41,7 @@ export class TopPanelComponent implements OnInit {
     this.authService.isLoggedIn.subscribe((_) => {
       if (_ === true) {
         this.projectService.loadProjects();
-        const { username } = JSON.parse(localStorage.getItem('currentUser'));
+        const { username } = JSON.parse(localStorage.getItem("currentUser"));
         this.username = username;
       }
     });

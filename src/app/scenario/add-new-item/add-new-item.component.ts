@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ItemsApiService } from '../../items-api.service';
-import { ActivatedRoute } from '@angular/router';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { NotificationMessage } from '../../notification/notification-messages';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ItemsService } from 'src/app/items.service';
-import { ItemStatus } from './add-new-item.model';
-import { ItemStatusValue } from 'src/app/item-detail/item-detail.model';
-import { ScenarioService } from 'src/app/scenario.service';
+import { Component, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ItemsApiService } from "../../items-api.service";
+import { ActivatedRoute } from "@angular/router";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationMessage } from "../../notification/notification-messages";
+import { NgxSpinnerService } from "ngx-spinner";
+import { ItemsService } from "src/app/items.service";
+import { ItemStatus } from "./add-new-item.model";
+import { ItemStatusValue } from "src/app/item-detail/item-detail.model";
+import { ScenarioService } from "src/app/scenario.service";
 
 @Component({
-  selector: 'app-add-new-item-modal',
-  templateUrl: './add-new-item.component.html',
-  styleUrls: ['./add-new-item.component.css'],
+  selector: "app-add-new-item-modal",
+  templateUrl: "./add-new-item.component.html",
+  styleUrls: ["./add-new-item.component.css"],
 
 })
 export class AddNewItemComponent implements OnInit {
@@ -47,18 +47,18 @@ export class AddNewItemComponent implements OnInit {
   }
 
   createFormControls() {
-    this.kpiFile = new FormControl('', [
+    this.kpiFile = new FormControl("", [
       Validators.required
     ]);
-    this.monitoringFile = new FormControl('', []);
-    this.environment = new FormControl('', [
+    this.monitoringFile = new FormControl("", []);
+    this.environment = new FormControl("", [
       Validators.required,
       Validators.maxLength(150)
     ]);
-    this.note = new FormControl('', [
+    this.note = new FormControl("", [
       Validators.maxLength(150)
     ]);
-    this.hostname = new FormControl('', [
+    this.hostname = new FormControl("", [
       Validators.maxLength(200)
     ]);
     this.status = new FormControl(this.DEFAULT_STATUS, [
@@ -77,7 +77,7 @@ export class AddNewItemComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onFileChange(event, fileType) {
@@ -105,7 +105,7 @@ export class AddNewItemComponent implements OnInit {
           this.spinner.hide();
           return this.itemsApiService.setData(message);
         });
-      this.myform.reset({ environment: '', status: this.DEFAULT_STATUS, note: '', hostname: '' });
+      this.myform.reset({ environment: "", status: this.DEFAULT_STATUS, note: "", hostname: "" });
       this.modalService.dismissAll();
     }
   }

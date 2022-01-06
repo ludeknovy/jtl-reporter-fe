@@ -1,19 +1,19 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ItemsService } from 'src/app/items.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Items } from 'src/app/items.service.model';
-import { ItemsApiService } from 'src/app/items-api.service';
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ItemsService } from "src/app/items.service";
+import { ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs";
+import { Items } from "src/app/items.service.model";
+import { ItemsApiService } from "src/app/items-api.service";
 
 const LIMIT = 15;
 const OFFSET = 15;
 
 
 @Component({
-  selector: 'app-stats-compare',
-  templateUrl: './stats-compare.component.html',
-  styleUrls: ['./stats-compare.component.css']
+  selector: "app-stats-compare",
+  templateUrl: "./stats-compare.component.html",
+  styleUrls: ["./stats-compare.component.css"]
 })
 
 export class StatsCompareComponent implements OnInit {
@@ -23,7 +23,7 @@ export class StatsCompareComponent implements OnInit {
   params;
   selectedTestItem;
 
-  @Output() itemDetailToCompare = new EventEmitter<{}>();
+  @Output() itemDetailToCompare = new EventEmitter<Record<any, unknown>>();
 
   constructor(
     private modalService: NgbModal,
@@ -37,8 +37,7 @@ export class StatsCompareComponent implements OnInit {
   }
 
   open(content) {
-    // @ts-ignore
-    this.modalService.open(content, { size: 'xl' });
+    this.modalService.open(content, { size: "xl" });
     this.route.params.subscribe(_ => {
       this.params = _;
       this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });

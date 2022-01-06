@@ -8,21 +8,21 @@ import {
   ViewChild,
   ViewEncapsulation,
   AfterViewInit,
-} from '@angular/core';
-import { Chart } from 'chart.js';
+} from "@angular/core";
+import { Chart } from "chart.js";
 
 @Component({
-  selector: 'app-item-chart',
-  templateUrl: './item-chart.component.html',
-  styleUrls: ['./item-chart.component.scss'],
+  selector: "app-item-chart",
+  templateUrl: "./item-chart.component.html",
+  styleUrls: ["./item-chart.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class ItemChartComponent implements AfterViewInit, OnDestroy {
 
   @Input() chartData: any;
-  @ViewChild('chartCanvasRef', { static: true }) chartCanvas: ElementRef;
-  @HostBinding('class.chart') htmlCardClass = true;
+  @ViewChild("chartCanvasRef", { static: true }) chartCanvas: ElementRef;
+  @HostBinding("class.chart") htmlCardClass = true;
 
   private chart: Chart;
 

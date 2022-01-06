@@ -1,16 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProjectApiService } from '../../../project-api.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { NotificationMessage } from '../../../notification/notification-messages';
-import { ProjectService } from '../../../project.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ProjectApiService } from "../../../project-api.service";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationMessage } from "../../../notification/notification-messages";
+import { ProjectService } from "../../../project.service";
 
 @Component({
-  styleUrls: ['./add-project-modal.component.css'],
-  selector: 'app-add-project',
-  templateUrl: './add-project-modal.component.html',
+  styleUrls: ["./add-project-modal.component.css"],
+  selector: "app-add-project",
+  templateUrl: "./add-project-modal.component.html",
 })
 export class AddNewProjectComponent implements OnInit {
   closeResult: string;
@@ -32,7 +32,7 @@ export class AddNewProjectComponent implements OnInit {
   }
 
   createFormControls() {
-    this.projectName = new FormControl('', [
+    this.projectName = new FormControl("", [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(50)
@@ -46,7 +46,7 @@ export class AddNewProjectComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {

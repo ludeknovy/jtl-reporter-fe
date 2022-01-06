@@ -47,10 +47,10 @@
           <tbody *ngIf="items.data.length > 0">
             <tr *ngFor="let _ of mf.data">
               <td>
-                {{_.maxVu}}
+                {{_.overview.maxVu}}
               </td>
               <td>
-                {{_.duration}}
+                {{_.overview.duration}}
               </td>
               <td>
                 {{_.environment}}

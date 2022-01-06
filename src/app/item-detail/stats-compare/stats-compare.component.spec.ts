@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { DataTableModule } from '@rushvora/ng-datatable';
+import {DataTableModule} from '@pascalhonegger/ng-datatable';
 
 describe('StatsCompareComponent', () => {
   let component: StatsCompareComponent;

@@ -9,25 +9,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './_interceptors/error-interceptor';
 import { JwtInterceptor } from './_interceptors/jwt-interceptor';
-import {AppRoutingModule} from './AppRoutingModule';
-import {ScenarioModule} from './scenario/scenario.module';
-import {SharedModule} from './shared/shared.module';
-import {ItemDetailModule} from './item-detail/item-detail.module';
-import {InitUserModule} from './init-user/init-user.module';
-import {AdministrationModule} from './administration/administration.module';
-import {ProjectAdministrationModule} from './administration/projects/project-administration.module';
-import {ProjectModule} from './project/project.module';
-import {RouterModule} from '@angular/router';
-import {TopPanelComponent} from './top-panel/top-panel.component';
-import {NotificationComponent} from './notification/notification.component';
-import {TimeagoModule} from 'ngx-timeago';
-
+import { AppRoutingModule } from './AppRoutingModule';
+import { ScenarioModule } from './scenario/scenario.module';
+import { SharedModule } from './shared/shared.module';
+import { ItemDetailModule } from './item-detail/item-detail.module';
+import { InitUserModule } from './init-user/init-user.module';
+import { AdministrationModule } from './administration/administration.module';
+import { ProjectAdministrationModule } from './administration/projects/project-administration.module';
+import { ProjectModule } from './project/project.module';
+import { RouterModule } from '@angular/router';
+import { TopPanelComponent } from './top-panel/top-panel.component';
+import { NotificationComponent } from './notification/notification.component';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopPanelComponent,
-    NotificationComponent
+    NotificationComponent,
   ],
   imports: [
     AppRoutingModule,

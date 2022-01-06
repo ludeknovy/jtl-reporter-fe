@@ -15,7 +15,7 @@ import {HighchartsChartModule} from 'highcharts-angular';
 import {ItemControlsComponent} from './item-controls/item-controls.component';
 import {SharedItemModule} from '../shared/shared-item/shared-item.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import {DataTableModule} from '@rushvora/ng-datatable';
+import {DataTableModule} from '@pascalhonegger/ng-datatable';
 import {
   AddNewExternalNotificationComponent
 } from './external-notification/add-new-external-notification/add-new-external-notification.component';

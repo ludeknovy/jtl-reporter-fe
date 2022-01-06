@@ -8,7 +8,7 @@ import {ScenariosGraphComponent} from './graph/scenarios-graph.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from '../shared/shared.module';
-import {DataTableModule} from '@rushvora/ng-datatable';
+import {DataTableModule} from '@pascalhonegger/ng-datatable';
 import {TimeagoModule} from 'ngx-timeago';
 import {SharedProjectModule} from '../shared/shared-project/shared-project.module';
 

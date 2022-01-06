@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PerformanceAnalysisComponent } from './performance-analysis.component';
-import {DataTableModule} from '@rushvora/ng-datatable';
+import {DataTableModule} from '@pascalhonegger/ng-datatable';
 
 describe('PerformanceAnalysisComponent', () => {
   let component: PerformanceAnalysisComponent;

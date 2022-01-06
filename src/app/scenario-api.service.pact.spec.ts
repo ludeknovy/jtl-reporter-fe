@@ -2,7 +2,7 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { PactWeb, Matchers } from '@pact-foundation/pact-web';
 import { HttpClientModule } from '@angular/common/http';
 import { ScenarioApiService } from './scenario-api.service';
-import * as moment from 'moment';
+import * as moment from 'moment';
 
 describe('Scenario', () => {
 

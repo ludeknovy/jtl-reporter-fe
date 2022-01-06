@@ -1,16 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ScenarioApiService } from 'src/app/scenario-api.service';
-import { ScenarioService } from 'src/app/scenario.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { FormControl, Validators, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { of } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ScenarioApiService } from "src/app/scenario-api.service";
+import { ScenarioService } from "src/app/scenario.service";
 
 @Component({
-  selector: 'app-add-new-external-notification',
-  templateUrl: './add-new-external-notification.component.html',
-  styleUrls: ['./add-new-external-notification.component.css']
+  selector: "app-add-new-external-notification",
+  templateUrl: "./add-new-external-notification.component.html",
+  styleUrls: ["./add-new-external-notification.component.css"]
 })
 export class AddNewExternalNotificationComponent implements OnInit {
 
@@ -33,15 +33,15 @@ export class AddNewExternalNotificationComponent implements OnInit {
   }
 
   open(content) {
-    this.modal = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modal = this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   createFormControls() {
-    this.url = new FormControl('', [
+    this.url = new FormControl("", [
       Validators.maxLength(400),
       Validators.required
     ]);
-    this.name = new FormControl('', [
+    this.name = new FormControl("", [
       Validators.maxLength(100),
       Validators.required
     ]);
@@ -56,10 +56,10 @@ export class AddNewExternalNotificationComponent implements OnInit {
 
   onSubmit() {
     if (this.myform.valid) {
-      const { projectName, scenarioName } = this.params;
+      const { projectName, scenarioName } = this.params;
       const body = {
         ...this.myform.value,
-        type: 'ms-teams'
+        type: "ms-teams"
       };
 
       this.scenarioApiService.createNewScenarioNotification(projectName, scenarioName, body)

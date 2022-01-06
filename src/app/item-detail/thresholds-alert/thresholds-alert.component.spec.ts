@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { ThresholdsAlertComponent } from './thresholds-alert.component';
+import { ThresholdsAlertComponent } from "./thresholds-alert.component";
 
-describe('ThresholdAlertComponent', () => {
+describe("ThresholdAlertComponent", () => {
   let component: ThresholdsAlertComponent;
   let fixture: ComponentFixture<ThresholdsAlertComponent>;
 
@@ -39,7 +39,7 @@ describe('ThresholdAlertComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

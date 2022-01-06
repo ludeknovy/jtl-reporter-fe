@@ -1,18 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ProjectService } from 'src/app/project.service';
-import { ItemsApiService } from 'src/app/items-api.service';
-import { Router } from '@angular/router';
-import { ScenarioApiService } from 'src/app/scenario-api.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ProjectService } from "src/app/project.service";
+import { ItemsApiService } from "src/app/items-api.service";
+import { Router } from "@angular/router";
+import { ScenarioApiService } from "src/app/scenario-api.service";
 
 @Component({
-  selector: 'app-delete-scenario',
-  templateUrl: './delete-scenario.component.html',
-  styleUrls: ['./delete-scenario.component.css']
+  selector: "app-delete-scenario",
+  templateUrl: "./delete-scenario.component.html",
+  styleUrls: ["./delete-scenario.component.css"]
 })
 export class DeleteScenarioComponent implements OnInit {
 
@@ -36,7 +36,7 @@ export class DeleteScenarioComponent implements OnInit {
   }
 
   createFormControls() {
-    this.deleteCheck = new FormControl('', [
+    this.deleteCheck = new FormControl("", [
       Validators.required,
       Validators.minLength(5)
     ]);
@@ -49,7 +49,7 @@ export class DeleteScenarioComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {

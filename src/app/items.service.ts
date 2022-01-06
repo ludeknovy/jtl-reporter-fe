@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, interval } from 'rxjs';
-import { Items } from './items.service.model';
-import { ItemsApiService } from './items-api.service';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, interval } from "rxjs";
+import { Items } from "./items.service.model";
+import { ItemsApiService } from "./items-api.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 
 export class ItemsService {

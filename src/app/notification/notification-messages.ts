@@ -1,85 +1,85 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 
 export class NotificationMessage {
 
   newTestItemNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'File uploaded and processing just started');
+    return this.statusCodeMessage(response, "File uploaded and processing just started");
   }
 
   newProjectNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'New project has been saved');
+    return this.statusCodeMessage(response, "New project has been saved");
   }
 
   newScenarionNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'New scenario has been created');
+    return this.statusCodeMessage(response, "New scenario has been created");
   }
 
   deleteProjectNotification(response) {
-    return this.statusCodeMessage(response, 'Project has been deleted');
+    return this.statusCodeMessage(response, "Project has been deleted");
   }
 
   itemUpdate(response) {
-    return this.statusCodeMessage(response, 'Item info has been updated');
+    return this.statusCodeMessage(response, "Item info has been updated");
   }
 
   scenarioUpdate(response) {
-    return this.statusCodeMessage(response, 'Scenario has been updated');
+    return this.statusCodeMessage(response, "Scenario has been updated");
   }
 
   projectUpdate(response) {
-    return this.statusCodeMessage(response, 'Project has been updated');
+    return this.statusCodeMessage(response, "Project has been updated");
   }
 
   itemDeleted(response) {
-    return this.statusCodeMessage(response, 'Test has been deleted');
+    return this.statusCodeMessage(response, "Test has been deleted");
   }
 
   deleteScenario(response) {
-    return this.statusCodeMessage(response, 'Scenario has been deleted');
+    return this.statusCodeMessage(response, "Scenario has been deleted");
   }
 
   newApitokenNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'Api token has been created');
+    return this.statusCodeMessage(response, "Api token has been created");
   }
 
   deleteApitokenNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'Api token has been deleted');
+    return this.statusCodeMessage(response, "Api token has been deleted");
   }
 
   passwordChangeNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'Password has been changed');
+    return this.statusCodeMessage(response, "Password has been changed");
   }
 
   userCreatedNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'User has been created');
+    return this.statusCodeMessage(response, "User has been created");
   }
 
   userDeletedNotificationMessage(response) {
-    return this.statusCodeMessage(response, 'User has been deleted');
+    return this.statusCodeMessage(response, "User has been deleted");
   }
 
   deleteScenarioNotification(response) {
-    return this.statusCodeMessage(response, 'Notification has been deleted');
+    return this.statusCodeMessage(response, "Notification has been deleted");
   }
 
   createScenarioNotification(response) {
-    return this.statusCodeMessage(response, 'Notification has been created');
+    return this.statusCodeMessage(response, "Notification has been created");
   }
 
   createItemShareLinkNotification(response) {
-    return this.statusCodeMessage(response, 'Link was created');
+    return this.statusCodeMessage(response, "Link was created");
   }
 
   deleteItemShareTokenNotification(response) {
-    return this.statusCodeMessage(response, 'Link was deleted');
+    return this.statusCodeMessage(response, "Link was deleted");
   }
 
   scenarioThresholdUpdate(response) {
-    return this.statusCodeMessage(response, 'Thresholds were updated');
+    return this.statusCodeMessage(response, "Thresholds were updated");
   }
 
   private statusCodeMessage(response, successMessage) {
@@ -90,6 +90,7 @@ export class NotificationMessage {
       try {
         message = { success: false, message: response.message };
       } catch (e) {
+        return
       }
     }
     return message;

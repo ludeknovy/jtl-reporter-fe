@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HighchartsChartModule } from 'highcharts-angular';
-import { LabelChartComponent } from './label-chart.component';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { HighchartsChartModule } from "highcharts-angular";
+import { LabelChartComponent } from "./label-chart.component";
 
-describe('LabelChartComponent', () => {
+describe("LabelChartComponent", () => {
   let component: LabelChartComponent;
   let fixture: ComponentFixture<LabelChartComponent>;
 
@@ -21,11 +21,11 @@ describe('LabelChartComponent', () => {
     fixture = TestBed.createComponent(LabelChartComponent);
     component = fixture.componentInstance;
     component.labels = new Map([
-      ['Throughput', {}]]);
+      ["Throughput", {}]]);
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

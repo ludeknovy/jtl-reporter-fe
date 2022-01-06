@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../_services/authentication.service';
-import { first } from 'rxjs/operators';
-import { InitService } from '../_services/init.service';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AuthenticationService } from "../_services/authentication.service";
+import { first } from "rxjs/operators";
+import { InitService } from "../_services/init.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -34,19 +34,19 @@ export class LoginComponent implements OnInit {
     new Promise(resolve => setTimeout(resolve, 0)).then();
     this.initService.fetchInfo().subscribe((res) => {
       if (res.initialized === false) {
-        this.router.navigate(['init']);
+        this.router.navigate(["init"]);
       }
       this.initLoaded = true;
     });
 
 
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', [Validators.required]]
+      username: ["", Validators.required],
+      password: ["", [Validators.required]]
     });
 
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
   }
 
   onSubmit() {

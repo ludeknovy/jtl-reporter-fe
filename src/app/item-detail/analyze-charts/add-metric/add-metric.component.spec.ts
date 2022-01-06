@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
 
-import { AddMetricComponent } from './add-metric.component';
+import { AddMetricComponent } from "./add-metric.component";
 
-describe('AddMetricComponent', () => {
+describe("AddMetricComponent", () => {
   let component: AddMetricComponent;
   let fixture: ComponentFixture<AddMetricComponent>;
 
@@ -20,13 +20,13 @@ describe('AddMetricComponent', () => {
     fixture = TestBed.createComponent(AddMetricComponent);
     component = fixture.componentInstance;
     component.chartLines = {
-      labels: new Map([['test', [{ name: 'test' }]]]),
+      labels: new Map([["test", [{ name: "test" }]]]),
       overall: new Map()
     };
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

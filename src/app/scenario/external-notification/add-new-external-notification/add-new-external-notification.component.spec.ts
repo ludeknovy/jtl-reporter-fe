@@ -1,11 +1,11 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
 
-import { AddNewExternalNotificationComponent } from './add-new-external-notification.component';
+import { AddNewExternalNotificationComponent } from "./add-new-external-notification.component";
 
-describe('AddNewExternalNotificationComponent', () => {
+describe("AddNewExternalNotificationComponent", () => {
   let component: AddNewExternalNotificationComponent;
   let fixture: ComponentFixture<AddNewExternalNotificationComponent>;
 
@@ -23,7 +23,7 @@ describe('AddNewExternalNotificationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

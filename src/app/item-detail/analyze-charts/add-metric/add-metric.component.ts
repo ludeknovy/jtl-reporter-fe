@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-add-metric',
-  templateUrl: './add-metric.component.html',
-  styleUrls: ['./add-metric.component.scss']
+  selector: "app-add-metric",
+  templateUrl: "./add-metric.component.html",
+  styleUrls: ["./add-metric.component.scss"]
 })
 export class AddMetricComponent implements OnInit, OnChanges {
 
   @Input() chartLines;
   @Input() preloadedSeries;
-  @Output() chartUpdate = new EventEmitter<{}>();
+  @Output() chartUpdate = new EventEmitter<any[]>();
 
   overallChartLines;
   labelsChartLines;
@@ -28,10 +28,11 @@ export class AddMetricComponent implements OnInit, OnChanges {
     const { value: firstItem } = this.chartLines.labels.values().next();
     const labels = firstItem?.map(_ => ({ name: _.name, isChecked: false }));
     overallLines.forEach((_: string) => {
-      this.metrics[_] = [{ name: 'overall', isChecked: false }];
+      this.metrics[_] = [{ name: "overall", isChecked: false }];
     });
     labelsLines.forEach((_: string) => {
       const labelsArray = [...JSON.parse(JSON.stringify(labels))];
+      // eslint-disable-next-line no-prototype-builtins
       this.metrics.hasOwnProperty(_)
         ? this.metrics[_].push(...labelsArray)
         : this.metrics[_] = labelsArray;
@@ -42,7 +43,7 @@ export class AddMetricComponent implements OnInit, OnChanges {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   submit() {

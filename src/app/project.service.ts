@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { ProjectApiService } from './project-api.service';
-import { BehaviorSubject, interval } from 'rxjs';
-import { ProjectsListing } from './project-api.service.model';
-import { IScenarios, Items } from './items.service.model';
-import { ScenarioApiService } from './scenario-api.service';
+import { Injectable } from "@angular/core";
+import { ProjectApiService } from "./project-api.service";
+import { BehaviorSubject, interval } from "rxjs";
+import { ProjectsListing } from "./project-api.service.model";
+import { IScenarios, Items } from "./items.service.model";
+import { ScenarioApiService } from "./scenario-api.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 
 export class ProjectService {

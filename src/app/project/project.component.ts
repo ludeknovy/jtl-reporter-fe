@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ProjectService } from '../project.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SharedMainBarService } from '../shared-main-bar.service';
-import { ViewType } from './project.component.model';
+import { Component, OnInit } from "@angular/core";
+import { ProjectService } from "../project.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SharedMainBarService } from "../shared-main-bar.service";
+import { ViewType } from "./project.component.model";
 
 @Component({
-  selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css', '../shared-styles.css'],
+  selector: "app-project",
+  templateUrl: "./project.component.html",
+  styleUrls: ["./project.component.css", "../shared-styles.css"],
 })
 export class ProjectComponent implements OnInit {
 
   scenarios;
   filteredScenarios;
   projectName: string;
-  nrSelect = 'az';
+  nrSelect = "az";
   viewType = ViewType.Cards;
 
   constructor(
@@ -48,13 +48,13 @@ export class ProjectComponent implements OnInit {
   changingValue(event) {
     const ordering = event.target.value;
     switch (ordering) {
-      case 'newest':
+      case "newest":
         this.filteredScenarios.sort(this.fromNewest);
         break;
-      case 'az':
+      case "az":
         this.filteredScenarios.sort(this.azSort);
         break;
-      case 'za':
+      case "za":
         this.filteredScenarios.sort(this.zaSort);
         break;
     }

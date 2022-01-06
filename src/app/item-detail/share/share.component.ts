@@ -1,15 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
-import { ItemsService } from 'src/app/items.service';
-import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
+import { Component, Input, OnInit } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Observable } from "rxjs";
+import { ItemsService } from "src/app/items.service";
+import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 @Component({
-  selector: 'app-share',
-  templateUrl: './share.component.html',
-  styleUrls: ['./share.component.css']
+  selector: "app-share",
+  templateUrl: "./share.component.html",
+  styleUrls: ["./share.component.css"]
 })
 export class ShareComponent implements OnInit {
 
@@ -38,12 +38,12 @@ export class ShareComponent implements OnInit {
 
   open(content) {
     this.itemService.fetchItemShareTokens(this.params.projectName, this.params.scenarioName, this.params.id);
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' as any });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "xl" as any });
   }
 
   copyInputMessage(inputElement) {
     inputElement.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     inputElement.setSelectionRange(0, 0);
   }
 

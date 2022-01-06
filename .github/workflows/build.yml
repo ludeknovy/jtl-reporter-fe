@@ -13,5 +13,5 @@ jobs:
           node-version: '14'
       - name: Install modules
         run: npm install
-      - name: Run unit tests
+      - name: Run Prod Build
         run: npm run build:prod

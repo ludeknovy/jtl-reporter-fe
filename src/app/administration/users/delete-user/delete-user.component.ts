@@ -1,16 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { UserService } from 'src/app/_services/user.service';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { NotificationService } from 'src/app/_services/notification.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormControl, Validators, FormGroup } from "@angular/forms";
+import { UserService } from "src/app/_services/user.service";
+import { of } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { NotificationService } from "src/app/_services/notification.service";
 
 @Component({
-  selector: 'app-delete-user',
-  templateUrl: './delete-user.component.html',
-  styleUrls: ['./delete-user.component.css', '../../administration.css']
+  selector: "app-delete-user",
+  templateUrl: "./delete-user.component.html",
+  styleUrls: ["./delete-user.component.css", "../../administration.css"]
 })
 
 
@@ -33,11 +33,11 @@ export class DeleteUserComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   createFormControls() {
-    this.deleteCheck = new FormControl('', [
+    this.deleteCheck = new FormControl("", [
       Validators.required,
       Validators.minLength(5)
     ]);

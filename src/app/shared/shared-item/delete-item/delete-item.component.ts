@@ -1,20 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProjectApiService } from 'src/app/project-api.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ProjectService } from 'src/app/project.service';
-import { ItemsApiService } from 'src/app/items-api.service';
-import { Router } from '@angular/router';
-import { ItemsService } from 'src/app/items.service';
-import { ScenarioService } from 'src/app/scenario.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ProjectApiService } from "src/app/project-api.service";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ProjectService } from "src/app/project.service";
+import { ItemsApiService } from "src/app/items-api.service";
+import { Router } from "@angular/router";
+import { ItemsService } from "src/app/items.service";
+import { ScenarioService } from "src/app/scenario.service";
 
 @Component({
-  selector: 'app-delete-item',
-  templateUrl: './delete-item.component.html',
-  styleUrls: ['./delete-item.component.css']
+  selector: "app-delete-item",
+  templateUrl: "./delete-item.component.html",
+  styleUrls: ["./delete-item.component.css"]
 })
 export class DeleteItemComponent implements OnInit {
 
@@ -40,7 +40,7 @@ export class DeleteItemComponent implements OnInit {
   }
 
   createFormControls() {
-    this.deleteCheck = new FormControl('', [
+    this.deleteCheck = new FormControl("", [
       Validators.required,
       Validators.minLength(5)
     ]);
@@ -53,7 +53,7 @@ export class DeleteItemComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {

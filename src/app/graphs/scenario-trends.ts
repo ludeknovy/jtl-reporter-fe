@@ -1,17 +1,17 @@
-import { ScenarioTrendsData } from '../items.service.model';
-import * as moment from 'moment';
+import { ScenarioTrendsData } from "../items.service.model";
+import * as moment from "moment";
 
 const options = ({ data, projectId, scenarioId }, yUnit) => {
   return {
     hover: {
       intersect: true,
       onHover: function (event, elements) {
-        event.target.style.cursor = elements[0] ? 'pointer' : 'default';
+        event.target.style.cursor = elements[0] ? "pointer" : "default";
       }
     },
     legend: false,
     tooltips: {
-      mode: 'index',
+      mode: "index",
       intersect: false,
       callbacks: {
         label: function (t, d) {
@@ -29,24 +29,24 @@ const options = ({ data, projectId, scenarioId }, yUnit) => {
         gridLines: {
           drawBorder: false,
           display: false,
-          type: 'time'
+          type: "time"
         },
       }],
       yAxes: [
         {
-          type: 'linear',
-          position: 'left',
-          id: 'A',
+          type: "linear",
+          position: "left",
+          id: "A",
           gridLines: {
-            color: '#b7b7b717',
-            zeroLineColor: '#b7b7b717',
+            color: "#b7b7b717",
+            zeroLineColor: "#b7b7b717",
             drawBorder: false
           },
           scaleLabel: {
             display: true,
             labelString: yUnit,
             padding: -3,
-            fontColor: '#888888c7'
+            fontColor: "#888888c7"
           },
           ticks: {
             beginAtZero: true,
@@ -54,12 +54,12 @@ const options = ({ data, projectId, scenarioId }, yUnit) => {
           }
         },
         {
-          id: 'B',
-          type: 'linear',
-          position: 'right',
+          id: "B",
+          type: "linear",
+          position: "right",
           gridLines: {
-            color: '#FFFFFF',
-            zeroLineColor: '#FFFFFF',
+            color: "#FFFFFF",
+            zeroLineColor: "#FFFFFF",
             drawBorder: false
           },
           ticks: {
@@ -68,9 +68,9 @@ const options = ({ data, projectId, scenarioId }, yUnit) => {
           },
           scaleLabel: {
             display: false,
-            labelString: 'threads',
+            labelString: "threads",
             padding: -3,
-            fontColor: '#888888c7'
+            fontColor: "#888888c7"
           },
         }
       ]
@@ -89,10 +89,10 @@ const options = ({ data, projectId, scenarioId }, yUnit) => {
 export const customScenarioTrends = () => {
   return {
     chart: {
-      type: 'column',
-      zoomType: 'x',
+      type: "column",
+      zoomType: "x",
       marginTop: 30,
-      className: 'chart-sync',
+      className: "chart-sync",
     },
     time: {
       getTimezoneOffset: function (timestamp) {
@@ -109,10 +109,10 @@ export const customScenarioTrends = () => {
       }
     },
     title: {
-      text: ''
+      text: ""
     },
-    colors: ['#5DADE2', '#2ECC71', '#F4D03F', '#D98880',
-      '#707B7C', '#7DCEA0', '#21618C', '#873600', '#AF7AC5', '#B7950B'],
+    colors: ["#5DADE2", "#2ECC71", "#F4D03F", "#D98880",
+      "#707B7C", "#7DCEA0", "#21618C", "#873600", "#AF7AC5", "#B7950B"],
     tooltip: {
       split: false,
       crosshairs: [true],
@@ -120,7 +120,7 @@ export const customScenarioTrends = () => {
     },
     plotOptions: {
       series: {
-        cursor: 'pointer',
+        cursor: "pointer",
         pointWidth: 20,
       },
       line: {
@@ -139,7 +139,7 @@ export const customScenarioTrends = () => {
       min: 0,
       max: 15,
       lineWidth: 0,
-      type: 'datetime',
+      type: "datetime",
       crosshair: {
         snap: true
       },
@@ -149,46 +149,46 @@ export const customScenarioTrends = () => {
     },
     yAxis: [
       {
-        gridLineColor: '#f2f2f2',
+        gridLineColor: "#f2f2f2",
         lineWidth: 0,
         showEmpty: false,
         title: {
-          text: 'ms'
+          text: "ms"
         },
       },
       {
-        gridLineColor: '#f2f2f2',
+        gridLineColor: "#f2f2f2",
         lineWidth: 0,
         opposite: true,
         showEmpty: false,
         title: {
-          text: 'VU'
+          text: "VU"
         },
       },
       {
-        gridLineColor: '#f2f2f2',
+        gridLineColor: "#f2f2f2",
         lineWidth: 0,
         showEmpty: false,
         title: {
-          text: 'hits/s'
+          text: "hits/s"
         },
       },
       {
-        gridLineColor: '#f2f2f2',
-        lineWidth: 0,
-        opposite: true,
-        showEmpty: false,
-        title: {
-          text: '%'
-        },
-      },
-      {
-        gridLineColor: '#f2f2f2',
+        gridLineColor: "#f2f2f2",
         lineWidth: 0,
         opposite: true,
         showEmpty: false,
         title: {
-          text: 'mbps'
+          text: "%"
+        },
+      },
+      {
+        gridLineColor: "#f2f2f2",
+        lineWidth: 0,
+        opposite: true,
+        showEmpty: false,
+        title: {
+          text: "mbps"
         },
       }
     ],
@@ -197,19 +197,19 @@ export const customScenarioTrends = () => {
 
 
 export const scenarioHistoryGraphs = (historyData: ScenarioTrendsData[], projectId, scenarioId) => {
-  const dates = historyData.map(_ => moment(_.overview.startDate).format('DD. MM. YYYY HH:mm'));
+  const dates = historyData.map(_ => moment(_.overview.startDate).format("DD. MM. YYYY HH:mm"));
   const intervals = [
-    { name: 'avgResponseTime', color: 'rgb(87,95,207, 0.8)', unit: 'ms' },
-    { name: 'throughput', color: 'rgb(41,128,187, 0.8)', unit: 'hit/s' },
-    { name: 'errorRate', color: 'rgb(231,76,60, 0.8)', unit: '%' },
-    { name: 'percentil', color: 'rgb(17,122,139, 0.8)', unit: 'ms' }].map(({ name, color, unit }) => {
+    { name: "avgResponseTime", color: "rgb(87,95,207, 0.8)", unit: "ms" },
+    { name: "throughput", color: "rgb(41,128,187, 0.8)", unit: "hit/s" },
+    { name: "errorRate", color: "rgb(231,76,60, 0.8)", unit: "%" },
+    { name: "percentil", color: "rgb(17,122,139, 0.8)", unit: "ms" }].map(({ name, color, unit }) => {
 
       // in case of no data create empty graph data to allow afterDraw hook to work
       if (historyData.length === 0) {
         return {
           name,
           data: {
-            type: 'bar',
+            type: "bar",
             data: {
               maxBarNumber: 15,
               labels: [],
@@ -227,23 +227,23 @@ export const scenarioHistoryGraphs = (historyData: ScenarioTrendsData[], project
           backgroundColor: color,
           fill: true,
           borderWidth: 1,
-          yAxisID: 'A',
+          yAxisID: "A",
         },
         {
           data: historyData.map((__) => __.overview.maxVu),
-          type: 'line',
+          type: "line",
           showLine: false,
-          yAxisID: 'B',
+          yAxisID: "B",
           fill: false,
-          borderColor: '#000000',
+          borderColor: "#000000",
           pointRadius: 5,
-          pointStyle: 'line',
+          pointStyle: "line",
         }
       ];
       return {
         name,
         data: {
-          type: 'bar',
+          type: "bar",
           data: {
             maxBarNumber: 15,
             labels: dates,
@@ -254,9 +254,9 @@ export const scenarioHistoryGraphs = (historyData: ScenarioTrendsData[], project
       };
     });
   return {
-    responseHistoryTimeChart: intervals.find(_ => _.name === 'avgResponseTime').data,
-    throughputHistoryChart: intervals.find(_ => _.name === 'throughput').data,
-    errorRateHistoryChart: intervals.find(_ => _.name === 'errorRate').data,
-    ninetyHistoryChart: intervals.find(_ => _.name === 'percentil').data,
+    responseHistoryTimeChart: intervals.find(_ => _.name === "avgResponseTime").data,
+    throughputHistoryChart: intervals.find(_ => _.name === "throughput").data,
+    errorRateHistoryChart: intervals.find(_ => _.name === "errorRate").data,
+    ninetyHistoryChart: intervals.find(_ => _.name === "percentil").data,
   };
 };

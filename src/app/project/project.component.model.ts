@@ -1,4 +1,4 @@
 export enum ViewType {
-  List = 'list',
-  Cards = 'cards',
+  List = "list",
+  Cards = "cards",
 }

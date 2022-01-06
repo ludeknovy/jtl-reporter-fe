@@ -1,22 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { labelTrendChartOptions, emptyChart } from 'src/app/graphs/label-trend';
-import { LabelApiService } from 'src/app/label-api.service';
-import * as Highcharts from 'highcharts';
-import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
+import { Component, OnInit, Input } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { labelTrendChartOptions, emptyChart } from "src/app/graphs/label-trend";
+import { LabelApiService } from "src/app/label-api.service";
+import * as Highcharts from "highcharts";
+import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 
 @Component({
-  selector: 'app-label-trend',
-  templateUrl: './label-trend.component.html',
-  styleUrls: ['./label-trend.component.css']
+  selector: "app-label-trend",
+  templateUrl: "./label-trend.component.html",
+  styleUrls: ["./label-trend.component.css"]
 })
-export class LabelTrendComponent implements OnInit {
+export class LabelTrendComponent {
   @Input() params: ItemParams;
 
   Highcharts: typeof Highcharts = Highcharts;
   chart;
-  chartConstructor = 'chart';
+  chartConstructor = "chart";
   chartCallback;
   updateFlag = false;
   labelChartOption;
@@ -29,18 +29,15 @@ export class LabelTrendComponent implements OnInit {
     private labelApiService: LabelApiService,
 
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     this.chartCallback = chart => {
       self.chart = chart;
     };
   }
 
-  ngOnInit() {
-  }
-
   open(content) {
-    // @ts-ignore
-    this.modalService.open(content, { size: 'xl' }).result
+    this.modalService.open(content, { size: "xl" }).result
       .then((_) => { this.labelChartOption = null; }, () => { this.labelChartOption = null; });
     this.fetchTrendData();
 

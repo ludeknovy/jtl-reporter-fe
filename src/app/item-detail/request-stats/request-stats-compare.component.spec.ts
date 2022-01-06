@@ -1,17 +1,17 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {DataTableModule} from '@pascalhonegger/ng-datatable';
-import { HighchartsChartModule } from 'highcharts-angular';
-import { ToastrModule } from 'ngx-toastr';
-import { LabelTrendComponent } from '../label-trend/label-trend.component';
-import { StatsCompareComponent } from '../stats-compare/stats-compare.component';
-import { LabelHealthComponent } from './label-health/label-health.component';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { DataTableModule } from "@pascalhonegger/ng-datatable";
+import { HighchartsChartModule } from "highcharts-angular";
+import { ToastrModule } from "ngx-toastr";
+import { LabelTrendComponent } from "../label-trend/label-trend.component";
+import { StatsCompareComponent } from "../stats-compare/stats-compare.component";
+import { LabelHealthComponent } from "./label-health/label-health.component";
 
-import { RequestStatsCompareComponent } from './request-stats-compare.component';
+import { RequestStatsCompareComponent } from "./request-stats-compare.component";
 
-describe('RequestStatsCompareComponent', () => {
+describe("RequestStatsCompareComponent", () => {
   let component: RequestStatsCompareComponent;
   let fixture: ComponentFixture<RequestStatsCompareComponent>;
 
@@ -47,7 +47,7 @@ describe('RequestStatsCompareComponent', () => {
         avgResponseTime: 10,
         bytes: 758,
         errorRate: 0,
-        label: '02 - Click_Log_In-22',
+        label: "02 - Click_Log_In-22",
         maxResponseTime: 38,
         minResponseTime: 8,
         n0: 33,
@@ -56,7 +56,7 @@ describe('RequestStatsCompareComponent', () => {
         samples: 200,
         throughput: 0.17,
         responseMessageFailures: [
-          { responseMessage: 'error', count: 1 }
+          { responseMessage: "error", count: 1 }
         ],
         statusCodes: [{
           statusCode: 200, count: 1
@@ -65,7 +65,7 @@ describe('RequestStatsCompareComponent', () => {
         avgResponseTime: 10,
         bytes: 758,
         errorRate: 0,
-        label: '02 - Click_Log_In-21',
+        label: "02 - Click_Log_In-21",
         maxResponseTime: 38,
         minResponseTime: 8,
         n0: 33,
@@ -74,7 +74,7 @@ describe('RequestStatsCompareComponent', () => {
         samples: 200,
         throughput: 0.17,
         responseMessageFailures: [
-          { responseMessage: 'error', count: 1 }
+          { responseMessage: "error", count: 1 }
         ],
         statusCodes: [{
           statusCode: 200, count: 1
@@ -84,7 +84,7 @@ describe('RequestStatsCompareComponent', () => {
         avgResponseTime: 10,
         bytes: 758,
         errorRate: 0,
-        label: '03 - Click_Log_In-20',
+        label: "03 - Click_Log_In-20",
         maxResponseTime: 38,
         minResponseTime: 8,
         n0: 33,
@@ -93,7 +93,7 @@ describe('RequestStatsCompareComponent', () => {
         samples: 200,
         throughput: 0.17,
         responseMessageFailures: [
-          { responseMessage: 'error', count: 1 }
+          { responseMessage: "error", count: 1 }
         ],
         statusCodes: [{
           statusCode: 200, count: 1
@@ -103,19 +103,19 @@ describe('RequestStatsCompareComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
-  it('should call resetStatsData when itemToCompare triggered', () => {
-    const spy = spyOn(component, 'resetStatsData').and.callThrough();
+  it("should call resetStatsData when itemToCompare triggered", () => {
+    const spy = spyOn(component, "resetStatsData").and.callThrough();
     component.itemToCompare({
       maxVu: 100,
-      id: '123-123',
+      id: "123-123",
       statistics: [{
         avgResponseTime: 109,
         bytes: 7587,
         errorRate: 0,
-        label: '02 - Click_Log_In-22',
+        label: "02 - Click_Log_In-22",
         maxResponseTime: 380,
         minResponseTime: 81,
         n0: 330,
@@ -127,21 +127,21 @@ describe('RequestStatsCompareComponent', () => {
     });
     expect(spy).toHaveBeenCalled();
   });
-  describe('label search', () => {
-    it('should search fulltext', () => {
-      component.search('02');
+  describe("label search", () => {
+    it("should search fulltext", () => {
+      component.search("02");
       expect(component.labelsData.length).toBe(2);
     });
-    it('should correctly filter out labels if NOT keyword used', () => {
-      component.search('not "02 - Click_Log_In-22"');
+    it("should correctly filter out labels if NOT keyword used", () => {
+      component.search("not \"02 - Click_Log_In-22\"");
       expect(component.labelsData.map(x => x.label))
-        .toEqual(['02 - Click_Log_In-21', '03 - Click_Log_In-20']);
+        .toEqual(["02 - Click_Log_In-21", "03 - Click_Log_In-20"]);
     });
-    it('should correctly filter out if OR keyword used', () => {
-      component.search('"02 - Click_Log_In-22" or "03 - Click_Log_In-20"');
+    it("should correctly filter out if OR keyword used", () => {
+      component.search("\"02 - Click_Log_In-22\" or \"03 - Click_Log_In-20\"");
       expect(component.labelsData.length).toBe(2);
       expect(component.labelsData.map(x => x.label))
-        .toEqual(['02 - Click_Log_In-22', '03 - Click_Log_In-20']);
+        .toEqual(["02 - Click_Log_In-22", "03 - Click_Log_In-20"]);
     });
   });
 

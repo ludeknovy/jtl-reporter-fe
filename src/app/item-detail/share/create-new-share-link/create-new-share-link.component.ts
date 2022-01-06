@@ -1,18 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/internal/operators/catchError';
-import { ItemsApiService } from 'src/app/items-api.service';
-import { ItemsService } from 'src/app/items.service';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
+import { Component, Input, OnInit } from "@angular/core";
+import { FormControl, Validators, FormGroup } from "@angular/forms";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { of } from "rxjs";
+import { catchError } from "rxjs/internal/operators/catchError";
+import { ItemsApiService } from "src/app/items-api.service";
+import { ItemsService } from "src/app/items.service";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 
 @Component({
-  selector: 'app-create-new-share-link',
-  templateUrl: './create-new-share-link.component.html',
-  styleUrls: ['./create-new-share-link.component.css']
+  selector: "app-create-new-share-link",
+  templateUrl: "./create-new-share-link.component.html",
+  styleUrls: ["./create-new-share-link.component.css"]
 })
 export class CreateNewShareLinkComponent implements OnInit {
 
@@ -34,11 +34,11 @@ export class CreateNewShareLinkComponent implements OnInit {
   }
 
   open(content) {
-    this.modal = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modal = this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   createFormControls() {
-    this.note = new FormControl('', [
+    this.note = new FormControl("", [
       Validators.maxLength(100),
       Validators.required
     ]);
@@ -52,7 +52,7 @@ export class CreateNewShareLinkComponent implements OnInit {
 
   onSubmit() {
     const { note } = this.newShareLinkForm.value;
-    const { projectName, scenarioName, id } = this.params;
+    const { projectName, scenarioName, id } = this.params;
 
     this.itemApiService.createItemShareToken(projectName, scenarioName, id, { note })
     .pipe(catchError(r => of(r)))

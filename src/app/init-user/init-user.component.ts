@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { AuthenticationService } from '../_services/authentication.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { first } from "rxjs/operators";
+import { AuthenticationService } from "../_services/authentication.service";
 
 @Component({
-  selector: 'app-init-user',
-  templateUrl: './init-user.component.html',
-  styleUrls: ['./init-user.component.css']
+  selector: "app-init-user",
+  templateUrl: "./init-user.component.html",
+  styleUrls: ["./init-user.component.css"]
 })
 export class InitUserComponent implements OnInit {
   initUserForm: FormGroup;
@@ -23,8 +23,8 @@ export class InitUserComponent implements OnInit {
 
   ngOnInit() {
     this.initUserForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      username: ["", Validators.required],
+      password: ["", [Validators.required, Validators.minLength(8)]],
     });
   }
 
@@ -42,7 +42,7 @@ export class InitUserComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate(['/']);
+          this.router.navigate(["/"]);
         },
         error => {
           this.error = error;

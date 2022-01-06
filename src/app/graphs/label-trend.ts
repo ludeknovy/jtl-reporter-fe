@@ -1,11 +1,11 @@
 export const labelTrendChartOptions = (_) => {
   return {
     chart: {
-      type: 'spline',
+      type: "spline",
     },
-    title: { text: '' },
+    title: { text: "" },
     subtitle: {
-      text: ''
+      text: ""
     },
     exporting: {
       enabled: false
@@ -19,30 +19,30 @@ export const labelTrendChartOptions = (_) => {
     }],
     yAxis: [{ // Primary yAxis
       labels: {
-        format: '{value} ms',
+        format: "{value} ms",
       },
-      type: 'logarithmic',
+      type: "logarithmic",
       title: {
-        text: '',
+        text: "",
       },
       gridLineWidth: 0
     }, {
       title: {
-        text: '',
+        text: "",
       },
       labels: {
-        format: '{value} hit/s',
+        format: "{value} hit/s",
       },
-      type: 'logarithmic',
+      type: "logarithmic",
       gridLineWidth: 0,
       opposite: true
     },
     {
       title: {
-        text: '',
+        text: "",
       },
       labels: {
-        format: '{value} %',
+        format: "{value} %",
         style: {
           lineWidt: 1,
         },
@@ -52,12 +52,12 @@ export const labelTrendChartOptions = (_) => {
     },
     {
       title: {
-        text: '',
+        text: "",
       },
       labels: {
-        format: '{value} VU',
+        format: "{value} VU",
       },
-      type: 'logarithmic',
+      type: "logarithmic",
       gridLineWidth: 0,
       opposite: false,
     }
@@ -75,87 +75,87 @@ export const labelTrendChartOptions = (_) => {
       // }
     },
     legend: {
-      layout: 'horizontal',
-      align: 'center',
+      layout: "horizontal",
+      align: "center",
     },
     series: [{
-      name: '90%',
-      type: 'areaspline',
+      name: "90%",
+      type: "areaspline",
       yAxis: 0,
-      stacking: 'normal',
-      data: _['n0'],
+      stacking: "normal",
+      data: _["n0"],
       // color: colors[0],
-      color: '#FFC400',
+      color: "#FFC400",
       lineWidth: 0,
       tooltip: {
-        valueSuffix: ' ms'
+        valueSuffix: " ms"
       },
       marker: { enabled: false },
     },
     {
-      name: '95%',
-      type: 'areaspline',
+      name: "95%",
+      type: "areaspline",
       yAxis: 0,
       // color: colors[3],
-      color: '#36B37E',
+      color: "#36B37E",
       lineWidth: 0,
-      data: _['n5'],
+      data: _["n5"],
       tooltip: {
-        valueSuffix: ' ms'
+        valueSuffix: " ms"
       },
       marker: { enabled: false },
-      stacking: 'normal',
+      stacking: "normal",
     },
     {
-      name: '99%',
-      type: 'areaspline',
+      name: "99%",
+      type: "areaspline",
       yAxis: 0,
       // color: colors[4],
-      color: '#008DA6',
+      color: "#008DA6",
       lineWidth: 0,
-      data: _['n9'],
+      data: _["n9"],
       tooltip: {
-        valueSuffix: ' ms'
+        valueSuffix: " ms"
       },
       marker: { enabled: false },
-      stacking: 'normal',
+      stacking: "normal",
     },
     {
-      name: 'throughput',
-      type: 'spline',
+      name: "throughput",
+      type: "spline",
       data: _.throughput,
       visible: false,
-      color: '#CB59E8',
+      color: "#CB59E8",
       tooltip: {
-        valueSuffix: ' hits/s'
+        valueSuffix: " hits/s"
       },
       yAxis: 1,
-      marker: { enabled: false, symbol: 'circle' }
+      marker: { enabled: false, symbol: "circle" }
     },
     {
-      name: 'error rate',
-      type: 'spline',
+      name: "error rate",
+      type: "spline",
       data: _.errorRate,
       tooltip: {
-        valueSuffix: ' %'
+        valueSuffix: " %"
       },
-      color: 'red',
+      color: "red",
       yAxis: 2,
-      dashStyle: 'ShortDot',
-      marker: { enabled: false, symbol: 'circle' }
+      dashStyle: "ShortDot",
+      marker: { enabled: false, symbol: "circle" }
     },
     {
-      name: 'threads',
-      type: 'spline',
+      name: "threads",
+      type: "spline",
       steped: `center`,
       data: _.threads,
       tooltip: {
-        valueSuffix: ' VU'
+        valueSuffix: " VU"
       },
-      color: 'black',
-      dashStyle: 'ShortDot',
+      color: "black",
+      dashStyle: "ShortDot",
       yAxis: 3,
-      marker: { enabled: false, symbol: 'circle' }
+      marker: { enabled: false, symbol: "circle" }
     },
     ]
   };
@@ -164,11 +164,11 @@ export const labelTrendChartOptions = (_) => {
 export const emptyChart = () => {
   return {
     chart: {
-      type: 'spline'
+      type: "spline"
     },
-    title: { text: 'No data' },
+    title: { text: "No data" },
     subtitle: {
-      text: 'there must be at least 2 records for given label'
+      text: "there must be at least 2 records for given label"
     },
   };
 };

@@ -1,14 +1,14 @@
-import { HttpClientModule } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { TestBed } from "@angular/core/testing";
 
-import { InitService } from './init.service';
+import { InitService } from "./init.service";
 
-describe('InitService', () => {
+describe("InitService", () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [ HttpClientModule ]
   }));
 
-  it('should be created', () => {
+  it("should be created", () => {
     const service: InitService = TestBed.get(InitService);
     expect(service).toBeTruthy();
   });

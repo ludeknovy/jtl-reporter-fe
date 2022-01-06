@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, interval } from 'rxjs';
-import { scenarioHistoryGraphs } from './graphs/scenario-trends';
-import { ScenarioNotifications } from './items.service.model';
-import { ScenarioApiService } from './scenario-api.service';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, interval } from "rxjs";
+import { scenarioHistoryGraphs } from "./graphs/scenario-trends";
+import { ScenarioNotifications } from "./items.service.model";
+import { ScenarioApiService } from "./scenario-api.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 
 export class ScenarioService {
 
-  private trends = new BehaviorSubject<{}>({});
+  private trends = new BehaviorSubject<Record<string, any>>({});
   public trends$ = this.trends.asObservable();
 
   private notifications = new BehaviorSubject<ScenarioNotifications[]>([]);

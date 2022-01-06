@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule, Routes} from '@angular/router';
-import {InitUserComponent} from './init-user.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule, Routes } from "@angular/router";
+import { InitUserComponent } from "./init-user.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-const routes: Routes = [{path: 'init', component: InitUserComponent}];
+const routes: Routes = [{ path: "init", component: InitUserComponent }];
 
 @NgModule({
   declarations: [InitUserComponent],

@@ -1,17 +1,17 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
-import { bytesToMbps, roundNumberTwoDecimals } from '../calculations';
-import { AnalyzeChartService } from '../../analyze-chart.service';
-import { ItemsApiService } from 'src/app/items-api.service';
-import { ToastrService } from 'ngx-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
+import { bytesToMbps, roundNumberTwoDecimals } from "../calculations";
+import { AnalyzeChartService } from "../../analyze-chart.service";
+import { ItemsApiService } from "src/app/items-api.service";
+import { ToastrService } from "ngx-toastr";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 
 
 @Component({
-  selector: 'app-request-stats-compare',
-  templateUrl: './request-stats-compare.component.html',
-  styleUrls: ['./request-stats-compare.component.css', '../item-detail.component.scss']
+  selector: "app-request-stats-compare",
+  templateUrl: "./request-stats-compare.component.html",
+  styleUrls: ["./request-stats-compare.component.css", "../item-detail.component.scss"]
 })
 export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
@@ -26,7 +26,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   comparisonWarning = [];
   comparedMetadata;
   comparisonMs = true;
-  externalSearchTerm = '';
+  externalSearchTerm = "";
 
   constructor(
     private itemsService: ItemsApiService,
@@ -64,14 +64,14 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     let orTerms = [];
 
     if (terms && terms.length > 0) {
-      if (terms[0] === 'not' && terms.length > 1) {
+      if (terms[0] === "not" && terms.length > 1) {
         notTerm = terms[1];
         terms.splice(0, 1);
       }
 
-      if (terms.includes('or')) {
+      if (terms.includes("or")) {
         orTerms = terms.map((term, index, arr) => {
-          if (term.toLowerCase() === 'or') {
+          if (term.toLowerCase() === "or") {
             return this.trimTerm(arr[index + 1]);
           } else if (index === 0) {
             return this.trimTerm(term);
@@ -106,7 +106,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   clearSearch() {
     const dataToFilter = this.comparedData || this.itemData.statistics;
     this.labelsData = dataToFilter;
-    this.externalSearchTerm = '';
+    this.externalSearchTerm = "";
   }
 
   itemToCompare(data) {
@@ -125,7 +125,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
           avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
           minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
           maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
-          // @ts-ignore
           bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
           n0: (_.n0 - labelToBeCompared.n0),
           n5: (_.n5 - labelToBeCompared.n5),
@@ -150,7 +149,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       }
     });
     if (data.environment !== this.itemData.environment) {
-      this.comparisonWarning.push('Environments do differ');
+      this.comparisonWarning.push("Environments do differ");
     }
     this.comparedData = this.comparedDataMs;
     this.labelsData = this.comparedData;
@@ -173,12 +172,12 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   showComparisonWarnings() {
-    this.toastr.warning(this.comparisonWarning.join('<br>'), 'Comparison Warning!',
+    this.toastr.warning(this.comparisonWarning.join("<br>"), "Comparison Warning!",
       {
         closeButton: true,
         enableHtml: true,
         timeOut: 15000,
-        positionClass: 'toast-bottom-right'
+        positionClass: "toast-bottom-right"
       });
     this.comparisonWarning = [];
   }
@@ -197,7 +196,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             avgResponseTime: this.calculatePercDifference(_.avgResponseTime, labelToBeCompared.avgResponseTime),
             minResponseTime: this.calculatePercDifference(_.minResponseTime, labelToBeCompared.minResponseTime),
             maxResponseTime: this.calculatePercDifference(_.maxResponseTime, labelToBeCompared.maxResponseTime),
-            // @ts-ignore
             bytes: this.calculatePercDifference(_.bytes, labelToBeCompared.bytes) / 1024,
             n0: this.calculatePercDifference(_.n0, labelToBeCompared.n0),
             n5: this.calculatePercDifference(_.n5, labelToBeCompared.n5),
@@ -243,15 +241,15 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     }
     return term
       .trim()
-      .replace(/^"+|"+$/g, '')
+      .replace(/^"+|"+$/g, "")
       .toLowerCase();
   }
 
   getUnit() {
     if (this.comparisonMs) {
-      return 'ms';
+      return "ms";
     }
-    return '%';
+    return "%";
   }
 
   focusLabel(label: string) {
@@ -259,6 +257,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   openSearchHelp(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 }

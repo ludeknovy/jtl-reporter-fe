@@ -1,16 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { ApiTokenService } from 'src/app/_services/api-token.service';
-import { NotificationService } from 'src/app/_services/notification.service';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
+import { Component, OnInit, Input } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { ApiTokenService } from "src/app/_services/api-token.service";
+import { NotificationService } from "src/app/_services/notification.service";
+import { NotificationMessage } from "src/app/notification/notification-messages";
 
 @Component({
-  selector: 'app-delete-token',
-  templateUrl: './delete-token.component.html',
-  styleUrls: ['./delete-token.component.css', '../../administration.css']
+  selector: "app-delete-token",
+  templateUrl: "./delete-token.component.html",
+  styleUrls: ["./delete-token.component.css", "../../administration.css"]
 })
 export class DeleteTokenComponent implements OnInit {
 
@@ -31,7 +31,7 @@ export class DeleteTokenComponent implements OnInit {
   }
 
   createFormControls() {
-    this.deleteCheck = new FormControl('', [
+    this.deleteCheck = new FormControl("", [
       Validators.required,
       Validators.minLength(5)
     ]);
@@ -44,7 +44,7 @@ export class DeleteTokenComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {

@@ -3,7 +3,7 @@ export const showZeroErrorWarning = (errorRate, errorCount) => {
     return true;
   } else {
     if (errorCount === null || errorCount === undefined) {
-      return 'unknown';
+      return "unknown";
     }
     return errorCount && errorCount > 0;
   }

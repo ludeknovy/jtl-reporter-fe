@@ -1,19 +1,19 @@
-import { Component, OnInit, Input, } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as Highcharts from 'highcharts';
-import { monitoringGraphSettings } from 'src/app/graphs/monitoring';
-import { from } from 'rxjs';
+import { Component, OnInit, Input, } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import * as Highcharts from "highcharts";
+import { monitoringGraphSettings } from "src/app/graphs/monitoring";
+import { from } from "rxjs";
 
 
 @Component({
-  selector: 'app-monitoring-stats',
-  templateUrl: './monitoring-stats.component.html',
-  styleUrls: ['./monitoring-stats.component.css']
+  selector: "app-monitoring-stats",
+  templateUrl: "./monitoring-stats.component.html",
+  styleUrls: ["./monitoring-stats.component.css"]
 })
-export class MonitoringStatsComponent implements OnInit {
+export class MonitoringStatsComponent {
   Highcharts: typeof Highcharts = Highcharts;
   monitoringChartOptions;
-  chartConstructor = 'chart';
+  chartConstructor = "chart";
   chartCallback;
   updateFlag = false;
   chart;
@@ -28,12 +28,9 @@ export class MonitoringStatsComponent implements OnInit {
 
   @Input() data: [{ name: string, timestamp: Date, avgCpu: number, avgMem: number }];
 
-  ngOnInit() {
-  }
-
 
   open(content) {
-    this.modalService.open(content, { size: 'xl' }).result
+    this.modalService.open(content, { size: "xl" }).result
       .then((_) => { this.monitoringChartOptions = null; }, () => { this.monitoringChartOptions = null; });
 
     const workers = Array.from(new Set(this.data.map(data => data.name)));
@@ -45,7 +42,7 @@ export class MonitoringStatsComponent implements OnInit {
         acc.name = current.name;
         return acc;
       }, { data: { cpu: [], mem: [] }, name: null }))
-      .map((worker) => [{ data: worker.data.cpu, name: worker.name + ' - cpu' }, { data: worker.data.mem, name: worker.name + ' - mem' }])
+      .map((worker) => [{ data: worker.data.cpu, name: worker.name + " - cpu" }, { data: worker.data.mem, name: worker.name + " - mem" }])
       .flat();
 
     from(new Promise(resolve => setTimeout(resolve, 50))).subscribe((val: any) => {

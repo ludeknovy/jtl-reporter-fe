@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {catchError} from 'rxjs/operators';
-import {of} from 'rxjs';
-import {ProjectApiService} from '../../../project-api.service';
-import {NotificationMessage} from '../../../notification/notification-messages';
-import {ProjectService} from '../../../project.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { ProjectApiService } from "../../../project-api.service";
+import { NotificationMessage } from "../../../notification/notification-messages";
+import { ProjectService } from "../../../project.service";
 
 @Component({
-  selector: 'app-project-settings',
-  templateUrl: './project-settings.component.html',
-  styleUrls: ['./project-settings.component.css']
+  selector: "app-project-settings",
+  templateUrl: "./project-settings.component.html",
+  styleUrls: ["./project-settings.component.css"]
 })
 export class ProjectSettingsComponent implements OnInit {
 
@@ -77,7 +77,7 @@ export class ProjectSettingsComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'});
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" });
   }
 
   onSubmit() {

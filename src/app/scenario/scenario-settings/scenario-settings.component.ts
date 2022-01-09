@@ -140,7 +140,6 @@ export class SettingsScenarioComponent implements OnInit {
         thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod
       } = this.scenarioSettingsForm.value;
       const { projectName, scenarioName: currentScenarioName } = this.params;
-      console.log(keepTestRunsPeriod)
       const body = {
         scenarioName,
         analysisEnabled,

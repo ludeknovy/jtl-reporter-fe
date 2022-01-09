@@ -147,6 +147,7 @@ describe("Scenario", () => {
               analysisEnabled: true,
               zeroErrorToleranceEnabled: true,
               deleteSamples: false,
+              keepTestRunsPeriod: 7,
               thresholds: {
                 throughput: 1,
                 percentile: 1,
@@ -174,6 +175,7 @@ describe("Scenario", () => {
             analysisEnabled: true,
             zeroErrorToleranceEnabled: true,
             deleteSamples: false,
+            keepTestRunsPeriod: 7,
             thresholds: {
               throughput: 1,
               percentile: 1,

@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { NotificationService } from 'src/app/_services/notification.service';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, Validators, FormControl } from "@angular/forms";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationService } from "src/app/_services/notification.service";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { AuthenticationService } from "src/app/_services/authentication.service";
 
 @Component({
-  selector: 'app-my-profile',
-  templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.css', '../administration.css', '../../shared-styles.css']
+  selector: "app-my-profile",
+  templateUrl: "./my-profile.component.html",
+  styleUrls: ["./my-profile.component.css", "../administration.css", "../../shared-styles.css"]
 })
 export class MyProfileComponent implements OnInit {
   myform: FormGroup;
@@ -31,8 +31,8 @@ export class MyProfileComponent implements OnInit {
   }
 
   createFormControls() {
-    this.currentPassword = new FormControl('', [Validators.required]);
-    this.newPassword = new FormControl('', [Validators.required, Validators.minLength(8)]);
+    this.currentPassword = new FormControl("", [Validators.required]);
+    this.newPassword = new FormControl("", [Validators.required, Validators.minLength(8)]);
   }
 
   createForm() {

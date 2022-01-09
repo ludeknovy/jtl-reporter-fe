@@ -1,5 +1,5 @@
-import { StatusCodes } from '../item-detail/request-stats/label-health/label-health.component';
-import { colors } from './colors';
+import { StatusCodes } from "../item-detail/request-stats/label-health/label-health.component";
+import { colors } from "./colors";
 
 export const statusCodesChart = (data: StatusCodes[]) => {
   return {
@@ -7,12 +7,12 @@ export const statusCodesChart = (data: StatusCodes[]) => {
       enabled: false,
     },
     colorAxis: {
-      minColor: '#FFFFFF',
-      maxColor: '#FFF'
+      minColor: "#FFFFFF",
+      maxColor: "#FFF"
   },
     series: [{
-      type: 'treemap',
-      layoutAlgorithm: 'squarified',
+      type: "treemap",
+      layoutAlgorithm: "squarified",
       allowDrillToNode: false,
       animationLimit: 1000,
       dataLabels: {
@@ -33,10 +33,10 @@ export const statusCodesChart = (data: StatusCodes[]) => {
       }))
     }],
     subtitle: {
-      text: ''
+      text: ""
     },
     title: {
-      text: ''
+      text: ""
     }
   };
 };

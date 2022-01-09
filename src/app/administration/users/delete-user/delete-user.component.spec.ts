@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { DeleteUserComponent } from './delete-user.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { DeleteUserComponent } from "./delete-user.component";
+import { ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
-describe('DeleteUserComponent', () => {
+describe("DeleteUserComponent", () => {
   let component: DeleteUserComponent;
   let fixture: ComponentFixture<DeleteUserComponent>;
 
@@ -22,7 +22,7 @@ describe('DeleteUserComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

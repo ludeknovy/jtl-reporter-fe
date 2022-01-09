@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ItemsApiService} from '../items-api.service';
-import {ItemDetail} from '../items.service.model';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {DecimalPipe} from '@angular/common';
-import * as Highcharts from 'highcharts';
-import exporting from 'highcharts/modules/exporting';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ItemsApiService } from "../items-api.service";
+import { ItemDetail } from "../items.service.model";
+import { NgxSpinnerService } from "ngx-spinner";
+import { DecimalPipe } from "@angular/common";
+import * as Highcharts from "highcharts";
+import exporting from "highcharts/modules/exporting";
 
 exporting(Highcharts);
 
@@ -15,22 +15,22 @@ import {
   throughputLineSettings,
   networkLineSettings,
   commonGraphSettings,
-} from '../graphs/item-detail';
-import {catchError, withLatestFrom} from 'rxjs/operators';
-import {of} from 'rxjs';
-import {SharedMainBarService} from '../shared-main-bar.service';
-import {ToastrService} from 'ngx-toastr';
-import {bytesToMbps} from './calculations';
-import {logScaleButton} from '../graphs/log-scale-button';
-import {ItemStatusValue} from './item-detail.model';
-import {Metrics} from './metrics';
-import {AnalyzeChartService} from '../analyze-chart.service';
-import {showZeroErrorWarning} from '../utils/showZeroErrorTolerance';
+} from "../graphs/item-detail";
+import { catchError, withLatestFrom } from "rxjs/operators";
+import { of } from "rxjs";
+import { SharedMainBarService } from "../shared-main-bar.service";
+import { ToastrService } from "ngx-toastr";
+import { bytesToMbps } from "./calculations";
+import { logScaleButton } from "../graphs/log-scale-button";
+import { ItemStatusValue } from "./item-detail.model";
+import { Metrics } from "./metrics";
+import { AnalyzeChartService } from "../analyze-chart.service";
+import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
 
 @Component({
-  selector: 'app-item-detail',
-  templateUrl: './item-detail.component.html',
-  styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
+  selector: "app-item-detail",
+  templateUrl: "./item-detail.component.html",
+  styleUrls: ["./item-detail.component.scss", "../shared-styles.css"],
   providers: [DecimalPipe]
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
@@ -103,7 +103,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.itemParams.projectName,
       this.itemParams.scenarioName,
       this.itemParams.id,
-      {token: this.token}
+      { token: this.token }
     )
       .pipe(catchError(r => {
         this.spinner.hide();
@@ -141,15 +141,15 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       percentile95, percentile99,
     } = this.itemData.plot;
 
-    const threadLine = {...threadLineSettings, name: 'virtual users', data: threads};
-    const errorLine = {...errorLineSettings, ...overAllFailRate};
-    const throughputLine = {...throughputLineSettings, ...overallThroughput};
+    const threadLine = { ...threadLineSettings, name: "virtual users", data: threads };
+    const errorLine = { ...errorLineSettings, ...overAllFailRate };
+    const throughputLine = { ...throughputLineSettings, ...overallThroughput };
 
     if (overAllNetworkV2) {
       const networkMbps = overAllNetworkV2.data.map((_) => {
         return [_[0], bytesToMbps(_[1])];
       });
-      const networkLine = {...networkLineSettings, data: networkMbps};
+      const networkLine = { ...networkLineSettings, data: networkMbps };
       this.chartLines.overall.set(Metrics.Network, networkLine);
     }
 
@@ -164,7 +164,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         return _;
       });
       const networkChartOptions = {
-        ...commonGraphSettings('mbps'),
+        ...commonGraphSettings("mbps"),
         series: [...networkMbps, threadLine], ...logScaleButton
       };
 
@@ -174,32 +174,32 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
     if (minResponseTime) {
       this.chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime);
-      this.labelCharts.set(Metrics.ResponseTimeMin, {...commonGraphSettings('ms'), series: [...minResponseTime, threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeMin, { ...commonGraphSettings("ms"), series: [...minResponseTime, threadLine] });
     }
 
     if (maxResponseTime) {
       this.chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime);
-      this.labelCharts.set(Metrics.ResponseTimeMax, {...commonGraphSettings('ms'), series: [...maxResponseTime, threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeMax, { ...commonGraphSettings("ms"), series: [...maxResponseTime, threadLine] });
     }
     if (percentile90) {
       this.chartLines.labels.set(Metrics.ResponseTimeP90, percentile90);
-      this.labelCharts.set(Metrics.ResponseTimeP90, {...commonGraphSettings('ms'), series: [...percentile90, threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP90, { ...commonGraphSettings("ms"), series: [...percentile90, threadLine] });
     }
     if (percentile95) {
       this.chartLines.labels.set(Metrics.ResponseTimeP95, percentile95);
-      this.labelCharts.set(Metrics.ResponseTimeP95, {...commonGraphSettings('ms'), series: [...percentile95, threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP95, { ...commonGraphSettings("ms"), series: [...percentile95, threadLine] });
     }
     if (percentile99) {
       this.chartLines.labels.set(Metrics.ResponseTimeP99, percentile99);
-      this.labelCharts.set(Metrics.ResponseTimeP99, {...commonGraphSettings('ms'), series: [...percentile99, threadLine]});
+      this.labelCharts.set(Metrics.ResponseTimeP99, { ...commonGraphSettings("ms"), series: [...percentile99, threadLine] });
     }
 
     this.chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime);
-    this.labelCharts.set(Metrics.ResponseTimeAvg, {...commonGraphSettings('ms'), series: [...responseTime, threadLine]});
+    this.labelCharts.set(Metrics.ResponseTimeAvg, { ...commonGraphSettings("ms"), series: [...responseTime, threadLine] });
 
 
     this.chartLines.labels.set(Metrics.Throughput, throughput);
-    this.labelCharts.set(Metrics.Throughput, {...commonGraphSettings('hits/s'), series: [...throughput, threadLine]});
+    this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings("hits/s"), series: [...throughput, threadLine] });
 
   }
 
@@ -208,11 +208,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     const oveallChartSeries = Array.from(this.chartLines.overall.values());
 
     this.overallChartOptions = {
-      ...overallChartSettings('ms'), series: oveallChartSeries
+      ...overallChartSettings("ms"), series: oveallChartSeries
     };
   }
 
-  itemDetailChanged({note, environment, hostname}) {
+  itemDetailChanged({ note, environment, hostname }) {
     this.itemData.note = note;
     this.itemData.environment = environment;
     this.itemData.hostname = hostname;
@@ -220,13 +220,13 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   monitoringAlerts() {
     const alertMessages = [];
-    const {max: maxCpu} = this.itemData.monitoring.cpu;
+    const { max: maxCpu } = this.itemData.monitoring.cpu;
     if (maxCpu > 90) {
       alertMessages.push(`High CPU usage`);
     }
 
     if (alertMessages.length > 0) {
-      this.toastr.warning(alertMessages.join('<br>'), 'Monitoring Alert!',
+      this.toastr.warning(alertMessages.join("<br>"), "Monitoring Alert!",
         {
           closeButton: true,
           disableTimeOut: true,
@@ -243,33 +243,33 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleThroughputBand({element, perfAnalysis}) {
+  toggleThroughputBand({ element, perfAnalysis }) {
     this.overallChartOptions.series.forEach(serie => {
-      if (['response time', 'errors'].includes(serie.name)) {
+      if (["response time", "errors"].includes(serie.name)) {
         serie.visible = this.toggleThroughputBandFlag;
       }
-      if (serie.name === 'throughput') {
+      if (serie.name === "throughput") {
         if (this.toggleThroughputBandFlag) {
           serie.zones = [];
           return;
         }
         serie.zones = [{
           value: this.itemData.overview.throughput,
-          color: '#e74c3c'
+          color: "#e74c3c"
         }];
       }
     });
 
     if (!this.toggleThroughputBandFlag) {
-      element.textContent = 'Hide in chart';
+      element.textContent = "Hide in chart";
       this.overallChartOptions.xAxis.plotBands = {
-        color: '#e74c3c4f',
+        color: "#e74c3c4f",
         from: perfAnalysis.throughputVariability.bandValues[0],
         to: perfAnalysis.throughputVariability.bandValues[1]
       };
       this.toggleThroughputBandFlag = true;
     } else {
-      element.textContent = 'Display in chart';
+      element.textContent = "Display in chart";
       this.overallChartOptions.xAxis.plotBands = null;
       this.toggleThroughputBandFlag = false;
     }

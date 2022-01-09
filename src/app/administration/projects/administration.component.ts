@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ProjectsListing } from '../../project-api.service.model';
-import { Observable } from 'rxjs';
-import { ProjectService } from '../../project.service';
-import { SharedMainBarService } from '../../shared-main-bar.service';
+import { Component, OnInit } from "@angular/core";
+import { ProjectsListing } from "../../project-api.service.model";
+import { Observable } from "rxjs";
+import { ProjectService } from "../../project.service";
+import { SharedMainBarService } from "../../shared-main-bar.service";
 
 @Component({
-  selector: 'app-administration',
-  templateUrl: './administration.component.html',
-  styleUrls: ['../administration.css', '../../shared-styles.css']
+  selector: "app-administration",
+  templateUrl: "./administration.component.html",
+  styleUrls: ["../administration.css", "../../shared-styles.css"]
 })
 export class ProjectsAdministrationComponent implements OnInit {
 

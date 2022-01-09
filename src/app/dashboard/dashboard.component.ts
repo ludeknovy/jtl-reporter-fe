@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ProjectApiService } from '../project-api.service';
-import { ItemsListing, ProjectsOverallStats } from '../items.service.model';
-import { Router } from '@angular/router';
-import { SharedMainBarService } from '../shared-main-bar.service';
+import { Component, OnInit } from "@angular/core";
+import { ProjectApiService } from "../project-api.service";
+import { ItemsListing, ProjectsOverallStats } from "../items.service.model";
+import { Router } from "@angular/router";
+import { SharedMainBarService } from "../shared-main-bar.service";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css', '../shared-styles.css']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.css", "../shared-styles.css"]
 })
 export class DashboardComponent implements OnInit {
   latestItems: ItemsListing[];

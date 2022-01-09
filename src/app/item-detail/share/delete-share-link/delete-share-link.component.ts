@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { ItemsApiService } from 'src/app/items-api.service';
-import { ItemsService } from 'src/app/items.service';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ItemParams } from 'src/app/scenario/item-controls/item-controls.model';
+import { Component, Input, OnInit } from "@angular/core";
+import { FormControl, Validators, FormGroup } from "@angular/forms";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { of } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { ItemsApiService } from "src/app/items-api.service";
+import { ItemsService } from "src/app/items.service";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 @Component({
-  selector: 'app-delete-share-link',
-  templateUrl: './delete-share-link.component.html',
-  styleUrls: ['./delete-share-link.component.css']
+  selector: "app-delete-share-link",
+  templateUrl: "./delete-share-link.component.html",
+  styleUrls: ["./delete-share-link.component.css"]
 })
 export class DeleteShareLinkComponent implements OnInit {
   deleteCheck: FormControl;
@@ -34,7 +34,7 @@ export class DeleteShareLinkComponent implements OnInit {
   }
 
   createFormControls() {
-    this.deleteCheck = new FormControl('', [
+    this.deleteCheck = new FormControl("", [
       Validators.required,
       Validators.minLength(5)
     ]);
@@ -47,7 +47,7 @@ export class DeleteShareLinkComponent implements OnInit {
   }
 
   open(content) {
-    this.modal = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modal = this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {

@@ -1,16 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import {  of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { ProjectService } from 'src/app/project.service';
-import { ScenarioApiService } from 'src/app/scenario-api.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { of } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { ProjectService } from "src/app/project.service";
+import { ScenarioApiService } from "src/app/scenario-api.service";
 
 @Component({
-  selector: 'app-add-new-scenario',
-  templateUrl: './add-new-scenario.component.html',
-  styleUrls: ['./add-new-scenario.component.css']
+  selector: "app-add-new-scenario",
+  templateUrl: "./add-new-scenario.component.html",
+  styleUrls: ["./add-new-scenario.component.css"]
 })
 export class AddNewScenarioComponent implements OnInit {
 
@@ -31,7 +31,7 @@ export class AddNewScenarioComponent implements OnInit {
   }
 
   createFormControls() {
-    this.scenarioName = new FormControl('', [
+    this.scenarioName = new FormControl("", [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(50)
@@ -45,13 +45,13 @@ export class AddNewScenarioComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {
     if (this.myform.valid) {
       const { scenarioName } = this.myform.value;
-      this.scenarioApiService.createNewScenario(this.projectName, {scenarioName})
+      this.scenarioApiService.createNewScenario(this.projectName, { scenarioName })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newProjectNotificationMessage(_);

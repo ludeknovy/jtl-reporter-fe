@@ -1,16 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ScenarioApiService } from 'src/app/scenario-api.service';
-import { ScenarioService } from 'src/app/scenario.service';
+import { Component, Input, OnInit } from "@angular/core";
+import { FormGroup } from "@angular/forms";
+import { NgbModal, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { of } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ScenarioApiService } from "src/app/scenario-api.service";
+import { ScenarioService } from "src/app/scenario.service";
 
 @Component({
-  selector: 'app-delete-external-notification',
-  templateUrl: './delete-external-notification.component.html',
-  styleUrls: ['./delete-external-notification.component.css']
+  selector: "app-delete-external-notification",
+  templateUrl: "./delete-external-notification.component.html",
+  styleUrls: ["./delete-external-notification.component.css"]
 })
 export class DeleteExternalNotificationComponent implements OnInit {
 
@@ -36,12 +36,12 @@ export class DeleteExternalNotificationComponent implements OnInit {
   }
 
   open(content) {
-    this.modal = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modal = this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {
     if (this.myform.valid) {
-      const { projectName, scenarioName } = this.params;
+      const { projectName, scenarioName } = this.params;
       this.scenarioApiService.deleteScenarioNotification(projectName, scenarioName, this.notificationInput.id)
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {

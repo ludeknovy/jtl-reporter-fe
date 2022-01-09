@@ -1,11 +1,11 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HighchartsChartModule } from 'highcharts-angular';
-import { LabelTrendComponent } from '../label-trend/label-trend.component';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { HighchartsChartModule } from "highcharts-angular";
+import { LabelTrendComponent } from "../label-trend/label-trend.component";
 
 
-describe('RequestStatsCompareComponent', () => {
+describe("RequestStatsCompareComponent", () => {
   let component: LabelTrendComponent;
   let fixture: ComponentFixture<LabelTrendComponent>;
 
@@ -29,7 +29,7 @@ describe('RequestStatsCompareComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

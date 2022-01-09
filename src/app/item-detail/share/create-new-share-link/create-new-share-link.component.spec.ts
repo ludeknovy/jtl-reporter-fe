@@ -1,10 +1,10 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
-import { CreateNewShareLinkComponent } from './create-new-share-link.component';
+import { CreateNewShareLinkComponent } from "./create-new-share-link.component";
 
-describe('CreateNewShareLinkComponent', () => {
+describe("CreateNewShareLinkComponent", () => {
   let component: CreateNewShareLinkComponent;
   let fixture: ComponentFixture<CreateNewShareLinkComponent>;
 
@@ -26,7 +26,7 @@ describe('CreateNewShareLinkComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

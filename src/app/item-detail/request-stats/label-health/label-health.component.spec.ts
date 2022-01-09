@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {DataTableModule} from '@pascalhonegger/ng-datatable';
-import { HighchartsChartModule } from 'highcharts-angular';
-import { LabelHealthComponent } from './label-health.component';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { DataTableModule } from "@pascalhonegger/ng-datatable";
+import { HighchartsChartModule } from "highcharts-angular";
+import { LabelHealthComponent } from "./label-health.component";
 
-describe('LabelHealthComponent', () => {
+describe("LabelHealthComponent", () => {
   let component: LabelHealthComponent;
   let fixture: ComponentFixture<LabelHealthComponent>;
 
@@ -21,7 +21,7 @@ describe('LabelHealthComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

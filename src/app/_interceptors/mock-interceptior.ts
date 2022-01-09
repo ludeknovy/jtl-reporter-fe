@@ -1,7 +1,7 @@
-import { Injectable, Injector } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Injectable, Injector } from "@angular/core";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 
-import { Observable, of } from 'rxjs';
+import { Observable, of } from "rxjs";
 
 
 @Injectable()
@@ -15,15 +15,15 @@ export class HttpRequestInterceptorMock implements HttpInterceptor {
       return of(new HttpResponse({ status: 200, body: [] }));
     }
     if (request.url &&
-      request.url.includes('projects/test-project/scenarios/test-scenario/items/test-item/share-tokens')) {
+      request.url.includes("projects/test-project/scenarios/test-scenario/items/test-item/share-tokens")) {
       return of(new HttpResponse({ status: 200, body: [] }));
     }
     if (request.url &&
-      request.url.includes('api-tokens')) {
+      request.url.includes("api-tokens")) {
       return of(new HttpResponse({ status: 200, body: [] }));
     }
     if (request.url &&
-      request.url.includes('projects/test-project/scenarios/test-scenario/items/test-item/custom-chart-settings')) {
+      request.url.includes("projects/test-project/scenarios/test-scenario/items/test-item/custom-chart-settings")) {
       return of(new HttpResponse({ status: 200 }));
     }
 

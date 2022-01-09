@@ -1,17 +1,17 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
-import { PactWeb, Matchers } from '@pact-foundation/pact-web';
-import { HttpClientModule } from '@angular/common/http';
-import { ScenarioApiService } from './scenario-api.service';
-import * as moment from 'moment';
+import { TestBed, waitForAsync } from "@angular/core/testing";
+import { PactWeb, Matchers } from "@pact-foundation/pact-web";
+import { HttpClientModule } from "@angular/common/http";
+import { ScenarioApiService } from "./scenario-api.service";
+import * as moment from "moment";
 
-describe('Scenario', () => {
+describe("Scenario", () => {
 
   let provider;
 
   beforeAll((done) => {
     provider = new PactWeb({
       port: 1234,
-      host: '127.0.0.1',
+      host: "127.0.0.1",
     });
 
     // required for slower CI environments
@@ -40,44 +40,44 @@ describe('Scenario', () => {
     provider.verify().then(done, e => done.fail(e));
   });
 
-  describe('/projects/:projectName/scenarios', () => {
-    describe('GET /projects/:projectName/scenarios', () => {
+  describe("/projects/:projectName/scenarios", () => {
+    describe("GET /projects/:projectName/scenarios", () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'there is at least one existing test item',
-          uponReceiving: 'a request for scenarios',
+          state: "there is at least one existing test item",
+          uponReceiving: "a request for scenarios",
           withRequest: {
-            method: 'GET',
-            path: '/projects/test-project/scenarios'
+            method: "GET",
+            path: "/projects/test-project/scenarios"
           },
           willRespondWith: {
             status: 200,
             body: Matchers.eachLike({
-              name: 'test-scenario',
-              id: 'e3d1cde2-6079-4b01-8592-4bde15ae6ed7',
+              name: "test-scenario",
+              id: "e3d1cde2-6079-4b01-8592-4bde15ae6ed7",
               data: Matchers.eachLike({
                 avgLatency: 372,
                 avgResponseTime: 373,
                 duration: 11.99,
                 // tslint:disable-next-line:max-line-length
-                endDate: Matchers.term({ generate: '2019-07-24T13:12:20.807Z', matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z' }),
+                endDate: Matchers.term({ generate: "2019-07-24T13:12:20.807Z", matcher: "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z" }),
                 errorRate: 0.48,
                 maxVu: 10,
                 percentil: 658,
                 // tslint:disable-next-line:max-line-length
-                startDate: Matchers.term({ generate: '2019-07-24T12:00:21.156Z', matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z' }),
+                startDate: Matchers.term({ generate: "2019-07-24T12:00:21.156Z", matcher: "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z" }),
                 throughput: 24.81,
               })
             })
           },
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           }
         }).then(done, e => done.fail(e));
       });
-      it('should return scenario lists', (done) => {
+      it("should return scenario lists", (done) => {
         const projectService: ScenarioApiService = TestBed.get(ScenarioApiService);
-        projectService.fetchScenarios('test-project').subscribe(response => {
+        projectService.fetchScenarios("test-project").subscribe(response => {
           expect(response).toEqual(jasmine.any(Array));
           response.forEach((_) => {
             expect(_.id).toEqual(jasmine.any(String));
@@ -101,53 +101,53 @@ describe('Scenario', () => {
         });
       });
     });
-    describe('POST /project/:projectName/scenarios', () => {
+    describe("POST /project/:projectName/scenarios", () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'there is existing project',
-          uponReceiving: 'a request for creating new scenario',
+          state: "there is existing project",
+          uponReceiving: "a request for creating new scenario",
           withRequest: {
-            method: 'POST',
-            path: '/projects/test-project/scenarios',
+            method: "POST",
+            path: "/projects/test-project/scenarios",
             body: {
               scenarioName: Matchers.somethingLike(`new-test-scenario`)
             },
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json"
             }
           },
           willRespondWith: {
             status: 201,
           },
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           }
         }).then(done, e => done.fail(e));
       });
-      it('should be able to create new scenario', (done) => {
+      it("should be able to create new scenario", (done) => {
         const scenarioService: ScenarioApiService = TestBed.get(ScenarioApiService);
-        scenarioService.createNewScenario('test-project', { scenarioName: 'new-scenario' }).subscribe(response => {
-          // @ts-ignore
+        scenarioService.createNewScenario("test-project", { scenarioName: "new-scenario" }).subscribe(response => {
           expect(response.status).toEqual(201);
           done();
         });
       });
     });
   });
-  describe('/project/:projectName/scenarios/:scenarioName', () => {
-    describe('PUT /project/:projectName/scenarios/:scenarioName', () => {
+  describe("/project/:projectName/scenarios/:scenarioName", () => {
+    describe("PUT /project/:projectName/scenarios/:scenarioName", () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'there is existing project with at least one scenario',
-          uponReceiving: 'a request for updating scenario',
+          state: "there is existing project with at least one scenario",
+          uponReceiving: "a request for updating scenario",
           withRequest: {
-            method: 'PUT',
-            path: '/projects/test-project/scenarios/test-scenario',
+            method: "PUT",
+            path: "/projects/test-project/scenarios/test-scenario",
             body: Matchers.somethingLike({
-              scenarioName: 'new-scenario-name',
+              scenarioName: "new-scenario-name",
               analysisEnabled: true,
               zeroErrorToleranceEnabled: true,
               deleteSamples: false,
+              keepTestRunsPeriod: 7,
               thresholds: {
                 throughput: 1,
                 percentile: 1,
@@ -156,25 +156,26 @@ describe('Scenario', () => {
               }
             }),
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json"
             }
           },
           willRespondWith: {
             status: 204,
           },
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           }
         }).then(done, e => done.fail(e));
       });
-      it('should be able to update scenario ', (done) => {
+      it("should be able to update scenario ", (done) => {
         const scenarioService: ScenarioApiService = TestBed.get(ScenarioApiService);
-        scenarioService.updateScenario('test-project', 'test-scenario',
+        scenarioService.updateScenario("test-project", "test-scenario",
           {
-            scenarioName: 'new-name',
+            scenarioName: "new-name",
             analysisEnabled: true,
             zeroErrorToleranceEnabled: true,
             deleteSamples: false,
+            keepTestRunsPeriod: 7,
             thresholds: {
               throughput: 1,
               percentile: 1,
@@ -182,65 +183,63 @@ describe('Scenario', () => {
               enabled: false,
             }
           }).subscribe(response => {
-            // @ts-ignore
             expect(response.status).toEqual(204);
             done();
           });
       });
     });
-    describe('DELETE /project/:projectName/scenarios/:scenarioName', () => {
+    describe("DELETE /project/:projectName/scenarios/:scenarioName", () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'there is existing project with at least one scenario',
-          uponReceiving: 'a request for deleting scenario',
+          state: "there is existing project with at least one scenario",
+          uponReceiving: "a request for deleting scenario",
           withRequest: {
-            method: 'DELETE',
-            path: '/projects/test-project/scenarios/test-scenario',
+            method: "DELETE",
+            path: "/projects/test-project/scenarios/test-scenario",
           },
           willRespondWith: {
             status: 204,
           },
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           }
         }).then(done, e => done.fail(e));
       });
-      it('should be able to delete scenario', (done) => {
+      it("should be able to delete scenario", (done) => {
         const scenarioService: ScenarioApiService = TestBed.get(ScenarioApiService);
-        scenarioService.deleteScenario('test-project', 'test-scenario').subscribe(response => {
-          // @ts-ignore
+        scenarioService.deleteScenario("test-project", "test-scenario").subscribe(response => {
           expect(response.status).toEqual(204);
           done();
         });
       });
     });
-    describe('GET /project/:projectName/scenarios/:scenarioName/trends', () => {
+    describe("GET /project/:projectName/scenarios/:scenarioName/trends", () => {
       beforeAll((done) => {
         provider.addInteraction({
-          state: 'there is at least one existing test item',
-          uponReceiving: 'a request for scenario trends',
+          state: "there is at least one existing test item",
+          uponReceiving: "a request for scenario trends",
           withRequest: {
-            method: 'GET',
-            path: '/projects/test-project/scenarios/test-scenario/trends',
+            method: "GET",
+            path: "/projects/test-project/scenarios/test-scenario/trends",
           },
           willRespondWith: {
             status: 200,
             body: Matchers.eachLike({
-              id: 'e3d1cde2-6079-4b01-8592-4bde15ae6ed7',
+              id: "e3d1cde2-6079-4b01-8592-4bde15ae6ed7",
               overview: Matchers.somethingLike({
                 avgLatency: 372,
                 avgResponseTime: 373,
                 duration: 11.99,
                 endDate: Matchers.term({
-                  generate: '2019-07-24T13:12:20.807Z',
-                  matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z'
+                  generate: "2019-07-24T13:12:20.807Z",
+                  matcher: "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z"
                 }),
                 errorRate: 0.48,
                 maxVu: 10,
                 percentil: 658,
                 startDate: Matchers.term({
-                  generate: '2019-07-24T12:00:21.156Z',
-                  matcher: '\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z'
+                  generate: "2019-07-24T12:00:21.156Z",
+                  matcher: "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z"
                 }),
                 throughput: 24.81,
                 avgConnect: 10,
@@ -249,14 +248,13 @@ describe('Scenario', () => {
             })
           },
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           }
         }).then(done, e => done.fail(e));
       });
-      it('should be able to fetch scenario trends', (done) => {
+      it("should be able to fetch scenario trends", (done) => {
         const scenarioService: ScenarioApiService = TestBed.get(ScenarioApiService);
-        scenarioService.fetchScenarioTrend('test-project', 'test-scenario').subscribe(response => {
-          // @ts-ignore
+        scenarioService.fetchScenarioTrend("test-project", "test-scenario").subscribe(response => {
           console.log(response);
           done();
         });

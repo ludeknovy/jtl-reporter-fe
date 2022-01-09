@@ -1,11 +1,11 @@
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
 
-import { InitUserComponent } from './init-user.component';
+import { InitUserComponent } from "./init-user.component";
 
-describe('InitUserComponent', () => {
+describe("InitUserComponent", () => {
   let component: InitUserComponent;
   let fixture: ComponentFixture<InitUserComponent>;
 
@@ -23,7 +23,7 @@ describe('InitUserComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

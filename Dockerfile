@@ -9,7 +9,7 @@ rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json angular.json ./
 RUN npm install
 
-COPY tsconfig.json tslint.json ./
+COPY tsconfig.json ./
 COPY /src ./src
 
 RUN npm run build:prod

@@ -13,7 +13,7 @@ import { ZeroErrorToleranceWarningComponent } from "./zero-error-tolerance-warni
 import { HighchartsChartModule } from "highcharts-angular";
 import { LabelChartComponent } from "./label-chart/label-chart.component";
 import { AnalyzeChartsComponent } from "./analyze-charts/analyze-charts.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LabelHealthComponent } from "./request-stats/label-health/label-health.component";
 import { LabelTrendComponent } from "./label-trend/label-trend.component";
 import { StatsCompareComponent } from "./stats-compare/stats-compare.component";
@@ -38,7 +38,7 @@ const routes: Routes = [  {
     CreateNewShareLinkComponent, MonitoringStatsComponent ],
   imports: [
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, FormsModule,
   ],
   exports: []
 })

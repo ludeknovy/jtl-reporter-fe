@@ -27,16 +27,46 @@ export class SettingsScenarioComponent implements OnInit {
     enabled: null,
     zeroErrorToleranceEnabled: null,
     deleteSamples: null,
+    keepTestRunsPeriod: null,
   };
 
   params;
+
+  keepTestRunPeriods = [
+    {
+      period: 0,
+      description: "forever",
+    },
+    {
+      period: 7,
+      description: "7 days",
+    },
+    {
+      period: 14,
+      description: "14 days"
+    },
+    {
+      period: 30,
+      description: "30 days",
+    },
+    {
+      period: 90,
+      description: "90 days"
+    },
+    {
+      period: 180,
+      description: "180 days",
+    }
+  ];
 
   constructor(
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private scenarioApiService: ScenarioApiService,
     private notification: NotificationMessage,
-  ) { }
+  ) {
+  }
+
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
     this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
@@ -78,6 +108,9 @@ export class SettingsScenarioComponent implements OnInit {
     this.formControls.deleteSamples = new FormControl(settings.deleteSamples, [
       Validators.required
     ]);
+    this.formControls.keepTestRunsPeriod = new FormControl(settings.keepTestRunsPeriod, [
+      Validators.required
+    ]);
   }
 
   createForm() {
@@ -90,6 +123,7 @@ export class SettingsScenarioComponent implements OnInit {
       thresholdErrorRate: this.formControls.errorRate,
       zeroErrorToleranceEnabled: this.formControls.zeroErrorToleranceEnabled,
       deleteSamples: this.formControls.deleteSamples,
+      keepTestRunsPeriod: this.formControls.keepTestRunsPeriod,
     });
   }
 
@@ -103,19 +137,20 @@ export class SettingsScenarioComponent implements OnInit {
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
-        thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled } = this.scenarioSettingsForm.value;
+        thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod
+      } = this.scenarioSettingsForm.value;
       const { projectName, scenarioName: currentScenarioName } = this.params;
-
       const body = {
         scenarioName,
         analysisEnabled,
         zeroErrorToleranceEnabled,
+        keepTestRunsPeriod,
         deleteSamples,
         thresholds: {
           enabled: thresholdEnabled,
-          errorRate:  parseFloat(thresholdErrorRate),
+          errorRate: parseFloat(thresholdErrorRate),
           throughput: parseFloat(thresholdThroughput),
-          percentile:  parseFloat(thresholdPercentile)
+          percentile: parseFloat(thresholdPercentile)
         }
       };
 

@@ -43,6 +43,18 @@
       </div>
 
       <div class="form-sub">
+        <div class="form-group">
+          <h6>Test runs retention</h6>
+          <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+            <small> How long to keep test runs. All related data will be deleted as well.</small></div>
+          <label for="keep-tests-period" class="form-label">Keep tests</label>
+          <select class="custom-select" id="keep-tests-period" formControlName="keepTestRunsPeriod">
+            <option *ngFor="let keepTestRunPeriod of keepTestRunPeriods" [ngValue]="keepTestRunPeriod.period">{{ keepTestRunPeriod.description }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-sub">
         <h6>Performance analysis</h6>
         <div class="form-group">
           <div class="custom-control custom-switch">
@@ -72,7 +84,9 @@
           </div>
         </div>
       </div>
+
     </div>
+
 
 
     <div class="modal-footer">

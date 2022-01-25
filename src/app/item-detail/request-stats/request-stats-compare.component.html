@@ -1,0 +1,175 @@
+<div class="card table-stats request-stats card-shadow">
+
+  <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
+
+      <span class="comparison-desc text-primary" *ngIf="comparedData && !comparisonMs"><i
+          class="fas fa-info-circle"></i> The values shown are in %.</span>
+      <span class="comparison-desc" *ngIf="comparedData">Comparing to test: <a
+          href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}">{{comparedMetadata.id}}
+          with
+          {{comparedMetadata.maxVu}} VU</a></span>
+      <button class="remove-comparison btn btn-sm jtl-btn-light" *ngIf="comparedData" (click)="resetStatsData()"><span
+          class="compare-desc-btn">Remove</span>
+      </button>
+      <button class="remove-comparison btn btn-sm jtl-btn-light jtl-no-glow" *ngIf="comparedData"
+        (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
+          <i class="fa" [ngClass]="{'fa-percent': comparisonMs, 'fa-stopwatch': !comparisonMs}"></i></span>
+      </button>
+
+      <div *ngIf="!isAnonymous" class="btn-group mr-3">
+        <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
+          aria-label="Button group with nested dropdown">
+          <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
+              class="fas fa-bars"></i></button>
+          <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+            <button class="quick-base-comparison btn btn-sm btn-outline-dark"
+              *ngIf="(itemData.baseId && itemData.baseId !== params.id)" (click)="quickBaseComparison(itemData.baseId)"
+              ngbDropdownItem><span class="compare-desc-btn">
+                Compare to base run</span></button>
+            <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+          </div>
+        </div>
+      </div>
+
+    </span></h6>
+  <div class="card-body card-body-request-stats">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+      </div>
+      <input class="form-control" id="label-filter" type="search" placeholder="label"
+        (keyup)='search($event.target.value)' [value]="externalSearchTerm">
+      <button type="button" class="btn bg-transparent jtl-no-glow" style="margin-left: -40px; z-index: 100;"
+        (click)="clearSearch()">
+        <i class="fa fa-times"></i></button>
+      <button type="button" class="btn btn-secondary jtl-no-glow" (click)="openSearchHelp(content)">
+        <i class="fas fa-info"></i>
+      </button>
+
+    </div>
+    <div class="labels-detail table-responsive">
+      <table class="table" [mfData]="labelsData" #mf="mfDataTable">
+        <thead>
+          <tr>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="label">label</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="samples">samples</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="avgResponseTime">avg [{{getUnit()}}]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="maxResponseTime">max [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="n0">P90 [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="n5">P95 [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="n9">P99 [ms]</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="throughput">requests/s</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="bytes">mbps</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+              <mfDefaultSorter by="errorRate">errors</mfDefaultSorter>
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+            </th>
+            <th scope="col" class="hd jtl-head-color">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let _ of mf.data">
+            <td>{{_.label}} </td>
+            <td>{{_.samples}}</td>
+            <td><span
+                [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime}}</span>
+            </td>
+            <td><span
+                [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime}}</span>
+            </td>
+            <td><span
+                [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime}}</span>
+            </td>
+            <td><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0}}</span>
+            </td>
+            <td><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5}}</span>
+            </td>
+            <td><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9}}</span>
+            </td>
+            <td>
+              <span
+                [className]="comparedData ? _.throughput > 0 ?  'value-negative' : 'value-positive' : ''">{{_.throughput}}</span>
+            </td>
+            <td>
+              <span
+                [className]="comparedData ? convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) > 0 ? 'value-positive' : 'value-negative' : ''">{{convertBytesToMbps(_.bytesPerSecond
+                + _.bytesSentPerSecond) || 0 }}</span>
+            </td>
+            <td>
+              <span
+                [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate}}</span>
+            </td>
+            <td>
+                <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label" [errorRate]="_.errorRate">
+              </app-label-health>
+            </td>
+            <td>
+              <app-label-trend *ngIf="!isAnonymous"
+                [trendInput]="{ environment: itemData.environment, labelName: _.label }" [params]="params">
+              </app-label-trend>
+
+              <a class="jtl-a-primary label-focus" (click)="focusLabel(_.label)"><i
+                  class="fas fa-search-location fa-sm"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Search help</h5>
+        <button type="button" style="outline: none;" class="close" aria-label="Close"
+          (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>
+            <strong>Label with spaces:</strong>
+          <p>If the searched label contains one or more spaces, you need to enclose it into double-quotes. Eg: <mark>"my search"</mark>
+            </p>
+          </li>
+          <li>
+            <strong>Not operator:</strong>
+            <p>If you want to exclude a particular label, the search needs to start with the <strong>not</strong>
+              keyword and followed by search term. Eg: <mark><strong>not</strong> "my search term"</mark></p>
+          </li>
+          <li>
+            <strong>OR operator:</strong>
+            <p> If you want to include only specific labels, you can join them by using the <strong>or</strong> keyword
+              and followed by search term. Eg: <mark>"my search term" <strong>or</strong> "another search term"</mark>
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+      </div>
+
+    </ng-template>
+  </div>
+
+</div>

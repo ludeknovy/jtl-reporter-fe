@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/scss/bootstrap.scss";
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-
 
 .maroon {
   background-color: #85144b;
@@ -92,4 +90,92 @@ a:hover {
 
 .icon-primary:hover {
   color: #105196
+}
+
+.jtl-head {
+  font-size: 12px;
+  padding-bottom: 5px;
+  border-top: 0 !important;
+  width: 30rem;
+  height: 43px;
+  color: #000000b5;
+}
+
+.jtl-head-color {
+    color: #000000b5;
+}
+
+.jtl-dropdown-control-menu {
+  box-shadow: #0c0c0d30 0px 5px 12px 4px;
+  border: none;
+}
+.jtl-control-menu::after {
+  display:none;
+}
+
+
+.jtl-no-glow,
+.jtl-no-glow:active{
+    box-shadow:none !important;
+    outline:0px !important;
+}
+
+.jtl-btn-light {
+  color: #4b7cf3;
+  background-color: #f2f4f8;
+}
+.jtl-btn-light:hover{
+  background-color: #dee3ed;
+  border-color: #dee3ed;
+  color: #4b7cf3;
+}
+
+.jtl-btn-primary {
+  color: white;
+  background-color: #4b7cf3;
+}
+.jtl-btn-primary:hover{
+  background-color: #5f88ee;
+  color: white;
+}
+
+.jtl-a-primary{
+  color: #4b7cf3 !important;
+}
+.jtl-a-primary:hover{
+  color: #5f88ee !important;
+
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.hamburger-menu:hover{
+  color: #4b7cf3;
+}
+
+.jtl-primary-color {
+  color: #4b7cf3;
+}
+
+.jtl-table tr td:first-child {
+  padding-left: 2.5rem;
+}
+
+.jtl-table tr th:first-child {
+  padding-left: 2.5rem;
+}
+
+.card h6 {
+  font-weight: 600;
+  padding-top: 1.25rem;
+}
+
+.card-shadow {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

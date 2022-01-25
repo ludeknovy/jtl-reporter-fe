@@ -1,0 +1,13 @@
+.btn {
+  margin-right: 15px;
+}
+
+.notif-control-panel {
+  margin-bottom: 10px;
+}
+.ellipsis {
+  max-width: 15rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

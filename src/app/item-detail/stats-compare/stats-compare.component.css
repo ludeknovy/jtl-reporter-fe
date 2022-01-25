@@ -21,3 +21,8 @@ thead {
   white-space: nowrap;
   overflow: hidden;
 }
+
+.compare-desc {
+  font-size: 13px;
+  font-weight: 400;
+}

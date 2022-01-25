@@ -1,28 +1,25 @@
-import { Injectable } from '@angular/core';
-import { ProjectApiService } from './project-api.service';
-import { BehaviorSubject } from 'rxjs';
-import { ProjectsListing } from './project-api.service.model';
-import { IScenarios, Items } from './items.service.model';
-import { scenarioHistoryGraphs } from './graphs/scenario-trends';
-import { ScenarioApiService } from './scenario-api.service';
+import { Injectable } from "@angular/core";
+import { ProjectApiService } from "./project-api.service";
+import { BehaviorSubject, interval } from "rxjs";
+import { ProjectsListing } from "./project-api.service.model";
+import { IScenarios, Items } from "./items.service.model";
+import { ScenarioApiService } from "./scenario-api.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 
 export class ProjectService {
+  public processingItemsInterval;
 
   private state = new BehaviorSubject<ProjectsListing[]>([]);
   public state$ = this.state.asObservable();
 
-  private items = new BehaviorSubject<Items>({ name, data: [], total: 0 });
+  private items = new BehaviorSubject<Items>({ name: undefined, data: [], total: 0 });
   public items$ = this.items.asObservable();
 
   private scenarios = new BehaviorSubject<IScenarios[]>([]);
   public scenarios$ = this.scenarios.asObservable();
-
-  private trends = new BehaviorSubject<{}>({});
-  public trends$ = this.trends.asObservable();
 
   constructor(
     private projectApiService: ProjectApiService,
@@ -51,11 +48,6 @@ export class ProjectService {
   fetchScenarios(projectName) {
     this.scenarioApiService.fetchScenarios(projectName)
       .subscribe(_ => this.scenarios.next(_));
-  }
-
-  fetchScenarioTrends(projectName, scenarioName) {
-    this.scenarioApiService.fetchScenarioTrend(projectName, scenarioName)
-      .subscribe(_ => this.trends.next(scenarioHistoryGraphs(_, projectName, scenarioName)));
   }
 
 }

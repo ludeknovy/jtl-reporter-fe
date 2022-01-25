@@ -1,116 +1,196 @@
-<app-control-panel>
+<app-control-panel *ngIf="!isAnonymous">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
       <app-breadcrumb></app-breadcrumb>
     </li>
   </ul>
   <div>
-    <app-edit-item *ngIf="itemData.environment"
-      [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
-      (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
-    <app-attachements [params]="itemParams" [attachements]="itemData.attachements"></app-attachements>
-    <app-delete-item [itemData]="itemParams"></app-delete-item>
-  </div>
 
+    <div class="btn-group">
+      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
+        aria-label="Button group with nested dropdown">
+        <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
+            class="fas fa-bars"></i></button>
+        <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+          <app-edit-item *ngIf="itemData.environment"
+            [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
+            (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
+          <app-share [params]=itemParams></app-share>
+          <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </app-control-panel>
 
-
-<div class="items-overview content-container" *ngIf="itemData.overview !== null">
+<div class="not-ready content-container" *ngIf="itemData.reportStatus === 'in_progress'">
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm">
+        <div class="alert alert-primary" role="alert">
+          Test report is being processed. Please wait.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="not-ready content-container" *ngIf="itemData.reportStatus === 'error'">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm">
+        <div class="alert alert-danger" role="alert">
+          An error occurred during processing test report.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="items-overview content-container" *ngIf="itemData.overview !== null && itemData.reportStatus === 'ready'">
+
+
+  <div class="container-fluid">
+
     <div class="overview-info">
+
+      <div class="row" *ngIf="itemData.thresholds && !itemData.thresholds?.passed">
+        <div class="col">
+          <app-regression-alert [itemData]="itemData"></app-regression-alert>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="showZeroErrorToleranceWarning() === true">
+        <div class="col">
+          <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="itemData.analysisEnabled">
+        <div class="col">
+          <app-performance-analysis [itemData]="itemData" [labelsChartLines]="chartLines.labels" (overallChartChange)="toggleThroughputBand($event)">
+          </app-performance-analysis>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-sm">
-          <div class="card">
+          <div class="card card-shadow">
+            <h6 class="card-header bg-white border-0">Overview <span class="total-samples"> requests: {{totalRequests | number}}</span></h6>
             <div class="card-body performance-overview-card">
-
               <div class="row">
-                <div class="col-sm">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.virtualUsers">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title text-amethyst">{{itemData.overview.maxVu}}</h2>
+                      <h2 class="card-title">{{itemData.overview.maxVu}}</h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Virtual Users</div>
 
                   </div>
                 </div>
 
-                <div class="col-sm">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.throughput">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title text-belize">{{itemData.overview.throughput}} <span
+                      <h2 class="card-title">{{itemData.overview.throughput > 1000 ?
+                        Math.round(itemData.overview.throughput) : itemData.overview.throughput}} <span
                           class="unit-desc">hits/s</span>
                       </h2>
                     </div>
-                    <div class="card-footer bg-transparent card-footer-overview">Throughput <i
-                        placement="bottom" ngbTooltip="Throughput is calculated as requests/unit of time. The time is calculated from the start of the first sample to the end of the last sample. This includes any intervals between samples, as it is supposed to represent the load on the server.
+                    <div class="card-footer bg-transparent card-footer-overview">Throughput <i placement="bottom"
+                        ngbTooltip="Throughput is calculated as requests/unit of time. The time is calculated from the start of the first sample to the end of the last sample. This includes any intervals between samples, as it is supposed to represent the load on the server.
                       The formula is: Throughput = (number of requests) / (total time)."><i
                           class="far fa-question-circle icon"></i></i></div>
 
                   </div>
                 </div>
 
-                <div class="col-sm">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.percentile">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 *ngIf="itemData.overview.percentil >= 1000" class="card-title text-percentil">{{
-                        Math.round((itemData.overview.percentil / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+                      <h2 *ngIf="itemData.overview.percentil >= 1000" class="card-title">{{
+                        Math.round((itemData.overview.percentil / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
-                      <h2 *ngIf="itemData.overview.percentil < 1000" class="card-title text-percentil">{{
+                      <h2 *ngIf="itemData.overview.percentil < 1000" class="card-title">{{
                         itemData.overview.percentil}} <span class="unit-desc">ms</span>
                       </h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">90% Response time</div>
-
                   </div>
                 </div>
-                <div class="col-sm">
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.avgResponseTime">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 *ngIf="itemData.overview.avgLatency >= 1000" class="card-title text-latency">{{
-                        Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span
-                          class="unit-desc">s</span>
+                      <h2 *ngIf="itemData.overview.avgResponseTime >= 1000" class="card-title">{{
+                        Math.round((itemData.overview.avgResponseTime / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
-                      <h2 *ngIf="itemData.overview.avgLatency < 1000" class="card-title text-latency">{{
+                      <h2 *ngIf="itemData.overview.avgResponseTime < 1000" class="card-title">{{
+                        itemData.overview.avgResponseTime}} <span class="unit-desc">ms</span>
+                      </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Avg. Response time</div>
+                  </div>
+                </div>
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.avgLatency">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 *ngIf="itemData.overview.avgLatency >= 1000" class="card-title">{{
+                        Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+                      </h2>
+                      <h2 *ngIf="itemData.overview.avgLatency < 1000"
+                        class="card-title">{{
                         itemData.overview.avgLatency}} <span class="unit-desc">ms</span>
                       </h2>
                     </div>
-                    <div class="card-footer bg-transparent card-footer-overview">Avg. latency <i class="ttp" placement="bottom"
-                      ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
-                        class="far fa-question-circle icon"></i></i></div>
-
+                    <div class="card-footer bg-transparent card-footer-overview">Avg. latency <i class="ttp"
+                        placement="bottom"
+                        ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
+                          class="far fa-question-circle icon"></i></i></div>
                   </div>
                 </div>
-                <div class="col-sm">
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.avgConnectionTime">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 *ngIf="itemData.overview.avgConnect >= 1000" class="card-title text-latency">{{
-                        Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span
-                          class="unit-desc">s</span>
+                      <h2 *ngIf="itemData.overview.avgConnect >= 1000" class="card-title">{{
+                        Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
-                      <h2 *ngIf="itemData.overview.avgConnect < 1000" class="card-title text-latency">{{
+                      <h2 *ngIf="itemData.overview.avgConnect < 1000"
+                        class="card-title">{{
                         itemData.overview.avgConnect}} <span class="unit-desc">ms</span>
                       </h2>
                     </div>
-                    <div class="card-footer bg-transparent card-footer-overview">Avg. connection <i class="ttp" placement="bottom"
-                      ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
-                        class="far fa-question-circle icon"></i></i></div>
-
+                    <div class="card-footer bg-transparent card-footer-overview">Avg. connection <i class="ttp"
+                        placement="bottom"
+                        ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
+                          class="far fa-question-circle icon"></i></i></div>
                   </div>
                 </div>
-                <div class="col-sm">
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.network">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title text-alizarin">{{itemData.overview.errorRate}} <span
+                      <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesPerSecond +
+                        itemData.overview.bytesSentPerSecond)}} <span class="unit-desc">Mbps</span>
+                      </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Network data</div>
+                  </div>
+                </div>
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.errorRate">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title">{{itemData.overview.errorRate}} <span
                           class="unit-desc">%</span></h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Error rate</div>
 
                   </div>
                 </div>
-
-
               </div>
-
             </div>
           </div>
         </div>
@@ -118,196 +198,150 @@
 
     </div>
 
-
-    <div class="overview-additional">
+    <div class="overview-additional card-shadow">
       <div class="row info">
         <div class="col-sm">
           <div class="date top">
-            <span>started:</span>
+            <span class="text-secondary">started:</span>
             <span class="small-text">{{itemData.overview.startDate | date:'d. L. yyyy H:mm:ss'}}</span>
           </div>
           <div class="date">
-            <span>ended:</span>
+            <span class="text-secondary">ended:</span>
             <span class="small-text">{{itemData.overview.endDate | date:'d. L. yyyy H:mm:ss'}}</span>
           </div>
           <div class="date bottom">
-            <span>duration:</span>
+            <span class="text-secondary">duration:</span>
             <span class="small-text">{{itemData.overview.duration}} min</span>
           </div>
         </div>
-        <div class="col-sm">
+        <div class="col">
           <div class="date top">
-            <span>environment:</span>
+            <span class="text-secondary">environment:</span>
             <span class="small-text">{{itemData.environment}}</span>
           </div>
           <div class="date" *ngIf="itemData.status">
-            <span>status:</span>
-            <span class="small-text"> {{getTextStatus(itemData.status)}}</span>
+            <span class="text-secondary">status:</span>
+            <span class="small-text">{{getTextStatus(itemData.status)}}</span>
+          </div>
+          <div class="date" *ngIf="itemData.hostname">
+            <span class="text-secondary">hostname:</span>
+            <span class="small-text">{{itemData.hostname}}</span>
           </div>
           <div class="date" *ngIf="itemData.note">
-            <span>note:</span>
-            <span class="small-text"> {{itemData.note}}</span>
-          </div>
-          <div class="date bottom" *ngIf="itemData.hostname">
-            <span>hostname:</span>
-            <span class="small-text"> {{itemData.hostname}}</span>
+            <span class="text-secondary">note:</span>
+            <span class="small-text">{{itemData.note}}</span>
           </div>
         </div>
-        <div *ngIf="itemData.monitoringData.cpu.length > 0" class="col-sm">
+
+
+
+        <div class="col-sm" *ngIf="itemData.monitoring.cpu.data.length > 0">
           <div class="date top">
-            <span>max cpu usage:</span>
-            <span class="small-text">{{itemData.monitoringData.maxCpu}}%</span>
-          </div>
-          <div class="date" *ngIf="itemData.status">
-            <span>max memory usage:</span>
-            <span class="small-text">{{itemData.monitoringData.maxMem}}%</span>
+            <span class="text-secondary">max cpu usage:</span>
+            <span class="small-text">{{itemData.monitoring.cpu.max}}%</span>
           </div>
           <div class="date">
-            <app-monitoring-stats [data]="itemData.monitoringData">
+            <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
             </app-monitoring-stats>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="charts">
-      <div class="row charts">
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header bg-transparent">Overall Chart</h6>
-            <div class="card-body">
-              <div class="chart">
-                <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions"
-                  style="width: 100%; height: 250px; display: block;"></highcharts-chart>
+
+
+    <div class="row middle-control">
+      <div class="col">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs justify-content-center" [destroyOnHide]="false" [(activeId)]="activeId" >
+          <li ngbNavItem [ngbNavItem]="1">
+            <a ngbNavLink class="nav-link bg-transparent">Overview charts</a>
+            <ng-template ngbNavContent>
+              <div class="row charts chart-fix">
+                <div class="col">
+                  <div class="card overview-chart-card card-shadow">
+                    <h6 class="card-header bg-transparent">Overall Chart</h6>
+                    <div class="card-body">
+                      <div class="chart">
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions"
+                          [(update)]="updateChartFlag" style="width: 100%; height: 350px; display: block;">
+                        </highcharts-chart>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header bg-transparent">Response Time</h6>
-            <div class="card-body">
-              <div class="chart">
-                <highcharts-chart [Highcharts]="Highcharts" [options]="responseTimeChartOptions"
-                  style="width: 100%; height: 250px; display: block;"></highcharts-chart>
+              <div class="row chart-fix">
+                <div class="col">
+                  <app-label-chart [labels]="labelCharts"></app-label-chart>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm">
-          <div class="card">
-            <h6 class="card-header bg-transparent">Throughput</h6>
-            <div class="card-body">
-              <div class="chart">
-                <highcharts-chart [Highcharts]="Highcharts" [options]="throughputChartOptions"
-                  style="width: 100%; height: 250px; display: block;"></highcharts-chart>
+            </ng-template>
+          </li>
+          <li ngbNavItem [ngbNavItem]="2">
+            <a ngbNavLink class="nav-link bg-transparent">Analyze charts</a>
+            <ng-template ngbNavContent>
+              <div class="row chart-fix charts">
+                <div class="col">
+                  <app-analyze-charts [chartLines]="chartLines" [params]="itemParams" [isAnonymous]="isAnonymous" [showPerformanceAnalysisLines]="performanceAnalysisLines"></app-analyze-charts>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
+
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav"></div>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
       <div class="col">
-        <div class="card request-stats">
-          <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
-              <span class="comparison-desc" *ngIf="comparedData">Comparing to test: {{comparedMetadata.id}} with
-                {{comparedMetadata.maxVu}} VU</span>
-              <a class="remove-comparison" *ngIf="comparedData" (click)="resetStatsData()"><i
-                  class="fas fa-minus"></i></a>
-              <a class="quick-base-comparison"
-                *ngIf="(itemData.baseId && itemData.baseId !== itemParams.id) && !comparedData"
-                (click)="quickBaseComparison(itemData.baseId)"><i class="fas fa-rocket"></i></a>
-              <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+        <div class="card table-stats card-shadow">
+          <h6 class="card-header bg-transparent">SUT Statistics <span class="compare">
             </span></h6>
-          <div class="card-body">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-              </div>
-              <input class="form-control" id="label-filter" type="search" placeholder="label"
-                (keyup)='search($event.target.value)'>
-            </div>
+          <div class="card-body card-body-request-stats">
             <div class="labels-detail table-responsive">
-              <table class="table" [mfData]="labelsData" #mf="mfDataTable">
+              <table class="table" [mfData]="itemData.sutOverview" #mf="mfDataTable">
                 <thead>
                   <tr>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="label">label</mfDefaultSorter>
+                    <th scope="col" class="hd jtl-head-color">
+                      <mfDefaultSorter by="sutHostname">SUT</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="samples">samples</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
+                    <th scope="col" class="hd jtl-head-color">
                       <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
+
+                    <th scope="col" class="hd jtl-head-color">
+                      <mfDefaultSorter by="percentile">P90 [ms]</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="maxResponseTime">max [ms]</mfDefaultSorter>
+                    <th scope="col" class="hd jtl-head-color">
+                      <mfDefaultSorter by="throughput">requests/s</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="n0">90% [ms]</mfDefaultSorter>
+                    <th scope="col" class="hd jtl-head-color">
+                      <mfDefaultSorter by="bytesPerSecond">mbps</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="n5">95% [ms]</mfDefaultSorter>
+                    <th scope="col" class="hd jtl-head-color">
+                      <mfDefaultSorter by="errorRate">error rate</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="n9">99% [ms]</mfDefaultSorter>
+                    <th scope="col" class="hd jtl-head-color">
                     </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="throughput">throughput [hits/s]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="bytes">avg data [kb]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                      <mfDefaultSorter by="errorRate">errorRate</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd">
-                    </th>
-                    <th scope="col" class="hd">
+                    <th scope="col" class="hd jtl-head-color">
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let _ of mf.data">
-                    <td>{{_.label}}</td>
-                    <td>{{_.samples}}</td>
-                    <td>{{_.avgResponseTime}} <sup [className]="_.avgDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.avgDiff">{{_.avgDiff}}</sup></td>
-                    <td>{{_.minResponseTime}} <sup [className]="_.minDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.minDiff">{{_.minDiff}}</sup></td>
-                    <td>{{_.maxResponseTime}} <sup [className]="_.maxDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.maxDiff">{{_.maxDiff}}</sup></td>
-                    <td>{{_.n0}} <sup [ngClass]="_.n0Diff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.n0Diff">{{_.n0Diff}}</sup></td>
-                    <td>{{_.n5}} <sup [className]="_.n5Diff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.n5Diff">{{_.n5Diff}}</sup></td>
-                    <td>{{_.n9}} <sup [className]="_.n9Diff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.n9Diff">{{_.n9Diff}}</sup></td>
-                    <td>{{_.throughput || "n/a"}} <sup
-                        [className]="_.throughputDiff < 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.throughputDiff">{{_.throughputDiff}}</sup></td>
-                    <td>{{(_.bytes / 1024).toFixed(2) || "n/a"}} <sup
-                        [className]="_.bytesDiff < 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.bytesDiff && bytesDiff !== 0">{{_.bytesDiff}}</sup></td>
-                    <td>{{_.errorRate}} % <sup [className]="_.errorRateDiff > 0 ? 'value-positive' : 'value-negative'"
-                        *ngIf="_.errorRateDiff">{{_.errorRateDiff}}</sup>
+                    <td>{{_.sutHostname || "other"}}
+                      <i *ngIf="!_.sutHostname" placement="bottom"
+                        ngbTooltip="All samples for which we could not parse the hostname."><i
+                          class="far fa-question-circle icon"></i></i>
                     </td>
+                    <td>{{_.avgResponseTime}}</td>
+                    <td>{{_.percentile}}</td>
+                    <td>{{_.throughput || "n/a"}} </td>
+                    <td>{{convertBytesToMbps(_.bytesPerSecond) || "n/a"}}</td>
+                    <td>{{_.errorRate}} % </td>
+                    <td></td>
                     <td>
-                      <app-label-error *ngIf="_.errorRate > 0 && hasErrorsAttachment"
-                        [labelInput]="{ labelName: _.label, params: itemParams }"></app-label-error>
-                    </td>
-                    <td>
-                      <app-label-trend [trendInput]="{ environment: itemData.environment, labelName: _.label }">
-                      </app-label-trend>
                     </td>
                   </tr>
                 </tbody>
@@ -315,6 +349,11 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="itemData">
+      <div class="col">
+        <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams"></app-request-stats-compare>
       </div>
     </div>
   </div>

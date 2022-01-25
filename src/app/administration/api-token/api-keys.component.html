@@ -8,18 +8,18 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <div class="card card-content">
+        <div class="card card-content card-shadow">
           <div class="card-body" *ngIf="apiKeys$ | async; let apiKeys">
             <div class="card-body">
               <div class="table-responsive" *ngIf="apiKeys$ | async; let apiKeys">
-                <table class="table items">
+                <table class="table items jtl-table">
                   <thead>
                     <tr>
-                      <th scope="col" class="head">token</th>
-                      <th scope="col" class="head">description</th>
-                      <th scope="col" class="head">created at</th>
-                      <th scope="col" class="head">created by</th>
-                      <th scope="col" class="head"></th>
+                      <th scope="col" class="jtl-head">token</th>
+                      <th scope="col" class="jtl-head">description</th>
+                      <th scope="col" class="jtl-head">created at</th>
+                      <th scope="col" class="jtl-head">created by</th>
+                      <th scope="col" class="jtl-head"></th>
                     </tr>
                   </thead>
                   <tbody>

@@ -1,23 +1,22 @@
 <div class="cotainer">
 
-  <div class="row justify-content-center">
+  <div *ngIf="initLoaded" class="row justify-content-center">
     <div class="col-md-3">
-      <div class="card mt-5">
-        <div class="card-header">Login</div>
+      <div class="card mt-5 card-shadow">
+        <h6 class="card-header bg-transparent">Login</h6>
         <div class="card-body">
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
+              <label for="username">Username</label>
+
               <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
-                  </div>
                   <input type="text" class="form-control" formControlName="username" aria-label="Default"
                     aria-describedby="inputGroup-sizing-default">
                 </div>
+
+                <label for="password">Password</label>
+
               <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Password </span>
-                  </div>
                   <input type="password" class="form-control" formControlName="password" aria-label="Default"
                     aria-describedby="inputGroup-sizing-default">
                 </div>

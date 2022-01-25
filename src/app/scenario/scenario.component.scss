@@ -1,16 +1,12 @@
 .items-overview {
-  padding-left: 200px;
-  padding-right: 200px;
   background-color: #f0f1f4;
   padding-top: 20px;
   min-height: 100%;
   width: 100%;;
-  position: absolute;
 }
 
 .items-overview  [class*='col'] {
   padding-left: 10px;
-  padding-right: 10px;
 }
 
 .items {
@@ -24,21 +20,6 @@ a {
 
 .items-count {
   font-size: 12px;
-}
-
-.head  {
-  font-size: 12px;
-  color: #888888c7;
-  border-top: 0px;
-  border-bottom: 2px solid #a5a2a247;
-}
-
-.vu, .duration, .status, .base {
-  max-width: 5rem;
-}
-
-.environment {
-  max-width: 70px;;
 }
 
 .head-edit {
@@ -140,7 +121,15 @@ tbody tr:hover {
 .total {
   font-size: 15px;
   float: right;
-} 
+  color: #28a746 !important;
+}
+
+.in-progress {
+  font-size: 15px;
+  float: right;
+  margin-right: 15px;
+  color: #f8cd0bea !important;
+}
 
 .base-icon {
   color: #0066ffd1
@@ -149,4 +138,27 @@ tbody tr:hover {
 .status-icon {
   font-size: 19px;
 }
- 
+
+.issue {
+  margin-left: 10px;
+  font-size: 19px;
+}
+
+.nav-link {
+  color: black;
+  border: none;
+  margin-right: 10px;
+}
+.nav-link:hover {
+  border-bottom: 2px solid grey;
+}
+
+.nav-link.active {
+  color: #4b7cf3;
+  border-bottom: 2px solid #4b7cf3;
+}
+
+.nav-tabs {
+  border:none;
+  padding-top: 10px;
+}

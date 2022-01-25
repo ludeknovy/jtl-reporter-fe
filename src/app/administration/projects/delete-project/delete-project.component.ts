@@ -1,16 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProjectApiService } from 'src/app/project-api.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { ProjectService } from 'src/app/project.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ProjectApiService } from "src/app/project-api.service";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { ProjectService } from "src/app/project.service";
 
 @Component({
-  selector: 'app-delete-project',
-  templateUrl: './delete-project.component.html',
-  styleUrls: ['./delete-project.component.css', '../../administration.css']
+  selector: "app-delete-project",
+  templateUrl: "./delete-project.component.html",
+  styleUrls: ["./delete-project.component.css"]
 })
 export class DeleteProjectComponent implements OnInit {
 
@@ -33,7 +33,7 @@ export class DeleteProjectComponent implements OnInit {
   }
 
   createFormControls() {
-    this.deleteCheck = new FormControl('', [
+    this.deleteCheck = new FormControl("", [
       Validators.required,
       Validators.minLength(5)
     ]);
@@ -46,7 +46,7 @@ export class DeleteProjectComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {

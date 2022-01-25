@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { ItemsApiService } from '../items-api.service';
-import { ProjectApiService } from '../project-api.service';
-import { ScenarioApiService } from '../scenario-api.service';
-import { ToastrService } from 'ngx-toastr';
-import { NotificationService } from '../_services/notification.service';
+import { Component, OnInit } from "@angular/core";
+import { Subject } from "rxjs";
+import { ItemsApiService } from "../items-api.service";
+import { ProjectApiService } from "../project-api.service";
+import { ScenarioApiService } from "../scenario-api.service";
+import { ToastrService } from "ngx-toastr";
+import { NotificationService } from "../_services/notification.service";
 
 @Component({
-  selector: 'app-alert',
-  templateUrl: './notification.component.html',
+  selector: "app-alert",
+  templateUrl: "./notification.component.html",
 })
 export class NotificationComponent implements OnInit {
   private _success = new Subject<{ success: boolean, message: string }>();
@@ -32,10 +32,11 @@ export class NotificationComponent implements OnInit {
 
 
     this._success.subscribe((message) => {
+      const options = { positionClass: "toast-bottom-right" };
       if (message.success === true) {
-        this.toastr.success(message.message);
+        this.toastr.success(message.message, null, options);
       } else {
-        this.toastr.error(message.message);
+        this.toastr.error(message.message, null, options);
       }
     });
   }

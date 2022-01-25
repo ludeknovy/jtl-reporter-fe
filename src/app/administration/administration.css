@@ -1,6 +1,4 @@
 .administration {
-  padding-left: 200px;
-  padding-right: 200px;
   background-color: #f0f1f4;
   padding-top: 20px;
   min-height: 100%;
@@ -20,15 +18,6 @@ a {
 
 .items-count {
   font-size: 12px;
-}
-
-.head {
-  font-size: 12px;
-  padding-bottom: 5px;
-  border-top: 0px;
-  width: 30rem;
-  height: 43px;
-  color: #343a40;
 }
 
 .card-body {
@@ -65,7 +54,6 @@ a {
 
 th {
   padding-left: 20px;
-  color: #888888c7;
 }
 
 td {

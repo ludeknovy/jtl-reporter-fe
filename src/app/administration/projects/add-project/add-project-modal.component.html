@@ -1,7 +1,7 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add new project</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <h5 class="modal-title" id="modal-basic-title">Add new project</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -21,12 +21,14 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn jtl-btn-primary">Submit</button>
     </div>
   </form>
 </ng-template>
 
 <div class="settings">
-  <button class="btn btn-primary btn-sm" (click)="open(content)"> <i class="fas fa-plus-circle"></i>
-    Add project</button>
+  <button *ngIf="topMenu === false" class="btn jtl-btn-primary btn-sm jtl-no-glow" (click)="open(content)"> Add project</button>
+  <div class="spacer">
+    <button ngbDropdownItem *ngIf="topMenu === true" class="btn btn-sm text-left dropdown-new-project" (click)="open(content)">New Project</button>
+  </div>
 </div>

@@ -1,23 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
-import { labelTrendChartOptions, emptyChart } from 'src/app/graphs/label-trend';
-import { LabelApiService } from 'src/app/label-api.service';
-import * as Highcharts from 'highcharts';
+import { Component, OnInit, Input } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { labelTrendChartOptions, emptyChart } from "src/app/graphs/label-trend";
+import { LabelApiService } from "src/app/label-api.service";
+import * as Highcharts from "highcharts";
+import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 
 @Component({
-  selector: 'app-label-trend',
-  templateUrl: './label-trend.component.html',
-  styleUrls: ['./label-trend.component.css']
+  selector: "app-label-trend",
+  templateUrl: "./label-trend.component.html",
+  styleUrls: ["./label-trend.component.css"]
 })
-export class LabelTrendComponent implements OnInit {
+export class LabelTrendComponent {
+  @Input() params: ItemParams;
+
   Highcharts: typeof Highcharts = Highcharts;
   chart;
-  chartConstructor = 'chart';
+  chartConstructor = "chart";
   chartCallback;
   updateFlag = false;
-  params;
   labelChartOption;
   vuFilters;
 
@@ -25,42 +26,30 @@ export class LabelTrendComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private route: ActivatedRoute,
     private labelApiService: LabelApiService,
 
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     this.chartCallback = chart => {
       self.chart = chart;
     };
   }
 
-  ngOnInit() {
-  }
-
   open(content) {
-    // @ts-ignore
-    this.modalService.open(content, { size: 'xl' }).result
+    this.modalService.open(content, { size: "xl" }).result
       .then((_) => { this.labelChartOption = null; }, () => { this.labelChartOption = null; });
-    this.route.params.subscribe(_ => {
-      this.params = _;
-      this.fetchTrendData();
+    this.fetchTrendData();
 
-      this.labelApiService.fetchLabelMaxVu(
-        this.params.projectName,
-        this.params.scenarioName,
-        this.params.id,
-        this.trendInput.labelName,
-        { environment: this.trendInput.environment }
-      )
-        .subscribe(__ => {
-          this.vuFilters = __.result.filter((r) => r.count > 5).map((r) => r.maxVu);
-        });
+    this.labelApiService.fetchLabelMaxVu(
+      this.params.projectName,
+      this.params.scenarioName,
+      this.params.id,
+      this.trendInput.labelName,
+      { environment: this.trendInput.environment }
+    ).subscribe(__ => {
+      this.vuFilters = __.result.filter((r) => r.count >= 2).map((r) => r.maxVu);
     });
-  }
-
-  updateData() {
-    this.updateFlag = true;
   }
 
   filterByVu(event) {
@@ -79,8 +68,8 @@ export class LabelTrendComponent implements OnInit {
         virtualUsers
       }
     ).subscribe((_) => {
-      this.labelChartOption = _.timePoints.length > 5 ? labelTrendChartOptions(_) : emptyChart();
-      this.updateData();
+      this.labelChartOption = _.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
+      this.updateFlag = true;
     });
   }
 }

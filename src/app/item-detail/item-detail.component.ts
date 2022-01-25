@@ -1,29 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ItemsApiService } from '../items-api.service';
-import { ItemDetail } from '../items.service.model';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { DecimalPipe } from '@angular/common';
-import * as Highcharts from 'highcharts';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { ItemsApiService } from "../items-api.service";
+import { ItemDetail } from "../items.service.model";
+import { NgxSpinnerService } from "ngx-spinner";
+import { DecimalPipe } from "@angular/common";
+import * as Highcharts from "highcharts";
+import exporting from "highcharts/modules/exporting";
+
+exporting(Highcharts);
 
 import {
-  commonGraphSettings, threadLineSettings,
+  threadLineSettings,
   errorLineSettings, overallChartSettings,
-  throughputLineSettings
-} from '../graphs/item-detail';
-import { catchError, withLatestFrom } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { SharedMainBarService } from '../shared-main-bar.service';
-import { ToastrService } from 'ngx-toastr';
-import { ItemStatusValue } from './item-detail.model';
+  throughputLineSettings,
+  networkLineSettings,
+  commonGraphSettings,
+} from "../graphs/item-detail";
+import { catchError, withLatestFrom } from "rxjs/operators";
+import { of } from "rxjs";
+import { SharedMainBarService } from "../shared-main-bar.service";
+import { ToastrService } from "ngx-toastr";
+import { bytesToMbps } from "./calculations";
+import { logScaleButton } from "../graphs/log-scale-button";
+import { ItemStatusValue } from "./item-detail.model";
+import { Metrics } from "./metrics";
+import { AnalyzeChartService } from "../analyze-chart.service";
+import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
 
 @Component({
-  selector: 'app-item-detail',
-  templateUrl: './item-detail.component.html',
-  styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
+  selector: "app-item-detail",
+  templateUrl: "./item-detail.component.html",
+  styleUrls: ["./item-detail.component.scss", "../shared-styles.css"],
   providers: [DecimalPipe]
 })
-export class ItemDetailComponent implements OnInit {
+export class ItemDetailComponent implements OnInit, OnDestroy {
   Highcharts: typeof Highcharts = Highcharts;
   itemData: ItemDetail = {
     overview: null,
@@ -31,32 +41,45 @@ export class ItemDetailComponent implements OnInit {
     baseId: null,
     note: null,
     plot: null,
+    reportStatus: null,
     hostname: null,
     statistics: [],
     testName: null,
-    attachements: [],
-    monitoringData: { mem: [], maxCpu: 0, maxMem: 0, cpu: [] },
+    monitoring: {
+      cpu: {
+        max: 0, data: []
+      }
+    },
+    analysisEnabled: null,
+    zeroErrorToleranceEnabled: null,
+    topMetricsSettings: null
   };
-  responseTimeChartOptions;
-  throughputChartOptions;
   overallChartOptions;
-  overallResponseTimeChart;
+  updateChartFlag = false;
   monitoringChart;
-  overallThroughput;
   itemParams;
   hasErrorsAttachment;
-  comparedData;
-  comparedMetadata;
-  labelsData;
   Math: any;
-  comparisonWarning = [];
+  token: string;
+  isAnonymous = false;
+  toggleThroughputBandFlag = false;
+  chartLines = {
+    overall: new Map(),
+    labels: new Map(),
+  };
+  labelCharts = new Map();
+  activeId = 1;
+  performanceAnalysisLines = null;
+  externalSearchTerm = null;
+  totalRequests = null;
 
   constructor(
     private route: ActivatedRoute,
     private itemsService: ItemsApiService,
     private spinner: NgxSpinnerService,
     private sharedMainBarService: SharedMainBarService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private analyzeChartService: AnalyzeChartService
   ) {
     this.Math = Math;
   }
@@ -70,31 +93,122 @@ export class ItemDetailComponent implements OnInit {
         return _;
       })
     ).subscribe(_ => this.itemParams = _);
+    this.route.queryParams.subscribe(_ => {
+      this.token = _.token;
+      if (this.token) {
+        this.isAnonymous = true;
+      }
+    });
     this.itemsService.fetchItemDetail(
       this.itemParams.projectName,
       this.itemParams.scenarioName,
-      this.itemParams.id)
-      .pipe(catchError(r => of(r)))
+      this.itemParams.id,
+      { token: this.token }
+    )
+      .pipe(catchError(r => {
+        this.spinner.hide();
+        return of(r);
+      }))
       .subscribe((results) => {
         this.itemData = results;
-        this.labelsData = this.itemData.statistics;
-        this.hasErrorsAttachment = this.itemData.attachements.find((_) => _ === 'error');
         this.monitoringAlerts();
         this.generateCharts();
+        this.calculateTotalRequests();
         this.spinner.hide();
       });
+    this.analyzeChartService.currentData.subscribe(data => {
+      if (data) {
+        this.activeId = 2;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.toastr.clear();
+  }
+
+  private calculateTotalRequests() {
+    this.totalRequests = this.itemData.statistics.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.samples;
+    }, 0);
+  }
+
+  private getChartLines() {
+    const {
+      threads, overallTimeResponse,
+      overallThroughput, overAllFailRate, overAllNetworkV2,
+      responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
+      percentile95, percentile99,
+    } = this.itemData.plot;
+
+    const threadLine = { ...threadLineSettings, name: "virtual users", data: threads };
+    const errorLine = { ...errorLineSettings, ...overAllFailRate };
+    const throughputLine = { ...throughputLineSettings, ...overallThroughput };
+
+    if (overAllNetworkV2) {
+      const networkMbps = overAllNetworkV2.data.map((_) => {
+        return [_[0], bytesToMbps(_[1])];
+      });
+      const networkLine = { ...networkLineSettings, data: networkMbps };
+      this.chartLines.overall.set(Metrics.Network, networkLine);
+    }
+
+    this.chartLines.overall.set(Metrics.ResponseTimeAvg, overallTimeResponse);
+    this.chartLines.overall.set(Metrics.Threads, threadLine);
+    this.chartLines.overall.set(Metrics.ErrorRate, errorLine);
+    this.chartLines.overall.set(Metrics.Throughput, throughputLine);
+
+    if (networkV2) {
+      const networkMbps = networkV2.map((_) => {
+        _.data = _.data.map(__ => [__[0], bytesToMbps(__[1])]);
+        return _;
+      });
+      const networkChartOptions = {
+        ...commonGraphSettings("mbps"),
+        series: [...networkMbps, threadLine], ...logScaleButton
+      };
+
+      this.chartLines.labels.set(Metrics.Network, networkMbps);
+      this.labelCharts.set(Metrics.Network, networkChartOptions);
+    }
+
+    if (minResponseTime) {
+      this.chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime);
+      this.labelCharts.set(Metrics.ResponseTimeMin, { ...commonGraphSettings("ms"), series: [...minResponseTime, threadLine] });
+    }
+
+    if (maxResponseTime) {
+      this.chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime);
+      this.labelCharts.set(Metrics.ResponseTimeMax, { ...commonGraphSettings("ms"), series: [...maxResponseTime, threadLine] });
+    }
+    if (percentile90) {
+      this.chartLines.labels.set(Metrics.ResponseTimeP90, percentile90);
+      this.labelCharts.set(Metrics.ResponseTimeP90, { ...commonGraphSettings("ms"), series: [...percentile90, threadLine] });
+    }
+    if (percentile95) {
+      this.chartLines.labels.set(Metrics.ResponseTimeP95, percentile95);
+      this.labelCharts.set(Metrics.ResponseTimeP95, { ...commonGraphSettings("ms"), series: [...percentile95, threadLine] });
+    }
+    if (percentile99) {
+      this.chartLines.labels.set(Metrics.ResponseTimeP99, percentile99);
+      this.labelCharts.set(Metrics.ResponseTimeP99, { ...commonGraphSettings("ms"), series: [...percentile99, threadLine] });
+    }
+
+    this.chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime);
+    this.labelCharts.set(Metrics.ResponseTimeAvg, { ...commonGraphSettings("ms"), series: [...responseTime, threadLine] });
+
+
+    this.chartLines.labels.set(Metrics.Throughput, throughput);
+    this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings("hits/s"), series: [...throughput, threadLine] });
+
   }
 
   private generateCharts() {
-    const { responseTime, throughput, threads, overallTimeResponse, overallThroughput, overAllFailRate } = this.itemData.plot;
-    const threadLine = { ...threadLineSettings, name: 'th', data: threads };
-    const errorLine = { ...errorLineSettings, ...overAllFailRate };
-    const throughputLine = { ...throughputLineSettings, ...overallThroughput };
-    this.responseTimeChartOptions = { ...commonGraphSettings('ms'), series: [...responseTime, ...threadLine] };
-    this.throughputChartOptions = { ...commonGraphSettings('hits/s'), series: [...throughput, ...threadLine] };
+    this.getChartLines();
+    const oveallChartSeries = Array.from(this.chartLines.overall.values());
+
     this.overallChartOptions = {
-      ...overallChartSettings('ms'), series: [
-        threadLine, overallTimeResponse, throughputLine, errorLine]
+      ...overallChartSettings("ms"), series: oveallChartSeries
     };
   }
 
@@ -104,97 +218,20 @@ export class ItemDetailComponent implements OnInit {
     this.itemData.hostname = hostname;
   }
 
-  itemToCompare(data) {
-    this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
-    if (data.maxVu !== this.itemData.overview.maxVu) {
-      this.comparisonWarning.push(`VU do differ ${this.itemData.overview.maxVu} vs. ${data.maxVu}`);
-    }
-
-    this.comparedData = this.labelsData.map((_) => {
-      const labelToBeCompared = data.statistics.find((__) => __.label === _.label);
-      if (labelToBeCompared) {
-        return {
-          ..._,
-          avgDiff: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
-          minDiff: (_.minResponseTime - labelToBeCompared.minResponseTime),
-          maxDiff: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
-          // @ts-ignore
-          bytesDiff: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
-          n0Diff: (_.n0 - labelToBeCompared.n0),
-          n5Diff: (_.n5 - labelToBeCompared.n5),
-          n9Diff: (_.n9 - labelToBeCompared.n9),
-          errorRateDiff: this.roundNumberTwoDecimals((_.errorRate - labelToBeCompared.errorRate)),
-          throughputDiff: this.roundNumberTwoDecimals((_.throughput - labelToBeCompared.throughput))
-        };
-      } else {
-        this.comparisonWarning.push(`${_.label} label not found`);
-        return {
-          ..._,
-          avgDiff: null,
-          minDiff: null,
-          maxDiff: null,
-          n0Diff: null,
-          n5Diff: null,
-          n9Diff: null,
-          errorRateDiff: null,
-          throughputDiff: null
-        };
-      }
-    });
-    if (data.environment !== this.itemData.environment) {
-      this.comparisonWarning.push('Environments do differ');
-    }
-    this.labelsData = this.comparedData;
-
-    if (this.comparisonWarning.length) {
-      this.showComparisonWarnings();
-    }
-  }
-
-  showComparisonWarnings() {
-    this.toastr.warning(this.comparisonWarning.join('<br>'), 'Comparison Warning!',
-      {
-        closeButton: true,
-        enableHtml: true,
-        timeOut: 15000
-      });
-    this.comparisonWarning = [];
-  }
-
   monitoringAlerts() {
     const alertMessages = [];
-    const { maxCpu, maxMem } = this.itemData.monitoringData;
+    const { max: maxCpu } = this.itemData.monitoring.cpu;
     if (maxCpu > 90) {
       alertMessages.push(`High CPU usage`);
     }
-    if (maxMem > 90) {
-      alertMessages.push(`High memory usage`);
-    }
 
     if (alertMessages.length > 0) {
-      this.toastr.warning(alertMessages.join('<br>'), 'Monitoring Alert!',
+      this.toastr.warning(alertMessages.join("<br>"), "Monitoring Alert!",
         {
           closeButton: true,
           disableTimeOut: true,
           enableHtml: true,
         });
-    }
-
-  }
-
-  resetStatsData() {
-    this.comparedData = null;
-    this.labelsData = this.itemData.statistics;
-  }
-
-  search(term: string) {
-    const dataToFilter = this.comparedData || this.itemData.statistics;
-    if (term) {
-      this.labelsData = dataToFilter.filter(x =>
-        x.label.trim().toLowerCase().includes(term.trim().toLowerCase())
-      );
-    } else {
-      this.labelsData = dataToFilter;
     }
   }
 
@@ -206,19 +243,54 @@ export class ItemDetailComponent implements OnInit {
     }
   }
 
-  quickBaseComparison(id) {
-    this.itemsService.fetchItemDetail(
-      this.itemParams.projectName,
-      this.itemParams.scenarioName,
-      id).subscribe(_ => this.itemToCompare({
-        statistics: _.statistics,
-        maxVu: _.overview.maxVu,
-        environment: _.environment,
-        id
-      }));
+  toggleThroughputBand({ element, perfAnalysis }) {
+    this.overallChartOptions.series.forEach(serie => {
+      if (["response time", "errors"].includes(serie.name)) {
+        serie.visible = this.toggleThroughputBandFlag;
+      }
+      if (serie.name === "throughput") {
+        if (this.toggleThroughputBandFlag) {
+          serie.zones = [];
+          return;
+        }
+        serie.zones = [{
+          value: this.itemData.overview.throughput,
+          color: "#e74c3c"
+        }];
+      }
+    });
+
+    if (!this.toggleThroughputBandFlag) {
+      element.textContent = "Hide in chart";
+      this.overallChartOptions.xAxis.plotBands = {
+        color: "#e74c3c4f",
+        from: perfAnalysis.throughputVariability.bandValues[0],
+        to: perfAnalysis.throughputVariability.bandValues[1]
+      };
+      this.toggleThroughputBandFlag = true;
+    } else {
+      element.textContent = "Display in chart";
+      this.overallChartOptions.xAxis.plotBands = null;
+      this.toggleThroughputBandFlag = false;
+    }
+    this.updateChartFlag = true;
   }
 
-  private roundNumberTwoDecimals = number => {
-    return Math.round(number * 100) / 100;
+  convertBytesToMbps(bytes) {
+    return bytesToMbps(bytes);
+  }
+
+  showZeroErrorToleranceWarning(): boolean | string {
+    if (this.itemData.zeroErrorToleranceEnabled) {
+      return showZeroErrorWarning(this.itemData.overview.errorRate,
+        this.itemData.overview.errorCount);
+    }
+    return false;
+  }
+
+  focusOnLabel($event: { label: string, metrics: Metrics[] }) {
+    this.activeId = 2;
+    this.performanceAnalysisLines = $event;
+    this.externalSearchTerm = $event.label;
   }
 }

@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { ApiTokenService } from 'src/app/_services/api-token.service';
-import { NotificationMessage } from 'src/app/notification/notification-messages';
-import { NotificationService } from 'src/app/_services/notification.service';
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { ApiTokenService } from "src/app/_services/api-token.service";
+import { NotificationMessage } from "src/app/notification/notification-messages";
+import { NotificationService } from "src/app/_services/notification.service";
 
 @Component({
-  selector: 'app-add-token',
-  templateUrl: './add-token.component.html',
-  styleUrls: ['./add-token.component.css']
+  selector: "app-add-token",
+  templateUrl: "./add-token.component.html",
+  styleUrls: ["./add-token.component.css"]
 })
 export class AddTokenComponent implements OnInit {
   myform: FormGroup;
@@ -29,7 +29,7 @@ export class AddTokenComponent implements OnInit {
   }
 
   createFormControls() {
-    this.description = new FormControl('', [
+    this.description = new FormControl("", [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(250)
@@ -43,7 +43,7 @@ export class AddTokenComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
   }
 
   onSubmit() {

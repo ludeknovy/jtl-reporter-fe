@@ -1,0 +1,33 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Add New Link</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="newShareLinkForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="alert alert-primary" role="alert">
+        <i class="fas fa-info-circle"> </i>
+        By sharing this link you will grant anonymous access to this test run. Please add note to your link.
+      </div>
+      <p class="text-secondary"></p>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Note</span>
+        </div>
+        <input type="input" class="form-control" formControlName="note" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="form-control-feedback" *ngIf="note.errors && (note.dirty || note.touched)">
+        <p class="alert alert-danger" *ngIf="note.errors.maxlength">Note is too long.</p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<button class="btn btn-sm jtl-btn-light jtl-no-glow create-new-link" (click)="open(content)">Add new link</button>

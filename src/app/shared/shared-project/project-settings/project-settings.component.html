@@ -1,0 +1,89 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Project Settings</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="projectSettingsForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+
+      <div class="form-group">
+        <label for="projectName">Project Name</label>
+        <input type="text" class="form-control" id="projectName" formControlName="projectName">
+
+      </div>
+      <div class="form-control-feedback" *ngIf="formControls.projectName.errors && (formControls.projectName.dirty || formControls.projectName.touched)">
+        <p class="alert alert-danger" *ngIf="formControls.projectName.errors.required">Project name is required</p>
+        <p class="alert alert-danger" *ngIf="formControls.projectName.errors.minlength">Project name must be at least 3 characters
+          long</p>
+        <p class="alert alert-danger" *ngIf="formControls.projectName.errors.maxlength">Max length is 50 characters</p>
+      </div>
+
+
+      <div class="form-sub">
+        <h6>Test Report Top Statistics Bar</h6>
+        <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+          <small> Please choose up to 5 test report top statistic you would like to be displayed.</small></div>
+
+        <div class="form-control-feedback" *ngIf="metricsEditable && (projectSettingsForm.dirty || projectSettingsForm.touched)">
+          <p class="alert alert-danger" *ngIf="metricsEditable">Please make sure max 5 metrics is selected.</p>
+        </div>
+
+        <div class="form-group">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="virtualUsers"
+                   formControlName="virtualUsers" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="virtualUsers">Virtual Users</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="errorRate"
+                   formControlName="errorRate" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="errorRate">Error Rate</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="percentile"
+                   formControlName="percentile" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="percentile">90% Percentile</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="throughput"
+                   formControlName="throughput" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="throughput">Throughput</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="avgLatency"
+                   formControlName="avgLatency" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="avgLatency">Average Latency</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="avgConnectionTime"
+                   formControlName="avgConnectionTime" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="avgConnectionTime">Average Connection Time</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="avgResponseTime"
+                   formControlName="avgResponseTime" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="avgResponseTime">Average Response Time</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="network"
+                   formControlName="network" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="network">Network</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="modal-footer">
+      <button type="submit" [disabled]="metricsEditable" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+
+</ng-template>
+
+  <button class="edit btn btn-sm dropdown-item" (click)="open(content)" ngbDropdownItem> Settings</button>

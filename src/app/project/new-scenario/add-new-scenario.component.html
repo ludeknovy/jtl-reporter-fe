@@ -1,0 +1,32 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Add new scenario</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Scenario Name</span>
+        </div>
+        <input type="input" class="form-control" formControlName="scenarioName" aria-label="Default"
+          aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="form-control-feedback" *ngIf="scenarioName.errors && (scenarioName.dirty || scenarioName.touched)">
+        <p class="alert alert-danger" *ngIf="scenarioName.errors.required">Scenario name is required</p>
+        <p class="alert alert-danger" *ngIf="scenarioName.errors.minlength">Project name must be at least 3 characters
+          long</p>
+        <p class="alert alert-danger" *ngIf="scenarioName.errors.maxlength">Max length is 50 characters</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn jtl-btn-primary">Submit</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<button *userRole="'regular'" class="btn btn-sm jtl-btn-primary jtl-no-glow" id="add-new-scenario" (click)="open(content)">
+  Add new scenario</button>

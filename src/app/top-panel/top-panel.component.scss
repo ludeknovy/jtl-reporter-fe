@@ -1,13 +1,13 @@
 
 .top-bar {
-  padding-left: 210px;
-  padding-right: 210px;
+  padding-left: 120px;
+  padding-right: 120px;
 }
 
 @media (max-width: 1550px) {
   .top-bar {
-    padding-left: 110px;
-    padding-right: 110px;
+    padding-left: 80px;
+    padding-right: 80px;
   }
 }
 
@@ -28,12 +28,11 @@
 .drop {
   color: white;
   background-color: #2f353a;
-  border: 0px;
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 15px;
   display: block;
-  border-color: #2f353a;
+  border: 0 #2f353a;
   cursor: pointer;
 }
 
@@ -100,21 +99,44 @@ a {
   color: black
 }
 
-.drop-area-left li a {
-  padding-left: 15px;
-}
-
-.dropdown-menu {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
 .navbar-toggler {
   border: none;
 }
 
+.dropdown-item{
+  line-height: 2rem;
+}
+
 .dropdown-item.active {
   color: white !important;
+  background-color: #243B55;
   border-radius: 0;
 }
 
+.dropdown-item:hover {
+  background-color: #5f6063  !important;
+  border-radius: 0;
+}
+
+.dropdowncustom-area {
+  background-color: #243B55 !important;
+  color: white;
+}
+
+.dropdown-dynamic {
+  top: 10px !important;
+}
+
+.dropdown-static {
+  top: 48px !important;
+}
+
+.dropdown-toggle {
+  box-shadow: none;
+}
+
+.bg-jtl-dark-gradient {
+  background: #141E30;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

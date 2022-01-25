@@ -1,0 +1,53 @@
+.scenarios-overview {
+  background-color: #f0f1f4;
+  padding-top: 20px;
+  min-height: 100%;
+  width: 100%;;
+}
+
+.card-header, .card-list {
+  border: none;
+}
+
+.create {
+  margin-bottom: 30px;
+}
+
+#scenario-filter, .scenario-filter, #basic-addon1, .scenario-order {
+  height: 30px;
+}
+
+.scenario-order {
+  margin-left: 10px
+}
+
+.scenario-order:focus {
+  outline: 0 !important;
+}
+
+.hd {
+  font-size: 12px;
+  color: #888888c7;
+  border-top: 0px;
+  border-bottom: 2px solid #a5a2a247;
+}
+
+.card-list .card-body {
+  padding-top: 0px;
+}
+
+tbody tr:hover {
+  cursor: pointer;
+  background-color: #e8e8e847;
+}
+
+.view-settings {
+  padding-top: 3px;
+}
+
+.card-scenario .card-footer  {
+  background: white;
+  border: 0px;
+  font-size: 12px;
+  padding-top: 0px;
+}

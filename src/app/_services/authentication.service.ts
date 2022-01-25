@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ApiKey } from './api-token.model';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
+import { BehaviorSubject, Observable } from "rxjs";
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthenticationService {
   private loggedIn = new BehaviorSubject<boolean>(false); // {1}
@@ -20,7 +19,7 @@ export class AuthenticationService {
         // login successful if there's a jwt token in the response
         if (user && user.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem("currentUser", JSON.stringify(user));
         }
 
         return user;
@@ -29,11 +28,15 @@ export class AuthenticationService {
 
   logout() {
     this.setLogin(false);
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem("currentUser");
   }
 
   changePassword(body): Observable<any> {
-    return this.http.post<any>('auth/change-password', body, { observe: 'response'});
+    return this.http.post<any>("auth/change-password", body, { observe: "response" });
+  }
+
+  initUser(body) {
+    return this.http.post("auth/initialize-user", body);
   }
 
   setLogin (value) {

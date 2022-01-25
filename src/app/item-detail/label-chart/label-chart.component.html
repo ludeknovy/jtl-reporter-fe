@@ -1,0 +1,34 @@
+<div class="card card-shadow" *ngIf="labelChartOptions">
+  <h6 class="card-header bg-transparent">
+    Label Chart - {{labelChartMetric}}
+    <span *ngIf="!labelCompareChartOptions" class="float-right">
+
+      <button class="jtl-no-glow add-item jtl-btn-light btn btn-sm"
+        (click)="toggleSeriesVisibility($event)">{{seriesVisibilityToggleText}}</button>
+
+
+      <button class="jtl-no-glow btn btn-sm jtl-ico-btn-light" (click)="collapseChart($event)"><i class="fa"
+          [ngClass]="{'fa-compress-alt': chartShouldExpand, 'fa-expand-alt': !chartShouldExpand}"> </i></button>
+
+    </span>
+    <span class="float-right">
+      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
+        aria-label="">
+        <button class="btn btn-sm jtl-no-glow metrics-button jtl-control-menu" ngbDropdownToggle>{{labelChartMetric}} <i
+            class="arrow"></i></button>
+        <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+          <button class="btn btn-sm" *ngFor="let _ of chartKeys" ngbDropdownItem
+            (click)="changeChart($event)">{{_}}</button>
+        </div>
+      </div>
+    </span>
+  </h6>
+  <div class="card-body">
+    <div class="chart">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="labelChartOptions" [(update)]="updateLabelChartFlag"
+        class="highchart-chart" [callbackFunction]="getInstance.bind(this)"
+        style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+    </div>
+  </div>
+
+</div>

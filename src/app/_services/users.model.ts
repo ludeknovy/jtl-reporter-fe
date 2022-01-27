@@ -6,6 +6,6 @@ export interface Users {
 
 export enum UserRole {
   Admin = 'admin',
-  Regular = 'regular',
+  Operator = 'operator',
   Readonly = 'readonly'
 }

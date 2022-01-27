@@ -1,14 +1,14 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { NavigationComponent } from "./navigation.component";
 import { RouterModule } from "@angular/router";
 import { RoleModule } from "src/app/_directives/role.module";
+import { AddNewItemComponent } from "./add-new-item.component";
 
 @NgModule({
-  declarations: [NavigationComponent],
+  declarations: [AddNewItemComponent],
   imports: [
     CommonModule, RouterModule, RoleModule,
   ],
-  exports: [NavigationComponent]
+  exports: [AddNewItemComponent]
 })
-export class NavigationModule { }
+export class AddNewItemModule { }

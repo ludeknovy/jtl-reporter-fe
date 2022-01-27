@@ -44,7 +44,7 @@ import { TimeagoModule } from "ngx-timeago";
     ProjectAdministrationModule,
     ProjectModule,
     NgxSpinnerModule,
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(),
   ],
   providers: [
     // no need to place any providers due to the `providedIn` flag...

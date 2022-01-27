@@ -20,7 +20,7 @@ export class AddUserComponent implements OnInit {
   password: FormControl;
   role: FormControl;
   roles = Object.values(UserRole);
-  DEFAULT_ROLE = UserRole.Regular;
+  DEFAULT_ROLE = UserRole.Operator;
 
   constructor(
     private modalService: NgbModal,

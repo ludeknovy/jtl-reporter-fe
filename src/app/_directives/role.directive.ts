@@ -14,8 +14,6 @@ export class RoleDirective {
 
   @Input() set userRole(inputRole: UserRole) {
     const { role } = JSON.parse(localStorage.getItem('currentUser'));
-    console.log(role)
-    console.log(inputRole);
     const minRole = roleMap.get(inputRole);
     const currentRole = roleMap.get(role);
 

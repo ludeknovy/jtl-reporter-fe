@@ -21,11 +21,11 @@ import { RouterModule } from "@angular/router";
 import { TopPanelComponent } from "./top-panel/top-panel.component";
 import { NotificationComponent } from "./notification/notification.component";
 import { TimeagoModule } from "ngx-timeago";
+import { TopPanelModule } from "./top-panel/top-panel.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    TopPanelComponent,
     NotificationComponent,
   ],
   imports: [
@@ -45,6 +45,7 @@ import { TimeagoModule } from "ngx-timeago";
     ProjectModule,
     NgxSpinnerModule,
     TimeagoModule.forRoot(),
+    TopPanelModule,
   ],
   providers: [
     // no need to place any providers due to the `providedIn` flag...

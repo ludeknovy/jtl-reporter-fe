@@ -38,6 +38,13 @@ export class TopPanelComponent implements OnInit {
     }
     );
     this.isLoggedIn$ = this.authService.isLoggedIn;
+    this.authService.isLoggedIn.subscribe((_) => {
+      if (_ === true) {
+        this.projectService.loadProjects();
+        const { username } = JSON.parse(localStorage.getItem("currentUser"));
+        this.username = username;
+      }
+    });
   }
 
 

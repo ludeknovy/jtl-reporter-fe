@@ -18,11 +18,11 @@ describe("NavigationComponent", () => {
 
   const mockLocalStorage = {
     getItem: (key: string): string => {
-      return JSON.stringify({ role: "operator"})
+      return JSON.stringify({ role: "operator" })
     },
   };
 
-  spyOn(localStorage, 'getItem')
+  spyOn(localStorage, "getItem")
     .and.callFake(mockLocalStorage.getItem);
 
   }));

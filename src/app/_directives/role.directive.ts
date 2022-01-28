@@ -1,9 +1,9 @@
-import { Directive, TemplateRef, ViewContainerRef, Input } from '@angular/core';
-import { UserRole } from '../_services/users.model';
+import { Directive, TemplateRef, ViewContainerRef, Input } from "@angular/core";
+import { UserRole } from "../_services/users.model";
 
 @Directive({
   // tslint:disable-next-line: directive-selector
-  selector: '[userRole]'
+  selector: "[userRole]"
 })
 
 export class RoleDirective {
@@ -13,7 +13,7 @@ export class RoleDirective {
     private viewContainer: ViewContainerRef) { }
 
   @Input() set userRole(inputRole: UserRole) {
-    const { role } = JSON.parse(localStorage.getItem('currentUser'));
+    const { role } = JSON.parse(localStorage.getItem("currentUser"));
     const minRole = roleMap.get(inputRole);
     const currentRole = roleMap.get(role);
 

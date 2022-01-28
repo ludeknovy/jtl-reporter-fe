@@ -5,7 +5,7 @@ export interface Users {
 }
 
 export enum UserRole {
-  Admin = 'admin',
-  Operator = 'operator',
-  Readonly = 'readonly'
+  Admin = "admin",
+  Operator = "operator",
+  Readonly = "readonly"
 }

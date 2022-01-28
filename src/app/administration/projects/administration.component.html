@@ -52,9 +52,9 @@
                                aria-label="Button group with nested dropdown">
                             <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
                             <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
-                              <app-project-settings [projectName]="_.projectName"></app-project-settings>
+                              <app-project-settings [projectName]="_.projectName | urlEncode"></app-project-settings>
 
-                              <app-delete-project [projectData]="{ projectName: _.projectName }"></app-delete-project>
+                              <app-delete-project [projectData]="{ projectName: _.projectName | urlEncode }"></app-delete-project>
 
                             </div>
 

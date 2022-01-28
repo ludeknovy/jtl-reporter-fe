@@ -11,6 +11,7 @@ import { SharedModule } from "../shared/shared.module";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import { TimeagoModule } from "ngx-timeago";
 import { SharedProjectModule } from "../shared/shared-project/shared-project.module";
+import { UrlEncodePipeModule } from "../_pipes/url-encode.module";
 
 const routes: Routes = [  {
   path: "project/:projectName/scenarios", component: ProjectComponent,
@@ -22,7 +23,7 @@ const routes: Routes = [  {
     AddNewScenarioComponent, ScenariosGraphComponent],
   imports: [
     CommonModule, RouterModule.forRoot(routes), FormsModule, NgbModule, SharedModule, DataTableModule, ReactiveFormsModule, TimeagoModule,
-    SharedProjectModule,
+    SharedProjectModule, UrlEncodePipeModule
   ],
   exports: [ProjectComponent, AddNewScenarioComponent, ScenariosGraphComponent]
 })

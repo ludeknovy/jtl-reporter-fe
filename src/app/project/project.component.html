@@ -45,7 +45,7 @@
       <div class="col-md-3" *ngFor="let _ of filteredScenarios">
         <div class="card card-scenario card-shadow">
           <h6 class="card-header bg-transparent">
-            <a routerLink="/project/{{projectName}}/scenario/{{_.name}}/items">{{_.name}}</a>
+            <a routerLink="/project/{{projectName}}/scenario/{{_.name | urlEncode}}/items">{{_.name}}</a>
           </h6>
           <div class="card-body">
             <div class="chart">

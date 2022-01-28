@@ -153,6 +153,7 @@ export class SettingsScenarioComponent implements OnInit {
           percentile: parseFloat(thresholdPercentile)
         }
       };
+      console.log(currentScenarioName)
 
       this.scenarioApiService.updateScenario(projectName, currentScenarioName, body)
         .pipe(catchError(r => of(r)))
@@ -163,7 +164,7 @@ export class SettingsScenarioComponent implements OnInit {
       this.modalService.dismissAll();
 
       if (this.scenarioNameChanged) {
-        this.scenarioNameChangeEvent.emit(scenarioName);
+        this.scenarioNameChangeEvent.emit(encodeURIComponent(scenarioName));
       }
     }
   }

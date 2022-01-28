@@ -109,7 +109,6 @@ export class ProjectSettingsComponent implements OnInit {
   isEditable() {
     const enabledMetrics = Object.values(this.formControls).map(control => control.value).filter(value => value === true);
     this.metricsEditable = enabledMetrics.length > 5;
-    console.log(this.metricsEditable);
   }
 
   onCheckboxChange() {

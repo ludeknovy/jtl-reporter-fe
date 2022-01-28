@@ -163,7 +163,7 @@ export class SettingsScenarioComponent implements OnInit {
       this.modalService.dismissAll();
 
       if (this.scenarioNameChanged) {
-        this.scenarioNameChangeEvent.emit(scenarioName);
+        this.scenarioNameChangeEvent.emit(encodeURIComponent(scenarioName));
       }
     }
   }

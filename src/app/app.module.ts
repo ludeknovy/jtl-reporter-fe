@@ -18,7 +18,6 @@ import { AdministrationModule } from "./administration/administration.module";
 import { ProjectAdministrationModule } from "./administration/projects/project-administration.module";
 import { ProjectModule } from "./project/project.module";
 import { RouterModule } from "@angular/router";
-import { TopPanelComponent } from "./top-panel/top-panel.component";
 import { NotificationComponent } from "./notification/notification.component";
 import { TimeagoModule } from "ngx-timeago";
 import { TopPanelModule } from "./top-panel/top-panel.module";

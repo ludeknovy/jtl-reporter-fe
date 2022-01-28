@@ -11,6 +11,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ReactiveFormsModule } from "@angular/forms";
 import { SharedProjectModule } from "../../shared/shared-project/shared-project.module";
 import { TimeagoModule } from "ngx-timeago";
+import { UrlEncodePipeModule } from "src/app/_pipes/url-encode.module";
 
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
   declarations: [ProjectsAdministrationComponent, AddNewProjectComponent, DeleteProjectComponent],
   imports: [
     CommonModule, RouterModule.forRoot(routes), NavigationModule, SharedModule, NgbModule, ReactiveFormsModule,
-    SharedProjectModule, TimeagoModule
+    SharedProjectModule, TimeagoModule, UrlEncodePipeModule
   ],
   exports: [ProjectsAdministrationComponent, AddNewProjectComponent, DeleteProjectComponent]
 })

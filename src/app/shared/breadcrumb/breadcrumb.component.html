@@ -1,6 +1,6 @@
 <ol class="breadcrumb breadcrumb-nav">
   <li class="breadcrumb-item" *ngFor="let u of urls">
-    <a *ngIf="!u.last" class="" routerLink="{{u.url}}">{{u.label}}</a>
-    <span *ngIf="u.last">{{u.label}}</span>
+    <a *ngIf="!u.last" class="" routerLink="{{u.url}}">{{u.label | urlDecode}}</a>
+    <span *ngIf="u.last">{{u.label | urlDecode}}</span>
   </li>
 </ol>

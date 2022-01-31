@@ -7,6 +7,8 @@ import { NavigationModule } from "../navigation/navigation.module";
 import { SharedModule } from "../../shared/shared.module";
 import { UsersComponent } from "./users.component";
 import { AuthGuard } from "../../auth.guard";
+import { AddUserModule } from "./add-user/add-user.module";
+import { DeleteUserModule } from "./delete-user/delete-user.module";
 
 
 const routes: Routes = [
@@ -14,9 +16,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [UsersComponent, AddUserComponent, DeleteUserComponent],
+  declarations: [UsersComponent],
   imports: [
-    CommonModule, RouterModule.forRoot(routes), SharedModule, NavigationModule,
+    CommonModule, RouterModule.forRoot(routes), SharedModule, NavigationModule, AddUserModule, DeleteUserModule,
   ],
   exports: [UsersComponent, AddUserComponent, DeleteUserComponent]
 })

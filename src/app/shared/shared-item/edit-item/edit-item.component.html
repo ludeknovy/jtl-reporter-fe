@@ -46,4 +46,4 @@
 
 </ng-template>
 
-<button class="edit btn btn-sm dropdown-item" (click)="open(content)" ngbDropdownItem> Edit</button>
+<button *userRole="'operator'" class="edit btn btn-sm dropdown-item" (click)="open(content)" ngbDropdownItem> Edit</button>

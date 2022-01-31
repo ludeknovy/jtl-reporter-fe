@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { ScenarioComponent } from "./scenario.component";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "../auth.guard";
-import { AddNewItemComponent } from "./add-new-item/add-new-item.component";
 import { ScenarioTrendsComponent } from "./scenario-trends/scenario-trends.component";
 import { SettingsScenarioComponent } from "./scenario-settings/scenario-settings.component";
 import { DeleteScenarioComponent } from "./delete-scenario/delete-scenario.component";
@@ -22,6 +21,8 @@ import {
 import {
   DeleteExternalNotificationComponent
 } from "./external-notification/delete-external-notification/delete-external-notification.component";
+import { RoleModule } from "../_directives/role.module";
+import { AddNewItemModule } from "./add-new-item/add-new-item.module";
 
 
 const routes: Routes = [
@@ -33,15 +34,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ScenarioComponent, AddNewItemComponent, ScenarioTrendsComponent,
+  declarations: [ScenarioComponent, ScenarioTrendsComponent,
     SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
-    ItemControlsComponent, AddNewExternalNotificationComponent, DeleteExternalNotificationComponent
+    ItemControlsComponent, AddNewExternalNotificationComponent, DeleteExternalNotificationComponent,
   ],
   imports: [
     CommonModule, RouterModule.forRoot(routes), NgxSpinnerModule, NgbModule, SharedModule, HighchartsChartModule,
-    SharedItemModule, ReactiveFormsModule, DataTableModule,
+    SharedItemModule, ReactiveFormsModule, DataTableModule, RoleModule, AddNewItemModule,
   ],
-  exports: [ScenarioComponent, AddNewItemComponent, ScenarioTrendsComponent,
+  exports: [ScenarioComponent, ScenarioTrendsComponent,
     SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
     ItemControlsComponent]
 })

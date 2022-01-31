@@ -71,4 +71,4 @@
 
 </ng-template>
 
-<button type="button" class="jtl-no-glow add-item jtl-btn-primary btn btn-sm" (click)="open(content)"> Add test run</button>
+<button *userRole="'operator'" type="button" class="jtl-no-glow add-item jtl-btn-primary btn btn-sm" (click)="open(content)"> Add test run</button>

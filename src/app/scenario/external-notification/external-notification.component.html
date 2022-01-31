@@ -60,4 +60,4 @@
 
 </ng-template>
 
-<button class="notification btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Notifications</button>
+<button *userRole="'operator'" class="notification btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Notifications</button>

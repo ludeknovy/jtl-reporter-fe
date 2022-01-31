@@ -97,4 +97,4 @@
 
 </ng-template>
 
-<button class="edit btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Settings</button>
+<button *userRole="'operator'" class="edit btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Settings</button>

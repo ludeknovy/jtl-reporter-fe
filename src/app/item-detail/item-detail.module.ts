@@ -23,6 +23,7 @@ import { DeleteShareLinkComponent } from "./share/delete-share-link/delete-share
 import { CreateNewShareLinkComponent } from "./share/create-new-share-link/create-new-share-link.component";
 import { MonitoringStatsComponent } from "./monitoring-stats/monitoring-stats.component";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
+import { RoleModule } from "../_directives/role.module";
 
 
 const routes: Routes = [  {
@@ -38,7 +39,7 @@ const routes: Routes = [  {
     CreateNewShareLinkComponent, MonitoringStatsComponent ],
   imports: [
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
-    ReactiveFormsModule, FormsModule,
+    ReactiveFormsModule, FormsModule, RoleModule
   ],
   exports: []
 })

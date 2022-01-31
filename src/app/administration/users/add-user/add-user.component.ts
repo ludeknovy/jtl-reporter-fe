@@ -6,6 +6,7 @@ import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { NotificationService } from "src/app/_services/notification.service";
 import { NotificationMessage } from "src/app/notification/notification-messages";
+import { UserRole } from "src/app/_services/users.model";
 
 @Component({
   selector: "app-add-user",
@@ -17,6 +18,9 @@ export class AddUserComponent implements OnInit {
   myform: FormGroup;
   username: FormControl;
   password: FormControl;
+  role: FormControl;
+  roles = Object.values(UserRole);
+  DEFAULT_ROLE = UserRole.Operator;
 
   constructor(
     private modalService: NgbModal,
@@ -41,12 +45,15 @@ export class AddUserComponent implements OnInit {
       Validators.required,
       Validators.minLength(8),
     ]);
+    this.role = new FormControl(this.DEFAULT_ROLE, [
+    ]);
   }
 
   createForm() {
     this.myform = new FormGroup({
       username: this.username,
       password: this.password,
+      role: this.role,
     });
   }
 
@@ -56,8 +63,8 @@ export class AddUserComponent implements OnInit {
 
   onSubmit() {
     if (this.myform.valid) {
-      const { username, password } = this.myform.value;
-      this.userService.createNewUser({ username, password })
+      const { username, password, role } = this.myform.value;
+      this.userService.createNewUser({ username, password, role })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.userCreatedNotificationMessage(_);

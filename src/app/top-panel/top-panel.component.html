@@ -17,7 +17,7 @@
             <a *ngFor="let _ of projects" ngbDropdownItem class="btn btn-block text-left text-white"
                routerLink="/project/{{_.projectName | urlEncode }}/scenarios"
                routerLinkActive="active" (click)="changeSelectedProject(_.projectName)">{{_.projectName }}</a>
-            <app-add-project [topMenu]="true">New Project</app-add-project>
+            <app-add-project  *userRole="'operator'" [topMenu]="true">New Project</app-add-project>
           </div>
         </div>
       </li>
@@ -28,7 +28,7 @@
         </button>
         <div class="drop-area drop-area-left dropdowncustom-area dropdown-dynamic" ngbDropdownMenu
              aria-labelledby="dropdownSettings">
-          <a ngbDropdownItem class="btn btn-block text-left text-white" [routerLink]="['/administration/projects']"><i
+          <a *userRole="'operator'" ngbDropdownItem class="btn btn-block text-left text-white" [routerLink]="['/administration/projects']"><i
             class="fas fa-cog icon"></i>Administrate</a>
 
           <a ngbDropdownItem class="btn btn-block text-left text-white" href="/api-docs" target="_blank"><i

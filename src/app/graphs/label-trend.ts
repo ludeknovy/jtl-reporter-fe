@@ -67,26 +67,21 @@ export const labelTrendChartOptions = (_) => {
     },
     plotOptions: {
       areaspline: {
-        fillOpacity: 0.7,
-        dataGrouping: { enabled: true }
+        fillOpacity: 0.9,
       },
-      // line: {
-      //   step: 'center'
-      // }
     },
     legend: {
       layout: "horizontal",
       align: "center",
     },
-    series: [{
-      name: "90%",
+    series: [
+    {
+      name: "99%",
       type: "areaspline",
       yAxis: 0,
-      stacking: "normal",
-      data: _["n0"],
-      // color: colors[0],
-      color: "#FFC400",
+      color: "#008DA6",
       lineWidth: 0,
+      data: _["n9"],
       tooltip: {
         valueSuffix: " ms"
       },
@@ -96,7 +91,6 @@ export const labelTrendChartOptions = (_) => {
       name: "95%",
       type: "areaspline",
       yAxis: 0,
-      // color: colors[3],
       color: "#36B37E",
       lineWidth: 0,
       data: _["n5"],
@@ -104,21 +98,18 @@ export const labelTrendChartOptions = (_) => {
         valueSuffix: " ms"
       },
       marker: { enabled: false },
-      stacking: "normal",
     },
     {
-      name: "99%",
+      name: "90%",
       type: "areaspline",
       yAxis: 0,
-      // color: colors[4],
-      color: "#008DA6",
+      data: _["n0"],
+      color: "#FFC400",
       lineWidth: 0,
-      data: _["n9"],
       tooltip: {
         valueSuffix: " ms"
       },
       marker: { enabled: false },
-      stacking: "normal",
     },
     {
       name: "throughput",

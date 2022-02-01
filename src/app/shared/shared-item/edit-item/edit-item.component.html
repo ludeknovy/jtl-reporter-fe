@@ -33,6 +33,9 @@
             <input type="checkbox" id="base-check" [attr.disabled]="disabled ? '' : null" formControlName="base" [(ngModel)]="isBase"
             data-md-icheck />
           <label id="base-desc" class="form-check-label" for="base-check">Set as base run</label>
+           <i placement="bottom"
+                        ngbTooltip="Set this test report as a reference. When selected, it will enable a 'Compare to base run' shortcut in the requests statistics menu in other reports within the same scenario."><i
+                          class="far fa-question-circle icon base-run-tooltip"></i></i>
         </div>
       </div>
       <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">

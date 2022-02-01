@@ -30,10 +30,13 @@
               <thead>
               <tr>
                 <th scope="col" class="hd jtl-head-color">
-                  <mfDefaultSorter by="responseMessage">response failure</mfDefaultSorter>
+                  <mfDefaultSorter by="responseMessage">response</mfDefaultSorter>
                 </th>
                 <th scope="col" class="hd jtl-head-color">
                   <mfDefaultSorter by="statusCode">status code</mfDefaultSorter>
+                </th>
+                <th scope="col" class="hd jtl-head-color">
+                  <mfDefaultSorter by="failureMessage">failure</mfDefaultSorter>
                 </th>
                 <th scope="col" class="hd jtl-head-color">
                   <mfDefaultSorter by="count">occurrence</mfDefaultSorter>
@@ -45,6 +48,7 @@
               <tr *ngFor="let _ of mf.data">
                 <td>{{_.responseMessage}} </td>
                 <td>{{_.statusCode || "n/a"}}</td>
+                <td>{{_.failureMessage}}</td>
                 <td>{{_.count}}</td>
               </tr>
               </tbody>

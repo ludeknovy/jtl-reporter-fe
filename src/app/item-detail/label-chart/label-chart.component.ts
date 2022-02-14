@@ -56,5 +56,8 @@ export class LabelChartComponent implements OnInit {
 
   getInstance(chart): void {
     this.chart = chart;
+    setTimeout(() => {
+      chart.reflow();
+  },0);
  }
 }

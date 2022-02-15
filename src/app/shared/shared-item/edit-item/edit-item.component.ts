@@ -23,11 +23,12 @@ export class EditItemComponent implements OnInit {
   base;
   isBase;
   disabled;
+  name;
 
   @Input() reloadItems: boolean;
   @Input() itemDetailData: ItemInput;
   @Output() itemDetailChange = new EventEmitter<{
-    note: string, environment: string, hostname: string}>();
+    note: string, environment: string, hostname: string, name: string }>();
 
   constructor(
     private modalService: NgbModal,
@@ -55,6 +56,9 @@ export class EditItemComponent implements OnInit {
       Validators.maxLength(200)
     ]);
     this.base = new FormControl(this.itemDetailData.isBase, []);
+    this.name = new FormControl(this.itemDetailData.name, [
+      Validators.maxLength(200)
+    ])
   }
 
   createForm() {
@@ -62,7 +66,8 @@ export class EditItemComponent implements OnInit {
       note: this.note,
       environment: this.environment,
       hostname: this.hostname,
-      base: this.base
+      base: this.base,
+      name: this.name
     });
   }
 
@@ -72,12 +77,12 @@ export class EditItemComponent implements OnInit {
 
   onSubmit() {
     if (this.myform.valid) {
-      const { note, environment, base, hostname } = this.myform.value;
+      const { note, environment, base, hostname, name } = this.myform.value;
       const { projectName, id, scenarioName } = this.itemDetailData.params;
-      this.itemsApiService.updateItemInfo(id, projectName, scenarioName, { environment, note, base, hostname })
+      this.itemsApiService.updateItemInfo(id, projectName, scenarioName, { environment, note, base, hostname, name })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
-          this.itemDetailChange.emit({ note, environment, hostname });
+          this.itemDetailChange.emit({ note, environment, hostname, name });
           const message = this.notification.itemUpdate(_);
           return this.itemsApiService.setData(message);
         }).add((_) => {

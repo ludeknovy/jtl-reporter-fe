@@ -1,7 +1,7 @@
 <app-control-panel *ngIf="!isAnonymous">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <app-breadcrumb></app-breadcrumb>
+      <app-breadcrumb *ngIf="itemData.environment" [testName]="itemData.name"></app-breadcrumb>
     </li>
   </ul>
   <div>
@@ -13,7 +13,7 @@
             class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-item *ngIf="itemData.environment"
-            [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
+            [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams, name: itemData.name}"
             (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
           <app-share [params]=itemParams></app-share>
           <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
@@ -256,13 +256,13 @@
           <li ngbNavItem [ngbNavItem]="1">
             <a ngbNavLink class="nav-link bg-transparent">Overview charts</a>
             <ng-template ngbNavContent>
-              <div class="row charts chart-fix">
+              <div class="row charts">
                 <div class="col">
                   <div class="card overview-chart-card card-shadow">
                     <h6 class="card-header bg-transparent">Overall Chart</h6>
                     <div class="card-body">
                       <div class="chart">
-                        <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions"
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions" [callbackFunction]="chartCallback"
                           [(update)]="updateChartFlag" style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
                       </div>
@@ -270,7 +270,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row chart-fix">
+              <div class="row">
                 <div class="col">
                   <app-label-chart [labels]="labelCharts"></app-label-chart>
                 </div>
@@ -280,7 +280,7 @@
           <li ngbNavItem [ngbNavItem]="2">
             <a ngbNavLink class="nav-link bg-transparent">Analyze charts</a>
             <ng-template ngbNavContent>
-              <div class="row chart-fix charts">
+              <div class="row charts">
                 <div class="col">
                   <app-analyze-charts [chartLines]="chartLines" [params]="itemParams" [isAnonymous]="isAnonymous" [showPerformanceAnalysisLines]="performanceAnalysisLines"></app-analyze-charts>
                 </div>
@@ -296,7 +296,7 @@
     <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
       <div class="col">
         <div class="card table-stats card-shadow">
-          <h6 class="card-header bg-transparent">SUT Statistics <span class="compare">
+          <h6 class="card-header bg-transparent">Target System Statistics <span class="compare">
             </span></h6>
           <div class="card-body card-body-request-stats">
             <div class="labels-detail table-responsive">

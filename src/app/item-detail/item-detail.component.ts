@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsApiService } from "../items-api.service";
 import { ItemDetail } from "../items.service.model";
@@ -34,6 +34,7 @@ import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
   providers: [DecimalPipe]
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
+  
   Highcharts: typeof Highcharts = Highcharts;
   itemData: ItemDetail = {
     overview: null,
@@ -44,7 +45,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     reportStatus: null,
     hostname: null,
     statistics: [],
-    testName: null,
+    name: null,
     monitoring: {
       cpu: {
         max: 0, data: []
@@ -212,10 +213,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     };
   }
 
-  itemDetailChanged({ note, environment, hostname }) {
+  itemDetailChanged({ note, environment, hostname, name }) {
     this.itemData.note = note;
     this.itemData.environment = environment;
     this.itemData.hostname = hostname;
+    this.itemData.name = name
   }
 
   monitoringAlerts() {
@@ -293,4 +295,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.performanceAnalysisLines = $event;
     this.externalSearchTerm = $event.label;
   }
+
+  chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
+    setTimeout(() => {
+        chart.reflow();
+    },0);
+}
 }

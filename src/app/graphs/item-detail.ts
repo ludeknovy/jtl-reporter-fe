@@ -16,7 +16,7 @@ export const commonGraphSettings: any = (text) => {
     exporting: {
       buttons: {
         contextButton: {
-          enabled: false
+          enabled: true
         },
       }
     },
@@ -113,7 +113,7 @@ export const customChartSettings = () => {
   exporting: {
     buttons: {
       contextButton: {
-        enabled: false
+        enabled: true
       },
     }
   },

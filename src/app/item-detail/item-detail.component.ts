@@ -293,4 +293,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.performanceAnalysisLines = $event;
     this.externalSearchTerm = $event.label;
   }
+
+  chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
+    setTimeout(() => {
+        chart.reflow();
+    },0);
+}
 }

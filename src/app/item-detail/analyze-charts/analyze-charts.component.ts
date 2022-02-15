@@ -74,6 +74,12 @@ export class AnalyzeChartsComponent implements OnInit {
     this.saveChartSettings(event);
   }
 
+  chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
+    setTimeout(() => {
+        chart.reflow();
+    },200);
+}
+
   private updateChart(series) {
     const chartSeries: Line[] = [];
     if (!Array.isArray(series)) {

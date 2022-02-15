@@ -29,7 +29,7 @@ export interface ItemDetail {
     cpu: { data: { name: string, cpu: number, timestamp: number }[], max?: number }
   };
   baseId: string;
-  testName: string;
+  name: string;
   note: string;
   hostname: string;
   environment: string;

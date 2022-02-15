@@ -4,5 +4,5 @@ export const roundNumberTwoDecimals = number => {
 
 
 export const bytesToMbps = (bytes) => {
-  return roundNumberTwoDecimals(bytes * 8.0E-6);
+  return bytes * 8.0E-6;
 };

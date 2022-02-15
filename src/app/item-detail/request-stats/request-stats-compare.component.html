@@ -58,7 +58,7 @@
               <mfDefaultSorter by="samples">samples</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="avgResponseTime">avg [{{getUnit()}}]</mfDefaultSorter>
+              <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
               <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
@@ -95,32 +95,32 @@
             <td>{{_.label}} </td>
             <td>{{_.samples}}</td>
             <td><span
-                [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime}}</span>
+                [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime | number: '1.0-2'}}</span>
             </td>
             <td><span
-                [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime}}</span>
+                [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime | number: '1.0-2'}}</span>
             </td>
             <td><span
-                [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime}}</span>
+                [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime | number: '1.0-2'}}</span>
             </td>
-            <td><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0}}</span>
+            <td><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0 | number: '1.0-2'}}</span>
             </td>
-            <td><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5}}</span>
+            <td><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5 | number: '1.0-2'}}</span>
             </td>
-            <td><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9}}</span>
+            <td><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9 | number: '1.0-2'}}</span>
             </td>
             <td>
               <span
-                [className]="comparedData ? _.throughput > 0 ?  'value-negative' : 'value-positive' : ''">{{_.throughput}}</span>
+                [className]="comparedData ? _.throughput > 0 ?  'value-negative' : 'value-positive' : ''">{{_.throughput | number: '1.0-2'}}</span>
             </td>
             <td>
               <span
                 [className]="comparedData ? convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) > 0 ? 'value-positive' : 'value-negative' : ''">{{convertBytesToMbps(_.bytesPerSecond
-                + _.bytesSentPerSecond) || 0 }}</span>
+                + _.bytesSentPerSecond) || 0 | number: '1.0-2' }}</span>
             </td>
             <td>
               <span
-                [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate}}</span>
+                [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate | number: '1.0-2'}}</span>
             </td>
             <td>
                 <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label" [errorRate]="_.errorRate">

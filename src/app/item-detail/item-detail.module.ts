@@ -24,6 +24,7 @@ import { CreateNewShareLinkComponent } from "./share/create-new-share-link/creat
 import { MonitoringStatsComponent } from "./monitoring-stats/monitoring-stats.component";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import { RoleModule } from "../_directives/role.module";
+import { ReloadCustomChartComponent } from "./analyze-charts/reload-custom-chart/reload-custom-chart.component";
 
 
 const routes: Routes = [  {
@@ -36,7 +37,7 @@ const routes: Routes = [  {
   declarations: [ItemDetailComponent, RequestStatsCompareComponent, ThresholdsAlertComponent,
     PerformanceAnalysisComponent, ZeroErrorToleranceWarningComponent, LabelChartComponent, AnalyzeChartsComponent,
     LabelHealthComponent, LabelTrendComponent, StatsCompareComponent, AddMetricComponent, ShareComponent, DeleteShareLinkComponent,
-    CreateNewShareLinkComponent, MonitoringStatsComponent ],
+    CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent ],
   imports: [
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
     ReactiveFormsModule, FormsModule, RoleModule

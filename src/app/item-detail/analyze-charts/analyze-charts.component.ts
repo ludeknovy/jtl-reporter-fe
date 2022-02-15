@@ -29,6 +29,7 @@ export class AnalyzeChartsComponent implements OnInit {
     ["Network", 4]
   ]);
   preloadedSeries;
+  isTemporaryChart = false
 
   constructor(
     private itemApiService: ItemsApiService,
@@ -50,6 +51,8 @@ export class AnalyzeChartsComponent implements OnInit {
       let chartLines;
       if (data) {
         const { label, metrics } = data;
+        this.isTemporaryChart = true
+        console.log(this.isTemporaryChart)
         if (metrics && metrics.length > 0) {
           chartLines = metrics.map(_ => ({ name: label, metric: _ }));
         } else  {
@@ -112,10 +115,16 @@ export class AnalyzeChartsComponent implements OnInit {
     this.updateLabelChartFlag = true;
   }
 
+  loadSavedCustomChart() {
+    this.isTemporaryChart = false
+    this.updateChart(this.preloadedSeries)
+  }
+
   private saveChartSettings(event) {
     if (this.isAnonymous) {
       return;
     }
+    this.preloadedSeries = event;
     this.itemApiService.upsertItemChartSettings(
       this.params.projectName,
       this.params.scenarioName,

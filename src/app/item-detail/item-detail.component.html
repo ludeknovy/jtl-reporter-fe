@@ -1,7 +1,7 @@
 <app-control-panel *ngIf="!isAnonymous">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <app-breadcrumb></app-breadcrumb>
+      <app-breadcrumb *ngIf="itemData.environment" [testName]="itemData.name"></app-breadcrumb>
     </li>
   </ul>
   <div>
@@ -13,7 +13,7 @@
             class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-item *ngIf="itemData.environment"
-            [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams}"
+            [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams, name: itemData.name}"
             (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
           <app-share [params]=itemParams></app-share>
           <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>

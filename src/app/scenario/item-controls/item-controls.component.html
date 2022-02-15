@@ -4,7 +4,7 @@
     <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
     <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
       <app-edit-item [itemDetailData]="item" [reloadItems]="true"></app-edit-item>
-      <app-delete-item [itemData]="{ id: item.params.id, scenarioName: item.params.scenarioName, projectName: item.params.projectName}" [remoteDelete]="true"></app-delete-item>
+      <app-delete-item [itemData]="{ id: item.params.id, scenarioName: item.params.scenarioName, projectName: item.params.projectName }" [remoteDelete]="true"></app-delete-item>
     </div>
   </div>
 </div>

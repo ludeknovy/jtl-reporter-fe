@@ -10,4 +10,5 @@ export interface ItemInput {
   isBase?: boolean;
   hostname?: string;
   params: ItemParams;
+  name: string;
 }

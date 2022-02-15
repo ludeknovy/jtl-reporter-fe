@@ -27,6 +27,7 @@ export class AddNewItemComponent implements OnInit {
   note: FormControl;
   status: FormControl;
   hostname: FormControl;
+  name: FormControl;
   routeParams;
   statuses = Object.values(ItemStatus);
   DEFAULT_STATUS = ItemStatus.None;
@@ -63,6 +64,9 @@ export class AddNewItemComponent implements OnInit {
     ]);
     this.status = new FormControl(this.DEFAULT_STATUS, [
     ]);
+    this.name = new FormControl("", [
+      Validators.maxLength(200)
+    ])
   }
 
   createForm() {
@@ -72,7 +76,8 @@ export class AddNewItemComponent implements OnInit {
       environment: this.environment,
       note: this.note,
       hostname: this.hostname,
-      status: this.status
+      status: this.status,
+      name: this.name
     });
   }
 
@@ -91,12 +96,12 @@ export class AddNewItemComponent implements OnInit {
     this.formCheck();
     if (this.myform.valid) {
       this.spinner.show();
-      const { kpiFile, errorFile, monitoringFile, environment, note, hostname, status } = this.myform.value;
+      const { kpiFile, errorFile, monitoringFile, environment, note, hostname, status, name } = this.myform.value;
       this.itemsApiService.addNewTestItem(
         this.routeParams.projectName,
         this.routeParams.scenarioName,
         environment, note, hostname, ItemStatusValue[status],
-        kpiFile, errorFile, monitoringFile)
+        kpiFile, name, errorFile, monitoringFile)
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newTestItemNotificationMessage(_);

@@ -126,11 +126,13 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
           minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
           maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
           bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
+          bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
+          bytesSentPerSecond:(_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond), 
           n0: (_.n0 - labelToBeCompared.n0),
           n5: (_.n5 - labelToBeCompared.n5),
           n9: (_.n9 - labelToBeCompared.n9),
-          errorRate: roundNumberTwoDecimals((_.errorRate - labelToBeCompared.errorRate)),
-          throughput: roundNumberTwoDecimals((_.throughput - labelToBeCompared.throughput))
+          errorRate: (_.errorRate - labelToBeCompared.errorRate),
+          throughput: (_.throughput - labelToBeCompared.throughput)
         };
       } else {
         this.comparisonWarning.push(`${_.label} label not found`);
@@ -191,6 +193,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       this.comparedData = this.labelsData.map((_) => {
         const labelToBeCompared = this.comparingData.statistics.find((__) => __.label === _.label);
         if (labelToBeCompared) {
+          console.log(_.bytes, labelToBeCompared)
           return {
             ..._,
             avgResponseTime: this.calculatePercDifference(_.avgResponseTime, labelToBeCompared.avgResponseTime),
@@ -200,6 +203,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             n0: this.calculatePercDifference(_.n0, labelToBeCompared.n0),
             n5: this.calculatePercDifference(_.n5, labelToBeCompared.n5),
             n9: this.calculatePercDifference(_.n9, labelToBeCompared.n9),
+            bytesPerSecond: this.calculatePercDifference(_.bytesPerSecond, labelToBeCompared.bytesPerSecond),
+            bytesSentPerSecond:this.calculatePercDifference(_.bytesSentPerSecond, labelToBeCompared.bytesSentPerSecond), 
             errorRate: this.calculatePercDifference(_.errorRate, labelToBeCompared.errorRate),
             throughput: this.calculatePercDifference(_.throughput, labelToBeCompared.throughput)
           };
@@ -243,13 +248,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       .trim()
       .replace(/^"+|"+$/g, "")
       .toLowerCase();
-  }
-
-  getUnit() {
-    if (this.comparisonMs) {
-      return "ms";
-    }
-    return "%";
   }
 
   focusLabel(label: string) {

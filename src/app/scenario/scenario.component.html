@@ -48,6 +48,9 @@
                   <table class="table items jtl-table" [mfData]="items.data" #mf="mfDataTable">
                     <thead>
                       <tr>
+                        <th scope="col" class="jtl-head">
+                          <mfDefaultSorter by="name">name</mfDefaultSorter>
+                        </th>
                         <th scope="col" class="jtl-head vu">
                           <mfDefaultSorter by="overview.maxVu">virtual users</mfDefaultSorter>
                         </th>
@@ -85,6 +88,7 @@
                     </tbody>
                     <tbody *ngIf="items.data.length > 0">
                       <tr *ngFor="let _ of mf.data">
+                        <td (click)="open(_.id)"> {{_.name || 'test run '}}</td>
                         <td (click)="open(_.id)">
                           {{_.overview.maxVu}}
                         </td>

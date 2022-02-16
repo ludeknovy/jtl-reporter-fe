@@ -11,24 +11,28 @@
         <table class="table items" [mfData]="items.data" #mf="mfDataTable">
           <thead>
             <tr>
-              <th scope="col" class="head">
+              <th scope="col" class="jtl-head">
+                <mfDefaultSorter by="name">name</mfDefaultSorter>
+              </th>
+
+              <th scope="col" class="jtl-head">
                 <mfDefaultSorter by="maxVu">VU</mfDefaultSorter>
               </th>
-              <th scope="col" class="head">
+              <th scope="col" class="jtl-head">
                 <mfDefaultSorter by="duration">duration</mfDefaultSorter>
               </th>
-              <th scope="col" class="head">
+              <th scope="col" class="jtl-head">
                 <mfDefaultSorter by="environment">environment</mfDefaultSorter>
               </th>
-              <th scope="col" class="head">
+              <th scope="col" class="jtl-head">
                 <mfDefaultSorter by="note">note</mfDefaultSorter>
               </th>
-              <th scope="col" class="head">
+              <th scope="col" class="jtl-head">
                 <mfDefaultSorter by="startTime">start time</mfDefaultSorter>
-              <th scope="col" class="head">
+              <th scope="col" class="jtl-head">
                 <mfDefaultSorter by="status">status</mfDefaultSorter>
               </th>
-              <th scope="col" class="head">
+              <th scope="col" class="jtl-head">
                 <mfDefaultSorter by="base"></mfDefaultSorter>
               </th>
               <th>
@@ -46,6 +50,7 @@
           </tbody>
           <tbody *ngIf="items.data.length > 0">
             <tr *ngFor="let _ of mf.data">
+              <td>{{_.name || 'test run'}}</td>
               <td>
                 {{_.overview.maxVu}}
               </td>

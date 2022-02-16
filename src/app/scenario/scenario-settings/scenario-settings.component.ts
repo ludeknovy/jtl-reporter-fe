@@ -28,6 +28,7 @@ export class SettingsScenarioComponent implements OnInit {
     zeroErrorToleranceEnabled: null,
     deleteSamples: null,
     keepTestRunsPeriod: null,
+    generateShareToken: null,
   };
 
   params;
@@ -111,6 +112,9 @@ export class SettingsScenarioComponent implements OnInit {
     this.formControls.keepTestRunsPeriod = new FormControl(settings.keepTestRunsPeriod, [
       Validators.required
     ]);
+    this.formControls.generateShareToken = new FormControl(settings.generateShareToken, [
+      Validators.required
+    ])
   }
 
   createForm() {
@@ -124,6 +128,7 @@ export class SettingsScenarioComponent implements OnInit {
       zeroErrorToleranceEnabled: this.formControls.zeroErrorToleranceEnabled,
       deleteSamples: this.formControls.deleteSamples,
       keepTestRunsPeriod: this.formControls.keepTestRunsPeriod,
+      generateShareToken: this.formControls.generateShareToken,
     });
   }
 
@@ -137,8 +142,9 @@ export class SettingsScenarioComponent implements OnInit {
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
-        thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod
+        thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod, generateShareToken
       } = this.scenarioSettingsForm.value;
+      console.log(this.scenarioSettingsForm.value)
       const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
@@ -146,6 +152,7 @@ export class SettingsScenarioComponent implements OnInit {
         zeroErrorToleranceEnabled,
         keepTestRunsPeriod,
         deleteSamples,
+        generateShareToken,
         thresholds: {
           enabled: thresholdEnabled,
           errorRate: parseFloat(thresholdErrorRate),

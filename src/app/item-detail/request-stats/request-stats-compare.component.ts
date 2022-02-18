@@ -122,6 +122,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       if (labelToBeCompared) {
         return {
           ..._,
+          samples: (_.samples - labelToBeCompared.samples),
           avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
           minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
           maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),

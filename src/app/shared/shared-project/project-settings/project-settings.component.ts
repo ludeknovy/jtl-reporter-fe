@@ -26,6 +26,9 @@ export class ProjectSettingsComponent implements OnInit {
     errorRate: null,
     network: null,
     projectName: null,
+    errorCount: null,
+    networkSent: null,
+    networkReceived: null,
   };
   @Input() projectName: string;
 
@@ -50,7 +53,10 @@ export class ProjectSettingsComponent implements OnInit {
     this.formControls.percentile = new FormControl(settings.topMetricsSettings.percentile, []);
     this.formControls.throughput = new FormControl(settings.topMetricsSettings.throughput, []);
     this.formControls.errorRate = new FormControl(settings.topMetricsSettings.errorRate, []);
+    this.formControls.errorCount = new FormControl(settings.topMetricsSettings.errorCount || false, []),
     this.formControls.network = new FormControl(settings.topMetricsSettings.network, []);
+    this.formControls.networkSent = new FormControl(settings.topMetricsSettings.networkSent || false, []);
+    this.formControls.networkReceived = new FormControl(settings.topMetricsSettings.networkReceived || false, []);
     this.formControls.avgLatency = new FormControl(settings.topMetricsSettings.avgLatency, []);
     this.formControls.avgConnectionTime = new FormControl(settings.topMetricsSettings.avgConnectionTime, []);
     this.formControls.avgResponseTime = new FormControl(settings.topMetricsSettings.avgResponseTime, []);
@@ -66,9 +72,12 @@ export class ProjectSettingsComponent implements OnInit {
     this.projectSettingsForm = new FormGroup({
       virtualUsers: this.formControls.virtualUsers,
       errorRate: this.formControls.errorRate,
+      errorCount: this.formControls.errorCount,
       percentile: this.formControls.percentile,
       throughput: this.formControls.throughput,
       network: this.formControls.network,
+      networkSent: this.formControls.networkSent,
+      networkReceived: this.formControls.networkReceived,
       avgLatency: this.formControls.avgLatency,
       avgConnectionTime: this.formControls.avgConnectionTime,
       avgResponseTime: this.formControls.avgResponseTime,
@@ -91,7 +100,10 @@ export class ProjectSettingsComponent implements OnInit {
         network: this.formControls.network.value,
         avgLatency: this.formControls.avgLatency.value,
         avgResponseTime: this.formControls.avgResponseTime.value,
-        avgConnectionTime: this.formControls.avgConnectionTime.value
+        avgConnectionTime: this.formControls.avgConnectionTime.value,
+        errorCount: this.formControls.errorCount.value,
+        networkSent: this.formControls.networkSent.value,
+        networkReceived: this.formControls.networkReceived.value
       }
     };
     if (this.projectSettingsForm.valid) {

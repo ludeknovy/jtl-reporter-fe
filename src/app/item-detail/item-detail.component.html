@@ -187,9 +187,38 @@
                           class="unit-desc">%</span></h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Error rate</div>
-
                   </div>
                 </div>
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.errorCount">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title">{{itemData.overview.errorCount | number}} </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Error count</div>
+                  </div>
+                </div>
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.networkSent">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesSentPerSecond)}} <span class="unit-desc">Mbps</span></h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Network sent</div>
+                  </div>
+                </div>
+
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.networkReceived">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesPerSecond)}} <span class="unit-desc">Mbps</span></h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Network received</div>
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </div>

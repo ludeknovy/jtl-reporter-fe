@@ -53,10 +53,10 @@ export class ProjectSettingsComponent implements OnInit {
     this.formControls.percentile = new FormControl(settings.topMetricsSettings.percentile, []);
     this.formControls.throughput = new FormControl(settings.topMetricsSettings.throughput, []);
     this.formControls.errorRate = new FormControl(settings.topMetricsSettings.errorRate, []);
-    this.formControls.errorCount = new FormControl(settings.topMetricsSettings.errorCount, []),
+    this.formControls.errorCount = new FormControl(settings.topMetricsSettings.errorCount || false, []),
     this.formControls.network = new FormControl(settings.topMetricsSettings.network, []);
-    this.formControls.networkSent = new FormControl(settings.topMetricsSettings.networkSent, []);
-    this.formControls.networkReceived = new FormControl(settings.topMetricsSettings.networkReceived, []);
+    this.formControls.networkSent = new FormControl(settings.topMetricsSettings.networkSent || false, []);
+    this.formControls.networkReceived = new FormControl(settings.topMetricsSettings.networkReceived || false, []);
     this.formControls.avgLatency = new FormControl(settings.topMetricsSettings.avgLatency, []);
     this.formControls.avgConnectionTime = new FormControl(settings.topMetricsSettings.avgConnectionTime, []);
     this.formControls.avgResponseTime = new FormControl(settings.topMetricsSettings.avgResponseTime, []);

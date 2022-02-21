@@ -93,7 +93,8 @@
         <tbody>
           <tr *ngFor="let _ of mf.data">
             <td>{{_.label}} </td>
-            <td>{{_.samples}}</td>
+            <td><span
+              [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.samples | number }}</span> </td>
             <td><span
                 [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime | number: '1.0-2'}}</span>
             </td>

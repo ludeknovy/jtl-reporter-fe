@@ -37,7 +37,7 @@ export class LabelTrendComponent {
   }
 
   open(content) {
-    this.modalService.open(content, { size: "xl" }).result
+    this.modalService.open(content, { size: "xl", windowClass: "label-modal" }).result
       .then((_) => { this.labelChartOption = null; }, () => { this.labelChartOption = null; });
     this.fetchTrendData();
 

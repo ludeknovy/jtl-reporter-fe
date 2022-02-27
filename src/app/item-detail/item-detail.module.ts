@@ -24,6 +24,7 @@ import { CreateNewShareLinkComponent } from "./share/create-new-share-link/creat
 import { MonitoringStatsComponent } from "./monitoring-stats/monitoring-stats.component";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import { RoleModule } from "../_directives/role.module";
+import { ExcelService } from "../_services/excel.service";
 
 
 const routes: Routes = [  {
@@ -41,6 +42,7 @@ const routes: Routes = [  {
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
     ReactiveFormsModule, FormsModule, RoleModule
   ],
-  exports: []
+  exports: [],
+  providers: [ExcelService]
 })
 export class ItemDetailModule { }

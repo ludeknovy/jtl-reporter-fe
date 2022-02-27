@@ -6,6 +6,7 @@ import { ItemsApiService } from "src/app/items-api.service";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import html2canvas from "html2canvas";
+import { ExcelService } from "src/app/_services/excel.service";
 
 
 
@@ -38,6 +39,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private analyzeChartService: AnalyzeChartService,
     private modalService: NgbModal,
+    private excelService: ExcelService,
   ) {
   }
 
@@ -271,5 +273,12 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       this.downloadLink.nativeElement.download = "request-stats.png";
       this.downloadLink.nativeElement.click();
     });
+  }
+
+  downloadAsXLXS() {
+    const dataToBeSaved = this.labelsData.map(({ 
+      n0: p90, n5: p95, n9: p99, label: label, statusCodes: statusCodes, responseMessageFailures, ...rest }) => 
+      ({ label, p90, p95, p99, ...rest }))
+    this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`)
   }
 }

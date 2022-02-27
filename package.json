@@ -32,6 +32,7 @@
     "chart.js": "^2.9.3",
     "core-js": "^2.5.4",
     "deepmerge": "^4.2.2",
+    "file-saver": "^2.0.5",
     "highcharts": "^9.2.2",
     "highcharts-angular": "^2.10.0",
     "html2canvas": "^1.4.1",
@@ -42,6 +43,7 @@
     "node-sass": "^4.14.1",
     "rxjs": "^6.0.0",
     "tslib": "^2.0.0",
+    "xlsx": "^0.18.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

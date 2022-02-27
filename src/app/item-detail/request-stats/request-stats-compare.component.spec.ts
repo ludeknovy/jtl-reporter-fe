@@ -5,6 +5,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import { HighchartsChartModule } from "highcharts-angular";
 import { ToastrModule } from "ngx-toastr";
+import { ExcelService } from "src/app/_services/excel.service";
 import { LabelTrendComponent } from "../label-trend/label-trend.component";
 import { StatsCompareComponent } from "../stats-compare/stats-compare.component";
 import { LabelHealthComponent } from "./label-health/label-health.component";
@@ -30,8 +31,8 @@ describe("RequestStatsCompareComponent", () => {
         HighchartsChartModule,
         HttpClientModule,
         RouterTestingModule,
-
-      ]
+      ],
+      providers: [ExcelService]
     })
       .compileComponents();
   }));

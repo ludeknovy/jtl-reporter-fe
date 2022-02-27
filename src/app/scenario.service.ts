@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, interval } from "rxjs";
-import { scenarioHistoryGraphs } from "./graphs/scenario-trends";
+import { BehaviorSubject } from "rxjs";
 import { ScenarioNotifications } from "./items.service.model";
 import { ScenarioApiService } from "./scenario-api.service";
 

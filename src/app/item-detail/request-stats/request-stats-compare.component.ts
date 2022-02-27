@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 import { bytesToMbps, roundNumberTwoDecimals } from "../calculations";
 import { AnalyzeChartService } from "../../analyze-chart.service";
 import { ItemsApiService } from "src/app/items-api.service";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import html2canvas from "html2canvas";
 
 
 
@@ -18,6 +19,10 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   @Input() itemData;
   @Input() isAnonymous: boolean;
   @Input() params: ItemParams;
+
+  @ViewChild("screen") screen: ElementRef;
+  @ViewChild("canvas") canvas: ElementRef;
+  @ViewChild("downloadLink") downloadLink: ElementRef;
 
   comparingData;
   comparedData;
@@ -257,5 +262,14 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   openSearchHelp(content) {
     this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
+  }
+
+  downloadAsPng() {
+    html2canvas(this.screen.nativeElement).then(canvas => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.downloadLink.nativeElement.href = canvas.toDataURL("image/png");
+      this.downloadLink.nativeElement.download = "request-stats.png";
+      this.downloadLink.nativeElement.click();
+    });
   }
 }

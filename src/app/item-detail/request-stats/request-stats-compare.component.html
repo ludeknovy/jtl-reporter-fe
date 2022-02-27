@@ -27,6 +27,7 @@
               ngbDropdownItem><span class="compare-desc-btn">
                 Compare to base run</span></button>
             <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+            <button class="quick-base-comparison btn btn-sm" (click)="downloadAsPng()" ngbDropdownItem>Download as png</button>
           </div>
         </div>
       </div>
@@ -48,7 +49,7 @@
 
     </div>
     <div class="labels-detail table-responsive">
-      <table class="table" [mfData]="labelsData" #mf="mfDataTable">
+      <table #screen class="table" [mfData]="labelsData" #mf="mfDataTable">
         <thead>
           <tr>
             <th scope="col" class="hd jtl-head-color">
@@ -84,9 +85,9 @@
             <th scope="col" class="hd jtl-head-color">
               <mfDefaultSorter by="errorRate">error rate</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
             </th>
           </tr>
         </thead>
@@ -124,15 +125,15 @@
                 [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate | number: '1.0-2'}}</span>
             </td>
             <td>
-                <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label" [errorRate]="_.errorRate">
+                <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label" [errorRate]="_.errorRate" data-html2canvas-ignore="true">
               </app-label-health>
             </td>
             <td>
-              <app-label-trend *ngIf="!isAnonymous"
+              <app-label-trend *ngIf="!isAnonymous" data-html2canvas-ignore="true"
                 [trendInput]="{ environment: itemData.environment, labelName: _.label }" [params]="params">
               </app-label-trend>
 
-              <a class="jtl-a-primary label-focus" (click)="focusLabel(_.label)"><i
+              <a class="jtl-a-primary label-focus" (click)="focusLabel(_.label)" data-html2canvas-ignore="true"><i
                   class="fas fa-search-location fa-sm"></i></a>
             </td>
           </tr>
@@ -173,4 +174,9 @@
     </ng-template>
   </div>
 
+</div>
+
+<div id="download">
+  <img #canvas>
+  <a #downloadLink></a>
 </div>

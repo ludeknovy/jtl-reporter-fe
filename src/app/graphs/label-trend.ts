@@ -63,7 +63,8 @@ export const labelTrendChartOptions = (data) => {
     }
     ],
     tooltip: {
-      shared: true
+      shared: true,
+      valueDecimals: 2,
     },
     plotOptions: {
       areaspline: {

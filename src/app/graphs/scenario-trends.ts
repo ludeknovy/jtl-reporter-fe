@@ -116,7 +116,8 @@ export const customScenarioTrends = () => {
     tooltip: {
       split: false,
       crosshairs: [true],
-      shared: true
+      shared: true,
+      valueDecimals: 2,
     },
     plotOptions: {
       series: {

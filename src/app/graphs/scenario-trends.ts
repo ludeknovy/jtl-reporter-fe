@@ -1,5 +1,3 @@
-import { ScenarioTrendsData } from "../items.service.model";
-import * as moment from "moment";
 
 const options = ({ data, projectId, scenarioId }, yUnit) => {
   return {

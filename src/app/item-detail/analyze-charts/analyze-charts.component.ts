@@ -103,6 +103,9 @@ export class AnalyzeChartsComponent implements OnInit {
           name: `${metric}: ${name}`,
           data: labelMetric.data,
           id: `${metric}: ${name}`,
+          tooltip: { 
+            valueSuffix: labelMetric.suffix
+          },
           yAxis
         };
         chartSeries.push(line);
@@ -128,9 +131,12 @@ interface Line {
   name: string;
   yAxis: number;
   id: number | string;
+  tooltip?: {
+    valueSuffix: string
+  }
 }
 
 interface ChartLines {
-  labels: Map<string, [{ data: [], name: string }]>;
+  labels: Map<string, [{ data: [], name: string, suffix: string }]>;
   overall: Map<string, { name: string, data: [] }>;
 }

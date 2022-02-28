@@ -6,7 +6,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
   templateUrl: "./add-metric.component.html",
   styleUrls: ["./add-metric.component.scss"]
 })
-export class AddMetricComponent implements OnInit, OnChanges {
+export class AddMetricComponent implements OnChanges {
 
   @Input() chartLines;
   @Input() preloadedSeries;
@@ -20,26 +20,6 @@ export class AddMetricComponent implements OnInit, OnChanges {
   constructor(
     private modalService: NgbModal,
   ) {
-  }
-
-  ngOnInit() {
-    const labelsLines = Array.from(this.chartLines.labels.keys());
-    const overallLines = Array.from(this.chartLines.overall.keys());
-    const { value: firstItem } = this.chartLines.labels.values().next();
-    const labels = firstItem?.map(_ => ({ name: _.name, isChecked: false }));
-    overallLines.forEach((_: string) => {
-      this.metrics[_] = [{ name: "overall", isChecked: false }];
-    });
-    labelsLines.forEach((_: string) => {
-      const labelsArray = [...JSON.parse(JSON.stringify(labels))];
-      // eslint-disable-next-line no-prototype-builtins
-      this.metrics.hasOwnProperty(_)
-        ? this.metrics[_].push(...labelsArray)
-        : this.metrics[_] = labelsArray;
-    });
-
-    this.overallChartLines = Array.from(this.chartLines.overall.keys());
-    this.labelsChartLines = Array.from(this.chartLines.labels.keys());
   }
 
   open(content) {
@@ -63,6 +43,10 @@ export class AddMetricComponent implements OnInit, OnChanges {
     // update checkboxes with pre-loaded settings
     if (changes.preloadedSeries) {
       const preloadedSeries = changes.preloadedSeries.currentValue;
+      const chartLines = changes.chartLines?.currentValue
+      if (chartLines) {
+        this.updateMetrics(chartLines)
+      }
       if (!Array.isArray(preloadedSeries)) {
         return;
       }
@@ -73,5 +57,25 @@ export class AddMetricComponent implements OnInit, OnChanges {
         }
       });
     }
+  }
+
+  private updateMetrics(chartLines) {
+    const labelsLines = Array.from(chartLines.labels.keys());
+    const overallLines = Array.from(chartLines.overall.keys());
+    const { value: firstItem } = chartLines.labels.values().next();
+    const labels = firstItem?.map(_ => ({ name: _.name, isChecked: false }));
+    overallLines.forEach((_: string) => {
+      this.metrics[_] = [{ name: "overall", isChecked: false }];
+    });
+    labelsLines.forEach((_: string) => {
+      const labelsArray = [...JSON.parse(JSON.stringify(labels))];
+      // eslint-disable-next-line no-prototype-builtins
+      this.metrics.hasOwnProperty(_)
+        ? this.metrics[_].push(...labelsArray)
+        : this.metrics[_] = labelsArray;
+    });
+
+    this.overallChartLines = Array.from(chartLines.overall.keys());
+    this.labelsChartLines = Array.from(chartLines.labels.keys());
   }
 }

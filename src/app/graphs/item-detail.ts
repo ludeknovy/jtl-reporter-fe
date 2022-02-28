@@ -28,7 +28,8 @@ export const commonGraphSettings: any = (text) => {
     tooltip: {
       split: true,
       crosshairs: [true],
-      valueSuffix: ` ${text}`
+      valueSuffix: ` ${text}`,
+      valueDecimals: 2,
     },
     plotOptions: {
       series: {

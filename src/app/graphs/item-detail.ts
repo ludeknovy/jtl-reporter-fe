@@ -126,7 +126,8 @@ export const customChartSettings = () => {
     "#707B7C", "#7DCEA0", "#21618C", "#873600", "#AF7AC5", "#B7950B"],
   tooltip: {
     split: true,
-    crosshairs: [true]
+    crosshairs: [true],
+    valueDecimals: 2,
   },
   plotOptions: {
     series: {

@@ -1,3 +1,7 @@
 .label-focus {
   margin-left: 5px;
 }
+
+#download {
+  display: none;
+}

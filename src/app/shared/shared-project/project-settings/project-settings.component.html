@@ -43,6 +43,11 @@
             <label class="custom-control-label" for="errorRate">Error Rate</label>
           </div>
           <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="errorCount"
+                   formControlName="errorCount" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="errorCount">Error Count</label>
+          </div>
+          <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="percentile"
                    formControlName="percentile" (change)="onCheckboxChange()">
             <label class="custom-control-label" for="percentile">90% Percentile</label>
@@ -70,7 +75,17 @@
           <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="network"
                    formControlName="network" (change)="onCheckboxChange()">
-            <label class="custom-control-label" for="network">Network</label>
+            <label class="custom-control-label" for="network">Network - combined </label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="network-sent"
+                   formControlName="networkSent" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="network-sent">Network - sent</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="network-received"
+                   formControlName="networkReceived" (change)="onCheckboxChange()">
+            <label class="custom-control-label" for="network-received">Network - received</label>
           </div>
         </div>
       </div>

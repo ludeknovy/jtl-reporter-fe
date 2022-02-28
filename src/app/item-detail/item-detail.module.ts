@@ -25,6 +25,7 @@ import { MonitoringStatsComponent } from "./monitoring-stats/monitoring-stats.co
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import { RoleModule } from "../_directives/role.module";
 import { ReloadCustomChartComponent } from "./analyze-charts/reload-custom-chart/reload-custom-chart.component";
+import { ExcelService } from "../_services/excel.service";
 
 
 const routes: Routes = [  {
@@ -42,6 +43,7 @@ const routes: Routes = [  {
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
     ReactiveFormsModule, FormsModule, RoleModule
   ],
-  exports: []
+  exports: [],
+  providers: [ExcelService]
 })
 export class ItemDetailModule { }

@@ -142,19 +142,19 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       percentile95, percentile99,
     } = this.itemData.plot;
 
-    const threadLine = { ...threadLineSettings, name: "virtual users", data: threads };
-    const errorLine = { ...errorLineSettings, ...overAllFailRate };
-    const throughputLine = { ...throughputLineSettings, ...overallThroughput };
+    const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
+    const errorLine = { ...errorLineSettings, ...overAllFailRate, tooltip: { valueSuffix: " %" } };
+    const throughputLine = { ...throughputLineSettings, ...overallThroughput, tooltip: { valueSuffix: " hits/s" } };
 
     if (overAllNetworkV2) {
       const networkMbps = overAllNetworkV2.data.map((_) => {
         return [_[0], bytesToMbps(_[1])];
       });
-      const networkLine = { ...networkLineSettings, data: networkMbps };
+      const networkLine = { ...networkLineSettings, data: networkMbps, tooltip: { valueSuffix: " mbps" } };
       this.chartLines.overall.set(Metrics.Network, networkLine);
     }
 
-    this.chartLines.overall.set(Metrics.ResponseTimeAvg, overallTimeResponse);
+    this.chartLines.overall.set(Metrics.ResponseTimeAvg, { ...overallTimeResponse, tooltip: { valueSuffix: " ms" } });
     this.chartLines.overall.set(Metrics.Threads, threadLine);
     this.chartLines.overall.set(Metrics.ErrorRate, errorLine);
     this.chartLines.overall.set(Metrics.Throughput, throughputLine);
@@ -169,37 +169,37 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         series: [...networkMbps, threadLine], ...logScaleButton
       };
 
-      this.chartLines.labels.set(Metrics.Network, networkMbps);
+      this.chartLines.labels.set(Metrics.Network, networkMbps.map((label) => ({ ...label, suffix: " mbps" })));
       this.labelCharts.set(Metrics.Network, networkChartOptions);
     }
 
     if (minResponseTime) {
-      this.chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime);
+      this.chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime.map((label) => ({ ...label,  suffix: " ms" })));
       this.labelCharts.set(Metrics.ResponseTimeMin, { ...commonGraphSettings("ms"), series: [...minResponseTime, threadLine] });
     }
 
     if (maxResponseTime) {
-      this.chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime);
+      this.chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime.map((label) => ({ ...label,  suffix: " ms" })));
       this.labelCharts.set(Metrics.ResponseTimeMax, { ...commonGraphSettings("ms"), series: [...maxResponseTime, threadLine] });
     }
     if (percentile90) {
-      this.chartLines.labels.set(Metrics.ResponseTimeP90, percentile90);
+      this.chartLines.labels.set(Metrics.ResponseTimeP90, percentile90.map((label) => ({ ...label,  suffix: " ms" })));
       this.labelCharts.set(Metrics.ResponseTimeP90, { ...commonGraphSettings("ms"), series: [...percentile90, threadLine] });
     }
     if (percentile95) {
-      this.chartLines.labels.set(Metrics.ResponseTimeP95, percentile95);
+      this.chartLines.labels.set(Metrics.ResponseTimeP95, percentile95.map((label) => ({ ...label,  suffix: " ms" })));
       this.labelCharts.set(Metrics.ResponseTimeP95, { ...commonGraphSettings("ms"), series: [...percentile95, threadLine] });
     }
     if (percentile99) {
-      this.chartLines.labels.set(Metrics.ResponseTimeP99, percentile99);
+      this.chartLines.labels.set(Metrics.ResponseTimeP99, percentile99.map((label) => ({ ...label,  suffix: " ms" })));
       this.labelCharts.set(Metrics.ResponseTimeP99, { ...commonGraphSettings("ms"), series: [...percentile99, threadLine] });
     }
 
-    this.chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime);
+    this.chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime.map((label) => ({ ...label,  suffix: " ms" })));
     this.labelCharts.set(Metrics.ResponseTimeAvg, { ...commonGraphSettings("ms"), series: [...responseTime, threadLine] });
 
 
-    this.chartLines.labels.set(Metrics.Throughput, throughput);
+    this.chartLines.labels.set(Metrics.Throughput,  throughput.map((label) => ({ ...label,  suffix: " hits/s" })));
     this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings("hits/s"), series: [...throughput, threadLine] });
 
   }

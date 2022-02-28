@@ -1,7 +1,7 @@
-export const labelTrendChartOptions = (_) => {
+export const labelTrendChartOptions = (data) => {
   return {
     chart: {
-      type: "spline",
+      type: "column",
     },
     title: { text: "" },
     subtitle: {
@@ -13,7 +13,7 @@ export const labelTrendChartOptions = (_) => {
     xAxis: [{
       lineWidth: 0,
       crosshair: true,
-      categories: _.timePoints,
+      categories: data.timePoints,
       tickInterval: 5,
       gridLineWidth: 0,
     }],
@@ -63,7 +63,8 @@ export const labelTrendChartOptions = (_) => {
     }
     ],
     tooltip: {
-      shared: true
+      shared: true,
+      valueDecimals: 2,
     },
     plotOptions: {
       areaspline: {
@@ -77,11 +78,10 @@ export const labelTrendChartOptions = (_) => {
     series: [
     {
       name: "99%",
-      type: "areaspline",
       yAxis: 0,
       color: "#008DA6",
       lineWidth: 0,
-      data: _["n9"],
+      data: data["n9"],
       tooltip: {
         valueSuffix: " ms"
       },
@@ -89,11 +89,10 @@ export const labelTrendChartOptions = (_) => {
     },
     {
       name: "95%",
-      type: "areaspline",
       yAxis: 0,
       color: "#36B37E",
       lineWidth: 0,
-      data: _["n5"],
+      data: data["n5"],
       tooltip: {
         valueSuffix: " ms"
       },
@@ -101,9 +100,8 @@ export const labelTrendChartOptions = (_) => {
     },
     {
       name: "90%",
-      type: "areaspline",
       yAxis: 0,
-      data: _["n0"],
+      data: data["n0"],
       color: "#FFC400",
       lineWidth: 0,
       tooltip: {
@@ -112,9 +110,30 @@ export const labelTrendChartOptions = (_) => {
       marker: { enabled: false },
     },
     {
-      name: "throughput",
-      type: "spline",
-      data: _.throughput,
+      name: "Connection [avg]",
+      yAxis: 0,
+      visible: false,
+      data: data.connect,
+      lineWidth: 0,
+      tooltip: {
+        valueSuffix: " ms"
+      },
+      marker: { enabled: false },
+    },
+    {
+      name: "Latency [avg]",
+      yAxis: 0,
+      visible: false,
+      data: data.latency,
+      lineWidth: 0,
+      tooltip: {
+        valueSuffix: " ms"
+      },
+      marker: { enabled: false },
+    },
+    {
+      name: "Throughput",
+      data: data.throughput,
       visible: false,
       color: "#CB59E8",
       tooltip: {
@@ -124,27 +143,25 @@ export const labelTrendChartOptions = (_) => {
       marker: { enabled: false, symbol: "circle" }
     },
     {
-      name: "error rate",
-      type: "spline",
-      data: _.errorRate,
+      name: "Error Rate",
+      data: data.errorRate,
       tooltip: {
         valueSuffix: " %"
       },
       color: "red",
       yAxis: 2,
-      dashStyle: "ShortDot",
       marker: { enabled: false, symbol: "circle" }
     },
     {
-      name: "threads",
+      name: "Virtual Users",
       type: "spline",
-      steped: `center`,
-      data: _.threads,
+      data: data.threads,
       tooltip: {
         valueSuffix: " VU"
       },
-      color: "black",
-      dashStyle: "ShortDot",
+      color: "grey",
+      pointRadius: 5,
+      pointStyle: "line",
       yAxis: 3,
       marker: { enabled: false, symbol: "circle" }
     },
@@ -155,7 +172,7 @@ export const labelTrendChartOptions = (_) => {
 export const emptyChart = () => {
   return {
     chart: {
-      type: "spline"
+      type: "column"
     },
     title: { text: "No data" },
     subtitle: {

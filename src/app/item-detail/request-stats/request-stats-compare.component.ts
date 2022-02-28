@@ -1,10 +1,12 @@
-import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 import { bytesToMbps, roundNumberTwoDecimals } from "../calculations";
 import { AnalyzeChartService } from "../../analyze-chart.service";
 import { ItemsApiService } from "src/app/items-api.service";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import html2canvas from "html2canvas";
+import { ExcelService } from "src/app/_services/excel.service";
 
 
 
@@ -18,6 +20,10 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   @Input() itemData;
   @Input() isAnonymous: boolean;
   @Input() params: ItemParams;
+
+  @ViewChild("screen") screen: ElementRef;
+  @ViewChild("canvas") canvas: ElementRef;
+  @ViewChild("downloadLink") downloadLink: ElementRef;
 
   comparingData;
   comparedData;
@@ -33,6 +39,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private analyzeChartService: AnalyzeChartService,
     private modalService: NgbModal,
+    private excelService: ExcelService,
   ) {
   }
 
@@ -122,6 +129,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       if (labelToBeCompared) {
         return {
           ..._,
+          samples: (_.samples - labelToBeCompared.samples),
           avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
           minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
           maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
@@ -256,5 +264,21 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   openSearchHelp(content) {
     this.modalService.open(content, { ariaLabelledBy: "modal-basic-title" });
+  }
+
+  downloadAsPng() {
+    html2canvas(this.screen.nativeElement).then(canvas => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.downloadLink.nativeElement.href = canvas.toDataURL("image/png");
+      this.downloadLink.nativeElement.download = "request-stats.png";
+      this.downloadLink.nativeElement.click();
+    });
+  }
+
+  downloadAsXLXS() {
+    const dataToBeSaved = this.labelsData.map(({ 
+      n0: p90, n5: p95, n9: p99, label: label, statusCodes: statusCodes, responseMessageFailures, ...rest }) => 
+      ({ label, p90, p95, p99, ...rest }))
+    this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`)
   }
 }

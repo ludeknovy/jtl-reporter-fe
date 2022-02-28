@@ -173,7 +173,7 @@
                   <div class="card">
                     <div class="card-body overview-body">
                       <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesPerSecond +
-                        itemData.overview.bytesSentPerSecond)}} <span class="unit-desc">Mbps</span>
+                        itemData.overview.bytesSentPerSecond) | number: '1.0-2'}} <span class="unit-desc">Mbps</span>
                       </h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Network data</div>
@@ -187,9 +187,38 @@
                           class="unit-desc">%</span></h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Error rate</div>
-
                   </div>
                 </div>
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.errorCount">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title">{{itemData.overview.errorCount | number}} </h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Error count</div>
+                  </div>
+                </div>
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.networkSent">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesSentPerSecond) | number: '1.0-2'}} <span class="unit-desc">Mbps</span></h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Network sent</div>
+                  </div>
+                </div>
+
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.networkReceived">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesPerSecond) | number: '1.0-2'}} <span class="unit-desc">Mbps</span></h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">Network received</div>
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </div>
@@ -293,7 +322,7 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
+    <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
       <div class="col">
         <div class="card table-stats card-shadow">
           <h6 class="card-header bg-transparent">Target System Statistics <span class="compare">
@@ -335,11 +364,11 @@
                         ngbTooltip="All samples for which we could not parse the hostname."><i
                           class="far fa-question-circle icon"></i></i>
                     </td>
-                    <td>{{_.avgResponseTime}}</td>
-                    <td>{{_.percentile}}</td>
-                    <td>{{_.throughput || "n/a"}} </td>
-                    <td>{{convertBytesToMbps(_.bytesPerSecond) || "n/a"}}</td>
-                    <td>{{_.errorRate}} % </td>
+                    <td>{{_.avgResponseTime | number: '1.0-2'}}</td>
+                    <td>{{_.percentile | number: '1.0-2'}}</td>
+                    <td>{{_.throughput | number: '1.0-2' || "n/a"}} </td>
+                    <td>{{convertBytesToMbps(_.bytesPerSecond) | number: '1.0-2' || "n/a" }}</td>
+                    <td>{{_.errorRate | number: '1.0-2'}} % </td>
                     <td></td>
                     <td>
                     </td>

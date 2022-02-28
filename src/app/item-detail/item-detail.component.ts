@@ -142,15 +142,15 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       percentile95, percentile99,
     } = this.itemData.plot;
 
-    const threadLine = { ...threadLineSettings, name: "virtual users", data: threads };
-    const errorLine = { ...errorLineSettings, ...overAllFailRate };
-    const throughputLine = { ...throughputLineSettings, ...overallThroughput };
+    const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
+    const errorLine = { ...errorLineSettings, ...overAllFailRate, tooltip: { valueSuffix: " %" } };
+    const throughputLine = { ...throughputLineSettings, ...overallThroughput, tooltip: { valueSuffix: " hits/s" } };
 
     if (overAllNetworkV2) {
       const networkMbps = overAllNetworkV2.data.map((_) => {
         return [_[0], bytesToMbps(_[1])];
       });
-      const networkLine = { ...networkLineSettings, data: networkMbps };
+      const networkLine = { ...networkLineSettings, data: networkMbps, tooltip: { valueSuffix: " mbps" } };
       this.chartLines.overall.set(Metrics.Network, networkLine);
     }
 

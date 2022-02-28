@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from "@angular/forms";
 import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
@@ -30,6 +30,7 @@ export class SettingsScenarioComponent implements OnInit {
     keepTestRunsPeriod: null,
     generateShareToken: null,
   };
+  labelFilterControls = {}
 
   params;
 
@@ -60,6 +61,14 @@ export class SettingsScenarioComponent implements OnInit {
     }
   ];
 
+  labelFiltersData = [{ term: "my label", operator: "includes" }, { term: "test", operator: "match" }]
+  private newAttribute: any = {};
+
+
+  labelFilters: FormArray
+
+
+
   constructor(
     private route: ActivatedRoute,
     private modalService: NgbModal,
@@ -76,6 +85,8 @@ export class SettingsScenarioComponent implements OnInit {
         this.createForm();
       }
     });
+    this.labelFilters =new FormArray(
+      this.labelFiltersData.map(filter=>new FormArray([new FormControl(filter.term,Validators.required), new FormControl(filter.operator, Validators.required)])))
   }
 
   createFormControls(settings) {
@@ -115,6 +126,7 @@ export class SettingsScenarioComponent implements OnInit {
     this.formControls.generateShareToken = new FormControl(settings.generateShareToken, [
       Validators.required
     ])
+  
   }
 
   createForm() {
@@ -138,6 +150,7 @@ export class SettingsScenarioComponent implements OnInit {
 
   onSubmit() {
     if (this.scenarioSettingsForm.valid) {
+      console.log(this.scenarioSettingsForm.value)
 
       const {
         scenarioName, analysisEnabled,
@@ -145,6 +158,7 @@ export class SettingsScenarioComponent implements OnInit {
         thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod, generateShareToken
       } = this.scenarioSettingsForm.value;
       console.log(this.scenarioSettingsForm.value)
+      console.log(this.labelFilters.value)
       const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
@@ -173,6 +187,11 @@ export class SettingsScenarioComponent implements OnInit {
         this.scenarioNameChangeEvent.emit(encodeURIComponent(scenarioName));
       }
     }
+  }
+
+  addFieldValue() {
+    this.labelFilters.push(this.newAttribute)
+    this.newAttribute = {};
   }
 
   private scenarioNameChanged(name): boolean {

@@ -6,105 +6,170 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form [formGroup]="scenarioSettingsForm" (ngSubmit)="onSubmit()">
-    <div class="modal-body">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Scenario name</label>
-        <input type="text" class="form-control" formControlName="scenarioName">
-      </div>
+  <div class="modal-body">
 
-      <div class="form-sub">
-        <h6>Thresholds</h6>
-        <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-          <small> Scenario thresholds will raise an alert in a report detail in case the given metrics diverge from the
-            previous
-            reports average by more than specified threshold percentage.</small></div>
 
-        <div class="form-group">
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="thresholdEnabled"
-                   formControlName="thresholdEnabled">
-            <label class="custom-control-label" for="thresholdEnabled">Enabled</label>
+  <ul ngbNav #nav="ngbNav" class="nav-tabs">
+    <li ngbNavItem>
+      <a ngbNavLink>General</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="scenarioSettingsForm" class="form-settings" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Scenario name</label>
+            <input type="text" class="form-control" formControlName="scenarioName">
           </div>
-        </div>
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">90% percentil</label>
-          <input type="input" class="form-control" formControlName="thresholdPercentile">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Throughput</label>
-          <input type="text" class="form-control" formControlName="thresholdThroughput">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Error rate</label>
-          <input type="text" class="form-control" formControlName="thresholdErrorRate">
-        </div>
-      </div>
-
-      <div class="form-sub">
-        <div class="form-group">
-          <h6>Test runs retention</h6>
-          <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-            <small> How long to keep test runs. All related data will be deleted as well.</small></div>
-          <label for="keep-tests-period" class="form-label">Keep tests</label>
-          <select class="custom-select" id="keep-tests-period" formControlName="keepTestRunsPeriod">
-            <option *ngFor="let keepTestRunPeriod of keepTestRunPeriods" [ngValue]="keepTestRunPeriod.period">{{ keepTestRunPeriod.description }}</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-sub">
-        <h6>Performance analysis</h6>
-        <div class="form-group">
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="analysisSwitch" formControlName="analysisEnabled">
-            <label class="custom-control-label" for="analysisSwitch">Enabled</label>
+    
+          <div class="form-sub">
+            <div class="form-group">
+              <h6>Test runs retention</h6>
+              <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                <small> How long to keep test runs. All related data will be deleted as well.</small></div>
+              <label for="keep-tests-period" class="form-label">Keep tests</label>
+              <select class="custom-select" id="keep-tests-period" formControlName="keepTestRunsPeriod">
+                <option *ngFor="let keepTestRunPeriod of keepTestRunPeriods" [ngValue]="keepTestRunPeriod.period">{{ keepTestRunPeriod.description }}</option>
+              </select>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div class="form-sub">
-        <h6>Zero error tolerance</h6>
-        <div class="form-group">
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="zeroErrorSwitch"
-                   formControlName="zeroErrorToleranceEnabled">
-            <label class="custom-control-label" for="zeroErrorSwitch">Enabled</label>
+    
+          <div class="form-sub">
+            <h6>Performance analysis</h6>
+            <div class="form-group">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="analysisSwitch" formControlName="analysisEnabled">
+                <label class="custom-control-label" for="analysisSwitch">Enabled</label>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div class="form-sub">
-        <h6>Delete sample data after processing</h6>
-        <div class="form-group">
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="deleteSamples" formControlName="deleteSamples">
-            <label class="custom-control-label" for="deleteSamples">Enabled</label>
+    
+          <div class="form-sub">
+            <h6>Zero error tolerance</h6>
+            <div class="form-group">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="zeroErrorSwitch"
+                       formControlName="zeroErrorToleranceEnabled">
+                <label class="custom-control-label" for="zeroErrorSwitch">Enabled</label>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div class="form-sub">
-        <h6>Generate share token automatically</h6>
-        <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-            <small> When enabled the API will return share token upon new test report upload.</small></div>
-        <div class="form-group">
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="shareToken" formControlName="generateShareToken">
-            <label class="custom-control-label" for="shareToken">Enabled</label>
+    
+          <div class="form-sub">
+            <h6>Delete sample data after processing</h6>
+            <div class="form-group">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="deleteSamples" formControlName="deleteSamples">
+                <label class="custom-control-label" for="deleteSamples">Enabled</label>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+    
+          <div class="form-sub">
+            <h6>Generate share token automatically</h6>
+            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                <small> When enabled the API will return share token upon new test report upload.</small></div>
+            <div class="form-group">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="shareToken" formControlName="generateShareToken">
+                <label class="custom-control-label" for="shareToken">Enabled</label>
+              </div>
+            </div>
+          </div>
 
-    </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+      </form>
+      </ng-template>
+    </li>
+    <li ngbNavItem>
+      <a ngbNavLink>Thresholds</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="scenarioSettingsForm" (ngSubmit)="onSubmit()">
+
+          <div class="form-sub">
+            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+              <small> Scenario thresholds will raise an alert in a report detail in case the given metrics diverge from the
+                previous
+                reports average by more than specified threshold percentage.</small></div>
+    
+            <div class="form-group">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="thresholdEnabled"
+                       formControlName="thresholdEnabled">
+                <label class="custom-control-label" for="thresholdEnabled">Enabled</label>
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <label for="exampleInputEmail1">90% percentil</label>
+              <input type="input" class="form-control" formControlName="thresholdPercentile">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Throughput</label>
+              <input type="text" class="form-control" formControlName="thresholdThroughput">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Error rate</label>
+              <input type="text" class="form-control" formControlName="thresholdErrorRate">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+
+        </form>
+      </ng-template>
+    </li>
+    <li ngbNavItem>
+      <a ngbNavLink>Label Filter Settings</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="labelFilters" (ngSubmit)="onSubmit()">
+          <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                  <tr  *ngFor="let subarray of labelFilters.controls;let i=index">
+                    <td *ngFor="let control of subarray.controls;let j=index">
+                      <input [formControl]=" subarray.controls[j]">
+                    </td>
+                    <td>
+                        <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
+                    </td>
+                </tr>
+        
+
+                <tr>
+                    <td>
+                        <input class="form-control" type="text" id="newAttributeCode" name="newAttributeCode" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" id="newAttributeName"  name="newAttributeName" />
+                    </td>
+                    <td>
+                        <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
 
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
 
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-  </form>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav"></div>
+
+  </div>
+
 
 
 </ng-template>

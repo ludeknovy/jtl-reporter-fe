@@ -12,8 +12,8 @@
   <div class="modal-body">
     <div *ngIf="labelChartOption">
       <highcharts-chart [Highcharts]="Highcharts" [options]="labelChartOption" [(update)]="updateFlag"
-        [callbackFunction]="chartCallback" [constructorType]="chartConstructor"
-        style="width: auto; height: 400px; display: block;"></highcharts-chart>
+         [oneToOne]="true"
+        style="width: auto; height: 450px; display: block;"></highcharts-chart>
     </div>
 
   </div>

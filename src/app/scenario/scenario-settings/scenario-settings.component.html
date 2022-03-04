@@ -124,34 +124,42 @@
       <a ngbNavLink>Label Filter Settings</a>
       <ng-template ngbNavContent>
         <form [formGroup]="labelFilters" (ngSubmit)="onSubmit()">
-          <table class="table table-striped table-bordered">
+          <table class="table jtl-table">
             <thead>
                 <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Action</th>
+                    <th class="jtl-head">Label</th>
+                    <th class="jtl-head">Operator</th>
+                    <th class="jtl-head"></th>
                 </tr>
             </thead>
             <tbody>
                   <tr  *ngFor="let subarray of labelFilters.controls;let i=index">
                     <td *ngFor="let control of subarray.controls;let j=index">
-                      <input [formControl]=" subarray.controls[j]">
+                      <input *ngIf="j === 0" class="form-control" type="text" [formControl]="subarray.controls[j]">
+                      <select *ngIf="j === 1" class="custom-select" [formControl]="subarray.controls[j]" aria-label="Default select example" [value]="subarray.controls[j].value">
+                        <option *ngFor="let operator of labelFilterOperators" value="{{operator}}">
+                          {{ operator }}
+                        </option>
+                      </select>
                     </td>
                     <td>
                         <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
                     </td>
                 </tr>
-        
 
                 <tr>
                     <td>
-                        <input class="form-control" type="text" id="newAttributeCode" name="newAttributeCode" />
+                        <input class="form-control" placeholder="Label term" type="text" id="term" name="term" #term />
                     </td>
                     <td>
-                        <input class="form-control" type="text" id="newAttributeName"  name="newAttributeName" />
+                      <select class="custom-select" aria-label="Default select example" #operator>
+                        <option *ngFor="let operator of labelFilterOperators" value="{{operator}}">
+                          {{ operator }}
+                        </option>
+                      </select>
                     </td>
                     <td>
-                        <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+                        <button class="btn btn-default" type="button" (click)="addFieldValue(operator.value)">Add</button>
                     </td>
                 </tr>
             </tbody>

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
@@ -17,6 +17,7 @@ export class SettingsScenarioComponent implements OnInit {
 
   @Output() scenarioNameChangeEvent = new EventEmitter<string>();
 
+
   scenarioSettingsForm: FormGroup;
   formControls = {
     scenarioName: null,
@@ -29,6 +30,8 @@ export class SettingsScenarioComponent implements OnInit {
     deleteSamples: null,
     keepTestRunsPeriod: null,
     generateShareToken: null,
+    term: null,
+    operator: null,
   };
   labelFilterControls = {}
 
@@ -62,9 +65,9 @@ export class SettingsScenarioComponent implements OnInit {
   ];
 
   labelFiltersData = [{ term: "my label", operator: "includes" }, { term: "test", operator: "match" }]
-  private newAttribute: any = {};
 
 
+  labelFilterOperators = ["includes", "match"]
   labelFilters: FormArray
 
 
@@ -74,8 +77,7 @@ export class SettingsScenarioComponent implements OnInit {
     private modalService: NgbModal,
     private scenarioApiService: ScenarioApiService,
     private notification: NotificationMessage,
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
@@ -83,10 +85,11 @@ export class SettingsScenarioComponent implements OnInit {
       if (_.name) {
         this.createFormControls(_);
         this.createForm();
+        this.labelFilters = new FormArray(
+          _.labelFilterSettings.map(filter=>new FormArray([new FormControl(filter.labelTerm,Validators.required), new FormControl(filter.operator, Validators.required)])))
       }
     });
-    this.labelFilters =new FormArray(
-      this.labelFiltersData.map(filter=>new FormArray([new FormControl(filter.term,Validators.required), new FormControl(filter.operator, Validators.required)])))
+
   }
 
   createFormControls(settings) {
@@ -149,16 +152,13 @@ export class SettingsScenarioComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.scenarioSettingsForm.valid) {
-      console.log(this.scenarioSettingsForm.value)
+    if (this.scenarioSettingsForm.valid && this.labelFilters.valid) {
 
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
         thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod, generateShareToken
       } = this.scenarioSettingsForm.value;
-      console.log(this.scenarioSettingsForm.value)
-      console.log(this.labelFilters.value)
       const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
@@ -172,7 +172,8 @@ export class SettingsScenarioComponent implements OnInit {
           errorRate: parseFloat(thresholdErrorRate),
           throughput: parseFloat(thresholdThroughput),
           percentile: parseFloat(thresholdPercentile)
-        }
+        },
+        labelFilterSettings: this.labelFilters.value.map(filter => ({ labelTerm: filter[0], operator: filter[1] }))
       };
 
       this.scenarioApiService.updateScenario(projectName, currentScenarioName, body)
@@ -189,9 +190,14 @@ export class SettingsScenarioComponent implements OnInit {
     }
   }
 
-  addFieldValue() {
-    this.labelFilters.push(this.newAttribute)
-    this.newAttribute = {};
+  addFieldValue(operator) {  
+   const element =  <HTMLInputElement>document.getElementById("term")
+    this.labelFilters.push(new FormArray([new FormControl(element.value,Validators.required), new FormControl(operator, Validators.required)]))
+    element.value = ""
+  }
+
+  deleteFieldValue(index) {
+    this.labelFilters.removeAt(index)
   }
 
   private scenarioNameChanged(name): boolean {

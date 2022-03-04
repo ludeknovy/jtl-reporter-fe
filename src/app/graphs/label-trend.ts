@@ -2,13 +2,18 @@ export const labelTrendChartOptions = (data) => {
   return {
     chart: {
       type: "column",
+      marginTop: 50,
     },
     title: { text: "" },
     subtitle: {
       text: ""
     },
     exporting: {
-      enabled: false
+      buttons: {
+        contextButton: {
+          enabled: true,
+        },
+      }
     },
     xAxis: [{
       lineWidth: 0,
@@ -44,7 +49,7 @@ export const labelTrendChartOptions = (data) => {
       labels: {
         format: "{value} %",
         style: {
-          lineWidt: 1,
+          lineWidth: 1,
         },
       },
       gridLineWidth: 0,

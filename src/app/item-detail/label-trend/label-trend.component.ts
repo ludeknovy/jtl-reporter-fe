@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { labelTrendChartOptions, emptyChart } from "src/app/graphs/label-trend";
 import { LabelApiService } from "src/app/label-api.service";
@@ -16,8 +16,6 @@ export class LabelTrendComponent {
 
   Highcharts: typeof Highcharts = Highcharts;
   chart;
-  chartConstructor = "chart";
-  chartCallback;
   updateFlag = false;
   labelChartOption;
   vuFilters;
@@ -29,11 +27,6 @@ export class LabelTrendComponent {
     private labelApiService: LabelApiService,
 
   ) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this;
-    this.chartCallback = chart => {
-      self.chart = chart;
-    };
   }
 
   open(content) {

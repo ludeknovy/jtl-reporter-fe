@@ -75,6 +75,11 @@ export const labelTrendChartOptions = (data) => {
       areaspline: {
         fillOpacity: 0.9,
       },
+      series: {
+        dataLabels: {
+            enabled: false
+        }
+    }
     },
     legend: {
       layout: "horizontal",

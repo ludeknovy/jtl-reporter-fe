@@ -87,7 +87,7 @@ export const labelTrendChartOptions = (data) => {
     },
     series: [
     {
-      name: "99%",
+      name: "Response Time [P99]",
       yAxis: 0,
       color: "#008DA6",
       lineWidth: 0,
@@ -98,7 +98,7 @@ export const labelTrendChartOptions = (data) => {
       marker: { enabled: false },
     },
     {
-      name: "95%",
+      name: "Response Time [P95]",
       yAxis: 0,
       color: "#36B37E",
       lineWidth: 0,
@@ -109,10 +109,21 @@ export const labelTrendChartOptions = (data) => {
       marker: { enabled: false },
     },
     {
-      name: "90%",
+      name: "Response Time [P90]",
       yAxis: 0,
       data: data["n0"],
       color: "#FFC400",
+      lineWidth: 0,
+      tooltip: {
+        valueSuffix: " ms"
+      },
+      marker: { enabled: false },
+    },
+    {
+      name: "Response Time [avg]",
+      yAxis: 0,
+      visible: false,
+      data: data.avgResponseTime,
       lineWidth: 0,
       tooltip: {
         valueSuffix: " ms"

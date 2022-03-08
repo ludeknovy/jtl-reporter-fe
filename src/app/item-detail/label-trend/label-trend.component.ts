@@ -19,15 +19,20 @@ export class LabelTrendComponent {
   updateFlag = false;
   labelChartOption;
   vuFilters;
+  chartCallback
 
   @Input() trendInput: { labelName: string, environment: string };
 
   constructor(
     private modalService: NgbModal,
     private labelApiService: LabelApiService,
-
   ) {
+    this.chartCallback = chart => {
+      this.chart = chart;
+    };
   }
+
+
 
   open(content) {
     this.modalService.open(content, { size: "xl", windowClass: "label-modal" }).result
@@ -64,5 +69,10 @@ export class LabelTrendComponent {
       this.labelChartOption = _.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
       this.updateFlag = true;
     });
+  }
+
+  onCheckboxChange(event) {
+    const enabled = event.target.checked
+    this.chart.series.forEach(serie => serie.update({ dataLabels: { enabled } }))
   }
 }

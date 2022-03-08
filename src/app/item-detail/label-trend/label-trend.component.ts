@@ -66,7 +66,7 @@ export class LabelTrendComponent {
         virtualUsers
       }
     ).subscribe((_) => {
-      this.labelChartOption = _.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
+      this.labelChartOption = _.chartSeries.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
       this.updateFlag = true;
     });
   }

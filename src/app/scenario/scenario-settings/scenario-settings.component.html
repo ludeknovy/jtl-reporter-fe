@@ -173,6 +173,70 @@
 
       </ng-template>
     </li>
+
+    <li ngbNavItem>
+      <a ngbNavLink>Label Trend Chart Settings</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="labelTrendChartSettingsForm" (ngSubmit)="onSubmit()">
+          <div class="form-group form-settings">
+            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+              <small> The selected metrics will get pre-set in label trend chart.</small></div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="virtualUsers"
+                     formControlName="virtualUsers">
+              <label class="custom-control-label" for="virtualUsers">Virtual Users</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="errorRate"
+                     formControlName="errorRate">
+              <label class="custom-control-label" for="errorRate">Error Rate</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="p90"
+                     formControlName="p90">
+              <label class="custom-control-label" for="p90">90% Percentile</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="p95"
+                     formControlName="p95">
+              <label class="custom-control-label" for="p95">95% Percentile</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="p99"
+                     formControlName="p99">
+              <label class="custom-control-label" for="p99">99% Percentile</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="throughput"
+                     formControlName="throughput">
+              <label class="custom-control-label" for="throughput">Throughput</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="avgLatency"
+                     formControlName="avgLatency">
+              <label class="custom-control-label" for="avgLatency">Average Latency</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="avgConnectionTime"
+                     formControlName="avgConnectionTime">
+              <label class="custom-control-label" for="avgConnectionTime">Average Connection Time</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="avgResponseTime"
+                     formControlName="avgResponseTime">
+              <label class="custom-control-label" for="avgResponseTime">Average Response Time</label>
+            </div>
+           
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+
+      </ng-template>
+    </li>
   </ul>
   <div [ngbNavOutlet]="nav"></div>
 

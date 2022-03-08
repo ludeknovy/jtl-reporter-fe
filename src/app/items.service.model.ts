@@ -222,14 +222,31 @@ export interface ProjectsOverallStats {
 }
 
 export interface LabelTrend {
-  timePoints: string[];
-  errorRate: number[];
-  id: string;
-  n0: number[];
-  n5: number[];
-  n9: number[];
-  throughput: number[];
-  threads: number[];
+    chartSeries: {
+      timePoints: string[];
+      errorRate: number[];
+      id: string;
+      p90: number[];
+      p95: number[];
+      p99: number[];
+      throughput: number[];
+      virtualUsers: number[];
+      avgLatency: number[],
+      avgConnectionTime: number[],
+      avgResponseTime: number[],
+    },
+    chartSettings: {
+      virtualUsers: boolean,
+      throughput: boolean,
+      avgLatency: boolean,
+      avgConnectionTime: boolean,
+      avgResponseTime: boolean,
+      p90: boolean,
+      p95: boolean,
+      p99: boolean,
+      errorRate: boolean,
+    }
+
 }
 
 export interface LabelMaxVu {

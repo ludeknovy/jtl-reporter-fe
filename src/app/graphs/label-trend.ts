@@ -1,4 +1,6 @@
-export const labelTrendChartOptions = (data) => {
+import { LabelTrend } from "../items.service.model";
+
+export const labelTrendChartOptions = (data: LabelTrend) => {
   return {
     chart: {
       type: "column",
@@ -18,7 +20,7 @@ export const labelTrendChartOptions = (data) => {
     xAxis: [{
       lineWidth: 0,
       crosshair: true,
-      categories: data.timePoints,
+      categories: data.chartSeries.timePoints,
       tickInterval: 5,
       gridLineWidth: 0,
     }],
@@ -88,10 +90,11 @@ export const labelTrendChartOptions = (data) => {
     series: [
     {
       name: "Response Time [P99]",
+      visible: data.chartSettings.p99,
       yAxis: 0,
       color: "#008DA6",
       lineWidth: 0,
-      data: data["n9"],
+      data: data.chartSeries.p99,
       tooltip: {
         valueSuffix: " ms"
       },
@@ -99,10 +102,11 @@ export const labelTrendChartOptions = (data) => {
     },
     {
       name: "Response Time [P95]",
+      visible: data.chartSettings.p95,
       yAxis: 0,
       color: "#36B37E",
       lineWidth: 0,
-      data: data["n5"],
+      data: data.chartSeries.p95,
       tooltip: {
         valueSuffix: " ms"
       },
@@ -110,8 +114,9 @@ export const labelTrendChartOptions = (data) => {
     },
     {
       name: "Response Time [P90]",
+      visible: data.chartSettings.p90,
       yAxis: 0,
-      data: data["n0"],
+      data: data.chartSeries.p90,
       color: "#FFC400",
       lineWidth: 0,
       tooltip: {
@@ -122,8 +127,8 @@ export const labelTrendChartOptions = (data) => {
     {
       name: "Response Time [avg]",
       yAxis: 0,
-      visible: false,
-      data: data.avgResponseTime,
+      visible: data.chartSettings.avgResponseTime,
+      data: data.chartSeries.avgResponseTime,
       lineWidth: 0,
       tooltip: {
         valueSuffix: " ms"
@@ -133,8 +138,8 @@ export const labelTrendChartOptions = (data) => {
     {
       name: "Connection [avg]",
       yAxis: 0,
-      visible: false,
-      data: data.connect,
+      visible: data.chartSettings.avgConnectionTime,
+      data: data.chartSeries.avgConnectionTime,
       lineWidth: 0,
       tooltip: {
         valueSuffix: " ms"
@@ -144,8 +149,8 @@ export const labelTrendChartOptions = (data) => {
     {
       name: "Latency [avg]",
       yAxis: 0,
-      visible: false,
-      data: data.latency,
+      visible: data.chartSettings.avgLatency,
+      data: data.chartSeries.avgLatency,
       lineWidth: 0,
       tooltip: {
         valueSuffix: " ms"
@@ -154,8 +159,8 @@ export const labelTrendChartOptions = (data) => {
     },
     {
       name: "Throughput",
-      data: data.throughput,
-      visible: false,
+      visible: data.chartSettings.throughput,
+      data: data.chartSeries.throughput,
       color: "#CB59E8",
       tooltip: {
         valueSuffix: " hits/s"
@@ -165,7 +170,8 @@ export const labelTrendChartOptions = (data) => {
     },
     {
       name: "Error Rate",
-      data: data.errorRate,
+      visible: data.chartSettings.errorRate,
+      data: data.chartSeries.errorRate,
       tooltip: {
         valueSuffix: " %"
       },
@@ -176,7 +182,8 @@ export const labelTrendChartOptions = (data) => {
     {
       name: "Virtual Users",
       type: "spline",
-      data: data.threads,
+      data: data.chartSeries.virtualUsers,
+      visible: data.chartSettings.virtualUsers,
       tooltip: {
         valueSuffix: " VU"
       },

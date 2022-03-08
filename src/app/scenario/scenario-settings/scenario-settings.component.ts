@@ -19,6 +19,7 @@ export class SettingsScenarioComponent implements OnInit {
 
 
   scenarioSettingsForm: FormGroup;
+  labelTrendChartSettingsForm: FormGroup;
   formControls = {
     scenarioName: null,
     analysisEnabled: null,
@@ -33,7 +34,19 @@ export class SettingsScenarioComponent implements OnInit {
     term: null,
     operator: null,
   };
+  labelTrendChartControls = {
+    virtualUsers: null,
+    throughput: null,
+    p90: null,
+    p95: null,
+    p99: null,
+    avgResponseTime: null,
+    avgConnectionTime: null,
+    avgLatency: null,
+    errorRate: null,
+  }
   labelFilterControls = {}
+
 
   params;
 
@@ -129,6 +142,16 @@ export class SettingsScenarioComponent implements OnInit {
     this.formControls.generateShareToken = new FormControl(settings.generateShareToken, [
       Validators.required
     ])
+
+    this.labelTrendChartControls.virtualUsers = new FormControl(settings.labelTrendChartSettings?.virtualUsers, []); 
+    this.labelTrendChartControls.throughput = new FormControl(settings.labelTrendChartSettings?.throughput, []); 
+    this.labelTrendChartControls.avgConnectionTime = new FormControl(settings.labelTrendChartSettings?.avgConnectionTime, []); 
+    this.labelTrendChartControls.avgLatency = new FormControl(settings.labelTrendChartSettings?.avgLatency, []); 
+    this.labelTrendChartControls.avgResponseTime = new FormControl(settings.labelTrendChartSettings?.avgResponseTime, []); 
+    this.labelTrendChartControls.p90 = new FormControl(settings.labelTrendChartSettings?.p90, []); 
+    this.labelTrendChartControls.p95 = new FormControl(settings.labelTrendChartSettings?.p95, []); 
+    this.labelTrendChartControls.p99 = new FormControl(settings.labelTrendChartSettings?.p99, []); 
+    this.labelTrendChartControls.errorRate = new FormControl(settings.labelTrendChartSettings?.errorRate, []); 
   
   }
 
@@ -145,6 +168,18 @@ export class SettingsScenarioComponent implements OnInit {
       keepTestRunsPeriod: this.formControls.keepTestRunsPeriod,
       generateShareToken: this.formControls.generateShareToken,
     });
+
+    this.labelTrendChartSettingsForm = new FormGroup({
+      virtualUsers: this.labelTrendChartControls.virtualUsers,
+      throughput: this.labelTrendChartControls.throughput,
+      avgConnectionTime: this.labelTrendChartControls.avgConnectionTime,
+      avgLatency: this.labelTrendChartControls.avgLatency,
+      avgResponseTime: this.labelTrendChartControls.avgResponseTime,
+      p90: this.labelTrendChartControls.p90,
+      p95: this.labelTrendChartControls.p95,
+      p99: this.labelTrendChartControls.p99,
+      errorRate: this.labelTrendChartControls.errorRate,
+    })
   }
 
   open(content) {
@@ -152,13 +187,14 @@ export class SettingsScenarioComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.scenarioSettingsForm.valid && this.labelFilters.valid) {
+    if (this.scenarioSettingsForm.valid && this.labelFilters.valid && this.labelTrendChartSettingsForm.valid) {
 
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
         thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod, generateShareToken
       } = this.scenarioSettingsForm.value;
+      console.log(this.labelTrendChartSettingsForm.value)
       const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
@@ -173,7 +209,8 @@ export class SettingsScenarioComponent implements OnInit {
           throughput: parseFloat(thresholdThroughput),
           percentile: parseFloat(thresholdPercentile)
         },
-        labelFilterSettings: this.labelFilters.value.map(filter => ({ labelTerm: filter[0], operator: filter[1] }))
+        labelFilterSettings: this.labelFilters.value.map(filter => ({ labelTerm: filter[0], operator: filter[1] })),
+        labelTrendChartSettings: this.labelTrendChartSettingsForm.value
       };
 
       this.scenarioApiService.updateScenario(projectName, currentScenarioName, body)

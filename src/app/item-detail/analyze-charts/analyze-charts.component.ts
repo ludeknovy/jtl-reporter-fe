@@ -9,6 +9,7 @@ import { AnalyzeChartService } from "../../analyze-chart.service";
   templateUrl: "./analyze-charts.component.html",
   styleUrls: ["./analyze-charts.component.css", "../item-detail.component.scss"]
 })
+
 export class AnalyzeChartsComponent implements OnInit {
 
   @Input() params: { projectName: string, scenarioName: string, id: string };

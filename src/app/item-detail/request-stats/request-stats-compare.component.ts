@@ -276,9 +276,11 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   downloadAsXLXS() {
-    const dataToBeSaved = this.labelsData.map(({ 
-      n0: p90, n5: p95, n9: p99, label: label, statusCodes: statusCodes, responseMessageFailures, ...rest }) => 
-      ({ label, p90, p95, p99, ...rest }))
+    const dataToBeSaved = this.labelsData.map((label) => 
+      ({ label: label.label, samples: label.samples, "avg [ms]": label.avgResponseTime, "min [ms]": label.minResponseTime,
+       "max [ms]": label.maxResponseTime, "P90 [ms]": label.n0, "P95 [ms]": label.n5, "P99 [ms]": label.n9,
+        "requests/s": label.throughput, mbps: roundNumberTwoDecimals(this.convertBytesToMbps(label.bytesPerSecond + label.bytesSentPerSecond)), "error rate": label.errorRate
+      }))
     this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`)
   }
 }

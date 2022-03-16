@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsApiService } from "../items-api.service";
 import { ItemDetail } from "../items.service.model";
@@ -144,7 +144,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
     const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
     const errorLine = { ...errorLineSettings, ...overAllFailRate, tooltip: { valueSuffix: " %" } };
-    const throughputLine = { ...throughputLineSettings, ...overallThroughput, tooltip: { valueSuffix: " hits/s" } };
+    const throughputLine = { ...throughputLineSettings, ...overallThroughput, tooltip: { valueSuffix: " reqs/s" } };
 
     if (overAllNetworkV2) {
       const networkMbps = overAllNetworkV2.data.map((_) => {
@@ -199,8 +199,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.labelCharts.set(Metrics.ResponseTimeAvg, { ...commonGraphSettings("ms"), series: [...responseTime, threadLine] });
 
 
-    this.chartLines.labels.set(Metrics.Throughput,  throughput.map((label) => ({ ...label,  suffix: " hits/s" })));
-    this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings("hits/s"), series: [...throughput, threadLine] });
+    this.chartLines.labels.set(Metrics.Throughput,  throughput.map((label) => ({ ...label,  suffix: " reqs/s" })));
+    this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings("reqs/s"), series: [...throughput, threadLine] });
 
   }
 

@@ -169,7 +169,7 @@ export const customScenarioTrends = () => {
         lineWidth: 0,
         showEmpty: false,
         title: {
-          text: "hits/s"
+          text: "reqs/s"
         },
       },
       {

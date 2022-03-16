@@ -15,7 +15,7 @@ export class LabelChartComponent implements OnInit {
   chartConstructor = "chart";
   labelChartMetric = "Throughput";
   labelCompareChartMetric;
-  labelChartOptions = commonGraphSettings("hits/s");
+  labelChartOptions = commonGraphSettings("reqs/s");
   updateLabelChartFlag = false;
   chartKeys;
   seriesVisibilityToggle = true;

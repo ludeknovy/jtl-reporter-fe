@@ -38,7 +38,7 @@ export const labelTrendChartOptions = (data: LabelTrend) => {
         text: "",
       },
       labels: {
-        format: "{value} hit/s",
+        format: "{value} reqs/s",
       },
       type: "logarithmic",
       gridLineWidth: 0,
@@ -163,7 +163,7 @@ export const labelTrendChartOptions = (data: LabelTrend) => {
       data: data.chartSeries.throughput,
       color: "#CB59E8",
       tooltip: {
-        valueSuffix: " hits/s"
+        valueSuffix: " reqs/s"
       },
       yAxis: 1,
       marker: { enabled: false, symbol: "circle" }

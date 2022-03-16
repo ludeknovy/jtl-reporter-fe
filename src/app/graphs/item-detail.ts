@@ -78,7 +78,7 @@ export const overallChartSettings = (text) => {
       gridLineColor: "#f2f2f2",
       lineWidth: 0,
       title: {
-        text: "hits/s"
+        text: "reqs/s"
       },
     },
     {
@@ -155,7 +155,7 @@ export const customChartSettings = () => {
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     title: {
-      text: "hits/s"
+      text: "reqs/s"
     },
   },
   {

@@ -31,7 +31,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   labelsData;
   comparisonWarning = [];
   comparedMetadata;
-  comparisonMs = true;
+  defaultUnit = true;
   externalSearchTerm = "";
 
   constructor(
@@ -60,7 +60,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   resetStatsData() {
     this.comparedData = null;
     this.labelsData = this.itemData.statistics;
-    this.comparisonMs = true;
+    this.defaultUnit = true;
   }
 
   search(query: string) {
@@ -197,7 +197,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   switchComparisonDataUnit() {
-    if (this.comparisonMs) {
+    if (this.defaultUnit) {
       this.comparedData = this.labelsData.map((_) => {
         const labelToBeCompared = this.comparingData.statistics.find((__) => __.label === _.label);
         if (labelToBeCompared) {
@@ -236,7 +236,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       this.comparedData = this.comparedDataMs;
     }
 
-    this.comparisonMs = !this.comparisonMs;
+    this.defaultUnit = !this.defaultUnit;
     this.labelsData = this.comparedData;
   }
 

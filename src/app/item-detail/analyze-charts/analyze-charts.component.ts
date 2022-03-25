@@ -9,6 +9,7 @@ import { AnalyzeChartService } from "../../analyze-chart.service";
   templateUrl: "./analyze-charts.component.html",
   styleUrls: ["./analyze-charts.component.css", "../item-detail.component.scss"]
 })
+
 export class AnalyzeChartsComponent implements OnInit {
 
   @Input() params: { projectName: string, scenarioName: string, id: string };
@@ -29,6 +30,7 @@ export class AnalyzeChartsComponent implements OnInit {
     ["Network", 4]
   ]);
   preloadedSeries;
+  isTemporaryChart = false
 
   constructor(
     private itemApiService: ItemsApiService,
@@ -50,6 +52,7 @@ export class AnalyzeChartsComponent implements OnInit {
       let chartLines;
       if (data) {
         const { label, metrics } = data;
+        this.isTemporaryChart = true
         if (metrics && metrics.length > 0) {
           chartLines = metrics.map(_ => ({ name: label, metric: _ }));
         } else  {
@@ -103,19 +106,34 @@ export class AnalyzeChartsComponent implements OnInit {
           name: `${metric}: ${name}`,
           data: labelMetric.data,
           id: `${metric}: ${name}`,
+          tooltip: { 
+            valueSuffix: labelMetric.suffix
+          },
           yAxis
         };
         chartSeries.push(line);
       }
     });
+    // hide all axis
+    this.customChartsOptions.yAxis.forEach(axis => axis.visible = false)
+    // display only actual axis
+    chartSeries.forEach(serie => {
+      this.customChartsOptions.yAxis[serie.yAxis].visible = true
+      })
     this.customChartsOptions.series = JSON.parse(JSON.stringify(chartSeries));
     this.updateLabelChartFlag = true;
+  }
+
+  loadSavedCustomChart() {
+    this.isTemporaryChart = false
+    this.updateChart(this.preloadedSeries)
   }
 
   private saveChartSettings(event) {
     if (this.isAnonymous) {
       return;
     }
+    this.preloadedSeries = event;
     this.itemApiService.upsertItemChartSettings(
       this.params.projectName,
       this.params.scenarioName,
@@ -128,9 +146,12 @@ interface Line {
   name: string;
   yAxis: number;
   id: number | string;
+  tooltip?: {
+    valueSuffix: string
+  }
 }
 
 interface ChartLines {
-  labels: Map<string, [{ data: [], name: string }]>;
+  labels: Map<string, [{ data: [], name: string, suffix: string }]>;
   overall: Map<string, { name: string, data: [] }>;
 }

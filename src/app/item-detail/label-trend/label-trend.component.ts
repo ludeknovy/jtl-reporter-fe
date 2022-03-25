@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { labelTrendChartOptions, emptyChart } from "src/app/graphs/label-trend";
 import { LabelApiService } from "src/app/label-api.service";
@@ -16,25 +16,23 @@ export class LabelTrendComponent {
 
   Highcharts: typeof Highcharts = Highcharts;
   chart;
-  chartConstructor = "chart";
-  chartCallback;
   updateFlag = false;
   labelChartOption;
   vuFilters;
+  chartCallback
 
   @Input() trendInput: { labelName: string, environment: string };
 
   constructor(
     private modalService: NgbModal,
     private labelApiService: LabelApiService,
-
   ) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this;
     this.chartCallback = chart => {
-      self.chart = chart;
+      this.chart = chart;
     };
   }
+
+
 
   open(content) {
     this.modalService.open(content, { size: "xl", windowClass: "label-modal" }).result
@@ -68,8 +66,13 @@ export class LabelTrendComponent {
         virtualUsers
       }
     ).subscribe((_) => {
-      this.labelChartOption = _.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
+      this.labelChartOption = _.chartSeries.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
       this.updateFlag = true;
     });
+  }
+
+  onCheckboxChange(event) {
+    const enabled = event.target.checked
+    this.chart.series.forEach(serie => serie.update({ dataLabels: { enabled } }))
   }
 }

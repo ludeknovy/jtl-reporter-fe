@@ -5,6 +5,12 @@
       <option value="0">No VU filter</option>
       <option *ngFor="let _ of vuFilters" value='{{_}}'>{{_}} VU</option>
     </select>
+    <div class="form-check display-bar-values-form">
+      <input class="form-check-input" type="checkbox" value="" id="display-bar-values" (change)="onCheckboxChange($event)">
+      <label class="form-check-label" for="display-bar-values">
+        Display bar values
+      </label>
+    </div>
     <button type="button" style="outline: none;" class="close" aria-label="" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -12,8 +18,8 @@
   <div class="modal-body">
     <div *ngIf="labelChartOption">
       <highcharts-chart [Highcharts]="Highcharts" [options]="labelChartOption" [(update)]="updateFlag"
-        [callbackFunction]="chartCallback" [constructorType]="chartConstructor"
-        style="width: auto; height: 400px; display: block;"></highcharts-chart>
+         [oneToOne]="true" [callbackFunction]="chartCallback"
+        style="width: auto; height: 450px; display: block;"></highcharts-chart>
     </div>
 
   </div>

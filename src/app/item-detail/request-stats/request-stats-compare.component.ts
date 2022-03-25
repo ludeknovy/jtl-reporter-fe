@@ -31,7 +31,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   labelsData;
   comparisonWarning = [];
   comparedMetadata;
-  comparisonMs = true;
+  defaultUnit = true;
   externalSearchTerm = "";
 
   constructor(
@@ -60,7 +60,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   resetStatsData() {
     this.comparedData = null;
     this.labelsData = this.itemData.statistics;
-    this.comparisonMs = true;
+    this.defaultUnit = true;
   }
 
   search(query: string) {
@@ -197,7 +197,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   switchComparisonDataUnit() {
-    if (this.comparisonMs) {
+    if (this.defaultUnit) {
       this.comparedData = this.labelsData.map((_) => {
         const labelToBeCompared = this.comparingData.statistics.find((__) => __.label === _.label);
         if (labelToBeCompared) {
@@ -236,7 +236,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       this.comparedData = this.comparedDataMs;
     }
 
-    this.comparisonMs = !this.comparisonMs;
+    this.defaultUnit = !this.defaultUnit;
     this.labelsData = this.comparedData;
   }
 
@@ -276,9 +276,11 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   downloadAsXLXS() {
-    const dataToBeSaved = this.labelsData.map(({ 
-      n0: p90, n5: p95, n9: p99, label: label, statusCodes: statusCodes, responseMessageFailures, ...rest }) => 
-      ({ label, p90, p95, p99, ...rest }))
+    const dataToBeSaved = this.labelsData.map((label) => 
+      ({ label: label.label, samples: label.samples, "avg [ms]": label.avgResponseTime, "min [ms]": label.minResponseTime,
+       "max [ms]": label.maxResponseTime, "P90 [ms]": label.n0, "P95 [ms]": label.n5, "P99 [ms]": label.n9,
+        "reqs/s": label.throughput, "network [mbps]": roundNumberTwoDecimals(this.convertBytesToMbps(label.bytesPerSecond + label.bytesSentPerSecond)), "error rate [%]": label.errorRate
+      }))
     this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`)
   }
 }

@@ -27,7 +27,9 @@ export const commonGraphSettings: any = (text) => {
       "#707B7C", "#7DCEA0", "#21618C", "#873600", "#AF7AC5", "#B7950B"],
     tooltip: {
       split: true,
-      crosshairs: [true]
+      crosshairs: [true],
+      valueSuffix: ` ${text}`,
+      valueDecimals: 2,
     },
     plotOptions: {
       series: {
@@ -76,7 +78,7 @@ export const overallChartSettings = (text) => {
       gridLineColor: "#f2f2f2",
       lineWidth: 0,
       title: {
-        text: "hits/s"
+        text: "reqs/s"
       },
     },
     {
@@ -124,7 +126,8 @@ export const customChartSettings = () => {
     "#707B7C", "#7DCEA0", "#21618C", "#873600", "#AF7AC5", "#B7950B"],
   tooltip: {
     split: true,
-    crosshairs: [true]
+    crosshairs: [true],
+    valueDecimals: 2,
   },
   plotOptions: {
     series: {
@@ -148,13 +151,15 @@ export const customChartSettings = () => {
     crosshair: true,
   },
   yAxis: [{
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     title: {
-      text: "hits/s"
+      text: "reqs/s"
     },
   },
   {
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     title: {
@@ -162,6 +167,7 @@ export const customChartSettings = () => {
     },
   },
   {
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     opposite: true,
@@ -170,6 +176,7 @@ export const customChartSettings = () => {
     },
   },
   {
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     opposite: true,
@@ -178,6 +185,7 @@ export const customChartSettings = () => {
     },
   },
   {
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     opposite: true,

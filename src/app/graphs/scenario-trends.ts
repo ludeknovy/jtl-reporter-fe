@@ -1,5 +1,3 @@
-import { ScenarioTrendsData } from "../items.service.model";
-import * as moment from "moment";
 
 const options = ({ data, projectId, scenarioId }, yUnit) => {
   return {
@@ -116,7 +114,8 @@ export const customScenarioTrends = () => {
     tooltip: {
       split: false,
       crosshairs: [true],
-      shared: true
+      shared: true,
+      valueDecimals: 2,
     },
     plotOptions: {
       series: {
@@ -170,7 +169,7 @@ export const customScenarioTrends = () => {
         lineWidth: 0,
         showEmpty: false,
         title: {
-          text: "hits/s"
+          text: "reqs/s"
         },
       },
       {

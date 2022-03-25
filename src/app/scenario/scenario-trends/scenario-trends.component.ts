@@ -6,7 +6,6 @@ import { customScenarioTrends } from "src/app/graphs/scenario-trends";
 import { Series } from "src/app/graphs/series.model";
 import { bytesToMbps } from "src/app/item-detail/calculations";
 import { ScenarioTrendsData } from "src/app/items.service.model";
-import { ScenarioApiService } from "src/app/scenario-api.service";
 import { ScenarioService } from "src/app/scenario.service";
 
 @Component({
@@ -27,14 +26,14 @@ export class ScenarioTrendsComponent implements OnInit {
   constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
     this.chartDataMapping = new Map([
-      ["percentil", { name: Series.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)" }],
-      ["avgResponseTime", { name: Series.ResponseTimeAvg, onLoad: false }],
-      ["avgLatency", { name: Series.LatencyAvg, onLoad: false }],
-      ["avgConnect", { name: Series.ConnetcAvg, onLoad: false }],
-      ["throughput", { name: Series.Throughput, yAxis: 2, onLoad: true, color: "rgb(41,128,187, 0.8)" }],
-      ["maxVu", { name: "vu", yAxis: 1, onLoad: true, type: "spline", color: "grey" }],
-      ["errorRate", { name: Series.ErrorRate, yAxis: 3, onLoad: true, color: "rgb(231,76,60, 0.8)" }],
-      ["network", { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform }],
+      ["percentil", { name: Series.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)", tooltip: { valueSuffix: " ms" } }],
+      ["avgResponseTime", { name: Series.ResponseTimeAvg, onLoad: false, tooltip: { valueSuffix: " ms" }  }],
+      ["avgLatency", { name: Series.LatencyAvg, onLoad: false, tooltip: { valueSuffix: " ms" }  }],
+      ["avgConnect", { name: Series.ConnetcAvg, onLoad: false, tooltip: { valueSuffix: " ms" }  }],
+      ["throughput", { name: Series.Throughput, yAxis: 2, onLoad: true, color: "rgb(41,128,187, 0.8)", tooltip: { valueSuffix: " reqs/s" }  }],
+      ["maxVu", { name: "vu", yAxis: 1, onLoad: true, type: "spline", color: "grey", }],
+      ["errorRate", { name: Series.ErrorRate, yAxis: 3, onLoad: true, color: "rgb(231,76,60, 0.8)", tooltip: { valueSuffix: " %" }  }],
+      ["network", { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform, tooltip: { valueSuffix: " mbps" }  }],
     ]);
   }
 
@@ -75,6 +74,7 @@ export class ScenarioTrendsComponent implements OnInit {
         visible: chartSerieSettings.onLoad || false,
         color: chartSerieSettings.color,
         type: chartSerieSettings.type,
+        tooltip: chartSerieSettings.tooltip,
       });
     }
     this.customScenarioTimeChartOption.series = JSON.parse(JSON.stringify(series));

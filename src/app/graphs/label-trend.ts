@@ -1,19 +1,26 @@
-export const labelTrendChartOptions = (data) => {
+import { LabelTrend } from "../items.service.model";
+
+export const labelTrendChartOptions = (data: LabelTrend) => {
   return {
     chart: {
       type: "column",
+      marginTop: 50,
     },
     title: { text: "" },
     subtitle: {
       text: ""
     },
     exporting: {
-      enabled: false
+      buttons: {
+        contextButton: {
+          enabled: true,
+        },
+      }
     },
     xAxis: [{
       lineWidth: 0,
       crosshair: true,
-      categories: data.timePoints,
+      categories: data.chartSeries.timePoints,
       tickInterval: 5,
       gridLineWidth: 0,
     }],
@@ -31,7 +38,7 @@ export const labelTrendChartOptions = (data) => {
         text: "",
       },
       labels: {
-        format: "{value} hit/s",
+        format: "{value} reqs/s",
       },
       type: "logarithmic",
       gridLineWidth: 0,
@@ -44,7 +51,7 @@ export const labelTrendChartOptions = (data) => {
       labels: {
         format: "{value} %",
         style: {
-          lineWidt: 1,
+          lineWidth: 1,
         },
       },
       gridLineWidth: 0,
@@ -63,12 +70,18 @@ export const labelTrendChartOptions = (data) => {
     }
     ],
     tooltip: {
-      shared: true
+      shared: true,
+      valueDecimals: 2,
     },
     plotOptions: {
       areaspline: {
         fillOpacity: 0.9,
       },
+      series: {
+        dataLabels: {
+            enabled: false
+        }
+    }
     },
     legend: {
       layout: "horizontal",
@@ -76,32 +89,46 @@ export const labelTrendChartOptions = (data) => {
     },
     series: [
     {
-      name: "99%",
+      name: "Response Time [P99]",
+      visible: data.chartSettings.p99,
       yAxis: 0,
       color: "#008DA6",
       lineWidth: 0,
-      data: data["n9"],
+      data: data.chartSeries.p99,
       tooltip: {
         valueSuffix: " ms"
       },
       marker: { enabled: false },
     },
     {
-      name: "95%",
+      name: "Response Time [P95]",
+      visible: data.chartSettings.p95,
       yAxis: 0,
       color: "#36B37E",
       lineWidth: 0,
-      data: data["n5"],
+      data: data.chartSeries.p95,
       tooltip: {
         valueSuffix: " ms"
       },
       marker: { enabled: false },
     },
     {
-      name: "90%",
+      name: "Response Time [P90]",
+      visible: data.chartSettings.p90,
       yAxis: 0,
-      data: data["n0"],
+      data: data.chartSeries.p90,
       color: "#FFC400",
+      lineWidth: 0,
+      tooltip: {
+        valueSuffix: " ms"
+      },
+      marker: { enabled: false },
+    },
+    {
+      name: "Response Time [avg]",
+      yAxis: 0,
+      visible: data.chartSettings.avgResponseTime,
+      data: data.chartSeries.avgResponseTime,
       lineWidth: 0,
       tooltip: {
         valueSuffix: " ms"
@@ -111,8 +138,8 @@ export const labelTrendChartOptions = (data) => {
     {
       name: "Connection [avg]",
       yAxis: 0,
-      visible: false,
-      data: data.connect,
+      visible: data.chartSettings.avgConnectionTime,
+      data: data.chartSeries.avgConnectionTime,
       lineWidth: 0,
       tooltip: {
         valueSuffix: " ms"
@@ -122,8 +149,8 @@ export const labelTrendChartOptions = (data) => {
     {
       name: "Latency [avg]",
       yAxis: 0,
-      visible: false,
-      data: data.latency,
+      visible: data.chartSettings.avgLatency,
+      data: data.chartSeries.avgLatency,
       lineWidth: 0,
       tooltip: {
         valueSuffix: " ms"
@@ -132,18 +159,19 @@ export const labelTrendChartOptions = (data) => {
     },
     {
       name: "Throughput",
-      data: data.throughput,
-      visible: false,
+      visible: data.chartSettings.throughput,
+      data: data.chartSeries.throughput,
       color: "#CB59E8",
       tooltip: {
-        valueSuffix: " hits/s"
+        valueSuffix: " reqs/s"
       },
       yAxis: 1,
       marker: { enabled: false, symbol: "circle" }
     },
     {
       name: "Error Rate",
-      data: data.errorRate,
+      visible: data.chartSettings.errorRate,
+      data: data.chartSeries.errorRate,
       tooltip: {
         valueSuffix: " %"
       },
@@ -154,7 +182,8 @@ export const labelTrendChartOptions = (data) => {
     {
       name: "Virtual Users",
       type: "spline",
-      data: data.threads,
+      data: data.chartSeries.virtualUsers,
+      visible: data.chartSettings.virtualUsers,
       tooltip: {
         valueSuffix: " VU"
       },

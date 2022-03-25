@@ -9,4 +9,5 @@ export interface Scenario {
     throughput: number;
     erroRate: number;
   };
+  labelFilterSettings: [{ operator: string, labelTerm: string }]
 }

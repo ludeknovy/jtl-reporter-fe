@@ -2,8 +2,6 @@
 
   <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
 
-      <span class="comparison-desc text-primary" *ngIf="comparedData && !comparisonMs"><i
-          class="fas fa-info-circle"></i> The values shown are in %.</span>
       <span class="comparison-desc" *ngIf="comparedData">Comparing to test: <a
           href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}">{{comparedMetadata.id}}
           with
@@ -13,7 +11,7 @@
       </button>
       <button class="remove-comparison btn btn-sm jtl-btn-light jtl-no-glow" *ngIf="comparedData"
         (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
-          <i class="fa" [ngClass]="{'fa-percent': comparisonMs, 'fa-stopwatch': !comparisonMs}"></i></span>
+          <i class="fa" [ngClass]="{'fa-percent': defaultUnit, 'fa-stopwatch': !defaultUnit}"></i></span>
       </button>
 
       <div *ngIf="!isAnonymous" class="btn-group mr-3">
@@ -59,34 +57,34 @@
               <mfDefaultSorter by="label">label</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="samples">samples</mfDefaultSorter>
+              <mfDefaultSorter by="samples">samples {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
+              <mfDefaultSorter by="avgResponseTime">avg [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
+              <mfDefaultSorter by="minResponseTime">min [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="maxResponseTime">max [ms]</mfDefaultSorter>
+              <mfDefaultSorter by="maxResponseTime">max [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="n0">P90 [ms]</mfDefaultSorter>
+              <mfDefaultSorter by="n0">P90 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="n5">P95 [ms]</mfDefaultSorter>
+              <mfDefaultSorter by="n5">P95 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="n9">P99 [ms]</mfDefaultSorter>
+              <mfDefaultSorter by="n9">P99 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="throughput">requests/s</mfDefaultSorter>
+              <mfDefaultSorter by="throughput">reqs/s {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="bytes">mbps</mfDefaultSorter>
+              <mfDefaultSorter by="bytes">network [{{ defaultUnit ? "mbps" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="errorRate">error rate</mfDefaultSorter>
+              <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
             </th>

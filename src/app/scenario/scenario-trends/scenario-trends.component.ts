@@ -30,7 +30,7 @@ export class ScenarioTrendsComponent implements OnInit {
       ["avgResponseTime", { name: Series.ResponseTimeAvg, onLoad: false, tooltip: { valueSuffix: " ms" }  }],
       ["avgLatency", { name: Series.LatencyAvg, onLoad: false, tooltip: { valueSuffix: " ms" }  }],
       ["avgConnect", { name: Series.ConnetcAvg, onLoad: false, tooltip: { valueSuffix: " ms" }  }],
-      ["throughput", { name: Series.Throughput, yAxis: 2, onLoad: true, color: "rgb(41,128,187, 0.8)", tooltip: { valueSuffix: " hits/s" }  }],
+      ["throughput", { name: Series.Throughput, yAxis: 2, onLoad: true, color: "rgb(41,128,187, 0.8)", tooltip: { valueSuffix: " reqs/s" }  }],
       ["maxVu", { name: "vu", yAxis: 1, onLoad: true, type: "spline", color: "grey", }],
       ["errorRate", { name: Series.ErrorRate, yAxis: 3, onLoad: true, color: "rgb(231,76,60, 0.8)", tooltip: { valueSuffix: " %" }  }],
       ["network", { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform, tooltip: { valueSuffix: " mbps" }  }],

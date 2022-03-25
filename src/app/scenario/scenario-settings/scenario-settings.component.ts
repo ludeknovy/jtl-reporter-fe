@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
@@ -17,7 +17,9 @@ export class SettingsScenarioComponent implements OnInit {
 
   @Output() scenarioNameChangeEvent = new EventEmitter<string>();
 
+
   scenarioSettingsForm: FormGroup;
+  labelTrendChartSettingsForm: FormGroup;
   formControls = {
     scenarioName: null,
     analysisEnabled: null,
@@ -29,7 +31,22 @@ export class SettingsScenarioComponent implements OnInit {
     deleteSamples: null,
     keepTestRunsPeriod: null,
     generateShareToken: null,
+    term: null,
+    operator: null,
   };
+  labelTrendChartControls = {
+    virtualUsers: null,
+    throughput: null,
+    p90: null,
+    p95: null,
+    p99: null,
+    avgResponseTime: null,
+    avgConnectionTime: null,
+    avgLatency: null,
+    errorRate: null,
+  }
+  labelFilterControls = {}
+
 
   params;
 
@@ -60,13 +77,20 @@ export class SettingsScenarioComponent implements OnInit {
     }
   ];
 
+  labelFiltersData = [{ term: "my label", operator: "includes" }, { term: "test", operator: "match" }]
+
+
+  labelFilterOperators = ["includes", "match"]
+  labelFilters: FormArray
+
+
+
   constructor(
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private scenarioApiService: ScenarioApiService,
     private notification: NotificationMessage,
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
@@ -74,8 +98,11 @@ export class SettingsScenarioComponent implements OnInit {
       if (_.name) {
         this.createFormControls(_);
         this.createForm();
+        this.labelFilters = new FormArray(
+          _.labelFilterSettings.map(filter=>new FormArray([new FormControl(filter.labelTerm,Validators.required), new FormControl(filter.operator, Validators.required)])))
       }
     });
+
   }
 
   createFormControls(settings) {
@@ -115,6 +142,17 @@ export class SettingsScenarioComponent implements OnInit {
     this.formControls.generateShareToken = new FormControl(settings.generateShareToken, [
       Validators.required
     ])
+
+    this.labelTrendChartControls.virtualUsers = new FormControl(settings.labelTrendChartSettings?.virtualUsers, []); 
+    this.labelTrendChartControls.throughput = new FormControl(settings.labelTrendChartSettings?.throughput, []); 
+    this.labelTrendChartControls.avgConnectionTime = new FormControl(settings.labelTrendChartSettings?.avgConnectionTime, []); 
+    this.labelTrendChartControls.avgLatency = new FormControl(settings.labelTrendChartSettings?.avgLatency, []); 
+    this.labelTrendChartControls.avgResponseTime = new FormControl(settings.labelTrendChartSettings?.avgResponseTime, []); 
+    this.labelTrendChartControls.p90 = new FormControl(settings.labelTrendChartSettings?.p90, []); 
+    this.labelTrendChartControls.p95 = new FormControl(settings.labelTrendChartSettings?.p95, []); 
+    this.labelTrendChartControls.p99 = new FormControl(settings.labelTrendChartSettings?.p99, []); 
+    this.labelTrendChartControls.errorRate = new FormControl(settings.labelTrendChartSettings?.errorRate, []); 
+  
   }
 
   createForm() {
@@ -130,6 +168,18 @@ export class SettingsScenarioComponent implements OnInit {
       keepTestRunsPeriod: this.formControls.keepTestRunsPeriod,
       generateShareToken: this.formControls.generateShareToken,
     });
+
+    this.labelTrendChartSettingsForm = new FormGroup({
+      virtualUsers: this.labelTrendChartControls.virtualUsers,
+      throughput: this.labelTrendChartControls.throughput,
+      avgConnectionTime: this.labelTrendChartControls.avgConnectionTime,
+      avgLatency: this.labelTrendChartControls.avgLatency,
+      avgResponseTime: this.labelTrendChartControls.avgResponseTime,
+      p90: this.labelTrendChartControls.p90,
+      p95: this.labelTrendChartControls.p95,
+      p99: this.labelTrendChartControls.p99,
+      errorRate: this.labelTrendChartControls.errorRate,
+    })
   }
 
   open(content) {
@@ -137,14 +187,14 @@ export class SettingsScenarioComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.scenarioSettingsForm.valid) {
+    if (this.scenarioSettingsForm.valid && this.labelFilters.valid && this.labelTrendChartSettingsForm.valid) {
 
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
         thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod, generateShareToken
       } = this.scenarioSettingsForm.value;
-      console.log(this.scenarioSettingsForm.value)
+      console.log(this.labelTrendChartSettingsForm.value)
       const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
@@ -158,7 +208,9 @@ export class SettingsScenarioComponent implements OnInit {
           errorRate: parseFloat(thresholdErrorRate),
           throughput: parseFloat(thresholdThroughput),
           percentile: parseFloat(thresholdPercentile)
-        }
+        },
+        labelFilterSettings: this.labelFilters.value.map(filter => ({ labelTerm: filter[0], operator: filter[1] })),
+        labelTrendChartSettings: this.labelTrendChartSettingsForm.value
       };
 
       this.scenarioApiService.updateScenario(projectName, currentScenarioName, body)
@@ -173,6 +225,16 @@ export class SettingsScenarioComponent implements OnInit {
         this.scenarioNameChangeEvent.emit(encodeURIComponent(scenarioName));
       }
     }
+  }
+
+  addFieldValue(operator) {  
+   const element =  <HTMLInputElement>document.getElementById("term")
+    this.labelFilters.push(new FormArray([new FormControl(element.value,Validators.required), new FormControl(operator, Validators.required)]))
+    element.value = ""
+  }
+
+  deleteFieldValue(index) {
+    this.labelFilters.removeAt(index)
   }
 
   private scenarioNameChanged(name): boolean {

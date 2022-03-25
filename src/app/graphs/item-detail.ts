@@ -78,7 +78,7 @@ export const overallChartSettings = (text) => {
       gridLineColor: "#f2f2f2",
       lineWidth: 0,
       title: {
-        text: "hits/s"
+        text: "reqs/s"
       },
     },
     {
@@ -151,13 +151,15 @@ export const customChartSettings = () => {
     crosshair: true,
   },
   yAxis: [{
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     title: {
-      text: "hits/s"
+      text: "reqs/s"
     },
   },
   {
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     title: {
@@ -165,6 +167,7 @@ export const customChartSettings = () => {
     },
   },
   {
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     opposite: true,
@@ -173,6 +176,7 @@ export const customChartSettings = () => {
     },
   },
   {
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     opposite: true,
@@ -181,6 +185,7 @@ export const customChartSettings = () => {
     },
   },
   {
+    visible: false,
     gridLineColor: "#f2f2f2",
     lineWidth: 0,
     opposite: true,

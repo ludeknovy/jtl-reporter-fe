@@ -9,6 +9,7 @@ import { AnalyzeChartService } from "../../analyze-chart.service";
   templateUrl: "./analyze-charts.component.html",
   styleUrls: ["./analyze-charts.component.css", "../item-detail.component.scss"]
 })
+
 export class AnalyzeChartsComponent implements OnInit {
 
   @Input() params: { projectName: string, scenarioName: string, id: string };
@@ -113,6 +114,12 @@ export class AnalyzeChartsComponent implements OnInit {
         chartSeries.push(line);
       }
     });
+    // hide all axis
+    this.customChartsOptions.yAxis.forEach(axis => axis.visible = false)
+    // display only actual axis
+    chartSeries.forEach(serie => {
+      this.customChartsOptions.yAxis[serie.yAxis].visible = true
+      })
     this.customChartsOptions.series = JSON.parse(JSON.stringify(chartSeries));
     this.updateLabelChartFlag = true;
   }

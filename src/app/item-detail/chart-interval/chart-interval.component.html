@@ -1,0 +1,6 @@
+<div ngbDropdown class="d-inline-block">
+    <button class="btn btn-sm btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{selectedInterval}}</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button class="btn-sm" *ngFor="let interval of availableIntervals" (click)="changeChartInterval(interval)" ngbDropdownItem>{{interval}}</button>
+    </div>
+  </div>

@@ -26,6 +26,7 @@ import { ItemStatusValue } from "./item-detail.model";
 import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
+import { ItemChartService } from "../_services/item-chart.service";
 
 @Component({
   selector: "app-item-detail",
@@ -42,6 +43,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     baseId: null,
     note: null,
     plot: null,
+    extraPlotData: null,
     reportStatus: null,
     hostname: null,
     statistics: [],
@@ -64,11 +66,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   token: string;
   isAnonymous = false;
   toggleThroughputBandFlag = false;
-  chartLines = {
-    overall: new Map(),
-    labels: new Map(),
-  };
-  labelCharts = new Map();
+  chartLines;
+  labelCharts
   activeId = 1;
   performanceAnalysisLines = null;
   externalSearchTerm = null;
@@ -80,7 +79,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private sharedMainBarService: SharedMainBarService,
     private toastr: ToastrService,
-    private analyzeChartService: AnalyzeChartService
+    private analyzeChartService: AnalyzeChartService,
+    private itemChartService: ItemChartService,
   ) {
     this.Math = Math;
   }
@@ -113,7 +113,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       .subscribe((results) => {
         this.itemData = results;
         this.monitoringAlerts();
-        this.generateCharts();
+        this.itemChartService.setCurrentPlot(this.itemData.plot)
+        // this.generateCharts();
         this.calculateTotalRequests();
         this.spinner.hide();
       });
@@ -121,6 +122,21 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       if (data) {
         this.activeId = 2;
       }
+    });
+    this.itemChartService.selectedPlot$.subscribe((value) => {
+      this.chartLines = value.chartLines;
+      this.labelCharts = value.labelCharts
+
+      if (this.chartLines) {
+        const oveallChartSeries = Array.from(this.chartLines?.overall?.values());
+
+        this.overallChartOptions = {
+          ...overallChartSettings("ms"), series: oveallChartSeries
+        };
+      }
+     
+
+      this.updateChartFlag = true
     });
   }
 
@@ -134,84 +150,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  private getChartLines() {
-    const {
-      threads, overallTimeResponse,
-      overallThroughput, overAllFailRate, overAllNetworkV2,
-      responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
-      percentile95, percentile99,
-    } = this.itemData.plot;
 
-    const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
-    const errorLine = { ...errorLineSettings, ...overAllFailRate, tooltip: { valueSuffix: " %" } };
-    const throughputLine = { ...throughputLineSettings, ...overallThroughput, tooltip: { valueSuffix: " reqs/s" } };
-
-    if (overAllNetworkV2) {
-      const networkMbps = overAllNetworkV2.data.map((_) => {
-        return [_[0], bytesToMbps(_[1])];
-      });
-      const networkLine = { ...networkLineSettings, data: networkMbps, tooltip: { valueSuffix: " mbps" } };
-      this.chartLines.overall.set(Metrics.Network, networkLine);
-    }
-
-    this.chartLines.overall.set(Metrics.ResponseTimeAvg, { ...overallTimeResponse, tooltip: { valueSuffix: " ms" } });
-    this.chartLines.overall.set(Metrics.Threads, threadLine);
-    this.chartLines.overall.set(Metrics.ErrorRate, errorLine);
-    this.chartLines.overall.set(Metrics.Throughput, throughputLine);
-
-    if (networkV2) {
-      const networkMbps = networkV2.map((_) => {
-        _.data = _.data.map(__ => [__[0], bytesToMbps(__[1])]);
-        return _;
-      });
-      const networkChartOptions = {
-        ...commonGraphSettings("mbps"),
-        series: [...networkMbps, threadLine], ...logScaleButton
-      };
-
-      this.chartLines.labels.set(Metrics.Network, networkMbps.map((label) => ({ ...label, suffix: " mbps" })));
-      this.labelCharts.set(Metrics.Network, networkChartOptions);
-    }
-
-    if (minResponseTime) {
-      this.chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime.map((label) => ({ ...label,  suffix: " ms" })));
-      this.labelCharts.set(Metrics.ResponseTimeMin, { ...commonGraphSettings("ms"), series: [...minResponseTime, threadLine] });
-    }
-
-    if (maxResponseTime) {
-      this.chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime.map((label) => ({ ...label,  suffix: " ms" })));
-      this.labelCharts.set(Metrics.ResponseTimeMax, { ...commonGraphSettings("ms"), series: [...maxResponseTime, threadLine] });
-    }
-    if (percentile90) {
-      this.chartLines.labels.set(Metrics.ResponseTimeP90, percentile90.map((label) => ({ ...label,  suffix: " ms" })));
-      this.labelCharts.set(Metrics.ResponseTimeP90, { ...commonGraphSettings("ms"), series: [...percentile90, threadLine] });
-    }
-    if (percentile95) {
-      this.chartLines.labels.set(Metrics.ResponseTimeP95, percentile95.map((label) => ({ ...label,  suffix: " ms" })));
-      this.labelCharts.set(Metrics.ResponseTimeP95, { ...commonGraphSettings("ms"), series: [...percentile95, threadLine] });
-    }
-    if (percentile99) {
-      this.chartLines.labels.set(Metrics.ResponseTimeP99, percentile99.map((label) => ({ ...label,  suffix: " ms" })));
-      this.labelCharts.set(Metrics.ResponseTimeP99, { ...commonGraphSettings("ms"), series: [...percentile99, threadLine] });
-    }
-
-    this.chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime.map((label) => ({ ...label,  suffix: " ms" })));
-    this.labelCharts.set(Metrics.ResponseTimeAvg, { ...commonGraphSettings("ms"), series: [...responseTime, threadLine] });
-
-
-    this.chartLines.labels.set(Metrics.Throughput,  throughput.map((label) => ({ ...label,  suffix: " reqs/s" })));
-    this.labelCharts.set(Metrics.Throughput, { ...commonGraphSettings("reqs/s"), series: [...throughput, threadLine] });
-
-  }
-
-  private generateCharts() {
-    this.getChartLines();
-    const oveallChartSeries = Array.from(this.chartLines.overall.values());
-
-    this.overallChartOptions = {
-      ...overallChartSettings("ms"), series: oveallChartSeries
-    };
-  }
 
   itemDetailChanged({ note, environment, hostname, name }) {
     this.itemData.note = note;

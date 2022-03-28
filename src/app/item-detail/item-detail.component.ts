@@ -9,19 +9,12 @@ import exporting from "highcharts/modules/exporting";
 
 exporting(Highcharts);
 
-import {
-  threadLineSettings,
-  errorLineSettings, overallChartSettings,
-  throughputLineSettings,
-  networkLineSettings,
-  commonGraphSettings,
-} from "../graphs/item-detail";
+import { overallChartSettings } from "../graphs/item-detail";
 import { catchError, withLatestFrom } from "rxjs/operators";
 import { of } from "rxjs";
 import { SharedMainBarService } from "../shared-main-bar.service";
 import { ToastrService } from "ngx-toastr";
 import { bytesToMbps } from "./calculations";
-import { logScaleButton } from "../graphs/log-scale-button";
 import { ItemStatusValue } from "./item-detail.model";
 import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
@@ -67,11 +60,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   isAnonymous = false;
   toggleThroughputBandFlag = false;
   chartLines;
-  labelCharts
   activeId = 1;
   performanceAnalysisLines = null;
   externalSearchTerm = null;
   totalRequests = null;
+  overallChart = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -114,7 +107,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.itemData = results;
         this.monitoringAlerts();
         this.itemChartService.setCurrentPlot(this.itemData.plot)
-        // this.generateCharts();
         this.calculateTotalRequests();
         this.spinner.hide();
       });
@@ -123,18 +115,19 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.activeId = 2;
       }
     });
+
+    this.overallChartOptions = {
+      ...overallChartSettings("ms")
+    };
+
     this.itemChartService.selectedPlot$.subscribe((value) => {
       this.chartLines = value.chartLines;
-      this.labelCharts = value.labelCharts
 
       if (this.chartLines) {
         const oveallChartSeries = Array.from(this.chartLines?.overall?.values());
-
-        this.overallChartOptions = {
-          ...overallChartSettings("ms"), series: oveallChartSeries
-        };
+        this.overallChartOptions.series = JSON.parse(JSON.stringify(oveallChartSeries))
+        
       }
-     
 
       this.updateChartFlag = true
     });

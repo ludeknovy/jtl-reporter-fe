@@ -14,7 +14,8 @@ export class ChartIntervalComponent implements OnInit {
   constructor(private itemChartService: ItemChartService) {}
 
   availableIntervals: string[]
-  selectedInterval = "Default interval";
+  defaultIntervalName = "Auto"
+  selectedInterval = this.defaultIntervalName;
 
   ngOnInit(): void {
     this.availableIntervals = this.intervals.extraIntervals.map(interval => interval.interval)
@@ -22,11 +23,14 @@ export class ChartIntervalComponent implements OnInit {
   }
 
   changeChartInterval(inputInterval: string) {
-    console.log("changed interval " + inputInterval)
     this.selectedInterval = inputInterval
-    const newPlotData = this.intervals.extraIntervals.find(interval => interval.interval === inputInterval)
-    console.log(newPlotData)
-    this.itemChartService.setCurrentPlot(newPlotData.data)
+    let newPlotData = null
+    if (inputInterval === this.defaultIntervalName) {
+      newPlotData = this.intervals.defaultInterval
+    } else {
+      newPlotData = this.intervals.extraIntervals.find(interval => interval.interval === inputInterval)?.data
+    }
+    this.itemChartService.setCurrentPlot(newPlotData)
   }
 
 }

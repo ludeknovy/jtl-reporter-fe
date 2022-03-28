@@ -10,7 +10,7 @@ import { Metrics } from "../item-detail/metrics";
 })
 export class ItemChartService {
 
-  private plot$ = new BehaviorSubject<ChartLines>({ labelCharts: null, chartLines: null });
+  private plot$ = new BehaviorSubject<ChartLines>({ labelCharts: new Map(), chartLines: null });
   selectedPlot$ = this.plot$.asObservable();
 
   setCurrentPlot(plot) {
@@ -102,6 +102,6 @@ export class ItemChartService {
 
 
 interface ChartLines {
-  labelCharts: unknown,
+  labelCharts: Map<string, object>,
   chartLines: unknown
 }

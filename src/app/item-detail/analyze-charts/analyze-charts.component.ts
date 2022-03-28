@@ -3,6 +3,7 @@ import { customChartSettings } from "src/app/graphs/item-detail";
 import * as Highcharts from "highcharts";
 import { ItemsApiService } from "src/app/items-api.service";
 import { AnalyzeChartService } from "../../analyze-chart.service";
+import { ChartLine, ItemChartService } from "src/app/_services/item-chart.service";
 
 @Component({
   selector: "app-analyze-charts",
@@ -13,7 +14,7 @@ import { AnalyzeChartService } from "../../analyze-chart.service";
 export class AnalyzeChartsComponent implements OnInit {
 
   @Input() params: { projectName: string, scenarioName: string, id: string };
-  @Input() chartLines: ChartLines;
+  @Input() chartLines: ChartLine;
   @Input() isAnonymous: boolean;
   @Input() showPerformanceAnalysisLines;
   Highcharts: typeof Highcharts = Highcharts;
@@ -34,7 +35,8 @@ export class AnalyzeChartsComponent implements OnInit {
 
   constructor(
     private itemApiService: ItemsApiService,
-    private analyzeChartService: AnalyzeChartService
+    private analyzeChartService: AnalyzeChartService,
+    private itemChartService: ItemChartService
   ) {
   }
 
@@ -70,7 +72,32 @@ export class AnalyzeChartsComponent implements OnInit {
       }
     });
 
+
+    this.itemChartService.selectedPlot$.subscribe(plot => {
+      const currentChartSeries = this.customChartsOptions.series
+
+      if (Array.isArray(currentChartSeries) && currentChartSeries.length > 0) {
+        this.chartLines = plot.chartLines
+
+        const updatedChartSeries = currentChartSeries.map(serie => {
+          const labelChart = serie.label
+          const name = labelChart 
+            ? labelChart
+            : "overall"
+  
+  
+          return { 
+            name,
+            metric: serie.metric
+          }
+        })
+        this.updateChart(updatedChartSeries)
+      }
+    })
+
   }
+
+
 
   chartUpdated(event: [{ name: string, metric: string }]) {
     this.updateChart(event);
@@ -80,7 +107,7 @@ export class AnalyzeChartsComponent implements OnInit {
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
         chart.reflow();
-    },200);
+    },0);
 }
 
   private updateChart(series) {
@@ -96,6 +123,7 @@ export class AnalyzeChartsComponent implements OnInit {
         const line: Line = {
           ...metricLine,
           id: `${metric}: ${name}`,
+          metric,
           yAxis
         };
         chartSeries.push(line);
@@ -106,6 +134,8 @@ export class AnalyzeChartsComponent implements OnInit {
           name: `${metric}: ${name}`,
           data: labelMetric.data,
           id: `${metric}: ${name}`,
+          metric,
+          label: name,
           tooltip: { 
             valueSuffix: labelMetric.suffix
           },
@@ -149,9 +179,7 @@ interface Line {
   tooltip?: {
     valueSuffix: string
   }
+  metric?,
+  label?: string,
 }
 
-interface ChartLines {
-  labels: Map<string, [{ data: [], name: string, suffix: string }]>;
-  overall: Map<string, { name: string, data: [] }>;
-}

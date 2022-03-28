@@ -28,7 +28,6 @@ export class LabelChartComponent implements OnInit {
 
   ngOnInit() {
     this.itemChartService.selectedPlot$.subscribe(plot => {
-      console.log(plot.labelCharts)
       this.labelCharts = plot.labelCharts
       this.labelChartOptions = deepmerge(this.labelCharts.get(this.labelChartMetric), {});
       this.updateLabelChartFlag = true;

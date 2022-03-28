@@ -19,7 +19,6 @@ export class ChartIntervalComponent implements OnInit {
 
   ngOnInit(): void {
     this.availableIntervals = this.intervals.extraIntervals.map(interval => interval.interval)
-    console.log(this.availableIntervals)
   }
 
   changeChartInterval(inputInterval: string) {

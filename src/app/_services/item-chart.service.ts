@@ -103,5 +103,16 @@ export class ItemChartService {
 
 interface ChartLines {
   labelCharts: Map<string, object>,
-  chartLines: unknown
+  chartLines: ChartLine
+}
+
+export interface ChartLine {
+  labels: Map<string, LabelChartLine[]>
+  overall: Map<string, { name: string, data: [] }>
+}
+
+export interface LabelChartLine {
+  name: string
+  data: [],
+  suffix: string
 }

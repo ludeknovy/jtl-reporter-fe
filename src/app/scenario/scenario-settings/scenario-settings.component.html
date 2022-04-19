@@ -74,6 +74,18 @@
             </div>
           </div>
 
+          <div class="form-sub">
+            <h6>Generate extra chart aggregations <i class="fas fa-flask"></i></h6>
+            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                <small> When enabled extra chart aggregations will be generated during processing. It might impact the processing times though.</small></div>
+            <div class="form-group">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="extraAggregations" formControlName="extraAggregations">
+                <label class="custom-control-label" for="extraAggregations">Enabled</label>
+              </div>
+            </div>
+          </div>
+
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
@@ -124,7 +136,12 @@
       <a ngbNavLink>Label Filter Settings</a>
       <ng-template ngbNavContent>
         <form [formGroup]="labelFilters" (ngSubmit)="onSubmit()">
+
+          <div class="desc text-secondary table-help"><i class="fas fa-info-circle"> </i>
+            <small> Enter search term(s) that you want to filter out. For a full match use "match" operator, for a partial match use "includes" operator</small></div>
+
           <table class="table jtl-table">
+            
             <thead>
                 <tr>
                     <th class="jtl-head">Label</th>

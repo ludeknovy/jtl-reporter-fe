@@ -85,7 +85,6 @@ export class AnalyzeChartsComponent implements OnInit {
             ? labelChart
             : "overall"
   
-  
           return { 
             name,
             metric: serie.metric

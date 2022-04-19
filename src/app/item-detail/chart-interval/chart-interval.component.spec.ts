@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ChartIntervalComponent } from './chart-interval.component';
+import { ChartIntervalComponent } from "./chart-interval.component";
 
-describe('ChartIntervalComponent', () => {
+describe("ChartIntervalComponent", () => {
   let component: ChartIntervalComponent;
   let fixture: ComponentFixture<ChartIntervalComponent>;
 
@@ -19,7 +19,7 @@ describe('ChartIntervalComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

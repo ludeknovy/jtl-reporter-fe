@@ -33,6 +33,7 @@ export class SettingsScenarioComponent implements OnInit {
     generateShareToken: null,
     term: null,
     operator: null,
+    extraAggregations: null
   };
   labelTrendChartControls = {
     virtualUsers: null,
@@ -141,6 +142,9 @@ export class SettingsScenarioComponent implements OnInit {
     ]);
     this.formControls.generateShareToken = new FormControl(settings.generateShareToken, [
       Validators.required
+    ]);
+    this.formControls.extraAggregations = new FormControl(settings.extraAggregations, [
+      Validators.required
     ])
 
     this.labelTrendChartControls.virtualUsers = new FormControl(settings.labelTrendChartSettings?.virtualUsers, []); 
@@ -151,7 +155,8 @@ export class SettingsScenarioComponent implements OnInit {
     this.labelTrendChartControls.p90 = new FormControl(settings.labelTrendChartSettings?.p90, []); 
     this.labelTrendChartControls.p95 = new FormControl(settings.labelTrendChartSettings?.p95, []); 
     this.labelTrendChartControls.p99 = new FormControl(settings.labelTrendChartSettings?.p99, []); 
-    this.labelTrendChartControls.errorRate = new FormControl(settings.labelTrendChartSettings?.errorRate, []); 
+    this.labelTrendChartControls.errorRate = new FormControl(settings.labelTrendChartSettings?.errorRate, []);
+ 
   
   }
 
@@ -167,6 +172,7 @@ export class SettingsScenarioComponent implements OnInit {
       deleteSamples: this.formControls.deleteSamples,
       keepTestRunsPeriod: this.formControls.keepTestRunsPeriod,
       generateShareToken: this.formControls.generateShareToken,
+      extraAggregations: this.formControls.extraAggregations,
     });
 
     this.labelTrendChartSettingsForm = new FormGroup({
@@ -192,7 +198,7 @@ export class SettingsScenarioComponent implements OnInit {
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
-        thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod, generateShareToken
+        thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod, generateShareToken, extraAggregations
       } = this.scenarioSettingsForm.value;
       console.log(this.labelTrendChartSettingsForm.value)
       const { projectName, scenarioName: currentScenarioName } = this.params;
@@ -203,6 +209,7 @@ export class SettingsScenarioComponent implements OnInit {
         keepTestRunsPeriod,
         deleteSamples,
         generateShareToken,
+        extraAggregations,
         thresholds: {
           enabled: thresholdEnabled,
           errorRate: parseFloat(thresholdErrorRate),

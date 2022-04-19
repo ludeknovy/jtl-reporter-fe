@@ -26,6 +26,7 @@ import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import { RoleModule } from "../_directives/role.module";
 import { ReloadCustomChartComponent } from "./analyze-charts/reload-custom-chart/reload-custom-chart.component";
 import { ExcelService } from "../_services/excel.service";
+import { ChartIntervalComponent } from "./chart-interval/chart-interval.component";
 
 
 const routes: Routes = [  {
@@ -38,7 +39,7 @@ const routes: Routes = [  {
   declarations: [ItemDetailComponent, RequestStatsCompareComponent, ThresholdsAlertComponent,
     PerformanceAnalysisComponent, ZeroErrorToleranceWarningComponent, LabelChartComponent, AnalyzeChartsComponent,
     LabelHealthComponent, LabelTrendComponent, StatsCompareComponent, AddMetricComponent, ShareComponent, DeleteShareLinkComponent,
-    CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent ],
+    CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent, ChartIntervalComponent ],
   imports: [
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
     ReactiveFormsModule, FormsModule, RoleModule

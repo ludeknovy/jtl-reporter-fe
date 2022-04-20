@@ -25,8 +25,9 @@ export const labelTrendChartOptions = (data: LabelTrend) => {
       labels: {
         useHTML: true,
         formatter: (ctx) => {
+          const name = data.chartSeries.name[ctx.pos]
           return `${ctx.isFirst || ctx.isLast ?  ctx.value : ""}<br><span>
-                    <p>${data.chartSeries.name[ctx.pos]}</p>
+                  <p>${name?.length > 20 ? name.substring(0, 15) + "...": name}</p>
                 </span>`;
         }
       }

@@ -234,6 +234,7 @@ export interface LabelTrend {
       avgLatency: number[],
       avgConnectionTime: number[],
       avgResponseTime: number[],
+      name: string[],
     },
     chartSettings: {
       virtualUsers: boolean,

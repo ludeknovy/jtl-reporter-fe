@@ -21,8 +21,15 @@ export const labelTrendChartOptions = (data: LabelTrend) => {
       lineWidth: 0,
       crosshair: true,
       categories: data.chartSeries.timePoints,
-      tickInterval: 5,
       gridLineWidth: 0,
+      labels: {
+        useHTML: true,
+        formatter: (ctx) => {
+          return `${ctx.isFirst || ctx.isLast ?  ctx.value : ""}<br><span>
+                    <p>${data.chartSeries.name[ctx.pos]}</p>
+                </span>`;
+        }
+      }
     }],
     yAxis: [{ // Primary yAxis
       labels: {

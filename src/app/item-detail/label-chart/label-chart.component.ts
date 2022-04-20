@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import * as Highcharts from "highcharts";
 import { commonGraphSettings } from "src/app/graphs/item-detail";
 import * as deepmerge from "deepmerge";
+import { ItemChartService } from "src/app/_services/item-chart.service";
 
 @Component({
   selector: "app-label-chart",
@@ -10,7 +11,6 @@ import * as deepmerge from "deepmerge";
 })
 export class LabelChartComponent implements OnInit {
 
-  @Input() labels: Map<string, object>;
   Highcharts: typeof Highcharts = Highcharts;
   chartConstructor = "chart";
   labelChartMetric = "Throughput";
@@ -22,21 +22,28 @@ export class LabelChartComponent implements OnInit {
   seriesVisibilityToggleText = "Hide all";
   chartShouldExpand = false;
   chart;
+  labelCharts
+
+  constructor(private itemChartService: ItemChartService) {}
 
   ngOnInit() {
-    this.labelChartOptions = deepmerge(this.labels.get(this.labelChartMetric), {});
-    this.updateLabelChartFlag = true;
-    this.getChartsKey();
+    this.itemChartService.selectedPlot$.subscribe(plot => {
+      this.labelCharts = plot.labelCharts
+      this.labelChartOptions = deepmerge(this.labelCharts.get(this.labelChartMetric), {});
+      this.updateLabelChartFlag = true;
+      this.getChartsKey();
+    })
+
   }
 
   private getChartsKey() {
-    this.chartKeys = Array.from(this.labels.keys());
+    this.chartKeys = Array.from(this.labelCharts.keys());
   }
 
   changeChart(event) {
     this.labelChartMetric = event.target.innerText;
 
-    this.labelChartOptions = deepmerge(this.labels.get(this.labelChartMetric), {});
+    this.labelChartOptions = deepmerge(this.labelCharts.get(this.labelChartMetric), {});
 
     this.updateLabelChartFlag = true;
   }
@@ -55,7 +62,6 @@ export class LabelChartComponent implements OnInit {
 
 
   getInstance(chart): void {
-    this.chart = chart;
     setTimeout(() => {
       chart.reflow();
   },0);

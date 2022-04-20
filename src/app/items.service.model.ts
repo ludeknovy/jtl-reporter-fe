@@ -34,6 +34,7 @@ export interface ItemDetail {
   hostname: string;
   environment: string;
   plot: ItemDataPlot;
+  extraPlotData: ItemExtraPlot[];
   statistics: ItemStatistics[];
   thresholds?: {
     passed: boolean,
@@ -102,6 +103,11 @@ export interface ItemDataPlot {
   overallThroughput: any;
   overAllFailRate: any;
   threads: any;
+}
+
+export interface ItemExtraPlot {
+  interval: string
+  data: ItemDataPlot
 }
 
 interface LabelSeries {

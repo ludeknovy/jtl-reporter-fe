@@ -4,6 +4,9 @@
       <app-breadcrumb *ngIf="itemData.environment" [testName]="itemData.name"></app-breadcrumb>
     </li>
   </ul>
+
+  <app-chart-interval *ngIf="itemData.extraPlotData" [intervals]="{ defaultInterval: itemData.plot, extraIntervals: itemData.extraPlotData}"></app-chart-interval>
+
   <div>
 
     <div class="btn-group">
@@ -66,7 +69,7 @@
         </div>
       </div>
 
-      <div class="row" *ngIf="itemData.analysisEnabled">
+      <div class="row" *ngIf="itemData.analysisEnabled && chartLines.labels">
         <div class="col">
           <app-performance-analysis [itemData]="itemData" [labelsChartLines]="chartLines.labels" (overallChartChange)="toggleThroughputBand($event)">
           </app-performance-analysis>
@@ -301,7 +304,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <app-label-chart [labels]="labelCharts"></app-label-chart>
+                  <app-label-chart></app-label-chart>
                 </div>
               </div>
             </ng-template>

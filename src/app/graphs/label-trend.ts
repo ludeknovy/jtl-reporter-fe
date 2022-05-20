@@ -21,18 +21,25 @@ export const labelTrendChartOptions = (data: LabelTrend) => {
       lineWidth: 0,
       crosshair: true,
       categories: data.chartSeries.timePoints,
-      tickInterval: 5,
       gridLineWidth: 0,
+      labels: {
+        useHTML: true,
+        formatter: (ctx) => {
+          const name = data.chartSeries.name[ctx.pos]
+          return `${ctx.isFirst || ctx.isLast ?  ctx.value : ""}<br><span>
+                  <p>${name?.length > 20 ? name.substring(0, 15) + "...": name}</p>
+                </span>`;
+        }
+      }
     }],
     yAxis: [{ // Primary yAxis
       labels: {
         format: "{value} ms",
       },
-      type: "logarithmic",
       title: {
         text: "",
       },
-      gridLineWidth: 0
+      gridLineWidth: 0,
     }, {
       title: {
         text: "",
@@ -40,7 +47,6 @@ export const labelTrendChartOptions = (data: LabelTrend) => {
       labels: {
         format: "{value} reqs/s",
       },
-      type: "logarithmic",
       gridLineWidth: 0,
       opposite: true
     },
@@ -64,7 +70,6 @@ export const labelTrendChartOptions = (data: LabelTrend) => {
       labels: {
         format: "{value} VU",
       },
-      type: "logarithmic",
       gridLineWidth: 0,
       opposite: false,
     }
@@ -77,6 +82,9 @@ export const labelTrendChartOptions = (data: LabelTrend) => {
       areaspline: {
         fillOpacity: 0.9,
       },
+      column: {
+        minPointLength: 3,
+        },
       series: {
         dataLabels: {
             enabled: false

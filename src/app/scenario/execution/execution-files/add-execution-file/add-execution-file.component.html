@@ -1,0 +1,31 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Add Execution File(s)</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">JMX File</span>
+        </div>
+        <input type="file" class="form-control" (change)="onFileChange($event, 'executionFile')"
+               aria-label="Default" aria-describedby="inputGroup-sizing-default" multiple>
+      </div>
+
+
+
+      <div class="form-control-feedback" *ngIf="executionFile.errors && (executionFile.dirty || executionFile.touched)">
+        <p class="alert alert-danger" *ngIf="executionFile.errors.required">Jtl file is required</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn jtl-btn-primary">Submit</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<button *userRole="'operator'" type="button" class="btn btn-sm jtl-btn-primary" (click)="open(content)">Add execution file(s)</button>

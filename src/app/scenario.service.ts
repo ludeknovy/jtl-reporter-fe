@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { ScenarioNotifications } from "./items.service.model";
 import { ScenarioApiService } from "./scenario-api.service";
+import {ExecutionFile} from './scenario.service.model';
 
 @Injectable({
   providedIn: "root"
@@ -14,6 +15,9 @@ export class ScenarioService {
 
   private notifications = new BehaviorSubject<ScenarioNotifications[]>([]);
   public notifications$ = this.notifications.asObservable();
+
+  private executionFiles = new BehaviorSubject<ExecutionFile[]>([]);
+  public executionFiles$ = this.executionFiles.asObservable();
 
   constructor(
     private scenarioApiService: ScenarioApiService
@@ -30,4 +34,11 @@ export class ScenarioService {
       .subscribe(_ => this.notifications.next(_));
   }
 
+  fetchScenarioExecutionFiles(projectName, scenarioName) {
+    this.scenarioApiService.fetchExecutionFiles(projectName, scenarioName)
+      .subscribe(_ => this.executionFiles.next(_));
+  }
+
 }
+
+

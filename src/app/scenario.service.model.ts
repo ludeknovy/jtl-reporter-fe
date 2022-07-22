@@ -11,5 +11,7 @@ export interface Scenario {
     errorRate: number;
   };
   labelFilterSettings: [{ operator: string, labelTerm: string }]
-  executionFiles: [{ filename: string; id: string}]
 }
+
+
+export interface ExecutionFile { filename: string, id: string}

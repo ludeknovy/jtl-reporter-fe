@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, Observable } from "rxjs";
 import { IScenarios, ScenarioNotifications } from "./items.service.model";
-import { Scenario } from "./scenario.service.model";
+import {ExecutionFile, Scenario} from './scenario.service.model';
 
 @Injectable({
   providedIn: "root"
@@ -57,6 +57,28 @@ export class ScenarioApiService {
   updateThresholds(projectName, scenarioName, body) {
     return this.http.put(`projects/${projectName}/scenarios/${scenarioName}/thresholds`, body, { observe: "response" });
   }
+
+  deleteExecutionFile(projectName, scenarioName, fileId) {
+    return this.http.delete(`projects/${projectName}/scenarios/${scenarioName}/execution-files/${fileId}`, { observe: "response" })
+  }
+
+  fetchExecutionFiles(projectName, scenarioName) {
+    return this.http.get<ExecutionFile[]>(`projects/${projectName}/scenarios/${scenarioName}/execution-files`)
+  }
+
+  uploadExecutionFiles(projectName, scenarioName, files) {
+    const headers = new HttpHeaders();
+    headers.set("Content-Type", null);
+    headers.set("Accept", "multipart/form-data");
+    const formData: FormData = new FormData();
+    Array.from(files).forEach(file => formData.append("file", file as any))
+
+    return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/execution-files`,
+      formData, {
+        headers, observe: "response"
+      })
+  }
+
 
   setData(data) {
     this.response.next(data);

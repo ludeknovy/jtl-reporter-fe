@@ -25,6 +25,8 @@ import { RoleModule } from "../_directives/role.module";
 import { AddNewItemModule } from "./add-new-item/add-new-item.module";
 import { ExecutionFilesComponent } from "./execution/execution-files/execution-files.component";
 import { StartExecutionComponent } from "./execution/start-execution/start-execution.component";
+import { DeleteExecutionFileComponent } from "./execution/execution-files/delete-execution-file/delete-execution-file.component";
+import { AddExecutionFileComponent } from "./execution/execution-files/add-execution-file/add-execution-file.component";
 
 
 const routes: Routes = [
@@ -39,7 +41,7 @@ const routes: Routes = [
   declarations: [ScenarioComponent, ScenarioTrendsComponent,
     SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
     ItemControlsComponent, AddNewExternalNotificationComponent, DeleteExternalNotificationComponent, ExecutionFilesComponent,
-    StartExecutionComponent
+    StartExecutionComponent, DeleteExecutionFileComponent, AddExecutionFileComponent
   ],
   imports: [
     CommonModule, RouterModule.forRoot(routes), NgxSpinnerModule, NgbModule, SharedModule, HighchartsChartModule,
@@ -47,6 +49,7 @@ const routes: Routes = [
   ],
   exports: [ScenarioComponent, ScenarioTrendsComponent,
     SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
-    ItemControlsComponent]
+    ItemControlsComponent, DeleteExecutionFileComponent]
 })
-export class ScenarioModule { }
+export class ScenarioModule {
+}

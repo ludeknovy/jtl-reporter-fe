@@ -1,6 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Observable } from "rxjs";
+import { ExecutionFile } from "../../../scenario.service.model";
+import { ScenarioService } from "../../../scenario.service";
 
 @Component({
   selector: "app-execution-files",
@@ -11,17 +14,21 @@ export class ExecutionFilesComponent implements OnInit {
 
   myform: FormGroup;
   jmxFile: FormControl;
-
+  executionFiles$: Observable<ExecutionFile[]>
+  @Input() params
 
   constructor(
     private modalService: NgbModal,
+    private scenarioService: ScenarioService
   ) {
+    this.executionFiles$ = this.scenarioService.executionFiles$
 
   }
 
   ngOnInit(): void {
     this.createFormControls();
     this.createForm();
+    this.executionFiles$.subscribe()
   }
 
   createFormControls() {

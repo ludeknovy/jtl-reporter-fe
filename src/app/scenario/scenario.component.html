@@ -6,10 +6,9 @@
     </li>
   </ul>
   <div>
-
     <div class="btn-group">
       <app-add-new-item-modal></app-add-new-item-modal>
-      <app-start-execution *ngIf="scenarioDetail.executionFiles.length > 0" [scenarioId]="scenarioDetail.id"></app-start-execution>
+      <app-start-execution *ngIf="canExecute"  [scenarioId]="scenarioDetail.id"></app-start-execution>
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="Button group with nested dropdown">
         <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
@@ -17,7 +16,7 @@
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-scenario-settings (scenarioNameChangeEvent)="updateScenarioName($event)"></app-scenario-settings>
           <app-external-notification></app-external-notification>
-          <app-execution-files></app-execution-files>
+          <app-execution-files [params]="params"></app-execution-files>
           <app-delete-scenario [scenarioData]="params"></app-delete-scenario>
         </div>
       </div>
@@ -119,11 +118,11 @@
                               class="far fa-circle text-secondary status-icon"></i></span>
                           <i *ngIf="_.thresholdPassed === false"
                             class="fas fa-exclamation-circle text-alizarin issue"></i>
-                          <i *ngIf="scenarioDetail.zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === true" placement="bottom"
+                          <i *ngIf="scenarioDetail && scenarioDetail.zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === true" placement="bottom"
                              ngbTooltip="Errors occurred during the test run"><i class="fas fa-bug text-alizarin issue"></i></i>
-                          <i *ngIf="scenarioDetail.zeroErrorToleranceEnabled && !showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate)" placement="bottom"
+                          <i *ngIf="scenarioDetail && scenarioDetail.zeroErrorToleranceEnabled && !showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate)" placement="bottom"
                              ngbTooltip="No errors were detected"><i class="fas fa-check-square text-success issue"></i></i>
-                          <i *ngIf="scenarioDetail.zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === 'unknown'" placement="bottom"
+                          <i *ngIf="scenarioDetail && scenarioDetail.zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === 'unknown'" placement="bottom"
                           ngbTooltip="Not all required data are available"><i class="far fa-question-circle issue"></i></i>
 
                         </td>

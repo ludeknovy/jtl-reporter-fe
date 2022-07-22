@@ -78,6 +78,14 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, "Link was deleted");
   }
 
+  deleteExecutionFile(response) {
+    return this.statusCodeMessage(response, "File was deleted")
+  }
+
+  uploadExecutionFiles(response) {
+    return this.statusCodeMessage(response, "File(s) successfully uploaded")
+  }
+
   scenarioThresholdUpdate(response) {
     return this.statusCodeMessage(response, "Thresholds were updated");
   }

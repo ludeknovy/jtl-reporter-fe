@@ -8,7 +8,7 @@ import { SharedMainBarService } from "../shared-main-bar.service";
 import { ScenarioService } from "../scenario.service";
 import { ScenarioApiService } from "../scenario-api.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
-import {Scenario} from '../scenario.service.model';
+import {ExecutionFile, Scenario} from '../scenario.service.model';
 
 const LIMIT = 15;
 const OFFSET = 15;
@@ -22,6 +22,8 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   overview$: Observable<ProjectOverview>;
   items$: Observable<Items>;
   trends$: Observable<Record<string, unknown>>;
+  executionFiles$: Observable<ExecutionFile[]>
+  canExecute = false
   processingItems$: Observable<Record<string, unknown>>;
   params;
   page = 1;
@@ -41,6 +43,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   ) {
     this.items$ = itemsService.items$;
     this.trends$ = scenarioService.trends$;
+    this.executionFiles$ = scenarioService.executionFiles$;
   }
 
   ngOnDestroy() {
@@ -55,6 +58,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
         this.sharedMainBarService.setProjectName(this.params.projectName);
         this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
         this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
+        this.scenarioService.fetchScenarioExecutionFiles(this.params.projectName, this.params.scenarioName)
         this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(scenario => {
           this.scenarioDetail = scenario
         });
@@ -75,6 +79,9 @@ export class ScenarioComponent implements OnInit, OnDestroy {
         return this.currentProcessingItems = inprogress.map((item) => item.id);
       }
     });
+    this.executionFiles$.subscribe(_ => {
+      this.canExecute = _.length > 0
+    })
 
   }
 

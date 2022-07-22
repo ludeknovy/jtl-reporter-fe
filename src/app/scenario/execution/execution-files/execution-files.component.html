@@ -1,31 +1,53 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">Add Execution File(s)</h5>
+    <h5 class="modal-title" id="modal-basic-title">Execution File(s)</h5>
     <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
-    <div class="modal-body">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default">JMX File</span>
-        </div>
-        <input type="file" class="form-control" (change)="onFileChange($event, 'kpiFile')"
-               aria-label="Default" aria-describedby="inputGroup-sizing-default">
-      </div>
+  <div class="modal-body">
+    <div class="control-panel">
+      <app-add-execution-file [params]="params"></app-add-execution-file>
 
-
-
-      <div class="form-control-feedback" *ngIf="jmxFile.errors && (jmxFile.dirty || jmxFile.touched)">
-        <p class="alert alert-danger" *ngIf="jmxFile.errors.required">Jtl file is required</p>
-      </div>
     </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn jtl-btn-primary">Submit</button>
+    <div class="responsive-table" *ngIf="executionFiles$ | async; let files">
+      <table class="table items" [mfData]="files" #mf="mfDataTable">
+        <thead>
+        <tr>
+          <th scope="col" class="jtl-head">
+            <mfDefaultSorter by="name">File name</mfDefaultSorter>
+          </th>
+          <th class="jtl-head">
+          </th>
+        </tr>
+        </thead>
+        <tbody *ngIf="files.length === 0">
+        <tr>
+          <td></td>
+          <td>
+            <div class="empty-table">No data found.</div>
+          </td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody *ngIf="files.length > 0">
+        <tr *ngFor="let file of mf.data">
+          <td>
+            {{file.filename}}
+          </td>
+          <td class="ellipsis">
+          </td>
+          <td>
+            <app-delete-execution-file [file]="file" [params]="params"></app-delete-execution-file>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
     </div>
-  </form>
+  </div>
+
 
 </ng-template>
 
-<button *userRole="'operator'" type="button" class="btn btn-sm" (click)="open(content)" ngbDropdownItem> Add execution files</button>
+<button *userRole="'operator'" type="button" class="btn btn-sm" (click)="open(content)" ngbDropdownItem>Execution files</button>

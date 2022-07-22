@@ -15,11 +15,20 @@ export class RequestHttpInterceptor implements HttpInterceptor {
   constructor(public projectService: ProjectApiService) { }
 
   private baseUrl = environment.baseUrl;
+  private baseUrlExecutor = environment.baseUrlExecutor
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let requestUrl = request.url;
+
+    if (requestUrl.indexOf("@executor-api") !== -1) {
+      requestUrl = requestUrl.replace("@executor-api", this.baseUrlExecutor);
+    } else {
+      requestUrl = `${this.baseUrl}/${request.url}`
+    }
+
 
     request = request.clone({
-      url: `${this.baseUrl}/${request.url}`,
+      url: requestUrl,
     });
 
     return next.handle(request);

@@ -1,0 +1,97 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Trigger Execution</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Concurrency <span class="text-danger"> *</span></span>
+        </div>
+        <input type="testName" class="form-control" formControlName="concurrency" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Duration [min]  <span class="text-danger"> *</span></span>
+        </div>
+        <input type="testName" class="form-control" formControlName="duration" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Ramp-up</span>
+        </div>
+        <input type="testName" class="form-control" formControlName="rampup" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Steps</span>
+        </div>
+        <input type="testName" class="form-control" formControlName="steps" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Iterations</span>
+        </div>
+        <input type="testName" class="form-control" formControlName="iterations" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Throughput</span>
+        </div>
+        <input type="testName" class="form-control" formControlName="throughput" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+
+
+
+      <div class="form-control-feedback" *ngIf="concurrency.errors && (concurrency.dirty || concurrency.touched)">
+        <p class="alert alert-danger" *ngIf="concurrency.errors.required">Concurrency is required</p>
+        <p class="alert alert-danger" *ngIf="concurrency.errors.pattern">Only numerical value is allowed</p>
+      </div>
+
+
+      <div class="form-control-feedback" *ngIf="duration.errors && (duration.dirty || duration.touched)">
+        <p class="alert alert-danger" *ngIf="duration.errors.required">Duration is required</p>
+        <p class="alert alert-danger" *ngIf="duration.errors.pattern">Only numerical value is allowed</p>
+      </div>
+
+      <div class="form-control-feedback" *ngIf="rampup.errors && (rampup.dirty || rampup.touched)">
+        <p class="alert alert-danger" *ngIf="rampup.errors.pattern">Only numerical value is allowed</p>
+      </div>
+
+      <div class="form-control-feedback" *ngIf="steps.errors && (steps.dirty || steps.touched)">
+        <p class="alert alert-danger" *ngIf="steps.errors.pattern">Only numerical value is allowed</p>
+      </div>
+
+      <div class="form-control-feedback" *ngIf="iterations.errors && (iterations.dirty || iterations.touched)">
+        <p class="alert alert-danger" *ngIf="iterations.errors.pattern">Only numerical value is allowed</p>
+      </div>
+
+      <div class="form-control-feedback" *ngIf="throughput.errors && (throughput.dirty || throughput.touched)">
+        <p class="alert alert-danger" *ngIf="throughput.errors.pattern">Only numerical value is allowed</p>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn jtl-btn-primary">Start Execution</button>
+    </div>
+  </form>
+
+</ng-template>
+
+
+<button *userRole="'operator'" type="button" class="jtl-no-glow add-item jtl-btn-primary btn btn-sm"
+        (click)="open(content)"><i class="fas fa-play"></i></button>

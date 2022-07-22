@@ -8,6 +8,7 @@ import { SharedMainBarService } from "../shared-main-bar.service";
 import { ScenarioService } from "../scenario.service";
 import { ScenarioApiService } from "../scenario-api.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
+import {Scenario} from '../scenario.service.model';
 
 const LIMIT = 15;
 const OFFSET = 15;
@@ -28,7 +29,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   currentProcessingItems = [];
   processingItems;
   subscription: Subscription;
-  zeroErrorToleranceEnabled: boolean;
+  scenarioDetail: Scenario
 
   constructor(
     private route: ActivatedRoute,
@@ -54,8 +55,8 @@ export class ScenarioComponent implements OnInit, OnDestroy {
         this.sharedMainBarService.setProjectName(this.params.projectName);
         this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
         this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
-        this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
-          this.zeroErrorToleranceEnabled = _.zeroErrorToleranceEnabled;
+        this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(scenario => {
+          this.scenarioDetail = scenario
         });
         this.itemsService.processingItemsInterval(this.params.projectName, this.params.scenarioName);
         return new Observable().pipe(catchError(err => of([])));

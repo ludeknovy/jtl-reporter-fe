@@ -3,11 +3,13 @@ export interface Scenario {
   zeroErrorToleranceEnabled: boolean;
   name: string;
   keepTestRunsPeriod: number;
+  id: string;
   thresholds: {
     enabled: boolean;
     percentile: number;
     throughput: number;
-    erroRate: number;
+    errorRate: number;
   };
   labelFilterSettings: [{ operator: string, labelTerm: string }]
+  executionFiles: [{ filename: string; id: string}]
 }

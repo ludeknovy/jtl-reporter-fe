@@ -13,11 +13,17 @@ import { ScenarioService } from "src/app/scenario.service";
   styleUrls: ["./add-new-external-notification.component.css"]
 })
 export class AddNewExternalNotificationComponent implements OnInit {
+  notificationConfig = new Map([
+    ["MS Teams", { key: "ms-teams", helpUrl: "https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel" }],
+    ["GChat", { key: "gchat", helpUrl: "https://developers.google.com/chat/how-tos/webhooks#create_a_webhook" }]])
 
   myform: FormGroup;
   url;
   name;
+  notificationType;
   modal: NgbActiveModal;
+  notifications: string[] = Array.from(this.notificationConfig.keys());
+  helpUrl: string;
   @Input() params;
 
   constructor(
@@ -45,21 +51,37 @@ export class AddNewExternalNotificationComponent implements OnInit {
       Validators.maxLength(100),
       Validators.required
     ]);
+    this.notificationType = new FormControl("", [Validators.required])
   }
 
   createForm() {
     this.myform = new FormGroup({
       url: this.url,
-      name: this.name
+      name: this.name,
+      notificationType: this.notificationType
     });
+  }
+
+  changeNotification(e) {
+    this.notificationType?.setValue(e.target.value);
+    if (this.notificationConfig.has(e.target.value)) {
+      const notification = this.notificationConfig.get(e.target.value)
+      this.helpUrl = notification.helpUrl
+    } else {
+      this.helpUrl = null
+    }
+
   }
 
   onSubmit() {
     if (this.myform.valid) {
       const { projectName, scenarioName } = this.params;
+      const { url, notificationType, name } = this.myform.value
+      const type = this.notificationConfig.get(notificationType).key
       const body = {
-        ...this.myform.value,
-        type: "ms-teams"
+        name,
+        url,
+        type
       };
 
       this.scenarioApiService.createNewScenarioNotification(projectName, scenarioName, body)

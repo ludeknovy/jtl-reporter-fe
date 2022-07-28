@@ -1,28 +1,41 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="modal-basic-title">MS Teams Webhook</h5>
-    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" style="outline: none;" class="close" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
-      <div class="alert alert-primary" role="alert">
+      <div class="alert alert-primary" role="alert" *ngIf="helpUrl">
         <i class="fas fa-info-circle"> </i>
-        Follow the instructions on how to set up <a href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel">Incoming Webhook</a> for a channel.
+        Follow the instructions on how to set up <a target="_blank"
+        href="{{helpUrl}}">Incoming
+        Webhook</a> for a channel.
       </div>
       <p class="text-secondary"></p>
+
+      <select class="custom-select mb-3" (change)="changeNotification($event)"  formControlName="notificationType">
+        <option value="">Choose notification type</option>
+        <option *ngFor="let notification of notifications" [value]="notification">
+          {{ notification }}
+        </option>
+      </select>
+
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-default">Webhook Url</span>
         </div>
-        <input type="input" class="form-control" formControlName="url" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <input type="input" class="form-control" formControlName="url" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
         </div>
-        <input type="input" class="form-control" formControlName="name" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <input type="input" class="form-control" formControlName="name" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-control-feedback" *ngIf="url.errors && (url.dirty || url.touched)">
         <p class="alert alert-danger" *ngIf="url.errors.required">Webhook Url required</p>
@@ -41,4 +54,5 @@
 
 </ng-template>
 
-<button class="notification btn btn-sm jtl-btn-light jtl-no-glow" (click)="open(content)">Add MS Teams notification</button>
+<button class="notification btn btn-sm jtl-btn-light jtl-no-glow" (click)="open(content)">Add notification
+</button>

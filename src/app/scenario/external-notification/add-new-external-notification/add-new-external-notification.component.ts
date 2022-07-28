@@ -77,7 +77,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
     if (this.myform.valid) {
       const { projectName, scenarioName } = this.params;
       const { url, notificationType, name } = this.myform.value
-      const type = this.notificationConfig.get(notificationType)
+      const type = this.notificationConfig.get(notificationType).key
       const body = {
         name,
         url,

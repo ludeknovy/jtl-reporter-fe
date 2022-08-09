@@ -13,12 +13,18 @@ import { ScenarioService } from "src/app/scenario.service";
   styleUrls: ["./add-new-external-notification.component.css"]
 })
 export class AddNewExternalNotificationComponent implements OnInit {
+  notificationConfig = new Map([
+    ["MS Teams", { key: "ms-teams", helpUrl: "https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel" }],
+    ["GChat", { key: "gchat", helpUrl: "https://developers.google.com/chat/how-tos/webhooks#create_a_webhook" }],
+    ["Slack", { key: "slack", helpUrl: "https://api.slack.com/messaging/webhooks#getting_started" }]
+  ])
 
   myform: FormGroup;
   url;
   name;
   modal: NgbActiveModal;
   @Input() params;
+  private DEFAULT_NOTIFICATION = 0
 
   constructor(
     private modalService: NgbModal,
@@ -30,6 +36,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
   ngOnInit() {
     this.createFormControls();
     this.createForm();
+    this.helpUrl = this.notificationConfig.get(this.notifications[this.DEFAULT_NOTIFICATION]).helpUrl
   }
 
   open(content) {
@@ -45,6 +52,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
       Validators.maxLength(100),
       Validators.required
     ]);
+    this.notificationType = new FormControl(this.notifications[this.DEFAULT_NOTIFICATION], [Validators.required])
   }
 
   createForm() {
@@ -69,7 +77,8 @@ export class AddNewExternalNotificationComponent implements OnInit {
           this.scenarioApiService.setData(message);
           this.scenarioService.fetchScenarioNotifications(projectName, scenarioName);
         });
-      this.myform.reset();
+      this.myform.reset({ notificationType: this.notifications[this.DEFAULT_NOTIFICATION ] });
+      this.helpUrl = this.notificationConfig.get(this.notifications[this.DEFAULT_NOTIFICATION ]).helpUrl
       this.modal.close();
     }
   }

@@ -39,7 +39,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
   ngOnInit() {
     this.createFormControls();
     this.createForm();
-    this.helpUrl = this.notificationConfig.get(this.notifications[this.DEFAULT_NOTIFICATION]).helpUrl
+    this.setHelpUrl(this.notifications[this.DEFAULT_NOTIFICATION])
   }
 
   open(content) {
@@ -69,12 +69,15 @@ export class AddNewExternalNotificationComponent implements OnInit {
   changeNotification(e) {
     this.notificationType?.setValue(e.target.value);
     if (this.notificationConfig.has(e.target.value)) {
-      const notification = this.notificationConfig.get(e.target.value)
-      this.helpUrl = notification.helpUrl
+      this.setHelpUrl(e.target.value)
     } else {
       this.helpUrl = null
     }
+  }
 
+  setHelpUrl(notificationType: string) {
+    const notification = this.notificationConfig.get(notificationType)
+    this.helpUrl = notification.helpUrl
   }
 
   onSubmit() {
@@ -96,7 +99,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
           this.scenarioService.fetchScenarioNotifications(projectName, scenarioName);
         });
       this.myform.reset({ notificationType: this.notifications[this.DEFAULT_NOTIFICATION ] });
-      this.helpUrl = this.notificationConfig.get(this.notifications[this.DEFAULT_NOTIFICATION ]).helpUrl
+      this.setHelpUrl(this.notifications[this.DEFAULT_NOTIFICATION ])
       this.modal.close();
     }
   }

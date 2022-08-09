@@ -22,7 +22,10 @@ export class AddNewExternalNotificationComponent implements OnInit {
   myform: FormGroup;
   url;
   name;
+  notificationType;
   modal: NgbActiveModal;
+  notifications: string[] = Array.from(this.notificationConfig.keys());
+  helpUrl: string;
   @Input() params;
   private DEFAULT_NOTIFICATION = 0
 
@@ -58,16 +61,31 @@ export class AddNewExternalNotificationComponent implements OnInit {
   createForm() {
     this.myform = new FormGroup({
       url: this.url,
-      name: this.name
+      name: this.name,
+      notificationType: this.notificationType
     });
+  }
+
+  changeNotification(e) {
+    this.notificationType?.setValue(e.target.value);
+    if (this.notificationConfig.has(e.target.value)) {
+      const notification = this.notificationConfig.get(e.target.value)
+      this.helpUrl = notification.helpUrl
+    } else {
+      this.helpUrl = null
+    }
+
   }
 
   onSubmit() {
     if (this.myform.valid) {
       const { projectName, scenarioName } = this.params;
+      const { url, notificationType, name } = this.myform.value
+      const type = this.notificationConfig.get(notificationType).key
       const body = {
-        ...this.myform.value,
-        type: "ms-teams"
+        name,
+        url,
+        type
       };
 
       this.scenarioApiService.createNewScenarioNotification(projectName, scenarioName, body)

@@ -15,7 +15,9 @@ import { ScenarioService } from "src/app/scenario.service";
 export class AddNewExternalNotificationComponent implements OnInit {
   notificationConfig = new Map([
     ["MS Teams", { key: "ms-teams", helpUrl: "https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel" }],
-    ["GChat", { key: "gchat", helpUrl: "https://developers.google.com/chat/how-tos/webhooks#create_a_webhook" }]])
+    ["GChat", { key: "gchat", helpUrl: "https://developers.google.com/chat/how-tos/webhooks#create_a_webhook" }],
+    ["Slack", { key: "slack", helpUrl: "https://api.slack.com/messaging/webhooks#getting_started" }]
+  ])
 
   myform: FormGroup;
   url;
@@ -25,6 +27,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
   notifications: string[] = Array.from(this.notificationConfig.keys());
   helpUrl: string;
   @Input() params;
+  private DEFAULT_NOTIFICATION = 0
 
   constructor(
     private modalService: NgbModal,
@@ -36,6 +39,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
   ngOnInit() {
     this.createFormControls();
     this.createForm();
+    this.setHelpUrl(this.notifications[this.DEFAULT_NOTIFICATION])
   }
 
   open(content) {
@@ -51,7 +55,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
       Validators.maxLength(100),
       Validators.required
     ]);
-    this.notificationType = new FormControl("", [Validators.required])
+    this.notificationType = new FormControl(this.notifications[this.DEFAULT_NOTIFICATION], [Validators.required])
   }
 
   createForm() {
@@ -65,12 +69,15 @@ export class AddNewExternalNotificationComponent implements OnInit {
   changeNotification(e) {
     this.notificationType?.setValue(e.target.value);
     if (this.notificationConfig.has(e.target.value)) {
-      const notification = this.notificationConfig.get(e.target.value)
-      this.helpUrl = notification.helpUrl
+      this.setHelpUrl(e.target.value)
     } else {
       this.helpUrl = null
     }
+  }
 
+  setHelpUrl(notificationType: string) {
+    const notification = this.notificationConfig.get(notificationType)
+    this.helpUrl = notification.helpUrl
   }
 
   onSubmit() {
@@ -91,7 +98,8 @@ export class AddNewExternalNotificationComponent implements OnInit {
           this.scenarioApiService.setData(message);
           this.scenarioService.fetchScenarioNotifications(projectName, scenarioName);
         });
-      this.myform.reset();
+      this.myform.reset({ notificationType: this.notifications[this.DEFAULT_NOTIFICATION ] });
+      this.setHelpUrl(this.notifications[this.DEFAULT_NOTIFICATION ])
       this.modal.close();
     }
   }

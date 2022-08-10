@@ -16,7 +16,6 @@
       </div>
       <p class="text-secondary"></p>
       <select class="custom-select mb-3" (change)="changeNotification($event)"  formControlName="notificationType">
-        <option value="">Choose notification type</option>
         <option *ngFor="let notification of notifications" [value]="notification">
           {{ notification }}
         </option>

@@ -5,7 +5,7 @@ import { NotificationComponent } from "./notification/notification.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ToastrModule } from "ngx-toastr";
 import { AddNewProjectComponent } from "./administration/projects/add-project/add-project-modal.component";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -23,7 +23,7 @@ describe("AppComponent", () => {
         RouterTestingModule,
         NgxSpinnerModule,
         NgbModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
         ToastrModule.forRoot(),

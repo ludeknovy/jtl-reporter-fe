@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DeleteTokenComponent } from "./delete-token.component";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("DeleteTokenComponent", () => {
   let component: DeleteTokenComponent;
@@ -9,7 +9,7 @@ describe("DeleteTokenComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientModule],
+      imports: [ReactiveFormsModule, HttpClientTestingModule],
       declarations: [ DeleteTokenComponent ]
     })
     .compileComponents();

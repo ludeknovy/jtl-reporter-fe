@@ -3,6 +3,7 @@ import { ProjectApiService } from "../project-api.service";
 import { ItemsListing, ProjectsOverallStats } from "../items.service.model";
 import { Router } from "@angular/router";
 import { SharedMainBarService } from "../shared-main-bar.service";
+import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
 
 @Component({
   selector: "app-dashboard",
@@ -37,5 +38,10 @@ export class DashboardComponent implements OnInit {
 
   open(projectName, scenarioName, itemId) {
     this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
+  }
+
+  showZeroErrorToleranceWarning(errorCount, errorRate) {
+    return showZeroErrorWarning(errorRate, errorCount);
+
   }
 }

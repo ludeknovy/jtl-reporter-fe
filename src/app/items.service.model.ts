@@ -3,9 +3,11 @@ export interface ItemsListing {
   name: string;
   projectName: string;
   environment: string;
-  startTime: string;
   status: string;
-  overview: ItemOverview;
+  zeroErrorToleranceEnabled: boolean;
+  thresholdPassed?: boolean
+  overview: ItemOverview
+
 }
 
 export interface Items {

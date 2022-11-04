@@ -5,7 +5,7 @@ import { NavigationComponent } from "../navigation/navigation.component";
 import { ControlPanelComponent } from "src/app/shared/control-panel/control-panel.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("MyProfileComponent", () => {
   let component: MyProfileComponent;
@@ -13,7 +13,7 @@ describe("MyProfileComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, HttpClientModule],
+      imports: [ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule],
       declarations: [ MyProfileComponent, NavigationComponent, ControlPanelComponent ]
     })
     .compileComponents();

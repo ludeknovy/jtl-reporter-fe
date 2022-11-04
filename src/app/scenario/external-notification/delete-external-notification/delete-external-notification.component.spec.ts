@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -12,7 +12,7 @@ describe("DeleteExternalNotificationComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DeleteExternalNotificationComponent ],
-      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule],
+      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientTestingModule],
     })
     .compileComponents();
   }));

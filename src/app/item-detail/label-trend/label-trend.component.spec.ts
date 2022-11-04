@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { HighchartsChartModule } from "highcharts-angular";
@@ -17,7 +17,7 @@ describe("RequestStatsCompareComponent", () => {
       imports: [
         NgbModule,
         HighchartsChartModule,
-        HttpClientModule,
+        HttpClientTestingModule,
       ]
     })
       .compileComponents();

@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
@@ -12,7 +12,8 @@ describe("DeleteScenarioComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [DeleteScenarioComponent],
-      imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule.forRoot([], { relativeLinkResolution: "legacy" })]
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
+        RouterModule.forRoot([], { relativeLinkResolution: "legacy" })]
     })
       .compileComponents();
   }));

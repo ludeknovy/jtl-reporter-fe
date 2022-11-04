@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -29,7 +29,7 @@ describe("RequestStatsCompareComponent", () => {
         NgbModule,
         ToastrModule.forRoot(),
         HighchartsChartModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterTestingModule,
       ],
       providers: [ExcelService]

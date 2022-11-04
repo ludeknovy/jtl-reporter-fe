@@ -10,7 +10,7 @@ import { HighchartsChartModule } from "highcharts-angular";
 import { RouterTestingModule } from "@angular/router/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ToastrModule } from "ngx-toastr";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 
@@ -34,7 +34,7 @@ describe("ItemDetailComponent", () => {
         HighchartsChartModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         FormsModule,
         NgbModule,
         ToastrModule.forRoot(),

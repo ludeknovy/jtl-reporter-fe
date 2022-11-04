@@ -1,12 +1,12 @@
 import { TestBed } from "@angular/core/testing";
 
 import { ScenarioService } from "./scenario.service";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("ScenarioService", () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
-      HttpClientModule
+      HttpClientTestingModule
     ],
   }));
 

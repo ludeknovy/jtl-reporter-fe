@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
 import { AuthenticationService } from "../_services/authentication.service";
-import {matchValidator} from '../form-utils/form-validators';
+import { matchValidator } from "../form-utils/form-validators";
 
 @Component({
   selector: "app-init-user",

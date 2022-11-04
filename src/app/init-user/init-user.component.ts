@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
 import { AuthenticationService } from "../_services/authentication.service";
+import { matchValidator } from "../form-utils/form-validators";
 
 @Component({
   selector: "app-init-user",
@@ -24,7 +25,8 @@ export class InitUserComponent implements OnInit {
   ngOnInit() {
     this.initUserForm = this.formBuilder.group({
       username: ["", Validators.required],
-      password: ["", [Validators.required, Validators.minLength(8)]],
+      password: ["", [Validators.required, Validators.minLength(8), matchValidator("confirmPassword", true)]],
+      confirmPassword:  ["", [Validators.required, Validators.minLength(8), matchValidator("password", )]],
     });
   }
 

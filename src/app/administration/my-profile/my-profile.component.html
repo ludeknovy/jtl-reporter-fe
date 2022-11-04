@@ -50,7 +50,7 @@
                           required</p>
                       </div>
                       <div class="form-control-feedback"
-                           *ngIf="confirmPassword.errors && (newPassword.dirty || newPassword.touched)">
+                           *ngIf="confirmPassword.errors && (confirmPassword.dirty || confirmPassword.touched)">
                         <p class="alert alert-danger" *ngIf="confirmPassword.errors.required">Current password is
                           required</p>
                         <p class="alert alert-danger" *ngIf="confirmPassword.hasError('matching')">

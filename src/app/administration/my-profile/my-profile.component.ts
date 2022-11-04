@@ -5,7 +5,7 @@ import { of } from "rxjs";
 import { NotificationService } from "src/app/_services/notification.service";
 import { NotificationMessage } from "src/app/notification/notification-messages";
 import { AuthenticationService } from "src/app/_services/authentication.service";
-import { matchValidator } from "./form-validators";
+import { matchValidator } from "../../form-utils/form-validators";
 
 @Component({
   selector: "app-my-profile",

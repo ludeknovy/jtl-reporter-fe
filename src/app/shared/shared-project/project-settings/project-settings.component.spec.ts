@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { ProjectSettingsComponent } from "./project-settings.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("ProjectSettingsComponent", () => {
   let component: ProjectSettingsComponent;
@@ -10,7 +10,7 @@ describe("ProjectSettingsComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientModule],
+      imports: [ReactiveFormsModule, HttpClientTestingModule],
       declarations: [ ProjectSettingsComponent ]
     })
     .compileComponents();

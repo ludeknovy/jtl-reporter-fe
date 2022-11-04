@@ -1,3 +1,6 @@
+const EXPORTING_SOURCE_WIDTH = 1920
+const EXPORTING_SOURCE_HEIGHT = 500
+
 export const commonGraphSettings: any = (text) => {
   return {
     chart: {
@@ -14,11 +17,13 @@ export const commonGraphSettings: any = (text) => {
       }
     },
     exporting: {
+      sourceWidth: EXPORTING_SOURCE_WIDTH,
+      sourceHeight: EXPORTING_SOURCE_HEIGHT,
       buttons: {
         contextButton: {
           enabled: true
         },
-      }
+      },
     },
     title: {
       text: ""
@@ -113,9 +118,11 @@ export const customChartSettings = () => {
     }
   },
   exporting: {
+    sourceWidth: EXPORTING_SOURCE_WIDTH,
+    sourceHeight: EXPORTING_SOURCE_HEIGHT,
     buttons: {
       contextButton: {
-        enabled: true
+        enabled: true,
       },
     }
   },

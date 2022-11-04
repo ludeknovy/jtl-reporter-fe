@@ -5,7 +5,7 @@ import { AuthGuard } from "./auth.guard";
 import { LoginComponent } from "./login/login.component";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
-import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipModule } from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   { path: "dashboard", component: DashboardComponent, canActivate: [AuthGuard] },

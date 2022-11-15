@@ -108,7 +108,9 @@ export class SettingsScenarioComponent implements OnInit {
 
   createFormControls(settings) {
     this.formControls.scenarioName = new FormControl(settings.name, [
-      Validators.maxLength(100)
+      Validators.minLength(3),
+      Validators.maxLength(100),
+      Validators.required
     ]);
     this.formControls.percentile = new FormControl(settings.thresholds.percentile, [
       Validators.min(0),
@@ -147,17 +149,17 @@ export class SettingsScenarioComponent implements OnInit {
       Validators.required
     ])
 
-    this.labelTrendChartControls.virtualUsers = new FormControl(settings.labelTrendChartSettings?.virtualUsers, []); 
-    this.labelTrendChartControls.throughput = new FormControl(settings.labelTrendChartSettings?.throughput, []); 
-    this.labelTrendChartControls.avgConnectionTime = new FormControl(settings.labelTrendChartSettings?.avgConnectionTime, []); 
-    this.labelTrendChartControls.avgLatency = new FormControl(settings.labelTrendChartSettings?.avgLatency, []); 
-    this.labelTrendChartControls.avgResponseTime = new FormControl(settings.labelTrendChartSettings?.avgResponseTime, []); 
-    this.labelTrendChartControls.p90 = new FormControl(settings.labelTrendChartSettings?.p90, []); 
-    this.labelTrendChartControls.p95 = new FormControl(settings.labelTrendChartSettings?.p95, []); 
-    this.labelTrendChartControls.p99 = new FormControl(settings.labelTrendChartSettings?.p99, []); 
+    this.labelTrendChartControls.virtualUsers = new FormControl(settings.labelTrendChartSettings?.virtualUsers, []);
+    this.labelTrendChartControls.throughput = new FormControl(settings.labelTrendChartSettings?.throughput, []);
+    this.labelTrendChartControls.avgConnectionTime = new FormControl(settings.labelTrendChartSettings?.avgConnectionTime, []);
+    this.labelTrendChartControls.avgLatency = new FormControl(settings.labelTrendChartSettings?.avgLatency, []);
+    this.labelTrendChartControls.avgResponseTime = new FormControl(settings.labelTrendChartSettings?.avgResponseTime, []);
+    this.labelTrendChartControls.p90 = new FormControl(settings.labelTrendChartSettings?.p90, []);
+    this.labelTrendChartControls.p95 = new FormControl(settings.labelTrendChartSettings?.p95, []);
+    this.labelTrendChartControls.p99 = new FormControl(settings.labelTrendChartSettings?.p99, []);
     this.labelTrendChartControls.errorRate = new FormControl(settings.labelTrendChartSettings?.errorRate, []);
- 
-  
+
+
   }
 
   createForm() {
@@ -234,7 +236,7 @@ export class SettingsScenarioComponent implements OnInit {
     }
   }
 
-  addFieldValue(operator) {  
+  addFieldValue(operator) {
    const element =  <HTMLInputElement>document.getElementById("term")
     this.labelFilters.push(new FormArray([new FormControl(element.value,Validators.required), new FormControl(operator, Validators.required)]))
     element.value = ""

@@ -49,6 +49,7 @@ export class AddNewScenarioComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formCheck();
     if (this.myform.valid) {
       const { scenarioName } = this.myform.value;
       this.scenarioApiService.createNewScenario(this.projectName, { scenarioName })
@@ -61,5 +62,12 @@ export class AddNewScenarioComponent implements OnInit {
       this.myform.reset();
       this.modalService.dismissAll();
     }
+  }
+
+  formCheck() {
+    Object.keys(this.myform.controls).forEach(field => {
+      const control = this.myform.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
   }
 }

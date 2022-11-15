@@ -62,6 +62,7 @@ export class AddUserComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formCheck()
     if (this.myform.valid) {
       const { username, password, role } = this.myform.value;
       this.userService.createNewUser({ username, password, role })
@@ -74,6 +75,13 @@ export class AddUserComponent implements OnInit {
       this.myform.reset();
       this.modalService.dismissAll();
     }
+  }
+
+  formCheck() {
+    Object.keys(this.myform.controls).forEach(field => {
+      const control = this.myform.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
   }
 
 }

@@ -50,6 +50,7 @@ export class AddNewProjectComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formCheck()
     if (this.myform.valid) {
       const { projectName } = this.myform.value;
       this.projectApiService.createNewProject({ projectName })
@@ -62,5 +63,12 @@ export class AddNewProjectComponent implements OnInit {
       this.myform.reset();
       this.modalService.dismissAll();
     }
+  }
+
+  formCheck() {
+    Object.keys(this.myform.controls).forEach(field => {
+      const control = this.myform.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
   }
 }

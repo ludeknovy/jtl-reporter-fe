@@ -110,7 +110,7 @@ export class AddNewItemComponent implements OnInit {
           this.spinner.hide();
           return this.itemsApiService.setData(message);
         });
-      this.myform.reset({ environment: "", status: this.DEFAULT_STATUS, note: "", hostname: "" });
+      this.myform.reset({ status: this.DEFAULT_STATUS, note: "", hostname: "" });
       this.modalService.dismissAll();
     }
   }

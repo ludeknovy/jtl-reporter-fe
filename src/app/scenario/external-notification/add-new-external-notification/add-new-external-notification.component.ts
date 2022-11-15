@@ -81,6 +81,7 @@ export class AddNewExternalNotificationComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formCheck()
     if (this.myform.valid) {
       const { projectName, scenarioName } = this.params;
       const { url, notificationType, name } = this.myform.value
@@ -102,6 +103,13 @@ export class AddNewExternalNotificationComponent implements OnInit {
       this.setHelpUrl(this.notifications[this.DEFAULT_NOTIFICATION ])
       this.modal.close();
     }
+  }
+
+  formCheck() {
+    Object.keys(this.myform.controls).forEach(field => {
+      const control = this.myform.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
   }
 
 }

@@ -7,18 +7,16 @@
   </div>
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default">Scenario Name</span>
-        </div>
-        <input type="input" class="form-control" formControlName="scenarioName" aria-label="Default"
+      <div class="form-group mb-3">
+        <label for="scenarioName" class="mb-1">Scenario Name</label>
+        <input type="input" id="scenarioName" class="form-control" formControlName="scenarioName" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
-      </div>
-      <div class="form-control-feedback" *ngIf="scenarioName.errors && (scenarioName.dirty || scenarioName.touched)">
-        <p class="alert alert-danger" *ngIf="scenarioName.errors.required">Scenario name is required</p>
-        <p class="alert alert-danger" *ngIf="scenarioName.errors.minlength">Project name must be at least 3 characters
-          long</p>
-        <p class="alert alert-danger" *ngIf="scenarioName.errors.maxlength">Max length is 50 characters</p>
+        <div class="form-control-feedback" *ngIf="scenarioName.errors && (scenarioName.dirty || scenarioName.touched)">
+          <p class="form-validation-error" *ngIf="scenarioName.errors.required">Scenario name is required</p>
+          <p class="form-validation-error" *ngIf="scenarioName.errors.minlength">Scenario name must be at least 3 characters
+            long</p>
+          <p class="form-validation-error" *ngIf="scenarioName.errors.maxlength">Max length is 50 characters</p>
+        </div>
       </div>
     </div>
     <div class="modal-footer">

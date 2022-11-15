@@ -7,18 +7,17 @@
     </div>
     <form [formGroup]="myform" (ngSubmit)="onSubmit()">
       <div class="modal-body">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
-          </div>
-          <input type="text" class="form-control" formControlName="description" aria-label="Default"
+        <div class="form-group mb-3">
+          <label for="description" class="mb-1">Description</label>
+          <input type="text" id="description" class="form-control" formControlName="description" aria-label="Default"
             aria-describedby="inputGroup-sizing-default">
+          <div class="form-control-feedback" *ngIf="description.errors && (description.dirty || description.touched)">
+            <p class="form-validation-error" *ngIf="description.errors.required">Description is required</p>
+            <p class="form-validation-error" *ngIf="description.errors.minlength">Description must be at least 3 characters long</p>
+            <p class="form-validation-error" *ngIf="description.errors.maxlength">Max length is 250 characters</p>
+          </div>
         </div>
-        <div class="form-control-feedback" *ngIf="description.errors && (description.dirty || description.touched)">
-          <p class="alert alert-danger" *ngIf="description.errors.required">Description is required</p>
-          <p class="alert alert-danger" *ngIf="description.errors.minlength">Description must be at least 3 characters long</p>
-          <p class="alert alert-danger" *ngIf="description.errors.maxlength">Max length is 250 characters</p>
-        </div>
+
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn jtl-btn-primary">Submit</button>

@@ -47,6 +47,7 @@ export class AddTokenComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formCheck()
     if (this.myform.valid) {
       const { description } = this.myform.value;
       this.apiTokenService.createApiToken({ description })
@@ -59,6 +60,13 @@ export class AddTokenComponent implements OnInit {
       this.myform.reset();
       this.modalService.dismissAll();
     }
+  }
+
+  formCheck() {
+    Object.keys(this.myform.controls).forEach(field => {
+      const control = this.myform.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
   }
 
 }

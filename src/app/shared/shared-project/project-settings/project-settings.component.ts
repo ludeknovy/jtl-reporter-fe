@@ -29,6 +29,7 @@ export class ProjectSettingsComponent implements OnInit {
     errorCount: null,
     networkSent: null,
     networkReceived: null,
+    scenarioUpsert: null,
   };
   @Input() projectName: string;
 
@@ -49,6 +50,7 @@ export class ProjectSettingsComponent implements OnInit {
   }
 
   createFormControls(settings) {
+    console.log(settings)
     this.formControls.virtualUsers = new FormControl(settings.topMetricsSettings.virtualUsers, []);
     this.formControls.percentile = new FormControl(settings.topMetricsSettings.percentile, []);
     this.formControls.throughput = new FormControl(settings.topMetricsSettings.throughput, []);
@@ -60,12 +62,12 @@ export class ProjectSettingsComponent implements OnInit {
     this.formControls.avgLatency = new FormControl(settings.topMetricsSettings.avgLatency, []);
     this.formControls.avgConnectionTime = new FormControl(settings.topMetricsSettings.avgConnectionTime, []);
     this.formControls.avgResponseTime = new FormControl(settings.topMetricsSettings.avgResponseTime, []);
+    this.formControls.scenarioUpsert = new FormControl(settings.upsertScenario, [])
     this.formControls.projectName = new FormControl(settings.projectName, [
       Validators.required,
       Validators.maxLength(100),
       Validators.minLength(3),
     ]);
-
   }
 
   createForm() {
@@ -81,7 +83,9 @@ export class ProjectSettingsComponent implements OnInit {
       avgLatency: this.formControls.avgLatency,
       avgConnectionTime: this.formControls.avgConnectionTime,
       avgResponseTime: this.formControls.avgResponseTime,
+
       projectName: this.formControls.projectName,
+      scenarioUpsert: this.formControls.scenarioUpsert,
     });
   }
 
@@ -92,6 +96,7 @@ export class ProjectSettingsComponent implements OnInit {
   onSubmit() {
     const payload = {
       projectName: this.formControls.projectName.value,
+      upsertScenario: this.formControls.scenarioUpsert.value,
       topMetricsSettings: {
         virtualUsers: this.formControls.virtualUsers.value,
         errorRate: this.formControls.errorRate.value,
@@ -119,7 +124,10 @@ export class ProjectSettingsComponent implements OnInit {
   }
 
   isEditable() {
-    const enabledMetrics = Object.values(this.formControls).map(control => control.value).filter(value => value === true);
+    const enabledMetrics = Object.values([this.formControls.virtualUsers, this.formControls.errorRate, this.formControls.percentile,
+    this.formControls.throughput, this.formControls.network, this.formControls.avgLatency, this.formControls.avgResponseTime,
+    this.formControls.avgConnectionTime, this.formControls.errorRate, this.formControls.networkSent, this.formControls.networkReceived])
+      .map(control => control.value).filter(value => value === true);
     this.metricsEditable = enabledMetrics.length > 5;
   }
 

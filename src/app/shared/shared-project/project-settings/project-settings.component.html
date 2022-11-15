@@ -6,11 +6,12 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form [formGroup]="projectSettingsForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="projectSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
     <div class="modal-body">
 
       <div class="form-group">
-        <label for="projectName">Project Name</label>
+
+        <label for="projectName" class="mb-1">Project Name</label>
         <input type="text" class="form-control" id="projectName" formControlName="projectName">
 
       </div>
@@ -22,10 +23,13 @@
       </div>
 
 
-      <div class="form-sub">
+      <hr class="mt-4">
+
+
+      <div class="form-sub pt-2">
         <h6>Test Report Top Statistics Bar</h6>
-        <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-          <small> Please choose up to 5 test report top statistic you would like to be displayed.</small></div>
+        <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
+          <small> Please choose up to 5 test report top statistics you would like to be displayed.</small></div>
 
         <div class="form-control-feedback" *ngIf="metricsEditable && (projectSettingsForm.dirty || projectSettingsForm.touched)">
           <p class="alert alert-danger" *ngIf="metricsEditable">Please make sure max 5 metrics is selected.</p>
@@ -89,6 +93,21 @@
           </div>
         </div>
       </div>
+
+      <hr class="mt-4">
+      <div class="form-sub">
+        <h6>Upsert Scenario</h6>
+        <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
+          <small> When pushing test report into scenario that does not exists, the application will create it on the fly.</small></div>
+        <div class="form-group">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="scenarioUpsert"
+                   formControlName="scenarioUpsert">
+            <label class="custom-control-label" for="scenarioUpsert">Scenario Upsert</label>
+          </div>
+        </div>
+      </div>
+
     </div>
 
 

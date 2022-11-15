@@ -13,12 +13,15 @@
     <li ngbNavItem>
       <a ngbNavLink>General</a>
       <ng-template ngbNavContent>
-        <form [formGroup]="scenarioSettingsForm" class="form-settings" (ngSubmit)="onSubmit()">
-          <div class="form-group">
+        <form [formGroup]="scenarioSettingsForm" class="form-settings" (ngSubmit)="onSubmit()" class="pl-3">
+          <div class="form-group pt-3">
             <label for="exampleInputEmail1">Scenario name</label>
             <input type="text" class="form-control" formControlName="scenarioName">
           </div>
-    
+
+          <hr class="mt-4">
+
+
           <div class="form-sub">
             <div class="form-group">
               <h6>Test runs retention</h6>
@@ -30,7 +33,10 @@
               </select>
             </div>
           </div>
-    
+
+          <hr class="mt-4">
+
+
           <div class="form-sub">
             <h6>Performance analysis</h6>
             <div class="form-group">
@@ -40,7 +46,10 @@
               </div>
             </div>
           </div>
-    
+
+          <hr class="mt-4">
+
+
           <div class="form-sub">
             <h6>Zero error tolerance</h6>
             <div class="form-group">
@@ -51,7 +60,10 @@
               </div>
             </div>
           </div>
-    
+
+          <hr class="mt-4">
+
+
           <div class="form-sub">
             <h6>Delete sample data after processing</h6>
             <div class="form-group">
@@ -61,7 +73,10 @@
               </div>
             </div>
           </div>
-    
+
+          <hr class="mt-4">
+
+
           <div class="form-sub">
             <h6>Generate share token automatically</h6>
             <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
@@ -73,6 +88,9 @@
               </div>
             </div>
           </div>
+
+          <hr class="mt-4">
+
 
           <div class="form-sub">
             <h6>Generate extra chart aggregations <i class="fas fa-flask"></i></h6>
@@ -95,14 +113,14 @@
     <li ngbNavItem>
       <a ngbNavLink>Thresholds</a>
       <ng-template ngbNavContent>
-        <form [formGroup]="scenarioSettingsForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="scenarioSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
 
-          <div class="form-sub">
+          <div class="form-sub pt-3">
             <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
               <small> Scenario thresholds will raise an alert in a report detail in case the given metrics diverge from the
                 previous
                 reports average by more than specified threshold percentage.</small></div>
-    
+
             <div class="form-group">
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" id="thresholdEnabled"
@@ -110,7 +128,7 @@
                 <label class="custom-control-label" for="thresholdEnabled">Enabled</label>
               </div>
             </div>
-    
+
             <div class="form-group">
               <label for="exampleInputEmail1">90% percentil</label>
               <input type="input" class="form-control" formControlName="thresholdPercentile">
@@ -135,13 +153,13 @@
     <li ngbNavItem>
       <a ngbNavLink>Label Filter Settings</a>
       <ng-template ngbNavContent>
-        <form [formGroup]="labelFilters" (ngSubmit)="onSubmit()">
+        <form [formGroup]="labelFilters" (ngSubmit)="onSubmit()" class="pl-3">
 
-          <div class="desc text-secondary table-help"><i class="fas fa-info-circle"> </i>
+          <div class="text-secondary table-help"><i class="fas fa-info-circle"> </i>
             <small> Enter search term(s) that you want to filter out. For a full match use "match" operator, for a partial match use "includes" operator</small></div>
 
           <table class="table jtl-table">
-            
+
             <thead>
                 <tr>
                     <th class="jtl-head">Label</th>
@@ -194,8 +212,8 @@
     <li ngbNavItem>
       <a ngbNavLink>Label Trend Chart Settings</a>
       <ng-template ngbNavContent>
-        <form [formGroup]="labelTrendChartSettingsForm" (ngSubmit)="onSubmit()">
-          <div class="form-group form-settings">
+        <form [formGroup]="labelTrendChartSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
+          <div class="form-group form-settings pt-3">
             <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
               <small> The selected metrics will get pre-set in label trend chart.</small></div>
             <div class="custom-control custom-switch">
@@ -243,7 +261,7 @@
                      formControlName="avgResponseTime">
               <label class="custom-control-label" for="avgResponseTime">Average Response Time</label>
             </div>
-           
+
           </div>
 
 

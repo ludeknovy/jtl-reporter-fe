@@ -11,6 +11,9 @@
         <label for="kpiFile">KPI CSV file</label>
         <input type="file" id="kpiFile" class="form-control" (change)="onFileChange($event, 'kpiFile')"
           aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="kpiFile.errors && (kpiFile.dirty || kpiFile.touched)">
+          <div class="form-validation-error" *ngIf="kpiFile.errors.required">Jtl file is required.</div>
+        </div>
       </div>
       <div class="form-group mb-3">
         <label for="monitoringFile">Monitoring CSV file</label>
@@ -21,6 +24,9 @@
         <label for="environment">Environment</label>
         <input type="testName" id="environment" class="form-control" formControlName="environment" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">
+          <p class="form-validation-error" *ngIf="environment.errors.required">Environment is required.</p>
+        </div>
       </div>
 
       <div class="form-group mb-3">
@@ -48,14 +54,6 @@
             {{s}}
           </option>
         </select>
-      </div>
-
-
-      <div class="form-control-feedback" *ngIf="kpiFile.errors && (kpiFile.dirty || kpiFile.touched)">
-        <p class="alert alert-danger" *ngIf="kpiFile.errors.required">Jtl file is required</p>
-      </div>
-      <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">
-        <p class="alert alert-danger" *ngIf="environment.errors.required">Environment is required</p>
       </div>
     </div>
     <div class="modal-footer">

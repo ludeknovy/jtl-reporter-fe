@@ -48,6 +48,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formCheck()
     if (this.myform.valid) {
       const { newPassword, currentPassword } = this.myform.value;
       this.authenticationService.changePassword({ newPassword, currentPassword })
@@ -58,6 +59,13 @@ export class MyProfileComponent implements OnInit {
         });
       this.myform.reset();
     }
+  }
+
+  formCheck() {
+    Object.keys(this.myform.controls).forEach(field => {
+      const control = this.myform.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
   }
 
 

@@ -183,3 +183,14 @@ a:hover {
 .label-modal .modal-dialog{
   max-width: 90% !important;
 }
+
+.form-validation-error {
+  font-size: 80%;
+  color: #dc3545;
+  margin-top: 0.25rem;
+}
+
+
+input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}

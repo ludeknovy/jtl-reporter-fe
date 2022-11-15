@@ -21,6 +21,9 @@
         <label for="environment">Environment</label>
         <input type="testName" id="environment" class="form-control" formControlName="environment" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">
+          <p class="form-validation-error" *ngIf="environment.errors.required">Environment is required</p>
+        </div>
       </div>
       <div class="form-group mb-3">
         <label for="hostname">Hostname</label>
@@ -36,9 +39,6 @@
                         ngbTooltip="Set this test report as a reference. When selected, it will enable a 'Compare to base run' shortcut in the requests statistics menu in other reports within the same scenario."><i
                           class="far fa-question-circle icon base-run-tooltip"></i></i>
         </div>
-      </div>
-      <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">
-        <p class="alert alert-danger" *ngIf="environment.errors.required">Environment is required</p>
       </div>
     </div>
     <div class="modal-footer">

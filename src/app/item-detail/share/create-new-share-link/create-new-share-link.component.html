@@ -15,9 +15,9 @@
       <div class="form-group mb-3">
         <label for="note">Note</label>
         <input type="input" id="note" class="form-control" formControlName="note" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-      </div>
-      <div class="form-control-feedback" *ngIf="note.errors && (note.dirty || note.touched)">
-        <p class="alert alert-danger" *ngIf="note.errors.maxlength">Note is too long.</p>
+        <div class="form-control-feedback" *ngIf="note.errors && (note.dirty || note.touched)">
+          <p class="form-validation-error" *ngIf="note.errors.maxlength">Note is too long.</p>
+        </div>
       </div>
     </div>
 

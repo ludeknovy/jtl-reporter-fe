@@ -11,11 +11,11 @@
         <label for="projectName">Project Name</label>
         <input type="projectName" id="projectName" class="form-control" formControlName="projectName" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
-      </div>
-      <div class="form-control-feedback" *ngIf="projectName.errors && (projectName.dirty || projectName.touched)">
-        <p class="alert alert-danger" *ngIf="projectName.errors.required">Project name is required</p>
-        <p class="alert alert-danger" *ngIf="projectName.errors.minlength">Project name must be at least 3 characters long</p>
-        <p class="alert alert-danger" *ngIf="projectName.errors.maxlength">Max length is 50 characters</p>
+        <div class="form-control-feedback" *ngIf="projectName.errors && (projectName.dirty || projectName.touched)">
+          <p class="form-validation-error" *ngIf="projectName.errors.required">Project name is required</p>
+          <p class="form-validation-error" *ngIf="projectName.errors.minlength">Project name must be at least 3 characters long</p>
+          <p class="form-validation-error" *ngIf="projectName.errors.maxlength">Max length is 50 characters</p>
+        </div>
       </div>
     </div>
     <div class="modal-footer">

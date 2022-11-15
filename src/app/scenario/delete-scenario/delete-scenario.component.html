@@ -11,10 +11,11 @@
         <label for="deleteCheck">Please enter 5 random characters:</label>
         <input type="deleteCheck" id="deleteCheck" class="form-control" formControlName="deleteCheck" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="deleteCheck.errors && (deleteCheck.dirty || deleteCheck.touched)">
+          <p class="form-validation-error" *ngIf="deleteCheck.errors.minlength">Please enter at least 5 characters...</p>
+        </div>
       </div>
-      <div class="form-control-feedback" *ngIf="deleteCheck.errors && (deleteCheck.dirty || deleteCheck.touched)">
-        <p class="alert alert-danger" *ngIf="deleteCheck.errors.minlength">Please enter at least 5 characters...</p>
-      </div>
+
     </div>
     <div class="modal-footer">
       <button type="submit" class="btn btn-danger">Delete</button>

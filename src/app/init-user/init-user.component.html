@@ -10,51 +10,48 @@
 
           <form [formGroup]="initUserForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-              <label for="username">Username</label>
 
-              <div class="input-group mb-3">
-                  <input type="text" class="form-control" formControlName="username" aria-label="Default"
+              <div class="form-group mb-3">
+                <label for="username">Username</label>
+
+                <input type="text" id="username" class="form-control" formControlName="username" aria-label="Default"
                     aria-describedby="inputGroup-sizing-default">
+                <div class="form-control-feedback"*ngIf="submitted && initUserForm.controls.username.errors">
+                  <p class="form-validation-error" *ngIf="this.initUserForm.controls.username.errors">Username is required</p>
+                </div>
                 </div>
 
-              <label for="password">Password</label>
 
-              <div class="input-group mb-3">
-                  <input type="password" class="form-control" formControlName="password" aria-label="Default"
+              <div class="form-group mb-3">
+                <label for="password">Password</label>
+
+                <input type="password" id="password" class="form-control" formControlName="password" aria-label="Default"
                     aria-describedby="inputGroup-sizing-default">
+                <div class="form-control-feedback"*ngIf="submitted && initUserForm.controls.password.errors">
+                  <p class="form-validation-error" *ngIf="this.initUserForm.controls.password.errors.required">Password is required</p>
+                  <p class="form-validation-error" *ngIf="this.initUserForm.controls.password.errors.minlength">Password should be at least 8 characters long</p>
+                </div>
                 </div>
 
-              <label for="password">Confirm Password</label>
 
-              <div class="input-group mb-3">
-                <input type="password" class="form-control" formControlName="confirmPassword" aria-label="Default"
+              <div class="form-group mb-3">
+                <label for="passwordConfirmation">Confirm Password</label>
+
+                <input type="password" id="passwordConfirmation" class="form-control" formControlName="confirmPassword" aria-label="Default"
                        aria-describedby="inputGroup-sizing-default">
+                <div class="form-control-feedback"
+                     *ngIf="initUserForm.controls.confirmPassword.errors && (initUserForm.controls.confirmPassword.dirty || initUserForm.controls.confirmPassword.touched)">
+                  <p class="form-validation-error" *ngIf="initUserForm.controls.confirmPassword.errors.required">Current password is
+                    required</p>
+                  <p class="form-validation-error" *ngIf="initUserForm.controls.confirmPassword.hasError('matching')">
+                    Passwords do not match!
+                  </p>
+                </div>
+
               </div>
-
-
-
 
             </div>
 
-
-
-
-            <div class="form-control-feedback"*ngIf="submitted && initUserForm.controls.password.errors">
-                <p class="alert alert-danger" *ngIf="this.initUserForm.controls.password.errors.required">Password is required</p>
-                <p class="alert alert-danger" *ngIf="this.initUserForm.controls.password.errors.minlength">Password should be at least 8 characters long</p>
-              </div>
-            <div class="form-control-feedback"*ngIf="submitted && initUserForm.controls.username.errors">
-                <p class="alert alert-danger" *ngIf="this.initUserForm.controls.username.errors">Username is required</p>
-              </div>
-
-            <div class="form-control-feedback"
-                 *ngIf="initUserForm.controls.confirmPassword.errors && (initUserForm.controls.confirmPassword.dirty || initUserForm.controls.confirmPassword.touched)">
-              <p class="alert alert-danger" *ngIf="initUserForm.controls.confirmPassword.errors.required">Current password is
-                required</p>
-              <p class="alert alert-danger" *ngIf="initUserForm.controls.confirmPassword.hasError('matching')">
-                Passwords do not match!
-              </p>
-            </div>
 
             <div class="form-group">
               <button class="btn btn-primary form-control">Create new user</button>

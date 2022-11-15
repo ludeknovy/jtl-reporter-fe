@@ -17,6 +17,11 @@
           <div class="form-group pt-3">
             <label for="exampleInputEmail1">Scenario name</label>
             <input type="text" class="form-control" formControlName="scenarioName">
+            <div class="form-control-feedback" *ngIf="formControls.scenarioName.errors && (formControls.scenarioName.dirty || formControls.scenarioName.touched)">
+              <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.required">Name required</p>
+              <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.maxlength">Name is too long.</p>
+              <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.minlength">Name is too short.</p>
+            </div>
           </div>
 
           <hr class="mt-4">

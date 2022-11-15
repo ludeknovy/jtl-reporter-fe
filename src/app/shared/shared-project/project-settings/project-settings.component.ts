@@ -65,7 +65,7 @@ export class ProjectSettingsComponent implements OnInit {
     this.formControls.scenarioUpsert = new FormControl(settings.upsertScenario, [])
     this.formControls.projectName = new FormControl(settings.projectName, [
       Validators.required,
-      Validators.maxLength(100),
+      Validators.maxLength(50),
       Validators.minLength(3),
     ]);
   }
@@ -126,7 +126,7 @@ export class ProjectSettingsComponent implements OnInit {
   isEditable() {
     const enabledMetrics = Object.values([this.formControls.virtualUsers, this.formControls.errorRate, this.formControls.percentile,
     this.formControls.throughput, this.formControls.network, this.formControls.avgLatency, this.formControls.avgResponseTime,
-    this.formControls.avgConnectionTime, this.formControls.errorRate, this.formControls.networkSent, this.formControls.networkReceived])
+    this.formControls.avgConnectionTime, this.formControls.errorCount, this.formControls.networkSent, this.formControls.networkReceived])
       .map(control => control.value).filter(value => value === true);
     this.metricsEditable = enabledMetrics.length > 5;
   }

@@ -7,12 +7,9 @@
   </div>
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
-      <p>Please enter 5 random characters:</p>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default">Delete check</span>
-        </div>
-        <input type="deleteCheck" class="form-control" formControlName="deleteCheck" aria-label="Default"
+      <div class="form-group mb-3">
+        <label for="deleteCheck">Please enter 5 random characters:</label>
+        <input type="deleteCheck" id="deleteCheck" class="form-control" formControlName="deleteCheck" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-control-feedback" *ngIf="deleteCheck.errors && (deleteCheck.dirty || deleteCheck.touched)">

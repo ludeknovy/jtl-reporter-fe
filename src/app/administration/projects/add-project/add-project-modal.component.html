@@ -7,11 +7,9 @@
   </div>
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default">Project name</span>
-        </div>
-        <input type="projectName" class="form-control" formControlName="projectName" aria-label="Default"
+      <div class="form-group mb-3">
+        <label for="projectName">Project Name</label>
+        <input type="projectName" id="projectName" class="form-control" formControlName="projectName" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-control-feedback" *ngIf="projectName.errors && (projectName.dirty || projectName.touched)">

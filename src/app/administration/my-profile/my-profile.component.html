@@ -16,25 +16,19 @@
                 <div class="col">
                   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
                     <div class="modal-body">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroup-sizing-default">Current password</span>
-                        </div>
-                        <input type="password" class="form-control" formControlName="currentPassword"
+                      <div class="form-group mb-3">
+                        <label for="password">Current password</label>
+                        <input type="password" id="password" class="form-control" formControlName="currentPassword"
                           aria-label="Default" aria-describedby="inputGroup-sizing-default">
                       </div>
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroup-sizing-default">New password</span>
-                        </div>
-                        <input type="password" class="form-control" formControlName="newPassword" aria-label="Default"
+                      <div class="form-group mb-3">
+                        <label for="newPassword">New password</label>
+                        <input type="password" id="newPassword" class="form-control" formControlName="newPassword" aria-label="Default"
                           aria-describedby="inputGroup-sizing-default">
                       </div>
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroup-sizing-default">Password Confirmation</span>
-                        </div>
-                        <input type="password" class="form-control" formControlName="confirmPassword" aria-label="Default"
+                      <div class="form-group mb-3">
+                        <label for="confirmPassword">Password Confirmation</label>
+                        <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" aria-label="Default"
                                aria-describedby="inputGroup-sizing-default">
                       </div>
                       <div class="form-control-feedback"

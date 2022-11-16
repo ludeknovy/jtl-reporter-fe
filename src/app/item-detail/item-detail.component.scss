@@ -252,10 +252,6 @@ thead .hd {
   margin-top: 10px;
 }
 
-.perf-analaysis-desc {
-  margin-left: 20px;
-}
-
 .performance-analysis-success{
   border-left: 4px solid #28a745;
 }
@@ -303,4 +299,13 @@ thead .hd {
 .total-samples {
   font-size: 13px;
   font-weight: normal;
+}
+
+.tab-charts {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.summary-bold {
+  font-weight: 500;
 }

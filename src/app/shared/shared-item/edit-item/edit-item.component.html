@@ -18,7 +18,7 @@
           aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-group mb-3">
-        <label for="environment">Environment</label>
+        <label for="environment">Environment <span class="text-danger">*</span></label>
         <input type="testName" id="environment" class="form-control" formControlName="environment" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">

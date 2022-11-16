@@ -9,15 +9,14 @@
     <div class="modal-body">
       <div class="form-group mb-3">
         <label for="kpiFile">KPI CSV file <span class="text-danger">*</span></label>
-        <input type="file" id="kpiFile" class="form-control" (change)="onFileChange($event, 'kpiFile')"
-          aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <input type="file" id="kpiFile" class="form-control border-0 pl-0" (change)="onFileChange($event, 'kpiFile')">
         <div class="form-control-feedback" *ngIf="kpiFile.errors && (kpiFile.dirty || kpiFile.touched)">
           <div class="form-validation-error" *ngIf="kpiFile.errors.required">Jtl file is required.</div>
         </div>
       </div>
       <div class="form-group mb-3">
         <label for="monitoringFile">Monitoring CSV file</label>
-        <input type="file" id="monitoringFile" class="form-control" (change)="onFileChange($event, 'monitoringFile')"
+        <input type="file" id="monitoringFile" class="form-control border-0 pl-0" (change)="onFileChange($event, 'monitoringFile')"
           aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-group mb-3">

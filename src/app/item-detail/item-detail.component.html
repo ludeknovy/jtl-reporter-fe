@@ -230,55 +230,71 @@
 
     </div>
 
-    <div class="overview-additional card-shadow">
-      <div class="row info">
-        <div class="col-sm">
-          <div class="date top">
-            <span class="text-secondary">started:</span>
-            <span class="small-text">{{itemData.overview.startDate | date:'d. L. yyyy H:mm:ss'}}</span>
+    <div class="row">
+      <div class="col">
+        <div class="overview-additional card card-shadow">
+          <h6 class="card-header bg-white border-0">Summary</h6>
+          <div class="card-body">
+            <div class="row ml-2">
+              <div class="col">
+                <div class="row">
+                  <div class="col-sm mb-1 summary-bold">Start time</div>
+                  <div class="col-sm mb-1">
+                    {{itemData.overview.startDate | date:'d. L. yyyy, H:mm:ss'}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm mb-1 summary-bold">End Time</div>
+                  <div class="col-sm mb-1">
+                    {{itemData.overview.endDate | date:'d. L. yyyy, H:mm:ss'}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm mb-1 summary-bold">Duration</div>
+                  <div class="col-sm mb-1">{{itemData.overview.duration}} min</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm mb-1 summary-bold">Environment</div>
+                  <div class="col-sm mb-1">{{itemData.environment}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm mb-1 summary-bold">Status</div>
+                  <div class="col-sm mb-1">{{getTextStatus(itemData.status)}}</div>
+                </div>
+
+              </div>
+
+              <div class="col">
+                <div class="row">
+                  <div class="col-sm mb-1 summary-bold">Hostname</div>
+                  <div class="col-sm mb-1">{{itemData.hostname}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm mb-1 summary-bold">Note</div>
+                  <div class="col-sm mb-1">{{itemData.note}}</div>
+                </div>
+                <div class="row" *ngIf="itemData.monitoring.cpu.data.length > 0">
+                  <div class="col-sm mb-1 summary-bold">Max CPU usage</div>
+                  <div class="col-sm mb-1">{{itemData.monitoring.cpu.max}}%  <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
+                  </app-monitoring-stats></div>
+                </div>
+              </div>
+
+            </div>
           </div>
-          <div class="date">
-            <span class="text-secondary">ended:</span>
-            <span class="small-text">{{itemData.overview.endDate | date:'d. L. yyyy H:mm:ss'}}</span>
-          </div>
-          <div class="date bottom">
-            <span class="text-secondary">duration:</span>
-            <span class="small-text">{{itemData.overview.duration}} min</span>
-          </div>
-        </div>
-        <div class="col">
-          <div class="date top">
-            <span class="text-secondary">environment:</span>
-            <span class="small-text">{{itemData.environment}}</span>
-          </div>
-          <div class="date" *ngIf="itemData.status">
-            <span class="text-secondary">status:</span>
-            <span class="small-text">{{getTextStatus(itemData.status)}}</span>
-          </div>
-          <div class="date" *ngIf="itemData.hostname">
-            <span class="text-secondary">hostname:</span>
-            <span class="small-text">{{itemData.hostname}}</span>
-          </div>
-          <div class="date" *ngIf="itemData.note">
-            <span class="text-secondary">note:</span>
-            <span class="small-text">{{itemData.note}}</span>
-          </div>
-        </div>
 
 
 
-        <div class="col-sm" *ngIf="itemData.monitoring.cpu.data.length > 0">
-          <div class="date top">
-            <span class="text-secondary">max cpu usage:</span>
-            <span class="small-text">{{itemData.monitoring.cpu.max}}%</span>
-          </div>
-          <div class="date">
-            <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
-            </app-monitoring-stats>
-          </div>
         </div>
       </div>
     </div>
+
+
+
+
+
+
+
 
 
 
@@ -289,7 +305,7 @@
             <a ngbNavLink class="nav-link bg-transparent">Overview charts</a>
             <ng-template ngbNavContent>
               <div class="row charts">
-                <div class="col">
+                <div class="col tab-charts">
                   <div class="card overview-chart-card card-shadow">
                     <h6 class="card-header bg-transparent">Overall Chart</h6>
                     <div class="card-body">
@@ -303,7 +319,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col">
+                <div class="col tab-charts">
                   <app-label-chart></app-label-chart>
                 </div>
               </div>
@@ -313,7 +329,7 @@
             <a ngbNavLink class="nav-link bg-transparent">Analyze charts</a>
             <ng-template ngbNavContent>
               <div class="row charts">
-                <div class="col">
+                <div class="col tab-charts">
                   <app-analyze-charts [chartLines]="chartLines" [params]="itemParams" [isAnonymous]="isAnonymous" [showPerformanceAnalysisLines]="performanceAnalysisLines"></app-analyze-charts>
                 </div>
               </div>

@@ -11,7 +11,7 @@
 
       <div class="form-group">
 
-        <label for="projectName" class="mb-1">Project Name</label>
+        <label for="projectName" class="mb-1">Project Name <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="projectName" formControlName="projectName">
         <div class="form-control-feedback" *ngIf="formControls.projectName.errors && (formControls.projectName.dirty || formControls.projectName.touched)">
           <p class="form-validation-error" *ngIf="formControls.projectName.errors.required">Project name is required</p>

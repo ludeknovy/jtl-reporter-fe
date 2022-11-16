@@ -27,7 +27,6 @@ import { RoleModule } from "../_directives/role.module";
 import { ReloadCustomChartComponent } from "./analyze-charts/reload-custom-chart/reload-custom-chart.component";
 import { ExcelService } from "../_services/excel.service";
 import { ChartIntervalComponent } from "./chart-interval/chart-interval.component";
-import { ObservationComponent } from './observation/observation.component';
 
 
 const routes: Routes = [  {

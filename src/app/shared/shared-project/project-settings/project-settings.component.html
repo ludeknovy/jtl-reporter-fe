@@ -7,14 +7,15 @@
     </button>
   </div>
 
+  <div class="modal-body">
+
   <ul ngbNav #nav="ngbNav" class="nav-tabs">
     <li ngbNavItem>
       <a ngbNavLink>General</a>
       <ng-template ngbNavContent>
         <form [formGroup]="projectSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
-          <div class="modal-body">
 
-            <div class="form-group">
+            <div class="form-group pt-3">
 
               <label for="projectName" class="mb-1">Project Name <span class="text-danger">*</span></label>
               <input type="text" class="form-control" id="projectName" formControlName="projectName">
@@ -111,7 +112,6 @@
               </div>
             </div>
 
-          </div>
 
 
 
@@ -128,6 +128,7 @@
     </li>
   </ul>
   <div [ngbNavOutlet]="nav"></div>
+  </div>
 
 
 

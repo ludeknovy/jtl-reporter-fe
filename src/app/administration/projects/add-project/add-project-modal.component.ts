@@ -17,7 +17,7 @@ import { UserRole, Users } from "../../../_services/users.model";
 export class AddNewProjectComponent implements OnInit {
   myform: FormGroup;
   projectName: FormControl;
-  allowedUsers: FormArray;
+  projectMembers: FormArray;
   users: Users[];
 
   @Input() topMenu: boolean;
@@ -44,7 +44,7 @@ export class AddNewProjectComponent implements OnInit {
   }
 
   get usersFormArray() {
-    return this.myform.controls.allowedUsers as FormArray;
+    return this.myform.controls.projectMembers as FormArray;
   }
 
   createFormControls() {
@@ -53,13 +53,13 @@ export class AddNewProjectComponent implements OnInit {
       Validators.minLength(3),
       Validators.maxLength(50)
     ]);
-    this.allowedUsers = new FormArray([])
+    this.projectMembers = new FormArray([])
   }
 
   createForm() {
     this.myform = new FormGroup({
       projectName: this.projectName,
-      allowedUsers: this.allowedUsers
+      projectMembers: this.projectMembers
     });
   }
 
@@ -70,12 +70,12 @@ export class AddNewProjectComponent implements OnInit {
   onSubmit() {
     this.formCheck()
     if (this.myform.valid) {
-      const allowedUsers = this.myform.value.allowedUsers
+      const projectMembers = this.myform.value.projectMembers
         .map((v, i) => v ? this.users[i].id : null)
         .filter(v => v !== null);
 
       const { projectName } = this.myform.value;
-      this.projectApiService.createNewProject({ projectName, allowedUsers })
+      this.projectApiService.createNewProject({ projectName, projectMembers })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newProjectNotificationMessage(_);

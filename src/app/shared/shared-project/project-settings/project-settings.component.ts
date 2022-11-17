@@ -41,13 +41,8 @@ export class ProjectSettingsComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    this.projectApiService.getProject(this.projectName).subscribe((r) => {
-      this.createFormControls(r.body);
-      this.createForm();
-      this.isEditable();
-    });
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  ngOnInit() {}
 
   createFormControls(settings) {
     this.formControls.virtualUsers = new FormControl(settings.topMetricsSettings.virtualUsers, []);
@@ -89,7 +84,14 @@ export class ProjectSettingsComponent implements OnInit {
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" });
+    this.projectApiService.getProject(this.projectName).subscribe((r) => {
+      this.createFormControls(r.body);
+      this.createForm();
+      this.isEditable();
+      this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" });
+    });
+
+
   }
 
   onSubmit() {
@@ -118,6 +120,7 @@ export class ProjectSettingsComponent implements OnInit {
           this.projectService.loadProjects();
           return this.projectApiService.setData(message);
         });
+      this.projectSettingsForm.reset()
       this.modalService.dismissAll();
     }
   }

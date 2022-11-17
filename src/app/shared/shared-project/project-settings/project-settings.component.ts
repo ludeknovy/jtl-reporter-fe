@@ -50,7 +50,6 @@ export class ProjectSettingsComponent implements OnInit {
   }
 
   createFormControls(settings) {
-    console.log(settings)
     this.formControls.virtualUsers = new FormControl(settings.topMetricsSettings.virtualUsers, []);
     this.formControls.percentile = new FormControl(settings.topMetricsSettings.percentile, []);
     this.formControls.throughput = new FormControl(settings.topMetricsSettings.throughput, []);

@@ -8,4 +8,5 @@ export interface ProjectsListing {
 
 export interface NewProjectBody {
   projectName: string;
+  allowedUsers?: string[]
 }

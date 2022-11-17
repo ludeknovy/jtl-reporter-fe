@@ -8,7 +8,7 @@
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
       <div class="form-group mb-3">
-        <label for="projectName">Project Name</label>
+        <label for="projectName">Project Name <span class="text-danger">*</span></label>
         <input type="projectName" id="projectName" class="form-control" formControlName="projectName" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="projectName.errors && (projectName.dirty || projectName.touched)">
@@ -17,6 +17,21 @@
           <p class="form-validation-error" *ngIf="projectName.errors.maxlength">Max length is 50 characters</p>
         </div>
       </div>
+
+      <div *ngIf="users">
+
+        <div class="form-group mb-3">
+          <label>Project members</label>
+          <li class="list-label"   *ngFor="let user of usersFormArray.controls; let i = index">
+            <label formArrayName="allowedUsers">
+              <input type="checkbox" [formControlName]="i">
+              {{users[i].username}}
+            </label>
+          </li>
+        </div>
+      </div>
+
+
     </div>
     <div class="modal-footer">
       <button type="submit" class="btn jtl-btn-primary">Submit</button>

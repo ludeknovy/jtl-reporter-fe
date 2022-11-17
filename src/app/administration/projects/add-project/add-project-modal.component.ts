@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { ProjectApiService } from "../../../project-api.service";
 import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { NotificationMessage } from "../../../notification/notification-messages";
 import { ProjectService } from "../../../project.service";
+import { UserService } from "../../../_services/user.service";
+import { UserRole, Users } from "../../../_services/users.model";
 
 @Component({
   styleUrls: ["./add-project-modal.component.css"],
@@ -13,9 +15,10 @@ import { ProjectService } from "../../../project.service";
   templateUrl: "./add-project-modal.component.html",
 })
 export class AddNewProjectComponent implements OnInit {
-  closeResult: string;
   myform: FormGroup;
   projectName: FormControl;
+  allowedUsers: FormArray;
+  users: Users[];
 
   @Input() topMenu: boolean;
 
@@ -24,11 +27,24 @@ export class AddNewProjectComponent implements OnInit {
     private modalService: NgbModal,
     private projectApiService: ProjectApiService,
     private projectService: ProjectService,
-    private notification: NotificationMessage
+    private notification: NotificationMessage,
+    private userService: UserService
   ) { }
   ngOnInit() {
     this.createFormControls();
     this.createForm();
+    const { role } = JSON.parse(localStorage.getItem("currentUser"));
+    if (role === UserRole.Admin) {
+      this.userService.fetchUsers().subscribe(data => {
+        this.users = data.filter(user => user.role != "admin")
+        this.addCheckboxes()
+      });
+    }
+
+  }
+
+  get usersFormArray() {
+    return this.myform.controls.allowedUsers as FormArray;
   }
 
   createFormControls() {
@@ -37,11 +53,13 @@ export class AddNewProjectComponent implements OnInit {
       Validators.minLength(3),
       Validators.maxLength(50)
     ]);
+    this.allowedUsers = new FormArray([])
   }
 
   createForm() {
     this.myform = new FormGroup({
       projectName: this.projectName,
+      allowedUsers: this.allowedUsers
     });
   }
 
@@ -52,8 +70,12 @@ export class AddNewProjectComponent implements OnInit {
   onSubmit() {
     this.formCheck()
     if (this.myform.valid) {
+      const allowedUsers = this.myform.value.allowedUsers
+        .map((v, i) => v ? this.users[i].id : null)
+        .filter(v => v !== null);
+
       const { projectName } = this.myform.value;
-      this.projectApiService.createNewProject({ projectName })
+      this.projectApiService.createNewProject({ projectName, allowedUsers })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newProjectNotificationMessage(_);
@@ -70,5 +92,9 @@ export class AddNewProjectComponent implements OnInit {
       const control = this.myform.get(field);
       control.markAsTouched({ onlySelf: true });
     });
+  }
+
+  private addCheckboxes() {
+    this.users.forEach(() => this.usersFormArray.push(new FormControl(false)));
   }
 }

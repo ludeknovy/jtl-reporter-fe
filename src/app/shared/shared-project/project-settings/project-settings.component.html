@@ -9,21 +9,25 @@
 
   <div class="modal-body">
 
-  <ul ngbNav #nav="ngbNav" class="nav-tabs">
-    <li ngbNavItem>
-      <a ngbNavLink>General</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="projectSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+      <li ngbNavItem>
+        <a ngbNavLink>General</a>
+        <ng-template ngbNavContent>
+          <form [formGroup]="projectSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
 
             <div class="form-group pt-3">
 
               <label for="projectName" class="mb-1">Project Name <span class="text-danger">*</span></label>
               <input type="text" class="form-control" id="projectName" formControlName="projectName">
-              <div class="form-control-feedback" *ngIf="formControls.projectName.errors && (formControls.projectName.dirty || formControls.projectName.touched)">
-                <p class="form-validation-error" *ngIf="formControls.projectName.errors.required">Project name is required</p>
-                <p class="form-validation-error" *ngIf="formControls.projectName.errors.minlength">Project name must be at least 3 characters
+              <div class="form-control-feedback"
+                   *ngIf="formControls.projectName.errors && (formControls.projectName.dirty || formControls.projectName.touched)">
+                <p class="form-validation-error" *ngIf="formControls.projectName.errors.required">Project name is
+                  required</p>
+                <p class="form-validation-error" *ngIf="formControls.projectName.errors.minlength">Project name must be
+                  at least 3 characters
                   long</p>
-                <p class="form-validation-error" *ngIf="formControls.projectName.errors.maxlength">Max length is 50 characters</p>
+                <p class="form-validation-error" *ngIf="formControls.projectName.errors.maxlength">Max length is 50
+                  characters</p>
               </div>
             </div>
 
@@ -35,7 +39,8 @@
               <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
                 <small> Please choose up to 5 test report top statistics you would like to be displayed.</small></div>
 
-              <div class="form-control-feedback" *ngIf="metricsEditable && (projectSettingsForm.dirty || projectSettingsForm.touched)">
+              <div class="form-control-feedback"
+                   *ngIf="metricsEditable && (projectSettingsForm.dirty || projectSettingsForm.touched)">
                 <p class="form-validation-error" *ngIf="metricsEditable">Please make sure max 5 metrics is selected.</p>
               </div>
 
@@ -102,7 +107,8 @@
             <div class="form-sub">
               <h6>Upsert Scenario</h6>
               <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
-                <small> When pushing test report into scenario that does not exists, the application will create it on the fly.</small></div>
+                <small> When pushing test report into scenario that does not exists, the application will create it on
+                  the fly.</small></div>
               <div class="form-group">
                 <div class="custom-control custom-switch">
                   <input type="checkbox" class="custom-control-input" id="scenarioUpsert"
@@ -113,27 +119,39 @@
             </div>
 
 
+            <div class="modal-footer">
+              <button type="submit" [disabled]="metricsEditable" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink>Project Members</a>
+        <ng-template ngbNavContent>
+          <form [formGroup]="projectMembersForm" (ngSubmit)="onSubmit()" class="pl-3 pt-3">
 
+            <div class="form-group mb-3">
+              <li class="list-label"  *ngFor="let user of usersFormArray.controls; let i = index">
+                <label formArrayName="projectMembers">
+                  <input type="checkbox" [formControlName]="i">
+                  {{projectMembersData[i].username}}
+                </label>
+              </li>
+           </div>
 
           <div class="modal-footer">
-            <button type="submit" [disabled]="metricsEditable" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-        </form>
-      </ng-template>
-    </li>
-    <li ngbNavItem>
-      <a ngbNavLink>Project Members</a>
-      <ng-template ngbNavContent>
-      </ng-template>
-    </li>
-  </ul>
-  <div [ngbNavOutlet]="nav"></div>
+
+          </form>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav"></div>
   </div>
-
-
-
 
 
 </ng-template>
 
-<button *userRole="'operator'" class="edit btn btn-sm dropdown-item" (click)="open(content)" ngbDropdownItem> Settings</button>
+<button *userRole="'operator'" class="edit btn btn-sm dropdown-item" (click)="open(content)" ngbDropdownItem> Settings
+</button>

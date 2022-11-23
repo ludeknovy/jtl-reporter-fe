@@ -6,8 +6,8 @@ import { of } from "rxjs";
 import { ProjectApiService } from "../../../project-api.service";
 import { NotificationMessage } from "../../../notification/notification-messages";
 import { ProjectService } from "../../../project.service";
-import {UserService} from '../../../_services/user.service';
-import {Users} from '../../../_services/users.model';
+import { UserService } from "../../../_services/user.service";
+import { Users } from "../../../_services/users.model";
 
 @Component({
   selector: "app-project-settings",
@@ -164,7 +164,9 @@ export class ProjectSettingsComponent implements OnInit {
   }
 
   private mapProjectMembersToUsersData = (projectMembers: string[], users: Users[]) => {
-    this.projectMembersData = users.map(user => {
+    this.projectMembersData = users
+      .filter(user => user.role !== "admin")
+      .map(user => {
       const isMember = projectMembers.find(member => member === user.id)
       return {
         id: user.id,

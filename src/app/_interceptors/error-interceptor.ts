@@ -20,6 +20,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.authenticationService.logout();
         this.router.navigate(["login"]);
       }
+      if (err.status === 403) {
+        this.router.navigate(["forbidden"])
+      }
 
 
       const error = err.error.message || err.statusText;

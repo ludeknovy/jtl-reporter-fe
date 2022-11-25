@@ -125,7 +125,7 @@
           </form>
         </ng-template>
       </li>
-      <li ngbNavItem>
+      <li ngbNavItem *userRole="'admin'">
         <a ngbNavLink>Project Members</a>
         <ng-template ngbNavContent>
           <form [formGroup]="projectMembersForm" (ngSubmit)="onSubmit()" class="pl-3 pt-3">

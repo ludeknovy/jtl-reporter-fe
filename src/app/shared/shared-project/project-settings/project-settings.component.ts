@@ -100,10 +100,15 @@ export class ProjectSettingsComponent implements OnInit {
 
   open(content) {
     this.projectApiService.getProject(this.projectName).subscribe((r) => {
-      this.userService.fetchUsers().subscribe((users) => {
-        this.mapProjectMembersToUsersData(r.body.projectMembers, users)
-        this.addCheckboxes()
-      })
+      const { role } = JSON.parse(localStorage.getItem("currentUser"));
+
+      if (role === "admin") {
+        this.userService.fetchUsers().subscribe((users) => {
+          this.mapProjectMembersToUsersData(r.body.projectMembers, users)
+          this.addCheckboxes()
+        })
+      }
+
       this.createFormControls(r.body);
       this.createForm();
       this.isEditable();
@@ -119,7 +124,6 @@ export class ProjectSettingsComponent implements OnInit {
         .map((v, i) => v ? this.projectMembersData[i].id : null)
         .filter(v => v !== null);
 
-      console.log(projectMembers)
       const payload = {
         projectName: this.formControls.projectName.value,
         upsertScenario: this.formControls.scenarioUpsert.value,

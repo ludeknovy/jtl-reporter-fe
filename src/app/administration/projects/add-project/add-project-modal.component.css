@@ -13,3 +13,8 @@
   background-color: #5f6063 !important;
   border-radius: 0;
 }
+
+.list-label {
+  list-style-type:none;
+  margin-left: 1rem;
+}

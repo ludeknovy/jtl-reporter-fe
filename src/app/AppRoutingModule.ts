@@ -6,6 +6,7 @@ import { LoginComponent } from "./login/login.component";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgbTooltipModule } from "@ng-bootstrap/ng-bootstrap";
+import { ForbiddenComponent } from "./forbidden/forbidden.component";
 
 const routes: Routes = [
   { path: "dashboard", component: DashboardComponent, canActivate: [AuthGuard] },
@@ -15,6 +16,7 @@ const routes: Routes = [
     pathMatch: "full"
   },
   { path: "login", component: LoginComponent },
+  { path: "forbidden", component: ForbiddenComponent }
 ];
 
 // configures NgModule imports and exports

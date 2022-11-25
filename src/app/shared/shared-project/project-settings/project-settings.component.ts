@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { ProjectApiService } from "../../../project-api.service";
 import { NotificationMessage } from "../../../notification/notification-messages";
 import { ProjectService } from "../../../project.service";
+import { UserService } from "../../../_services/user.service";
+import { Users } from "../../../_services/users.model";
 
 @Component({
   selector: "app-project-settings",
@@ -15,6 +17,9 @@ import { ProjectService } from "../../../project.service";
 export class ProjectSettingsComponent implements OnInit {
 
   projectSettingsForm: FormGroup;
+  projectMembersForm: FormGroup;
+  projectMembers: FormArray;
+  projectMembersData
   metricsEditable;
   formControls = {
     virtualUsers: null,
@@ -30,6 +35,7 @@ export class ProjectSettingsComponent implements OnInit {
     networkSent: null,
     networkReceived: null,
     scenarioUpsert: null,
+    projectMembers: null,
   };
   @Input() projectName: string;
 
@@ -38,19 +44,18 @@ export class ProjectSettingsComponent implements OnInit {
     private projectApiService: ProjectApiService,
     private notification: NotificationMessage,
     private projectService: ProjectService,
+    private userService: UserService
   ) {
   }
 
-  ngOnInit() {
-    this.projectApiService.getProject(this.projectName).subscribe((r) => {
-      this.createFormControls(r.body);
-      this.createForm();
-      this.isEditable();
-    });
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  ngOnInit() {}
+
+  get usersFormArray() {
+    return this.projectMembersForm.controls.projectMembers as FormArray;
   }
 
   createFormControls(settings) {
-    console.log(settings)
     this.formControls.virtualUsers = new FormControl(settings.topMetricsSettings.virtualUsers, []);
     this.formControls.percentile = new FormControl(settings.topMetricsSettings.percentile, []);
     this.formControls.throughput = new FormControl(settings.topMetricsSettings.throughput, []);
@@ -68,6 +73,7 @@ export class ProjectSettingsComponent implements OnInit {
       Validators.maxLength(50),
       Validators.minLength(3),
     ]);
+    this.formControls.projectMembers = new FormArray([])
   }
 
   createForm() {
@@ -87,31 +93,56 @@ export class ProjectSettingsComponent implements OnInit {
       projectName: this.formControls.projectName,
       scenarioUpsert: this.formControls.scenarioUpsert,
     });
+    this.projectMembersForm = new FormGroup({
+      projectMembers: this.formControls.projectMembers,
+    })
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" });
+    this.projectApiService.getProject(this.projectName).subscribe((r) => {
+      const { role } = JSON.parse(localStorage.getItem("currentUser"));
+
+      if (role === "admin") {
+        this.userService.fetchUsers().subscribe((users) => {
+          this.mapProjectMembersToUsersData(r.body.projectMembers, users)
+          this.addCheckboxes()
+        })
+      }
+
+      this.createFormControls(r.body);
+      this.createForm();
+      this.isEditable();
+      this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" });
+    });
+
+
   }
 
   onSubmit() {
-    const payload = {
-      projectName: this.formControls.projectName.value,
-      upsertScenario: this.formControls.scenarioUpsert.value,
-      topMetricsSettings: {
-        virtualUsers: this.formControls.virtualUsers.value,
-        errorRate: this.formControls.errorRate.value,
-        percentile: this.formControls.percentile.value,
-        throughput: this.formControls.throughput.value,
-        network: this.formControls.network.value,
-        avgLatency: this.formControls.avgLatency.value,
-        avgResponseTime: this.formControls.avgResponseTime.value,
-        avgConnectionTime: this.formControls.avgConnectionTime.value,
-        errorCount: this.formControls.errorCount.value,
-        networkSent: this.formControls.networkSent.value,
-        networkReceived: this.formControls.networkReceived.value
-      }
-    };
     if (this.projectSettingsForm.valid) {
+      const projectMembers = this.projectMembersForm.value.projectMembers
+        .map((v, i) => v ? this.projectMembersData[i].id : null)
+        .filter(v => v !== null);
+
+      const payload = {
+        projectName: this.formControls.projectName.value,
+        upsertScenario: this.formControls.scenarioUpsert.value,
+        topMetricsSettings: {
+          virtualUsers: this.formControls.virtualUsers.value,
+          errorRate: this.formControls.errorRate.value,
+          percentile: this.formControls.percentile.value,
+          throughput: this.formControls.throughput.value,
+          network: this.formControls.network.value,
+          avgLatency: this.formControls.avgLatency.value,
+          avgResponseTime: this.formControls.avgResponseTime.value,
+          avgConnectionTime: this.formControls.avgConnectionTime.value,
+          errorCount: this.formControls.errorCount.value,
+          networkSent: this.formControls.networkSent.value,
+          networkReceived: this.formControls.networkReceived.value
+        },
+        projectMembers,
+      };
+
       this.projectApiService.updateProject(this.projectName, payload)
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
@@ -119,6 +150,7 @@ export class ProjectSettingsComponent implements OnInit {
           this.projectService.loadProjects();
           return this.projectApiService.setData(message);
         });
+      this.projectSettingsForm.reset()
       this.modalService.dismissAll();
     }
   }
@@ -133,6 +165,25 @@ export class ProjectSettingsComponent implements OnInit {
 
   onCheckboxChange() {
     this.isEditable();
+  }
+
+  private mapProjectMembersToUsersData = (projectMembers: string[], users: Users[]) => {
+    this.projectMembersData = users
+      .filter(user => user.role !== "admin")
+      .map(user => {
+      const isMember = projectMembers.find(member => member === user.id)
+      return {
+        id: user.id,
+        username: user.username,
+        isMember: !!isMember
+      }
+    })
+
+  }
+
+  private addCheckboxes() {
+    console.log(this.projectMembersData)
+    this.projectMembersData.forEach((projectMember) => this.usersFormArray.push(new FormControl(projectMember.isMember)));
   }
 
 }

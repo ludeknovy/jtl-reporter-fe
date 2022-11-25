@@ -8,7 +8,7 @@ import { ProjectsAdministrationComponent } from "./administration.component";
 import { AuthGuard } from "../../auth.guard";
 import { SharedModule } from "../../shared/shared.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedProjectModule } from "../../shared/shared-project/shared-project.module";
 import { TimeagoModule } from "ngx-timeago";
 import { UrlEncodePipeModule } from "src/app/_pipes/url-encode.module";
@@ -20,10 +20,10 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [ProjectsAdministrationComponent, AddNewProjectComponent, DeleteProjectComponent],
-  imports: [
-    CommonModule, RouterModule.forRoot(routes), NavigationModule, SharedModule, NgbModule, ReactiveFormsModule,
-    SharedProjectModule, TimeagoModule, UrlEncodePipeModule
-  ],
+    imports: [
+        CommonModule, RouterModule.forRoot(routes), NavigationModule, SharedModule, NgbModule, ReactiveFormsModule,
+        SharedProjectModule, TimeagoModule, UrlEncodePipeModule, FormsModule
+    ],
   exports: [ProjectsAdministrationComponent, AddNewProjectComponent, DeleteProjectComponent]
 })
 export class ProjectAdministrationModule { }

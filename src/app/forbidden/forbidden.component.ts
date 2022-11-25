@@ -7,8 +7,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ForbiddenComponent implements OnInit {
 
-  constructor() { }
-
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
   }
 

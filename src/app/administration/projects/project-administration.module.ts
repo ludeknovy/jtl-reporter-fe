@@ -8,7 +8,7 @@ import { ProjectsAdministrationComponent } from "./administration.component";
 import { AuthGuard } from "../../auth.guard";
 import { SharedModule } from "../../shared/shared.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SharedProjectModule } from "../../shared/shared-project/shared-project.module";
 import { TimeagoModule } from "ngx-timeago";
 import { UrlEncodePipeModule } from "src/app/_pipes/url-encode.module";

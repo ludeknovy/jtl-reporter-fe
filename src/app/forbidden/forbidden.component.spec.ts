@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ForbiddenComponent } from './forbidden.component';
+import { ForbiddenComponent } from "./forbidden.component";
 
-describe('ForbiddenComponent', () => {
+describe("ForbiddenComponent", () => {
   let component: ForbiddenComponent;
   let fixture: ComponentFixture<ForbiddenComponent>;
 
@@ -19,7 +19,7 @@ describe('ForbiddenComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

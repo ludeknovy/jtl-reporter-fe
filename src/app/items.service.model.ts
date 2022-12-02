@@ -1,3 +1,5 @@
+import {RequestStats} from './scenario.service.model';
+
 export interface ItemsListing {
   id: string;
   name: string;
@@ -47,6 +49,9 @@ export interface ItemDetail {
     }
   };
   topMetricsSettings: TopMetricsSettings;
+  userSettings: {
+    requestStats: RequestStats
+  }
 }
 
 interface TopMetricsSettings {

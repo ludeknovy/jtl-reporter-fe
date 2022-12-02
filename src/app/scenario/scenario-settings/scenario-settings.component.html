@@ -135,16 +135,16 @@
             </div>
 
             <div class="form-group">
-              <label for="exampleInputEmail1">90% percentil</label>
-              <input type="input" class="form-control" formControlName="thresholdPercentile">
+              <label for="scen-settings-p90">90% percentil</label>
+              <input type="input" id="scen-settings-p90" class="form-control" formControlName="thresholdPercentile">
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail1">Throughput</label>
-              <input type="text" class="form-control" formControlName="thresholdThroughput">
+              <label for="scen-settings-throughput">Throughput</label>
+              <input type="text" id="scen-settings-throughput" class="form-control" formControlName="thresholdThroughput">
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail1">Error rate</label>
-              <input type="text" class="form-control" formControlName="thresholdErrorRate">
+              <label for="scen-settings-error-rate">Error rate</label>
+              <input type="text" id="scen-settings-error-rate" class="form-control" formControlName="thresholdErrorRate">
             </div>
           </div>
 
@@ -277,6 +277,77 @@
 
       </ng-template>
     </li>
+
+    <li ngbNavItem>
+      <a ngbNavLink>Request statistics configuration</a>
+      <ng-template ngbNavContent>
+        <form [formGroup]="requestStatsSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
+          <div class="form-group form-settings pt-3">
+            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+              <small> The selected metrics will get pre-set in request stats table.</small></div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-samples"
+                     formControlName="samples">
+              <label class="custom-control-label" for="rs-samples">Samples</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-avg"
+                     formControlName="avg">
+              <label class="custom-control-label" for="rs-avg">Response Time [avg]</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-p90"
+                     formControlName="p90">
+              <label class="custom-control-label" for="rs-p90">Response Time [P90]</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-p95"
+                     formControlName="p95">
+              <label class="custom-control-label" for="rs-p95">Response Time [P95]</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-p99"
+                     formControlName="p99">
+              <label class="custom-control-label" for="rs-p99">Response Time [P99]</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-throughput"
+                     formControlName="throughput">
+              <label class="custom-control-label" for="rs-throughput">Throughput</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-min"
+                     formControlName="min">
+              <label class="custom-control-label" for="rs-min">Response Time [min]</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-max"
+                     formControlName="max">
+              <label class="custom-control-label" for="rs-max">Response Time [max]</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-network"
+                     formControlName="network">
+              <label class="custom-control-label" for="rs-network">Network</label>
+            </div>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="rs-error-rate"
+                     formControlName="errorRate">
+              <label class="custom-control-label" for="rs-error-rate">Error Rate</label>
+            </div>
+
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+
+      </ng-template>
+    </li>
+
+
   </ul>
   <div [ngbNavOutlet]="nav"></div>
 

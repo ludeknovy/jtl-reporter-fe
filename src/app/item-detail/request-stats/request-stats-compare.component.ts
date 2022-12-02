@@ -7,6 +7,8 @@ import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import html2canvas from "html2canvas";
 import { ExcelService } from "src/app/_services/excel.service";
+import {ItemDetailComponent} from '../item-detail.component';
+import {ItemDetail} from '../../items.service.model';
 
 
 
@@ -17,7 +19,7 @@ import { ExcelService } from "src/app/_services/excel.service";
 })
 export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
-  @Input() itemData;
+  @Input() itemData: ItemDetail;
   @Input() isAnonymous: boolean;
   @Input() params: ItemParams;
 
@@ -135,7 +137,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
           maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
           bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
           bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
-          bytesSentPerSecond:(_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond), 
+          bytesSentPerSecond:(_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
           n0: (_.n0 - labelToBeCompared.n0),
           n5: (_.n5 - labelToBeCompared.n5),
           n9: (_.n9 - labelToBeCompared.n9),
@@ -212,7 +214,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             n5: this.calculatePercDifference(_.n5, labelToBeCompared.n5),
             n9: this.calculatePercDifference(_.n9, labelToBeCompared.n9),
             bytesPerSecond: this.calculatePercDifference(_.bytesPerSecond, labelToBeCompared.bytesPerSecond),
-            bytesSentPerSecond:this.calculatePercDifference(_.bytesSentPerSecond, labelToBeCompared.bytesSentPerSecond), 
+            bytesSentPerSecond:this.calculatePercDifference(_.bytesSentPerSecond, labelToBeCompared.bytesSentPerSecond),
             errorRate: this.calculatePercDifference(_.errorRate, labelToBeCompared.errorRate),
             throughput: this.calculatePercDifference(_.throughput, labelToBeCompared.throughput)
           };
@@ -276,11 +278,18 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   downloadAsXLXS() {
-    const dataToBeSaved = this.labelsData.map((label) => 
+    const dataToBeSaved = this.labelsData.map((label) =>
       ({ label: label.label, samples: label.samples, "avg [ms]": label.avgResponseTime, "min [ms]": label.minResponseTime,
        "max [ms]": label.maxResponseTime, "P90 [ms]": label.n0, "P95 [ms]": label.n5, "P99 [ms]": label.n9,
         "reqs/s": label.throughput, "network [mbps]": roundNumberTwoDecimals(this.convertBytesToMbps(label.bytesPerSecond + label.bytesSentPerSecond)), "error rate [%]": label.errorRate
       }))
     this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`)
   }
+
+  displayColumn(value) {
+    if (typeof value === "undefined" || value === null) {
+      return true
+    }
+    return value
+}
 }

@@ -20,6 +20,7 @@ export class SettingsScenarioComponent implements OnInit {
 
   scenarioSettingsForm: FormGroup;
   labelTrendChartSettingsForm: FormGroup;
+  requestStatsSettingsForm: FormGroup;
   formControls = {
     scenarioName: null,
     analysisEnabled: null,
@@ -47,6 +48,18 @@ export class SettingsScenarioComponent implements OnInit {
     errorRate: null,
   }
   labelFilterControls = {}
+  requestStatsCormControls = {
+    samples: null,
+    avg: null,
+    min: null,
+    max: null,
+    p90: null,
+    p95: null,
+    p99: null,
+    throughput: null,
+    network: null,
+    errorRate: null,
+  }
 
 
   params;
@@ -159,6 +172,17 @@ export class SettingsScenarioComponent implements OnInit {
     this.labelTrendChartControls.p99 = new FormControl(settings.labelTrendChartSettings?.p99, []);
     this.labelTrendChartControls.errorRate = new FormControl(settings.labelTrendChartSettings?.errorRate, []);
 
+    this.requestStatsCormControls.samples = new FormControl(settings.userSettings.requestStats.samples, [Validators.required])
+    this.requestStatsCormControls.avg = new FormControl(settings.userSettings.requestStats.avg, [Validators.required])
+    this.requestStatsCormControls.min = new FormControl(settings.userSettings.requestStats.min, [Validators.required])
+    this.requestStatsCormControls.max = new FormControl(settings.userSettings.requestStats.max, [Validators.required])
+    this.requestStatsCormControls.p90 = new FormControl(settings.userSettings.requestStats.p90, [Validators.required])
+    this.requestStatsCormControls.p95 = new FormControl(settings.userSettings.requestStats.p95, [Validators.required])
+    this.requestStatsCormControls.p99 = new FormControl(settings.userSettings.requestStats.p99, [Validators.required])
+    this.requestStatsCormControls.throughput = new FormControl(settings.userSettings.requestStats.throughput, [Validators.required])
+    this.requestStatsCormControls.network = new FormControl(settings.userSettings.requestStats.network, [Validators.required])
+    this.requestStatsCormControls.errorRate = new FormControl(settings.userSettings.requestStats.errorRate, [Validators.required])
+
 
   }
 
@@ -188,21 +212,33 @@ export class SettingsScenarioComponent implements OnInit {
       p99: this.labelTrendChartControls.p99,
       errorRate: this.labelTrendChartControls.errorRate,
     })
+
+    this.requestStatsSettingsForm = new FormGroup({
+      samples: this.requestStatsCormControls.samples,
+      avg: this.requestStatsCormControls.avg,
+      min: this.requestStatsCormControls.min,
+      max: this.requestStatsCormControls.max,
+      p90: this.requestStatsCormControls.p90,
+      p95: this.requestStatsCormControls.p95,
+      p99: this.requestStatsCormControls.p99,
+      throughput: this.requestStatsCormControls.throughput,
+      network: this.requestStatsCormControls.network,
+      errorRate: this.requestStatsCormControls.errorRate
+    })
   }
 
   open(content) {
-    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" });
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "xl" });
   }
 
   onSubmit() {
-    if (this.scenarioSettingsForm.valid && this.labelFilters.valid && this.labelTrendChartSettingsForm.valid) {
+    if (this.scenarioSettingsForm.valid && this.labelFilters.valid && this.labelTrendChartSettingsForm.valid && this.requestStatsSettingsForm) {
 
       const {
         scenarioName, analysisEnabled,
         thresholdEnabled, thresholdErrorRate,
         thresholdPercentile, thresholdThroughput, deleteSamples, zeroErrorToleranceEnabled, keepTestRunsPeriod, generateShareToken, extraAggregations
       } = this.scenarioSettingsForm.value;
-      console.log(this.labelTrendChartSettingsForm.value)
       const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
@@ -219,7 +255,10 @@ export class SettingsScenarioComponent implements OnInit {
           percentile: parseFloat(thresholdPercentile)
         },
         labelFilterSettings: this.labelFilters.value.map(filter => ({ labelTerm: filter[0], operator: filter[1] })),
-        labelTrendChartSettings: this.labelTrendChartSettingsForm.value
+        labelTrendChartSettings: this.labelTrendChartSettingsForm.value,
+        userSettings: {
+          requestStats: this.requestStatsSettingsForm.value,
+        }
       };
 
       this.scenarioApiService.updateScenario(projectName, currentScenarioName, body)

@@ -7,8 +7,7 @@ import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import html2canvas from "html2canvas";
 import { ExcelService } from "src/app/_services/excel.service";
-import {ItemDetailComponent} from '../item-detail.component';
-import {ItemDetail} from '../../items.service.model';
+import { ItemDetail } from "../../items.service.model";
 
 
 

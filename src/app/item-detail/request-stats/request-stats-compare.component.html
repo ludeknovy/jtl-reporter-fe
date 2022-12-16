@@ -56,34 +56,34 @@
             <th scope="col" class="hd jtl-head-color">
               <mfDefaultSorter by="label">label</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)">
               <mfDefaultSorter by="samples">samples {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)">
               <mfDefaultSorter by="avgResponseTime">avg [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)">
               <mfDefaultSorter by="minResponseTime">min [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)">
               <mfDefaultSorter by="maxResponseTime">max [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)">
               <mfDefaultSorter by="n0">P90 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p95)">
               <mfDefaultSorter by="n5">P95 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p99)">
               <mfDefaultSorter by="n9">P99 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.throughput)">
               <mfDefaultSorter by="throughput">reqs/s {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
               <mfDefaultSorter by="bytes">network [{{ defaultUnit ? "mbps" : "%" }}]</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
@@ -95,33 +95,33 @@
         <tbody>
           <tr *ngFor="let _ of mf.data">
             <td>{{_.label}} </td>
-            <td><span
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)"><span
               [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.samples | number }}</span> </td>
-            <td><span
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)"><span
                 [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime | number: '1.0-2'}}</span>
             </td>
-            <td><span
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)"><span
                 [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime | number: '1.0-2'}}</span>
             </td>
-            <td><span
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)"><span
                 [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime | number: '1.0-2'}}</span>
             </td>
-            <td><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0 | number: '1.0-2'}}</span>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0 | number: '1.0-2'}}</span>
             </td>
-            <td><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5 | number: '1.0-2'}}</span>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p95)"><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5 | number: '1.0-2'}}</span>
             </td>
-            <td><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9 | number: '1.0-2'}}</span>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p99)"><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9 | number: '1.0-2'}}</span>
             </td>
-            <td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.throughput)">
               <span
                 [className]="comparedData ? _.throughput > 0 ?  'value-negative' : 'value-positive' : ''">{{_.throughput | number: '1.0-2'}}</span>
             </td>
-            <td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
               <span
                 [className]="comparedData ? convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) > 0 ? 'value-positive' : 'value-negative' : ''">{{convertBytesToMbps(_.bytesPerSecond
                 + _.bytesSentPerSecond) || 0 | number: '1.0-2' }}</span>
             </td>
-            <td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <span
                 [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate | number: '1.0-2'}}</span>
             </td>

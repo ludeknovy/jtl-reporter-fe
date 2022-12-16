@@ -41,9 +41,46 @@ describe("RequestStatsCompareComponent", () => {
     fixture = TestBed.createComponent(RequestStatsCompareComponent);
     component = fixture.componentInstance;
     component.itemData = {
+      environment: "",
+      extraPlotData: [],
+      hostname: "",
+      monitoring: { cpu: { data: [] } },
+      name: "",
+      note: "",
+      plot: undefined,
+      reportStatus: undefined,
+      topMetricsSettings: undefined,
+      zeroErrorToleranceEnabled: false,
       overview: {
-        maxVu: 100
+        maxVu: 100,
+        avgConnect: 100,
+        avgLatency: 10,
+        avgResponseTime: 99,
+        duration: 100,
+        endDate: "",
+        startDate: "",
+        errorCount: 0,
+        percentil: 10,
+        errorRate: 0,
+        throughput: 100
       },
+      analysisEnabled: false,
+      userSettings: {
+        requestStats: {
+          avg: true,
+          samples: true,
+          max: true,
+          p99: true,
+          p90: true,
+          throughput: true,
+          network: true,
+          errorRate: true,
+          min: true,
+          p95: true,
+        }
+      },
+      baseId: "",
+
       statistics: [{
         avgResponseTime: 10,
         bytes: 758,
@@ -59,9 +96,6 @@ describe("RequestStatsCompareComponent", () => {
         responseMessageFailures: [
           { responseMessage: "error", count: 1 }
         ],
-        statusCodes: [{
-          statusCode: 200, count: 1
-        }],
       }, {
         avgResponseTime: 10,
         bytes: 758,
@@ -77,9 +111,6 @@ describe("RequestStatsCompareComponent", () => {
         responseMessageFailures: [
           { responseMessage: "error", count: 1 }
         ],
-        statusCodes: [{
-          statusCode: 200, count: 1
-        }],
       },
       {
         avgResponseTime: 10,
@@ -96,9 +127,6 @@ describe("RequestStatsCompareComponent", () => {
         responseMessageFailures: [
           { responseMessage: "error", count: 1 }
         ],
-        statusCodes: [{
-          statusCode: 200, count: 1
-        }],
       }, ]
     };
     fixture.detectChanges();

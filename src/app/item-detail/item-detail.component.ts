@@ -28,7 +28,7 @@ import { ItemChartService } from "../_services/item-chart.service";
   providers: [DecimalPipe]
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
-  
+
   Highcharts: typeof Highcharts = Highcharts;
   itemData: ItemDetail = {
     overview: null,
@@ -48,7 +48,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     },
     analysisEnabled: null,
     zeroErrorToleranceEnabled: null,
-    topMetricsSettings: null
+    topMetricsSettings: null,
+    userSettings: null,
   };
   overallChartOptions;
   updateChartFlag = false;
@@ -126,7 +127,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       if (this.chartLines) {
         const oveallChartSeries = Array.from(this.chartLines?.overall?.values());
         this.overallChartOptions.series = JSON.parse(JSON.stringify(oveallChartSeries))
-        
+
       }
 
       this.updateChartFlag = true

@@ -125,8 +125,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.chartLines = value.chartLines;
 
       if (this.chartLines) {
-        const oveallChartSeries = Array.from(this.chartLines?.overall?.values());
-        this.overallChartOptions.series = JSON.parse(JSON.stringify(oveallChartSeries))
+        const overallChartSeries = Array.from(this.chartLines?.overall?.values());
+        this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries))
 
       }
 

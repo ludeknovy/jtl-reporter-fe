@@ -10,7 +10,6 @@ import { ExcelService } from "src/app/_services/excel.service";
 import { ItemDetail } from "../../items.service.model";
 
 
-
 @Component({
   selector: "app-request-stats-compare",
   templateUrl: "./request-stats-compare.component.html",
@@ -136,7 +135,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
           maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
           bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
           bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
-          bytesSentPerSecond:(_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
+          bytesSentPerSecond: (_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
           n0: (_.n0 - labelToBeCompared.n0),
           n5: (_.n5 - labelToBeCompared.n5),
           n9: (_.n9 - labelToBeCompared.n9),
@@ -175,11 +174,11 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       this.params.projectName,
       this.params.scenarioName,
       id).subscribe(_ => this.itemToCompare({
-        statistics: _.statistics,
-        maxVu: _.overview.maxVu,
-        environment: _.environment,
-        id
-      }));
+      statistics: _.statistics,
+      maxVu: _.overview.maxVu,
+      environment: _.environment,
+      id
+    }));
   }
 
   showComparisonWarnings() {
@@ -202,7 +201,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       this.comparedData = this.labelsData.map((_) => {
         const labelToBeCompared = this.comparingData.statistics.find((__) => __.label === _.label);
         if (labelToBeCompared) {
-          console.log(_.bytes, labelToBeCompared)
+          console.log(_.bytes, labelToBeCompared);
           return {
             ..._,
             avgResponseTime: this.calculatePercDifference(_.avgResponseTime, labelToBeCompared.avgResponseTime),
@@ -213,7 +212,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             n5: this.calculatePercDifference(_.n5, labelToBeCompared.n5),
             n9: this.calculatePercDifference(_.n9, labelToBeCompared.n9),
             bytesPerSecond: this.calculatePercDifference(_.bytesPerSecond, labelToBeCompared.bytesPerSecond),
-            bytesSentPerSecond:this.calculatePercDifference(_.bytesSentPerSecond, labelToBeCompared.bytesSentPerSecond),
+            bytesSentPerSecond: this.calculatePercDifference(_.bytesSentPerSecond, labelToBeCompared.bytesSentPerSecond),
             errorRate: this.calculatePercDifference(_.errorRate, labelToBeCompared.errorRate),
             throughput: this.calculatePercDifference(_.throughput, labelToBeCompared.throughput)
           };
@@ -277,18 +276,35 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   downloadAsXLXS() {
-    const dataToBeSaved = this.labelsData.map((label) =>
-      ({ label: label.label, samples: label.samples, "avg [ms]": label.avgResponseTime, "min [ms]": label.minResponseTime,
-       "max [ms]": label.maxResponseTime, "P90 [ms]": label.n0, "P95 [ms]": label.n5, "P99 [ms]": label.n9,
-        "reqs/s": label.throughput, "network [mbps]": roundNumberTwoDecimals(this.convertBytesToMbps(label.bytesPerSecond + label.bytesSentPerSecond)), "error rate [%]": label.errorRate
-      }))
-    this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`)
+    const { requestStats = {
+      samples: true,
+      avg: true, min: true,
+      max: true,  p90: true, p95: true,
+      p99: true, throughput: true, network: true,
+      errorRate: true }
+    } = this.itemData.userSettings;
+    const dataToBeSaved = this.labelsData.map((label) => {
+      return {
+        label: label.label,
+        ...(requestStats.samples && { samples: label.samples }),
+        ...(requestStats.avg && { "avg [ms]": label.avgResponseTime }),
+        ...(requestStats.min && { "min [ms]": label.minResponseTime }),
+        ...(requestStats.max && { "max [ms]": label.maxResponseTime }),
+        ...(requestStats.p90 && { "P90 [ms]": label.n0 }),
+        ...(requestStats.p95 && { "P95 [ms]": label.n5 }),
+        ...(requestStats.p99 && { "P99 [ms]": label.n9 }),
+        ...(requestStats.throughput && { "reqs/s": label.throughput }),
+        ...(requestStats.network && { "network [mbps]": roundNumberTwoDecimals(this.convertBytesToMbps(label.bytesPerSecond + label.bytesSentPerSecond)) }),
+        ...(requestStats.errorRate && { "error rate [%]": label.errorRate }),
+      };
+    });
+    this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`);
   }
 
   displayColumn(value) {
     if (typeof value === "undefined" || value === null) {
-      return true
+      return true;
     }
-    return value
-}
+    return value;
+  }
 }

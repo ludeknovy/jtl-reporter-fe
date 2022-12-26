@@ -17,10 +17,13 @@ export class SettingsScenarioComponent implements OnInit {
 
   @Output() scenarioNameChangeEvent = new EventEmitter<string>();
 
+  active = "general"
 
   scenarioSettingsForm: FormGroup;
   labelTrendChartSettingsForm: FormGroup;
   requestStatsSettingsForm: FormGroup;
+  labelFiltersForm: FormGroup
+
   formControls = {
     scenarioName: null,
     analysisEnabled: null,
@@ -225,6 +228,10 @@ export class SettingsScenarioComponent implements OnInit {
       network: this.requestStatsCormControls.network,
       errorRate: this.requestStatsCormControls.errorRate
     })
+    this.labelFiltersForm = new FormGroup({
+
+    })
+
   }
 
   open(content) {

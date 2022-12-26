@@ -9,7 +9,7 @@
 
   <div class="modal-body">
 
-    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs" orientation="vertical">
       <li ngbNavItem>
         <a ngbNavLink>General</a>
         <ng-template ngbNavContent>
@@ -131,7 +131,7 @@
           <form [formGroup]="projectMembersForm" (ngSubmit)="onSubmit()" class="pl-3 pt-3">
 
             <div class="form-group mb-3">
-              <li class="list-label"  *ngFor="let user of usersFormArray.controls; let i = index">
+              <li *ngFor="let user of usersFormArray.controls; let i = index" class="list-label">
                 <label formArrayName="projectMembers">
                   <input type="checkbox" [formControlName]="i">
                   {{projectMembersData[i].username}}

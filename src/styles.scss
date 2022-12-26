@@ -41,10 +41,12 @@
 .text-belize {
   color: #2980b9;
 }
+
 .samaritane {
   background-color: #3c6382;
   color: white;
 }
+
 .text-samaritane {
   color: #3c6382;
 }
@@ -102,29 +104,31 @@ a:hover {
 }
 
 .jtl-head-color {
-    color: #000000b5;
+  color: #000000b5;
 }
 
 .jtl-dropdown-control-menu {
   box-shadow: #0c0c0d30 0px 5px 12px 4px;
   border: none;
 }
+
 .jtl-control-menu::after {
-  display:none;
+  display: none;
 }
 
 
 .jtl-no-glow,
-.jtl-no-glow:active{
-    box-shadow:none !important;
-    outline:0px !important;
+.jtl-no-glow:active {
+  box-shadow: none !important;
+  outline: 0px !important;
 }
 
 .jtl-btn-light {
   color: #4b7cf3;
   background-color: #f2f4f8;
 }
-.jtl-btn-light:hover{
+
+.jtl-btn-light:hover {
   background-color: #dee3ed;
   border-color: #dee3ed;
   color: #4b7cf3;
@@ -134,15 +138,17 @@ a:hover {
   color: white;
   background-color: #4b7cf3;
 }
-.jtl-btn-primary:hover{
+
+.jtl-btn-primary:hover {
   background-color: #5f88ee;
   color: white;
 }
 
-.jtl-a-primary{
+.jtl-a-primary {
   color: #4b7cf3 !important;
 }
-.jtl-a-primary:hover{
+
+.jtl-a-primary:hover {
   color: #5f88ee !important;
 
 }
@@ -155,7 +161,7 @@ a:hover {
   border-bottom: none;
 }
 
-.hamburger-menu:hover{
+.hamburger-menu:hover {
   color: #4b7cf3;
 }
 
@@ -180,7 +186,7 @@ a:hover {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.label-modal .modal-dialog{
+.label-modal .modal-dialog {
   max-width: 90% !important;
 }
 
@@ -193,4 +199,15 @@ a:hover {
 
 input.ng-invalid.ng-touched {
   border-color: #dc3545;
+}
+
+.jtl-nav-link {
+  font-weight: 350;
+  color: #24292f;
+}
+
+.jtl-nav-link.active {
+  font-weight: 500;
+  color: black;
+  border-left: 4px solid #4b7cf3;
 }

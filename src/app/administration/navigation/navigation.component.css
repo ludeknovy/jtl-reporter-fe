@@ -1,11 +1,4 @@
-.active-link {
-    color: #4b7cf3;
-    border-bottom: 2px solid #4b7cf3;
-}
 
-.nav-item :not(.active-link):hover {
-  border-bottom: 2px solid grey;
-}
 
 .nav-item .btn {
   border-radius: 0;

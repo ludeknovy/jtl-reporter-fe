@@ -4,3 +4,29 @@
   border-radius: 0;
   padding-right: 5px;
 }
+
+
+
+.administration-navigation {
+  padding-left: 120px;
+  padding-top: 20px;
+  padding-right: 30px;
+  min-width: fit-content;
+}
+
+@media (max-width: 1550px) {
+  .administration-navigation  {
+    padding-left: 80px;
+  }
+}
+
+@media (max-width: 1350px) {
+  .administration-navigation  {
+    padding-left: 60px;
+  }
+}
+@media (max-width: 1150px) {
+  .administration-navigation {
+    padding-left: 30px;
+  }
+}

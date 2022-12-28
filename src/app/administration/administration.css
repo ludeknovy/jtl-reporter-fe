@@ -3,8 +3,28 @@
   padding-top: 20px;
   min-height: 100%;
   width: 100%;
-  margin-left: -5px;
+  margin-left: 30px;
+  padding-right: 150px;
 }
+
+
+@media (max-width: 1550px) {
+  .administration  {
+    padding-left: 80px;
+  }
+}
+
+@media (max-width: 1350px) {
+  .administration  {
+    padding-left: 60px;
+  }
+}
+@media (max-width: 1150px) {
+  .administration {
+    padding-left: 30px;
+  }
+}
+
 
 .items {
   padding-bottom: 1px;
@@ -76,4 +96,16 @@ tbody tr:hover {
 
 .settings-icon {
   font-size: 14px;
+}
+
+.inline-controller {
+  float: right;
+}
+
+.navbar-collapse {
+  align-items: self-start !important;
+}
+
+.card-header {
+  border-bottom: none;
 }

@@ -1,67 +1,68 @@
-<app-control-panel>
-  <app-administrate-navigation></app-administrate-navigation>
-  <ul class="navbar-nav mr-auto">
-  </ul>
-  <app-add-project [topMenu]="false"></app-add-project>
-</app-control-panel>
-<div class="administration content-container">
+
+<div class="administration">
   <div class="container-fluid">
     <div class="row">
       <div class="col">
         <div class="card card-content card-shadow">
+          <h6 class="card-header bg-transparent">Projects <span class="inline-controller">  <app-add-project
+            [topMenu]="false"></app-add-project>
+</span></h6>
           <div class="card-body" *ngIf="projects$ | async; let projects">
             <div class="card-body">
               <div class="table-responsive" *ngIf="projects$ | async; let projects">
                 <table class="table items jtl-table">
                   <thead>
-                    <tr>
-                      <th scope="col" class="jtl-head">project name</th>
-                      <th scope="col" class="jtl-head">number of launches</th>
-                      <th scope="col" class="jtl-head">number of scenarios</th>
-                      <th scope="col" class="jtl-head">last run</th>
-                      <th scope="col" class="jtl-head"></th>
-                    </tr>
+                  <tr>
+                    <th scope="col" class="jtl-head">project name</th>
+                    <th scope="col" class="jtl-head">number of launches</th>
+                    <th scope="col" class="jtl-head">number of scenarios</th>
+                    <th scope="col" class="jtl-head">last run</th>
+                    <th scope="col" class="jtl-head"></th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr *ngIf="projects.length === 0">
-                      <td></td>
-                      <td></td>
-                      <td class="text-muted">No data...</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr *ngFor="let _ of projects">
-                      <td class="project-name">
-                        <span>{{_.projectName}}</span>
-                      </td>
-                      <td>
-                        {{_.itemCount}}
-                      </td>
-                      <td>
-                        {{_.scenarioCount}}
-                      </td>
-                      <td *ngIf="! _.latestRun">
-                        never run
-                      </td>
-                      <td *ngIf="_.latestRun" class="latest-run">
-                        <span>{{_.latestRun | timeago}}</span>
-                      </td>
-                      <td class="edit text-right">
-                        <div class="btn-group mr-3">
-                          <div display="dynamic" container="body" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
-                               aria-label="Button group with nested dropdown">
-                            <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i class="fas fa-ellipsis-h"></i></button>
-                            <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
-                              <app-project-settings [projectName]="_.projectName | urlEncode"></app-project-settings>
+                  <tr *ngIf="projects.length === 0">
+                    <td></td>
+                    <td></td>
+                    <td class="text-muted">No data...</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr *ngFor="let _ of projects">
+                    <td class="project-name">
+                      <span>{{_.projectName}}</span>
+                    </td>
+                    <td>
+                      {{_.itemCount}}
+                    </td>
+                    <td>
+                      {{_.scenarioCount}}
+                    </td>
+                    <td *ngIf="! _.latestRun">
+                      never run
+                    </td>
+                    <td *ngIf="_.latestRun" class="latest-run">
+                      <span>{{_.latestRun | timeago}}</span>
+                    </td>
+                    <td class="edit text-right">
+                      <div class="btn-group mr-3">
+                        <div display="dynamic" container="body" [placement]="['bottom-right', 'bottom-left']"
+                             class="btn-group" ngbDropdown role="group"
+                             aria-label="Button group with nested dropdown">
+                          <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
+                            class="fas fa-ellipsis-h"></i></button>
+                          <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
+                            <app-project-settings [projectName]="_.projectName | urlEncode"></app-project-settings>
 
-                              <app-delete-project [projectData]="{ projectName: _.projectName | urlEncode }"></app-delete-project>
-
-                            </div>
+                            <app-delete-project
+                              [projectData]="{ projectName: _.projectName | urlEncode }"></app-delete-project>
 
                           </div>
+
                         </div>
-                      </td>
-                    </tr>
+                      </div>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -73,3 +74,4 @@
 
   </div>
 </div>
+

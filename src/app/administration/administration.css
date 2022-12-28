@@ -11,17 +11,21 @@
 @media (max-width: 1550px) {
   .administration  {
     padding-left: 80px;
+    padding-right: 115px;
   }
 }
 
 @media (max-width: 1350px) {
   .administration  {
     padding-left: 60px;
+    padding-right: 95px;
+
   }
 }
 @media (max-width: 1150px) {
   .administration {
     padding-left: 30px;
+    padding-right: 65px;
   }
 }
 

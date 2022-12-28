@@ -4,6 +4,7 @@ import { RoleDirective } from "src/app/_directives/role.directive";
 
 
 import { NavigationComponent } from "./navigation.component";
+import { NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 
 describe("NavigationComponent", () => {
   let component: NavigationComponent;
@@ -11,7 +12,7 @@ describe("NavigationComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, NgbNavModule],
       declarations: [ NavigationComponent, RoleDirective ]
     })
     .compileComponents();

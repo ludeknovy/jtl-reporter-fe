@@ -17,7 +17,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [ApiKeysComponent, AddTokenComponent, DeleteTokenComponent],
   imports: [
-    CommonModule, RouterModule.forRoot(routes), SharedModule, NavigationModule, ReactiveFormsModule
+    CommonModule, RouterModule.forRoot(routes), SharedModule, ReactiveFormsModule
   ],
   exports: [ApiKeysComponent, AddTokenComponent, DeleteTokenComponent]
 })

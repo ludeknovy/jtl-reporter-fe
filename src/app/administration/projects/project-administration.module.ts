@@ -21,7 +21,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [ProjectsAdministrationComponent, AddNewProjectComponent, DeleteProjectComponent],
     imports: [
-        CommonModule, RouterModule.forRoot(routes), NavigationModule, SharedModule, NgbModule, ReactiveFormsModule,
+        CommonModule, RouterModule.forRoot(routes), SharedModule, NgbModule, ReactiveFormsModule,
         SharedProjectModule, TimeagoModule, UrlEncodePipeModule, FormsModule
     ],
   exports: [ProjectsAdministrationComponent, AddNewProjectComponent, DeleteProjectComponent]

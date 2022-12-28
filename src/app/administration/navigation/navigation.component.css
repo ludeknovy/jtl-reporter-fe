@@ -1,13 +1,32 @@
-.active-link {
-    color: #4b7cf3;
-    border-bottom: 2px solid #4b7cf3;
-}
 
-.nav-item :not(.active-link):hover {
-  border-bottom: 2px solid grey;
-}
 
 .nav-item .btn {
   border-radius: 0;
   padding-right: 5px;
+}
+
+
+
+.administration-navigation {
+  padding-left: 120px;
+  padding-top: 20px;
+  padding-right: 30px;
+  min-width: fit-content;
+}
+
+@media (max-width: 1550px) {
+  .administration-navigation  {
+    padding-left: 80px;
+  }
+}
+
+@media (max-width: 1350px) {
+  .administration-navigation  {
+    padding-left: 60px;
+  }
+}
+@media (max-width: 1150px) {
+  .administration-navigation {
+    padding-left: 30px;
+  }
 }

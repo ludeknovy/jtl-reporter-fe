@@ -182,7 +182,6 @@ export class ProjectSettingsComponent implements OnInit {
   }
 
   private addCheckboxes() {
-    console.log(this.projectMembersData)
     this.projectMembersData.forEach((projectMember) => this.usersFormArray.push(new FormControl(projectMember.isMember)));
   }
 

@@ -1,19 +1,40 @@
-<ul class="navbar-nav mr-auto">
-  <li class="nav-item">
-    <a class="btn btn-sm btn-block text-left jtl-no-glow" [routerLink]="['/administration/projects']"
-      [routerLinkActive]="['active-link']" *userRole="'operator'">Projects</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-sm btn-block text-left jtl-no-glow" [routerLink]="['/administration/api-keys']"
-      [routerLinkActive]="['active-link']" *userRole="'operator'">Api keys</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-sm btn-block text-left jtl-no-glow" [routerLink]="['/administration/users']"
-      [routerLinkActive]="['active-link']" *userRole="'admin'">Users</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-sm btn-block text-left jtl-no-glow" [routerLink]="['/administration/my-profile']"
-      [routerLinkActive]="['active-link']" >My profile</a>
-  </li>
-</ul>
+<div class="d-flex">
+
+  <ul ngbNav #nav="ngbNav" class="administration-navigation" orientation="vertical" [(activeId)]="active">
+
+    <li ngbNavItem [ngbNavItem]="'projects'">
+      <a ngbNavLink class="jtl-nav-link"
+         [routerLinkActive]="['active-link']"
+         *userRole="'operator'">Projects</a>
+        <ng-template ngbNavContent><app-administration></app-administration></ng-template>
+
+    </li>
+
+    <li [ngbNavItem]="'apiKeys'">
+      <a ngbNavLink class="jtl-nav-link"
+         [routerLinkActive]="['active-link']"
+         *userRole="'operator'">API Keys</a>
+      <ng-template ngbNavContent><app-api-keys></app-api-keys></ng-template>
+
+
+    </li>
+    <li [ngbNavItem]="'users'">
+      <a ngbNavLink class="jtl-nav-link"
+         [routerLinkActive]="['active-link']" *userRole="'admin'">Users</a>
+      <ng-template ngbNavContent><app-users></app-users></ng-template>
+
+
+    </li>
+    <li [ngbNavItem]="'myProfile'">
+      <a ngbNavLink class="jtl-nav-link"
+         [routerLinkActive]="['active-link']">My profile</a>
+      <ng-template ngbNavContent><app-my-profile></app-my-profile></ng-template>
+
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="ms-4">
+
+  </div>
+
+</div>
 

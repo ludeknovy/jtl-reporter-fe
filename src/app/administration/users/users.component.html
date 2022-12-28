@@ -1,52 +1,50 @@
-<app-control-panel>
-  <app-administrate-navigation></app-administrate-navigation>
-  <ul class="navbar-nav mr-auto">
-  </ul>
-  <app-add-user></app-add-user>
-</app-control-panel>
-<div class="administration content-container">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col">
-        <div class="card card-content card-shadow">
-          <div class="card-body" *ngIf="users$ | async; let users">
-            <div class="card-body">
+
+  <div class="administration">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="card card-content card-shadow">
+            <h6 class="card-header bg-transparent">Users <span class="inline-controller">  <app-add-user></app-add-user>
+</span></h6>
+
+            <div class="card-body" *ngIf="users$ | async; let users">
+              <div class="card-body">
                 <div class="table-responsive" *ngIf="users$ | async; let users">
                   <table class="table items jtl-table">
                     <thead>
-                      <tr>
-                        <th scope="col" class="jtl-head">username</th>
-                        <th scope="col" class="jtl-head">create date</th>
-                        <th scope="col" class="jtl-head">role</th>
-                        <th scope="col" class="jtl-head"># of tokens</th>
-                        <th scope="col" class="jtl-head"></th>
-                      </tr>
+                    <tr>
+                      <th scope="col" class="jtl-head">username</th>
+                      <th scope="col" class="jtl-head">create date</th>
+                      <th scope="col" class="jtl-head">role</th>
+                      <th scope="col" class="jtl-head"># of tokens</th>
+                      <th scope="col" class="jtl-head"></th>
+                    </tr>
                     </thead>
                     <tbody>
-                      <tr *ngIf="users.length === 0">
-                        <td></td>
-                        <td></td>
-                        <td class="text-muted">No users...</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr *ngFor="let _ of users">
-                        <td>
-                          <span>{{_.username}}</span>
-                        </td>
-                        <td>
-                          <span>{{_.createDate | date:'d. L. yyyy H:mm'}}</span>
-                        </td>
-                        <td>
-                          <span>{{_.role}}</span>
-                        </td>
-                        <td>
-                          <span>{{_.tokenCount}}</span>
-                        </td>
-                        <td class="edit text-right">
-                          <app-delete-user [deleteUserInput]="{ username: _.username, tokenCount: _.tokenCount, userId: _.id}"></app-delete-user>
-                        </td>
-                      </tr>
+                    <tr *ngIf="users.length === 0">
+                      <td></td>
+                      <td></td>
+                      <td class="text-muted">No users...</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr *ngFor="let _ of users">
+                      <td>
+                        <span>{{_.username}}</span>
+                      </td>
+                      <td>
+                        <span>{{_.createDate | date:'d. L. yyyy H:mm'}}</span>
+                      </td>
+                      <td>
+                        <span>{{_.role}}</span>
+                      </td>
+                      <td>
+                        <span>{{_.tokenCount}}</span>
+                      </td>
+                      <td class="edit text-right">
+                        <app-delete-user [deleteUserInput]="{ username: _.username, tokenCount: _.tokenCount, userId: _.id}"></app-delete-user>
+                      </td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>
@@ -58,3 +56,4 @@
 
     </div>
   </div>
+

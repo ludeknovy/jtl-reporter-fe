@@ -101,8 +101,9 @@ export class PerformanceAnalysisComponent implements OnInit {
       const { overallThroughput, threads } = this.itemData.plot;
       const { maxVu, throughput } = this.itemData.overview;
       const rampUpIndex = threads.map(_ => _[1]).indexOf(maxVu);
+      const rampDownIndex = threads.map(_ => _[1]).lastIndexOf(maxVu)
 
-      const throughputValues = overallThroughput.data.slice(rampUpIndex, -2).map(_ => _[1]);
+      const throughputValues = overallThroughput.data.slice(rampUpIndex, rampDownIndex).map(_ => _[1]);
       const minThroughput = Math.min(...throughputValues);
       const minThroughputIndex = throughputValues.indexOf(minThroughput);
       const maxBandIndex = throughputValues.length;

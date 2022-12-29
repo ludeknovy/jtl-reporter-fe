@@ -125,8 +125,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.chartLines = value.chartLines;
 
       if (this.chartLines) {
-        const oveallChartSeries = Array.from(this.chartLines?.overall?.values());
-        this.overallChartOptions.series = JSON.parse(JSON.stringify(oveallChartSeries))
+        const overallChartSeries = Array.from(this.chartLines?.overall?.values());
+        this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries))
 
       }
 
@@ -197,11 +197,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
     if (!this.toggleThroughputBandFlag) {
       element.textContent = "Hide in chart";
-      this.overallChartOptions.xAxis.plotBands = {
-        color: "#e74c3c4f",
-        from: perfAnalysis.throughputVariability.bandValues[0],
-        to: perfAnalysis.throughputVariability.bandValues[1]
-      };
       this.toggleThroughputBandFlag = true;
     } else {
       element.textContent = "Display in chart";

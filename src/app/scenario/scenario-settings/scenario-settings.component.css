@@ -14,3 +14,9 @@
 table {
   margin-top: 10px;
 }
+
+
+.nav-item .btn {
+  border-radius: 0;
+  padding-right: 5px;
+}

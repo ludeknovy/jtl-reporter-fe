@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { AddUserComponent } from "./add-user/add-user.component";
 import { DeleteUserComponent } from "./delete-user/delete-user.component";
-import { NavigationModule } from "../navigation/navigation.module";
 import { SharedModule } from "../../shared/shared.module";
 import { UsersComponent } from "./users.component";
 import { AuthGuard } from "../../auth.guard";
@@ -18,7 +17,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [UsersComponent],
   imports: [
-    CommonModule, RouterModule.forRoot(routes), SharedModule, NavigationModule, AddUserModule, DeleteUserModule,
+    CommonModule, RouterModule.forRoot(routes), SharedModule, AddUserModule, DeleteUserModule,
   ],
   exports: [UsersComponent, AddUserComponent, DeleteUserComponent]
 })

@@ -1,52 +1,49 @@
-<app-control-panel>
-    <app-administrate-navigation></app-administrate-navigation>
-  <ul class="navbar-nav mr-auto">
-  </ul>
-  <app-add-token></app-add-token>
-</app-control-panel>
-<div class="administration content-container">
+<div class="administration">
   <div class="container-fluid">
     <div class="row">
       <div class="col">
         <div class="card card-content card-shadow">
+          <h6 class="card-header bg-transparent">API Keys <span class="inline-controller"><app-add-token></app-add-token></span>
+          </h6>
+
           <div class="card-body" *ngIf="apiKeys$ | async; let apiKeys">
-            <div class="card-body">
+            <div class="card-body w-100">
               <div class="table-responsive" *ngIf="apiKeys$ | async; let apiKeys">
                 <table class="table items jtl-table">
                   <thead>
-                    <tr>
-                      <th scope="col" class="jtl-head">token</th>
-                      <th scope="col" class="jtl-head">description</th>
-                      <th scope="col" class="jtl-head">created at</th>
-                      <th scope="col" class="jtl-head">created by</th>
-                      <th scope="col" class="jtl-head"></th>
-                    </tr>
+                  <tr>
+                    <th scope="col" class="jtl-head">token</th>
+                    <th scope="col" class="jtl-head">description</th>
+                    <th scope="col" class="jtl-head">created at</th>
+                    <th scope="col" class="jtl-head">created by</th>
+                    <th scope="col" class="jtl-head"></th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr *ngIf="apiKeys.length === 0">
-                      <td></td>
-                      <td></td>
-                      <td class="text-muted">No api tokens...</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr *ngFor="let _ of apiKeys">
-                      <td>
-                        <span>{{_.token}}</span>
-                      </td>
-                      <td>
-                        {{_.description}}
-                      </td>
-                      <td>
-                        {{_.createDate | date:'d. L. yyyy H:mm'}}
-                      </td>
-                      <td>
-                        {{_.createdBy}}
-                      </td>
-                      <td class="edit text-right">
-                        <app-delete-token [tokenInput]="_.id"></app-delete-token>
-                      </td>
-                    </tr>
+                  <tr *ngIf="apiKeys.length === 0">
+                    <td></td>
+                    <td></td>
+                    <td class="text-muted">No api tokens...</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr *ngFor="let _ of apiKeys">
+                    <td>
+                      <span>{{_.token}}</span>
+                    </td>
+                    <td>
+                      {{_.description}}
+                    </td>
+                    <td>
+                      {{_.createDate | date:'d. L. yyyy H:mm'}}
+                    </td>
+                    <td>
+                      {{_.createdBy}}
+                    </td>
+                    <td class="edit text-right">
+                      <app-delete-token [tokenInput]="_.id"></app-delete-token>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -58,3 +55,6 @@
 
   </div>
 </div>
+
+
+

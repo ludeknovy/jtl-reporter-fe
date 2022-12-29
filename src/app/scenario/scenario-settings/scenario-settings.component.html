@@ -9,187 +9,203 @@
   <div class="modal-body">
 
 
-  <ul ngbNav #nav="ngbNav" class="nav-tabs">
-    <li ngbNavItem>
-      <a ngbNavLink>General</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="scenarioSettingsForm" class="form-settings" (ngSubmit)="onSubmit()" class="pl-3">
-          <div class="form-group pt-3">
-            <label for="scenarioName">Scenario name <span class="text-danger">*</span></label>
-            <input type="text" id="scenarioName" class="form-control" formControlName="scenarioName">
-            <div class="form-control-feedback" *ngIf="formControls.scenarioName.errors && (formControls.scenarioName.dirty || formControls.scenarioName.touched)">
-              <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.required">Name required</p>
-              <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.maxlength">Name is too long.</p>
-              <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.minlength">Name is too short.</p>
-            </div>
-          </div>
-
-          <hr class="mt-4">
-
-
-          <div class="form-sub">
-            <div class="form-group">
-              <h6>Test runs retention</h6>
-              <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-                <small> How long to keep test runs. All related data will be deleted as well.</small></div>
-              <label for="keep-tests-period" class="form-label">Keep tests</label>
-              <select class="custom-select" id="keep-tests-period" formControlName="keepTestRunsPeriod">
-                <option *ngFor="let keepTestRunPeriod of keepTestRunPeriods" [ngValue]="keepTestRunPeriod.period">{{ keepTestRunPeriod.description }}</option>
-              </select>
-            </div>
-          </div>
-
-          <hr class="mt-4">
-
-
-          <div class="form-sub">
-            <h6>Performance analysis</h6>
-            <div class="form-group">
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="analysisSwitch" formControlName="analysisEnabled">
-                <label class="custom-control-label" for="analysisSwitch">Enabled</label>
+    <div class="d-flex">
+      <ul ngbNav #nav="ngbNav" orientation="vertical" [(activeId)]="active">
+        <li ngbNavItem="general">
+          <a ngbNavLink class="jtl-nav-link"> General</a>
+          <ng-template ngbNavContent>
+            <form [formGroup]="scenarioSettingsForm" class="form-settings" (ngSubmit)="onSubmit()">
+              <div class="form-group pt-3">
+                <label for="scenarioName">Scenario name <span class="text-danger">*</span></label>
+                <input type="text" id="scenarioName" class="form-control" formControlName="scenarioName">
+                <div class="form-control-feedback"
+                     *ngIf="formControls.scenarioName.errors && (formControls.scenarioName.dirty || formControls.scenarioName.touched)">
+                  <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.required">Name required</p>
+                  <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.maxlength">Name is too
+                    long.</p>
+                  <p class="form-validation-error" *ngIf="formControls.scenarioName.errors.minlength">Name is too
+                    short.</p>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <hr class="mt-4">
+              <hr class="mt-4">
 
 
-          <div class="form-sub">
-            <h6>Zero error tolerance</h6>
-            <div class="form-group">
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="zeroErrorSwitch"
-                       formControlName="zeroErrorToleranceEnabled">
-                <label class="custom-control-label" for="zeroErrorSwitch">Enabled</label>
+              <div class="form-sub">
+                <div class="form-group">
+                  <h6>Test runs retention</h6>
+                  <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                    <small> How long to keep test runs. All related data will be deleted as well.</small></div>
+                  <label for="keep-tests-period" class="form-label">Keep tests</label>
+                  <select class="custom-select" id="keep-tests-period" formControlName="keepTestRunsPeriod">
+                    <option *ngFor="let keepTestRunPeriod of keepTestRunPeriods"
+                            [ngValue]="keepTestRunPeriod.period">{{ keepTestRunPeriod.description }}</option>
+                  </select>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <hr class="mt-4">
+              <hr class="mt-4">
 
 
-          <div class="form-sub">
-            <h6>Delete sample data after processing</h6>
-            <div class="form-group">
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="deleteSamples" formControlName="deleteSamples">
-                <label class="custom-control-label" for="deleteSamples">Enabled</label>
+              <div class="form-sub">
+                <h6>Performance analysis</h6>
+                <div class="form-group">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="analysisSwitch"
+                           formControlName="analysisEnabled">
+                    <label class="custom-control-label" for="analysisSwitch">Enabled</label>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <hr class="mt-4">
+              <hr class="mt-4">
 
 
-          <div class="form-sub">
-            <h6>Generate share token automatically</h6>
-            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-                <small> When enabled the API will return share token upon new test report upload.</small></div>
-            <div class="form-group">
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="shareToken" formControlName="generateShareToken">
-                <label class="custom-control-label" for="shareToken">Enabled</label>
+              <div class="form-sub">
+                <h6>Zero error tolerance</h6>
+                <div class="form-group">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="zeroErrorSwitch"
+                           formControlName="zeroErrorToleranceEnabled">
+                    <label class="custom-control-label" for="zeroErrorSwitch">Enabled</label>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <hr class="mt-4">
+              <hr class="mt-4">
 
 
-          <div class="form-sub">
-            <h6>Generate extra chart aggregations <i class="fas fa-flask"></i></h6>
-            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-                <small> When enabled extra chart aggregations will be generated during processing. It might impact the processing times though.</small></div>
-            <div class="form-group">
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="extraAggregations" formControlName="extraAggregations">
-                <label class="custom-control-label" for="extraAggregations">Enabled</label>
+              <div class="form-sub">
+                <h6>Delete sample data after processing</h6>
+                <div class="form-group">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="deleteSamples"
+                           formControlName="deleteSamples">
+                    <label class="custom-control-label" for="deleteSamples">Enabled</label>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-      </form>
-      </ng-template>
-    </li>
-    <li ngbNavItem>
-      <a ngbNavLink>Thresholds</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="scenarioSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
+              <hr class="mt-4">
 
-          <div class="form-sub pt-3">
-            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-              <small> Scenario thresholds will raise an alert in a report detail in case the given metrics diverge from the
-                previous
-                reports average by more than specified threshold percentage.</small></div>
 
-            <div class="form-group">
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="thresholdEnabled"
-                       formControlName="thresholdEnabled">
-                <label class="custom-control-label" for="thresholdEnabled">Enabled</label>
+              <div class="form-sub">
+                <h6>Generate share token automatically</h6>
+                <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                  <small> When enabled the API will return share token upon new test report upload.</small></div>
+                <div class="form-group">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="shareToken"
+                           formControlName="generateShareToken">
+                    <label class="custom-control-label" for="shareToken">Enabled</label>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label for="scen-settings-p90">90% percentil</label>
-              <input type="input" id="scen-settings-p90" class="form-control" formControlName="thresholdPercentile">
-            </div>
-            <div class="form-group">
-              <label for="scen-settings-throughput">Throughput</label>
-              <input type="text" id="scen-settings-throughput" class="form-control" formControlName="thresholdThroughput">
-            </div>
-            <div class="form-group">
-              <label for="scen-settings-error-rate">Error rate</label>
-              <input type="text" id="scen-settings-error-rate" class="form-control" formControlName="thresholdErrorRate">
-            </div>
-          </div>
+              <hr class="mt-4">
 
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
 
-        </form>
-      </ng-template>
-    </li>
-    <li ngbNavItem>
-      <a ngbNavLink>Label Filter Settings</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="labelFilters" (ngSubmit)="onSubmit()" class="pl-3">
+              <div class="form-sub">
+                <h6>Generate extra chart aggregations <i class="fas fa-flask"></i></h6>
+                <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                  <small> When enabled extra chart aggregations will be generated during processing. It might impact the
+                    processing times though.</small></div>
+                <div class="form-group">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="extraAggregations"
+                           formControlName="extraAggregations">
+                    <label class="custom-control-label" for="extraAggregations">Enabled</label>
+                  </div>
+                </div>
+              </div>
 
-          <div class="text-secondary table-help"><i class="fas fa-info-circle"> </i>
-            <small> Enter search term(s) that you want to filter out. For a full match use "match" operator, for a partial match use "includes" operator</small></div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </ng-template>
+        </li>
+        <li ngbNavItem>
+          <a ngbNavLink class="jtl-nav-link">Thresholds</a>
+          <ng-template ngbNavContent>
+            <form [formGroup]="scenarioSettingsForm" (ngSubmit)="onSubmit()" >
 
-          <table class="table jtl-table">
+              <div class="form-group form-settings pt-3">
+                <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                  <small> Scenario thresholds will raise an alert in a report detail in case the given metrics diverge
+                    from the
+                    previous
+                    reports average by more than specified threshold percentage.</small></div>
 
-            <thead>
-                <tr>
+                <div class="form-group">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="thresholdEnabled"
+                           formControlName="thresholdEnabled">
+                    <label class="custom-control-label" for="thresholdEnabled">Enabled</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="scen-settings-p90">90% percentil</label>
+                  <input type="input" id="scen-settings-p90" class="form-control" formControlName="thresholdPercentile">
+                </div>
+                <div class="form-group">
+                  <label for="scen-settings-throughput">Throughput</label>
+                  <input type="text" id="scen-settings-throughput" class="form-control"
+                         formControlName="thresholdThroughput">
+                </div>
+                <div class="form-group">
+                  <label for="scen-settings-error-rate">Error rate</label>
+                  <input type="text" id="scen-settings-error-rate" class="form-control"
+                         formControlName="thresholdErrorRate">
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+
+            </form>
+          </ng-template>
+        </li>
+        <li ngbNavItem>
+          <a ngbNavLink class="jtl-nav-link">Label Filter Settings</a>
+          <ng-template ngbNavContent>
+            <form [formGroup]="labelFiltersForm" (ngSubmit)="onSubmit()" class="pl-3">
+
+              <div class="form-group form-settings pt-3">
+                <div class="text-secondary table-help"><i class="fas fa-info-circle"> </i>
+                  <small> Enter search term(s) that you want to filter out. For a full match use "match" operator, for a
+                    partial match use "includes" operator</small></div>
+
+                <table class="table jtl-table">
+
+                  <thead>
+                  <tr>
                     <th class="jtl-head">Label</th>
                     <th class="jtl-head">Operator</th>
                     <th class="jtl-head"></th>
-                </tr>
-            </thead>
-            <tbody>
-                  <tr  *ngFor="let subarray of labelFilters.controls;let i=index">
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let subarray of labelFilters.controls;let i=index">
                     <td *ngFor="let control of subarray.controls;let j=index">
                       <input *ngIf="j === 0" class="form-control" type="text" [formControl]="subarray.controls[j]">
-                      <select *ngIf="j === 1" class="custom-select" [formControl]="subarray.controls[j]" aria-label="Default select example" [value]="subarray.controls[j].value">
+                      <select *ngIf="j === 1" class="custom-select" [formControl]="subarray.controls[j]"
+                              aria-label="Default select example" [value]="subarray.controls[j].value">
                         <option *ngFor="let operator of labelFilterOperators" value="{{operator}}">
                           {{ operator }}
                         </option>
                       </select>
                     </td>
                     <td>
-                        <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
+                      <button class="btn btn-default" type="button" (click)="deleteFieldValue(i)">Delete</button>
                     </td>
-                </tr>
+                  </tr>
 
-                <tr>
+                  <tr>
                     <td>
-                        <input class="form-control" placeholder="Label term" type="text" id="term" name="term" #term />
+                      <input class="form-control" placeholder="Label term" type="text" id="term" name="term" #term/>
                     </td>
                     <td>
                       <select class="custom-select" aria-label="Default select example" #operator>
@@ -199,162 +215,171 @@
                       </select>
                     </td>
                     <td>
-                        <button class="btn btn-default" type="button" (click)="addFieldValue(operator.value)">Add</button>
+                      <button class="btn btn-default" type="button" (click)="addFieldValue(operator.value)">Add</button>
                     </td>
-                </tr>
-            </tbody>
-        </table>
+                  </tr>
+                  </tbody>
+                </table>
 
 
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
 
-      </ng-template>
-    </li>
+              </div>
 
-    <li ngbNavItem>
-      <a ngbNavLink>Label Trend Chart Settings</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="labelTrendChartSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
-          <div class="form-group form-settings pt-3">
-            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-              <small> The selected metrics will get pre-set in label trend chart.</small></div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="virtualUsers"
-                     formControlName="virtualUsers">
-              <label class="custom-control-label" for="virtualUsers">Virtual Users</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="errorRate"
-                     formControlName="errorRate">
-              <label class="custom-control-label" for="errorRate">Error Rate</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="p90"
-                     formControlName="p90">
-              <label class="custom-control-label" for="p90">90% Percentile</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="p95"
-                     formControlName="p95">
-              <label class="custom-control-label" for="p95">95% Percentile</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="p99"
-                     formControlName="p99">
-              <label class="custom-control-label" for="p99">99% Percentile</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="throughput"
-                     formControlName="throughput">
-              <label class="custom-control-label" for="throughput">Throughput</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="avgLatency"
-                     formControlName="avgLatency">
-              <label class="custom-control-label" for="avgLatency">Average Latency</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="avgConnectionTime"
-                     formControlName="avgConnectionTime">
-              <label class="custom-control-label" for="avgConnectionTime">Average Connection Time</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="avgResponseTime"
-                     formControlName="avgResponseTime">
-              <label class="custom-control-label" for="avgResponseTime">Average Response Time</label>
-            </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
 
-          </div>
+          </ng-template>
+        </li>
+
+        <li ngbNavItem>
+          <a ngbNavLink class="jtl-nav-link">Label Trend Chart Settings</a>
+          <ng-template ngbNavContent>
+            <form [formGroup]="labelTrendChartSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
 
 
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
+              <div class="form-group form-settings pt-3">
+                <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                  <small> The selected metrics will get pre-set in label trend chart.</small></div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="virtualUsers"
+                         formControlName="virtualUsers">
+                  <label class="custom-control-label" for="virtualUsers">Virtual Users</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="errorRate"
+                         formControlName="errorRate">
+                  <label class="custom-control-label" for="errorRate">Error Rate</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="p90"
+                         formControlName="p90">
+                  <label class="custom-control-label" for="p90">90% Percentile</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="p95"
+                         formControlName="p95">
+                  <label class="custom-control-label" for="p95">95% Percentile</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="p99"
+                         formControlName="p99">
+                  <label class="custom-control-label" for="p99">99% Percentile</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="throughput"
+                         formControlName="throughput">
+                  <label class="custom-control-label" for="throughput">Throughput</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="avgLatency"
+                         formControlName="avgLatency">
+                  <label class="custom-control-label" for="avgLatency">Average Latency</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="avgConnectionTime"
+                         formControlName="avgConnectionTime">
+                  <label class="custom-control-label" for="avgConnectionTime">Average Connection Time</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="avgResponseTime"
+                         formControlName="avgResponseTime">
+                  <label class="custom-control-label" for="avgResponseTime">Average Response Time</label>
+                </div>
 
-      </ng-template>
-    </li>
-
-    <li ngbNavItem>
-      <a ngbNavLink>Request statistics configuration</a>
-      <ng-template ngbNavContent>
-        <form [formGroup]="requestStatsSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
-          <div class="form-group form-settings pt-3">
-            <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-              <small> The selected metrics will get pre-set in request stats table. Please not that this settings is user specific.</small></div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-samples"
-                     formControlName="samples">
-              <label class="custom-control-label" for="rs-samples">Samples</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-avg"
-                     formControlName="avg">
-              <label class="custom-control-label" for="rs-avg">Response Time [avg]</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-p90"
-                     formControlName="p90">
-              <label class="custom-control-label" for="rs-p90">Response Time [P90]</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-p95"
-                     formControlName="p95">
-              <label class="custom-control-label" for="rs-p95">Response Time [P95]</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-p99"
-                     formControlName="p99">
-              <label class="custom-control-label" for="rs-p99">Response Time [P99]</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-throughput"
-                     formControlName="throughput">
-              <label class="custom-control-label" for="rs-throughput">Throughput</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-min"
-                     formControlName="min">
-              <label class="custom-control-label" for="rs-min">Response Time [min]</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-max"
-                     formControlName="max">
-              <label class="custom-control-label" for="rs-max">Response Time [max]</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-network"
-                     formControlName="network">
-              <label class="custom-control-label" for="rs-network">Network</label>
-            </div>
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="rs-error-rate"
-                     formControlName="errorRate">
-              <label class="custom-control-label" for="rs-error-rate">Error Rate</label>
-            </div>
-
-          </div>
+              </div>
 
 
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
 
-      </ng-template>
-    </li>
+          </ng-template>
+        </li>
+
+        <li ngbNavItem>
+          <a ngbNavLink class="jtl-nav-link">Request statistics configuration</a>
+          <ng-template ngbNavContent>
+            <form [formGroup]="requestStatsSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
+              <div class="form-group form-settings pt-3">
+                <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                  <small> The selected metrics will get pre-set in request stats table. Please not that this settings is
+                    user specific.</small></div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-samples"
+                         formControlName="samples">
+                  <label class="custom-control-label" for="rs-samples">Samples</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-avg"
+                         formControlName="avg">
+                  <label class="custom-control-label" for="rs-avg">Response Time [avg]</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-p90"
+                         formControlName="p90">
+                  <label class="custom-control-label" for="rs-p90">Response Time [P90]</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-p95"
+                         formControlName="p95">
+                  <label class="custom-control-label" for="rs-p95">Response Time [P95]</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-p99"
+                         formControlName="p99">
+                  <label class="custom-control-label" for="rs-p99">Response Time [P99]</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-throughput"
+                         formControlName="throughput">
+                  <label class="custom-control-label" for="rs-throughput">Throughput</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-min"
+                         formControlName="min">
+                  <label class="custom-control-label" for="rs-min">Response Time [min]</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-max"
+                         formControlName="max">
+                  <label class="custom-control-label" for="rs-max">Response Time [max]</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-network"
+                         formControlName="network">
+                  <label class="custom-control-label" for="rs-network">Network</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="rs-error-rate"
+                         formControlName="errorRate">
+                  <label class="custom-control-label" for="rs-error-rate">Error Rate</label>
+                </div>
+
+              </div>
 
 
-  </ul>
-  <div [ngbNavOutlet]="nav"></div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+
+          </ng-template>
+        </li>
+
+
+      </ul>
+      <div [ngbNavOutlet]="nav" class="ms-2 ml-10 w-100" ></div>
+
+    </div>
+
 
   </div>
 
 
-
 </ng-template>
 
-<button *userRole="'operator'" class="edit btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Settings</button>
+<button *userRole="'operator'" class="edit btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Settings
+</button>

@@ -22,6 +22,8 @@
 
         <div class="form-group mb-3">
           <label>Project members</label>
+          <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
+            <small> Users with role <strong>admin</strong> are not listed as their access is granted automatically.</small></div>
           <li class="list-label"  *ngFor="let user of usersFormArray.controls; let i = index">
             <label formArrayName="projectMembers">
               <input type="checkbox" [formControlName]="i">

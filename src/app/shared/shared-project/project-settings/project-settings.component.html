@@ -127,18 +127,22 @@
             </form>
           </ng-template>
         </li>
-        <li ngbNavItem *userRole="'admin'">
+        
+        <li ngbNavItem="project-members" *userRole="'admin'">
           <a ngbNavLink class="jtl-nav-link">Project Members</a>
           <ng-template ngbNavContent>
             <form [formGroup]="projectMembersForm" (ngSubmit)="onSubmit()" class="pl-3 pt-3">
 
               <div class="form-group mb-3">
-                <li *ngFor="let user of usersFormArray.controls; let i = index" class="list-label">
-                  <label formArrayName="projectMembers">
-                    <input type="checkbox" [formControlName]="i">
-                    {{projectMembersData[i].username}}
-                  </label>
-                </li>
+                <ul>
+                  <li *ngFor="let user of usersFormArray.controls; let i = index" class="list-label">
+                    <label formArrayName="projectMembers">
+                      <input type="checkbox" [formControlName]="i">
+                      {{projectMembersData[i].username}}
+                    </label>
+                  </li>
+                </ul>
+
               </div>
 
               <div class="modal-footer">
@@ -151,7 +155,6 @@
       <div [ngbNavOutlet]="nav" class="ms-2 ml-10 w-100" ></div>
   </div>
 </div>
-
 
 </ng-template>
 

@@ -39,11 +39,11 @@
               <div class="form-sub pt-2">
                 <h6>Test Report Top Statistics Bar</h6>
                 <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
-                  <small> Please choose up to 5 test report top statistics you would like to be displayed.</small></div>
+                  <small> Please, choose up to 5 test report top statistics you would like to be displayed.</small></div>
 
                 <div class="form-control-feedback"
                      *ngIf="metricsEditable && (projectSettingsForm.dirty || projectSettingsForm.touched)">
-                  <p class="form-validation-error" *ngIf="metricsEditable">Please make sure max 5 metrics is selected.</p>
+                  <p class="form-validation-error" *ngIf="metricsEditable">Please, make sure max 5 metrics is selected.</p>
                 </div>
 
                 <div class="form-group">
@@ -107,10 +107,9 @@
 
               <hr class="mt-4">
               <div class="form-sub">
-                <h6>Upsert Scenario</h6>
+                <h6>Scenario auto-provisioning</h6>
                 <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
-                  <small> When pushing test report into scenario that does not exists, the application will create it on
-                    the fly.</small></div>
+                  <small> When pushing a test report into a scenario that does not exist, the application will create it on the fly.</small></div>
                 <div class="form-group">
                   <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="scenarioUpsert"

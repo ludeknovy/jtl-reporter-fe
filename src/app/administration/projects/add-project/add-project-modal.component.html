@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">Add new project</h5>
+    <h5 class="modal-title" id="modal-basic-title"> Add new project</h5>
     <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -44,6 +44,6 @@
 <div class="settings">
   <button *ngIf="topMenu === false" class="btn jtl-btn-primary btn-sm jtl-no-glow" (click)="open(content)"> Add project</button>
   <div class="spacer">
-    <button ngbDropdownItem *ngIf="topMenu === true" class="btn btn-sm text-left dropdown-new-project" (click)="open(content)">New Project</button>
+    <button ngbDropdownItem *ngIf="topMenu === true" class="btn btn-sm text-left dropdown-new-project" (click)="open(content)"> <i class="fas fa-plus"></i> New Project</button>
   </div>
 </div>

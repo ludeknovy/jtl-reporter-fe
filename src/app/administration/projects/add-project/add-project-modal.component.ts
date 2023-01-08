@@ -1,13 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ProjectApiService} from '../../../project-api.service';
-import {catchError} from 'rxjs/operators';
-import {of} from 'rxjs';
-import {NotificationMessage} from '../../../notification/notification-messages';
-import {ProjectService} from '../../../project.service';
-import {UserService} from '../../../_services/user.service';
-import {UserRole, Users} from '../../../_services/users.model';
+import { Component, Input, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ProjectApiService } from "../../../project-api.service";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationMessage } from "../../../notification/notification-messages";
+import { ProjectService } from "../../../project.service";
+import { UserService } from "../../../_services/user.service";
+import { UserRole, Users } from "../../../_services/users.model";
 
 @Component({
   styleUrls: ["./add-project-modal.component.css"],
@@ -29,7 +29,9 @@ export class AddNewProjectComponent implements OnInit {
     private projectService: ProjectService,
     private notification: NotificationMessage,
     private userService: UserService
-  ) { }
+  ) {
+  }
+
   ngOnInit() {
     this.createFormControls();
     this.createForm();
@@ -40,8 +42,8 @@ export class AddNewProjectComponent implements OnInit {
           ...user,
           isDisabled: user.role === UserRole.Admin,
           isChecked: user.role === UserRole.Admin
-        }))
-        this.addCheckboxes()
+        }));
+        this.addCheckboxes();
       });
     }
 
@@ -57,7 +59,7 @@ export class AddNewProjectComponent implements OnInit {
       Validators.minLength(3),
       Validators.maxLength(50)
     ]);
-    this.projectMembers = new FormArray([])
+    this.projectMembers = new FormArray([]);
   }
 
   createForm() {
@@ -72,7 +74,7 @@ export class AddNewProjectComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formCheck()
+    this.formCheck();
     if (this.myform.valid) {
       const projectMembers = this.myform.value.projectMembers
         .map((v, i) => v ? this.users[i].id : null)

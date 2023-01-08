@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
-import { ProjectApiService } from "../../../project-api.service";
-import { catchError } from "rxjs/operators";
-import { of } from "rxjs";
-import { NotificationMessage } from "../../../notification/notification-messages";
-import { ProjectService } from "../../../project.service";
-import { UserService } from "../../../_services/user.service";
-import { UserRole, Users } from "../../../_services/users.model";
+import {Component, Input, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ProjectApiService} from '../../../project-api.service';
+import {catchError} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {NotificationMessage} from '../../../notification/notification-messages';
+import {ProjectService} from '../../../project.service';
+import {UserService} from '../../../_services/user.service';
+import {UserRole, Users} from '../../../_services/users.model';
 
 @Component({
   styleUrls: ["./add-project-modal.component.css"],
@@ -36,7 +36,11 @@ export class AddNewProjectComponent implements OnInit {
     const { role } = JSON.parse(localStorage.getItem("currentUser"));
     if (role === UserRole.Admin) {
       this.userService.fetchUsers().subscribe(data => {
-        this.users = data.filter(user => user.role != "admin")
+        this.users = data.map(user => ({
+          ...user,
+          isDisabled: user.role === UserRole.Admin,
+          isChecked: user.role === UserRole.Admin
+        }))
         this.addCheckboxes()
       });
     }

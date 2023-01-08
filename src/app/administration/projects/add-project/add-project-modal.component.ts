@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ProjectApiService } from "../../../project-api.service";
 import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
@@ -29,15 +29,21 @@ export class AddNewProjectComponent implements OnInit {
     private projectService: ProjectService,
     private notification: NotificationMessage,
     private userService: UserService
-  ) { }
+  ) {
+  }
+
   ngOnInit() {
     this.createFormControls();
     this.createForm();
     const { role } = JSON.parse(localStorage.getItem("currentUser"));
     if (role === UserRole.Admin) {
       this.userService.fetchUsers().subscribe(data => {
-        this.users = data.filter(user => user.role != "admin")
-        this.addCheckboxes()
+        this.users = data.map(user => ({
+          ...user,
+          isDisabled: user.role === UserRole.Admin,
+          isChecked: user.role === UserRole.Admin
+        }));
+        this.addCheckboxes();
       });
     }
 
@@ -53,7 +59,7 @@ export class AddNewProjectComponent implements OnInit {
       Validators.minLength(3),
       Validators.maxLength(50)
     ]);
-    this.projectMembers = new FormArray([])
+    this.projectMembers = new FormArray([]);
   }
 
   createForm() {
@@ -68,7 +74,7 @@ export class AddNewProjectComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formCheck()
+    this.formCheck();
     if (this.myform.valid) {
       const projectMembers = this.myform.value.projectMembers
         .map((v, i) => v ? this.users[i].id : null)

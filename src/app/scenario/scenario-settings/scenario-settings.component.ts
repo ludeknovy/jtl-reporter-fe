@@ -62,6 +62,7 @@ export class SettingsScenarioComponent implements OnInit {
     throughput: null,
     network: null,
     errorRate: null,
+    apdex: null,
   }
 
 
@@ -185,6 +186,7 @@ export class SettingsScenarioComponent implements OnInit {
     this.requestStatsCormControls.throughput = new FormControl(settings.userSettings.requestStats.throughput, [Validators.required])
     this.requestStatsCormControls.network = new FormControl(settings.userSettings.requestStats.network, [Validators.required])
     this.requestStatsCormControls.errorRate = new FormControl(settings.userSettings.requestStats.errorRate, [Validators.required])
+    this.requestStatsCormControls.apdex = new FormControl(settings.userSettings.requestStats.apdex, [Validators.required])
 
 
   }
@@ -226,7 +228,8 @@ export class SettingsScenarioComponent implements OnInit {
       p99: this.requestStatsCormControls.p99,
       throughput: this.requestStatsCormControls.throughput,
       network: this.requestStatsCormControls.network,
-      errorRate: this.requestStatsCormControls.errorRate
+      errorRate: this.requestStatsCormControls.errorRate,
+      apdex: this.requestStatsCormControls.apdex,
     })
     this.labelFiltersForm = new FormGroup({
 

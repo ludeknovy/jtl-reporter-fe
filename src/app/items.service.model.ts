@@ -135,6 +135,10 @@ export interface ItemStatistics {
   samples: number;
   throughput: number;
   responseMessageFailures?: ResponseMessageFailure[];
+  apdex: {
+    satisfaction?: number
+    toleration?: number
+  }
 }
 
 interface ResponseMessageFailure {

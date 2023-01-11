@@ -27,4 +27,5 @@ export interface RequestStats {
   p99: boolean
   samples: boolean
   throughput: boolean
+  apdex: boolean
 }

@@ -33,6 +33,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   comparedMetadata;
   defaultUnit = true;
   externalSearchTerm = "";
+  displayApdexColumn = false;
 
   constructor(
     private itemsService: ItemsApiService,
@@ -51,6 +52,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
         this.externalSearchTerm = data.label;
       }
     });
+    this.displayApdexColumn = !!this.itemData.statistics.find(stats => stats.apdex.satisfaction && stats.apdex.toleration)
   }
 
   ngOnDestroy() {
@@ -306,5 +308,29 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       return true;
     }
     return value;
+  }
+
+  calculateApdex(satisfaction, toleration, samples) {
+    const apdexValue = roundNumberTwoDecimals((satisfaction + (toleration * 0.5)) / samples)
+    return this.apdexScore(apdexValue)
+  }
+
+  public sortByApdex(item) {
+    return roundNumberTwoDecimals(((item.apdex.satisfaction + ( item.apdex.toleration * 0.5)) / item.samples))
+  }
+
+  private apdexScore(apdexValue: number): string {
+    const score = [
+      { rangeFrom: 0.94, rangeTo: 1, name: "Excellent" },
+      { rangeTo: 0.93, rangeFrom: 0.85, name: "Good" },
+      { rangeFrom: 0.7, rangeTo: 0.83, name: "Fair", },
+      { rangeFrom: 0.5, rangeTo: 0.69, name: "Poor", },
+      { rangeFrom: 0, rangeTo: 0.49, name: "Unacceptable" }
+    ]
+    return score.find(sc => apdexValue >=  sc.rangeFrom && apdexValue <= sc.rangeTo)?.name
+  }
+
+  shouldApdexColumnBeDisplayed(): boolean {
+    return this.displayApdexColumn
   }
 }

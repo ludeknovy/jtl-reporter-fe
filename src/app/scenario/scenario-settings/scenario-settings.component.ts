@@ -67,7 +67,7 @@ export class SettingsScenarioComponent implements OnInit {
   };
   apdexFormControls = {
     apdexEnabled: null,
-    satisfiyingThreshold: null,
+    satisfyingThreshold: null,
     toleratingThreshold: null
   };
 
@@ -212,15 +212,15 @@ export class SettingsScenarioComponent implements OnInit {
     this.requestStatsCormControls.throughput = new FormControl(settings.userSettings.requestStats.throughput, [Validators.required]);
     this.requestStatsCormControls.network = new FormControl(settings.userSettings.requestStats.network, [Validators.required]);
     this.requestStatsCormControls.errorRate = new FormControl(settings.userSettings.requestStats.errorRate, [Validators.required]);
-    this.requestStatsCormControls.apdex = new FormControl(settings.userSettings.requestStats.apdex, [Validators.required]);
+    this.requestStatsCormControls.apdex = new FormControl(settings.userSettings.requestStats.apdex || false, [Validators.required]);
 
-    this.apdexFormControls.satisfiyingThreshold = new FormControl(settings?.apdex?.satisfiyingThreshold, [
+    this.apdexFormControls.satisfyingThreshold = new FormControl(settings?.apdexSettings?.satisfyingThreshold, [
       Validators.min(0),
       Validators.max(999999)]);
-    this.apdexFormControls.toleratingThreshold = new FormControl(settings?.apdex?.toleratingThreshold, [
+    this.apdexFormControls.toleratingThreshold = new FormControl(settings?.apdexSettings?.toleratingThreshold, [
       Validators.min(0),
       Validators.max(999999)]);
-    this.apdexFormControls.apdexEnabled = new FormControl(settings.apdex?.enabled, []);
+    this.apdexFormControls.apdexEnabled = new FormControl(settings.apdexSettings?.enabled, []);
   }
 
   createForm() {
@@ -266,7 +266,7 @@ export class SettingsScenarioComponent implements OnInit {
     this.labelFiltersForm = new FormGroup({});
     this.apdexSettingsForm = new FormGroup({
       toleratingThreshold: this.apdexFormControls.toleratingThreshold,
-      satisfyingThreshold: this.apdexFormControls.satisfiyingThreshold,
+      satisfyingThreshold: this.apdexFormControls.satisfyingThreshold,
       apdexEnabled: this.apdexFormControls.apdexEnabled,
     });
 
@@ -293,6 +293,7 @@ export class SettingsScenarioComponent implements OnInit {
         generateShareToken,
         extraAggregations
       } = this.scenarioSettingsForm.value;
+      const { apdexEnabled, satisfyingThreshold, toleratingThreshold } = this.apdexSettingsForm.value
       const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
@@ -312,6 +313,11 @@ export class SettingsScenarioComponent implements OnInit {
         labelTrendChartSettings: this.labelTrendChartSettingsForm.value,
         userSettings: {
           requestStats: this.requestStatsSettingsForm.value,
+        },
+        apdexSettings: {
+          enabled: apdexEnabled,
+          satisfyingThreshold,
+          toleratingThreshold
         }
       };
 

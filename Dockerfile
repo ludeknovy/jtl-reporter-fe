@@ -1,10 +1,13 @@
-FROM node:16.18.0-alpine3.15 as builder
+FROM node:18.13.0-alpine3.17 as builder
 
 WORKDIR /src/fe
 
 RUN apk --update add openjdk8 \
-    git python2 build-base && \
+    git build-base && \
 rm -rf /var/lib/apt/lists/*
+
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 
 COPY package.json package-lock.json angular.json ./
 RUN npm install

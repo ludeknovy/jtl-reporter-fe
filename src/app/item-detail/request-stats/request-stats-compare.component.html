@@ -86,6 +86,9 @@
             <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
             </th>
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats.apdex) && shouldApdexColumnBeDisplayed()">
+              <mfDefaultSorter [by]="sortByApdex">apdex</mfDefaultSorter>
+            </th>
             <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
             </th>
             <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
@@ -124,6 +127,11 @@
             <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <span
                 [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats.apdex) && shouldApdexColumnBeDisplayed()">
+              <span>
+                 {{ calculateApdex(_.apdex?.satisfaction,_.apdex?.toleration, _.samples)}}
+                </span>
             </td>
             <td>
                 <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label" [errorRate]="_.errorRate" data-html2canvas-ignore="true">

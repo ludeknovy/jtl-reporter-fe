@@ -77,6 +77,7 @@ describe("RequestStatsCompareComponent", () => {
           errorRate: true,
           min: true,
           p95: true,
+          apdex: true,
         }
       },
       baseId: "",
@@ -96,6 +97,10 @@ describe("RequestStatsCompareComponent", () => {
         responseMessageFailures: [
           { responseMessage: "error", count: 1 }
         ],
+        apdex: {
+          toleration: 100,
+          satisfaction: 400,
+        }
       }, {
         avgResponseTime: 10,
         bytes: 758,
@@ -111,6 +116,10 @@ describe("RequestStatsCompareComponent", () => {
         responseMessageFailures: [
           { responseMessage: "error", count: 1 }
         ],
+        apdex: {
+          toleration: 20,
+          satisfaction: 4,
+        }
       },
       {
         avgResponseTime: 10,
@@ -127,6 +136,10 @@ describe("RequestStatsCompareComponent", () => {
         responseMessageFailures: [
           { responseMessage: "error", count: 1 }
         ],
+        apdex: {
+          toleration: 10,
+          satisfaction: 40,
+        }
       }, ]
     };
     fixture.detectChanges();

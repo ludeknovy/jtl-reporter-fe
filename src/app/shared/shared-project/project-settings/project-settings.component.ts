@@ -7,7 +7,7 @@ import { ProjectApiService } from "../../../project-api.service";
 import { NotificationMessage } from "../../../notification/notification-messages";
 import { ProjectService } from "../../../project.service";
 import { UserService } from "../../../_services/user.service";
-import { Users } from "../../../_services/users.model";
+import { UserRole, Users } from "../../../_services/users.model";
 
 @Component({
   selector: "app-project-settings",
@@ -120,9 +120,10 @@ export class ProjectSettingsComponent implements OnInit {
 
   onSubmit() {
     if (this.projectSettingsForm.valid) {
-      const projectMembers = this.projectMembersForm.value.projectMembers
-        .map((v, i) => v ? this.projectMembersData[i].id : null)
-        .filter(v => v !== null);
+      const projectMembers = this.projectMembersData
+        .filter(member => member.role !== UserRole.Admin)
+        .filter(member => member.isMember)
+        .map(member => member.id)
 
       const payload = {
         projectName: this.formControls.projectName.value,
@@ -169,13 +170,14 @@ export class ProjectSettingsComponent implements OnInit {
 
   private mapProjectMembersToUsersData = (projectMembers: string[], users: Users[]) => {
     this.projectMembersData = users
-      .filter(user => user.role !== "admin")
       .map(user => {
       const isMember = projectMembers.find(member => member === user.id)
       return {
         id: user.id,
         username: user.username,
-        isMember: !!isMember
+        isMember: user.role === UserRole.Admin ? true : !!isMember,
+        role: user.role,
+        isDisabled: user.role === UserRole.Admin
       }
     })
 

@@ -18,4 +18,6 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
         run: npm run test:headless
       - name: Run Prod Build
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         run: npm run build:prod

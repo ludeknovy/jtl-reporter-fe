@@ -6,8 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -16,6 +14,8 @@ jobs:
       - name: Install modules
         run: npm install
       - name: Tests
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         run: npm run test:headless
       - name: Run Prod Build
         run: npm run build:prod

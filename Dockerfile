@@ -6,6 +6,9 @@ RUN apk --update add openjdk8 \
     git build-base && \
 rm -rf /var/lib/apt/lists/*
 
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
+
 COPY package.json package-lock.json angular.json ./
 RUN npm install
 

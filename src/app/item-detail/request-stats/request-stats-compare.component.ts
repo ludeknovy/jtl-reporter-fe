@@ -52,7 +52,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
         this.externalSearchTerm = data.label;
       }
     });
-    this.displayApdexColumn = !!this.itemData.statistics.find(stats => stats.apdex.satisfaction && stats.apdex.toleration)
+    this.displayApdexColumn = !!this.itemData.statistics.find(stats => stats.apdex?.satisfaction && stats.apdex?.toleration)
   }
 
   ngOnDestroy() {

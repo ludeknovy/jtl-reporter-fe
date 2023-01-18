@@ -180,7 +180,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   toggleThroughputBand({ element, perfAnalysis }) {
     this.overallChartOptions.series.forEach(serie => {
-      if (["response time", "errors"].includes(serie.name)) {
+      if (["response time", "errors", "network"].includes(serie.name)) {
         serie.visible = this.toggleThroughputBandFlag;
       }
       if (serie.name === "throughput") {

@@ -20,7 +20,7 @@ import { ScenarioService } from "src/app/scenario.service";
 })
 export class AddNewItemComponent implements OnInit {
   closeResult: string;
-  myform: FormGroup;
+  addItemForm: FormGroup;
   kpiFile: FormControl;
   monitoringFile: FormControl;
   environment: FormControl;
@@ -70,7 +70,7 @@ export class AddNewItemComponent implements OnInit {
   }
 
   createForm() {
-    this.myform = new FormGroup({
+    this.addItemForm = new FormGroup({
       kpiFile: this.kpiFile,
       monitoringFile: this.monitoringFile,
       environment: this.environment,
@@ -88,15 +88,15 @@ export class AddNewItemComponent implements OnInit {
   onFileChange(event, fileType) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.myform.get(fileType).setValue(file);
+      this.addItemForm.get(fileType).setValue(file);
     }
   }
 
   onSubmit() {
     this.formCheck();
-    if (this.myform.valid) {
+    if (this.addItemForm.valid) {
       this.spinner.show();
-      const { kpiFile, errorFile, monitoringFile, environment, note, hostname, status, name } = this.myform.value;
+      const { kpiFile, errorFile, monitoringFile, environment, note, hostname, status, name } = this.addItemForm.value;
       this.itemsApiService.addNewTestItem(
         this.routeParams.projectName,
         this.routeParams.scenarioName,
@@ -110,14 +110,14 @@ export class AddNewItemComponent implements OnInit {
           this.spinner.hide();
           return this.itemsApiService.setData(message);
         });
-      this.myform.reset({ status: this.DEFAULT_STATUS, note: "", hostname: "" });
+      this.addItemForm.reset({ status: this.DEFAULT_STATUS, note: "", hostname: "", name: "", environment: "" });
       this.modalService.dismissAll();
     }
   }
 
   formCheck() {
-    Object.keys(this.myform.controls).forEach(field => {
-      const control = this.myform.get(field);
+    Object.keys(this.addItemForm.controls).forEach(field => {
+      const control = this.addItemForm.get(field);
       control.markAsTouched({ onlySelf: true });
     });
   }

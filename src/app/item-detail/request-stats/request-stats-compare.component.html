@@ -101,11 +101,11 @@
             <tr>
               <th> <button
                 type="button"
-                class="btn btn-primary btn-sm"
+                class="btn btn-sm jtl-btn-light"
                 (click)="toggleSectionVisibility($event, i)"
                 [attr.aria-expanded]="collapsableSettings[i]"
                 [attr.aria-controls]="'collapse-row-' + i"
-              >test</button>
+              ><i [ngClass]="collapsableSettings[i] ?  'fas fa-chevron-down' : 'fas fa-chevron-left'"></i></button>
               </th>
               <td>{{_.label}} </td>
               <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)"><span

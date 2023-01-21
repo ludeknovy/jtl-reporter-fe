@@ -16,13 +16,13 @@ export class LabelChartComponent implements OnInit, OnChanges {
   @Input() label: string;
   @Input() activated: boolean
   Highcharts: typeof Highcharts = Highcharts;
-  labelChartMetric = Metrics.Throughput;
+  labelChartMetric = Metrics.ResponseTimeP90;
   labelCompareChartMetric;
   labelChartOptions = commonGraphSettings("reqs/s");
   updateLabelChartFlag = false;
   chartKeys;
   chartShouldExpand = false;
-  chart;
+  chart: Highcharts.Chart;
   chartCallback
   labelCharts = new Map();
 
@@ -46,11 +46,11 @@ export class LabelChartComponent implements OnInit, OnChanges {
   ngOnInit() {
     const availableMetrics = Array.from(this.labelLines.keys())
     availableMetrics.forEach(metric => {
-      const labelMetricsData = this.labelLines.get(Metrics.Throughput).find(data => data.name === this.label);
+      const labelMetricsData = this.labelLines.get(metric).find(data => data.name === this.label);
       const chartSettings = this.metricChartMap.get(metric)
       this.labelCharts.set(metric, { ...chartSettings, series: [labelMetricsData ] })
     })
-    this.labelChartOptions = this.labelCharts.get(this.labelChartMetric)
+    this.labelChartOptions = commonGraphSettings("ms")
     this.updateLabelChartFlag = true;
     this.getChartsKey();
 
@@ -58,6 +58,7 @@ export class LabelChartComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.activated.currentValue) {
+      this.changeChart({ target: { innerText: Metrics.ResponseTimeP90 } })
       this.chart.reflow()
     }
   }
@@ -70,7 +71,7 @@ export class LabelChartComponent implements OnInit, OnChanges {
 
   changeChart(event) {
     this.labelChartMetric = event.target.innerText;
-    this.labelChartOptions = JSON.parse(JSON.stringify(this.labelCharts.get(this.labelChartMetric)))
+    this.labelChartOptions = deepmerge(this.labelCharts.get(this.labelChartMetric), {})
     this.updateLabelChartFlag = true;
   }
 

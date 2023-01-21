@@ -291,13 +291,6 @@
 
 
 
-
-
-
-
-
-
-
     <div class="row middle-control">
       <div class="col">
         <ul ngbNav #nav="ngbNav" class="nav-tabs justify-content-center" [destroyOnHide]="false" [(activeId)]="activeId" >
@@ -305,13 +298,25 @@
             <a ngbNavLink class="nav-link bg-transparent">Overview charts</a>
             <ng-template ngbNavContent>
               <div class="row charts">
-                <div class="col tab-charts">
+                <div class="col tab-charts overallChart">
                   <div class="card overview-chart-card card-shadow">
                     <h6 class="card-header bg-transparent">Overall Chart</h6>
                     <div class="card-body">
                       <div class="chart">
                         <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions" [callbackFunction]="chartCallback"
                           [(update)]="updateChartFlag" style="width: 100%; height: 350px; display: block;">
+                        </highcharts-chart>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col tab-charts chart" *ngIf="statusChartOptions">
+                  <div class="card overview-chart-card card-shadow">
+                    <h6 class="card-header bg-transparent">Status Codes Chart</h6>
+                    <div class="card-body">
+                      <div class="chart">
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="statusChartOptions" [callbackFunction]="chartCallback"
+                                          [(update)]="updateChartFlag" style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
                       </div>
                     </div>

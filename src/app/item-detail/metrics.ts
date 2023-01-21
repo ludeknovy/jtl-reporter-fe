@@ -9,4 +9,5 @@ export enum Metrics {
   ResponseTimeP90 = "Response Time [P90]",
   ResponseTimeP95 = "Response Time [P95]",
   ResponseTimeP99 = "Response Time [P99]",
+  StatusCodeInTime = "Status Code In Time"
 }

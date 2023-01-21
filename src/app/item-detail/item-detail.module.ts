@@ -43,7 +43,7 @@ const routes: Routes = [  {
     CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent, ChartIntervalComponent, ForbiddenComponent ],
   imports: [
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
-    ReactiveFormsModule, FormsModule, RoleModule
+    ReactiveFormsModule, FormsModule, RoleModule,
   ],
   exports: [],
   providers: [ExcelService]

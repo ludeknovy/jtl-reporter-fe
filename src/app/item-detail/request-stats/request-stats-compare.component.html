@@ -53,6 +53,7 @@
       <table #screen class="table" [mfData]="labelsData" #mf="mfDataTable">
         <thead>
           <tr>
+            <th></th>
             <th scope="col" class="hd jtl-head-color">
               <mfDefaultSorter by="label">label</mfDefaultSorter>
             </th>
@@ -96,56 +97,70 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let _ of mf.data">
-            <td>{{_.label}} </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)"><span
-              [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.samples | number }}</span> </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)"><span
+          <ng-container *ngFor="let _ of mf.data; index as i">
+            <tr>
+              <th> <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                (click)="toggleSectionVisibility($event, i)"
+                [attr.aria-expanded]="collapsableSettings[i]"
+                [attr.aria-controls]="'collapse-row-' + i"
+              >test</button>
+              </th>
+              <td>{{_.label}} </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)"><span
+                [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.samples | number }}</span> </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)"><span
                 [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime | number: '1.0-2'}}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)"><span
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)"><span
                 [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime | number: '1.0-2'}}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)"><span
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)"><span
                 [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime | number: '1.0-2'}}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0 | number: '1.0-2'}}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p95)"><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5 | number: '1.0-2'}}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p99)"><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9 | number: '1.0-2'}}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.throughput)">
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0 | number: '1.0-2'}}</span>
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p95)"><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5 | number: '1.0-2'}}</span>
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p99)"><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9 | number: '1.0-2'}}</span>
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.throughput)">
               <span
                 [className]="comparedData ? _.throughput > 0 ?  'value-negative' : 'value-positive' : ''">{{_.throughput | number: '1.0-2'}}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
               <span
                 [className]="comparedData ? convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) > 0 ? 'value-positive' : 'value-negative' : ''">{{convertBytesToMbps(_.bytesPerSecond
                 + _.bytesSentPerSecond) || 0 | number: '1.0-2' }}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <span
                 [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate | number: '1.0-2'}}</span>
-            </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex) && shouldApdexColumnBeDisplayed()">
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex) && shouldApdexColumnBeDisplayed()">
               <span>
                  {{ calculateApdex(_.apdex?.satisfaction,_.apdex?.toleration, _.samples)}}
                 </span>
-            </td>
-            <td>
+              </td>
+              <td>
                 <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label" [errorRate]="_.errorRate" data-html2canvas-ignore="true">
-              </app-label-health>
-            </td>
-            <td>
-              <app-label-trend *ngIf="!isAnonymous" data-html2canvas-ignore="true"
-                [trendInput]="{ environment: itemData.environment, labelName: _.label }" [params]="params">
-              </app-label-trend>
+                </app-label-health>
+              </td>
+              <td>
+                <app-label-trend *ngIf="!isAnonymous" data-html2canvas-ignore="true"
+                                 [trendInput]="{ environment: itemData.environment, labelName: _.label }" [params]="params">
+                </app-label-trend>
 
-              <a class="jtl-a-primary label-focus" (click)="focusLabel(_.label)" data-html2canvas-ignore="true"><i
+                <a class="jtl-a-primary label-focus" (click)="focusLabel(_.label)" data-html2canvas-ignore="true"><i
                   class="fas fa-search-location fa-sm"></i></a>
-            </td>
-          </tr>
+              </td>
+            </tr>
+            <tr class="collapse-row collapse" #collapse="ngbCollapse" [(ngbCollapse)]="!collapsableSettings[i]" [attr.id]="'collapse-row-' + i">
+              <td colspan="100"><app-label-chart [labelLines]="labelLines" [label]="_.label" [activated]="collapsableSettings[i]"></app-label-chart></td>
+            </tr>
+          </ng-container>
+
         </tbody>
       </table>
     </div>

@@ -10,7 +10,7 @@ import { Metrics } from "../item-detail/metrics";
 })
 export class ItemChartService {
 
-  private plot$ = new BehaviorSubject<ChartLines>({ labelCharts: new Map(), chartLines: null });
+  private plot$ = new BehaviorSubject<ChartLines>({ chartLines: null });
   selectedPlot$ = this.plot$.asObservable();
 
   setCurrentPlot(plot) {
@@ -30,11 +30,10 @@ export class ItemChartService {
     const errorLine = { ...errorLineSettings, ...overAllFailRate, tooltip: { valueSuffix: " %" } };
     const throughputLine = { ...throughputLineSettings, ...overallThroughput, tooltip: { valueSuffix: " reqs/s" } };
 
-    const chartLines = {   
+    const chartLines = {
       overall: new Map(),
       labels: new Map()
      }
-    const labelCharts = new Map()
 
     if (overAllNetworkV2) {
       const networkMbps = overAllNetworkV2.data.map((_) => {
@@ -54,46 +53,30 @@ export class ItemChartService {
         _.data = _.data.map(__ => [__[0], bytesToMbps(__[1])]);
         return _;
       });
-      const networkChartOptions = {
-        ...commonGraphSettings("mbps"),
-        series: [...networkMbps, threadLine], ...logScaleButton
-      };
 
       chartLines.labels.set(Metrics.Network, networkMbps.map((label) => ({ ...label, suffix: " mbps" })));
-      labelCharts.set(Metrics.Network, networkChartOptions);
     }
 
     if (minResponseTime) {
       chartLines.labels.set(Metrics.ResponseTimeMin, minResponseTime.map((label) => ({ ...label,  suffix: " ms" })));
-      labelCharts.set(Metrics.ResponseTimeMin, { ...commonGraphSettings("ms"), series: [...minResponseTime, threadLine] });
     }
 
     if (maxResponseTime) {
       chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime.map((label) => ({ ...label,  suffix: " ms" })));
-      labelCharts.set(Metrics.ResponseTimeMax, { ...commonGraphSettings("ms"), series: [...maxResponseTime, threadLine] });
     }
     if (percentile90) {
       chartLines.labels.set(Metrics.ResponseTimeP90, percentile90.map((label) => ({ ...label,  suffix: " ms" })));
-      labelCharts.set(Metrics.ResponseTimeP90, { ...commonGraphSettings("ms"), series: [...percentile90, threadLine] });
     }
     if (percentile95) {
       chartLines.labels.set(Metrics.ResponseTimeP95, percentile95.map((label) => ({ ...label,  suffix: " ms" })));
-      labelCharts.set(Metrics.ResponseTimeP95, { ...commonGraphSettings("ms"), series: [...percentile95, threadLine] });
     }
     if (percentile99) {
       chartLines.labels.set(Metrics.ResponseTimeP99, percentile99.map((label) => ({ ...label,  suffix: " ms" })));
-      labelCharts.set(Metrics.ResponseTimeP99, { ...commonGraphSettings("ms"), series: [...percentile99, threadLine] });
     }
-
     chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime.map((label) => ({ ...label,  suffix: " ms" })));
-    labelCharts.set(Metrics.ResponseTimeAvg, { ...commonGraphSettings("ms"), series: [...responseTime, threadLine] });
-
-
     chartLines.labels.set(Metrics.Throughput,  throughput.map((label) => ({ ...label,  suffix: " reqs/s" })));
-    labelCharts.set(Metrics.Throughput, { ...commonGraphSettings("reqs/s"), series: [...throughput, threadLine] });
 
-
-    return { labelCharts, chartLines }
+    return { chartLines }
 
   }
 
@@ -102,7 +85,6 @@ export class ItemChartService {
 
 
 interface ChartLines {
-  labelCharts: Map<string, object>,
   chartLines: ChartLine
 }
 

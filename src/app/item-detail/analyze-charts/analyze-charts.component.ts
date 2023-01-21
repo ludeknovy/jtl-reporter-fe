@@ -79,15 +79,15 @@ export class AnalyzeChartsComponent implements OnInit {
       if (Array.isArray(currentChartSeries) && currentChartSeries.length > 0) {
         this.chartLines = plot.chartLines
 
-        const updatedChartSeries = currentChartSeries.map(serie => {
-          const labelChart = serie.label
-          const name = labelChart 
+        const updatedChartSeries = currentChartSeries.map(series => {
+          const labelChart = series.label
+          const name = labelChart
             ? labelChart
             : "overall"
-  
-          return { 
+
+          return {
             name,
-            metric: serie.metric
+            metric: series.metric
           }
         })
         this.updateChart(updatedChartSeries)
@@ -135,7 +135,7 @@ export class AnalyzeChartsComponent implements OnInit {
           id: `${metric}: ${name}`,
           metric,
           label: name,
-          tooltip: { 
+          tooltip: {
             valueSuffix: labelMetric.suffix
           },
           yAxis

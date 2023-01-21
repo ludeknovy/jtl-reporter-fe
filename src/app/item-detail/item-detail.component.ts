@@ -81,7 +81,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
 
   async ngOnInit() {
-    this.spinner.show();
+    await this.spinner.show();
     this.route.params.pipe(
       withLatestFrom(_ => {
         this.sharedMainBarService.setProjectName(_.projectName);
@@ -123,7 +123,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
     this.itemChartService.selectedPlot$.subscribe((value) => {
       this.chartLines = value.chartLines;
-
       if (this.chartLines) {
         const overallChartSeries = Array.from(this.chartLines?.overall?.values());
         this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries))
@@ -224,9 +223,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.externalSearchTerm = $event.label;
   }
 
+
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
         chart.reflow();
     },0);
-}
+  }
 }

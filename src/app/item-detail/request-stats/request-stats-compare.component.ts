@@ -20,6 +20,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   @Input() itemData: ItemDetail;
   @Input() isAnonymous: boolean;
   @Input() params: ItemParams;
+  @Input() labelLines;
 
   @ViewChild("screen") screen: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;
@@ -34,6 +35,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   defaultUnit = true;
   externalSearchTerm = "";
   displayApdexColumn = false;
+  collapsableSettings = {}
 
   constructor(
     private itemsService: ItemsApiService,
@@ -332,5 +334,15 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   shouldApdexColumnBeDisplayed(): boolean {
     return this.displayApdexColumn
+  }
+
+  toggleSectionVisibility(event, index) {
+    // eslint-disable-next-line no-prototype-builtins
+      if (!this.collapsableSettings.hasOwnProperty(index)) {
+        this.collapsableSettings[index] = true
+      } else {
+        this.collapsableSettings[index] = !this.collapsableSettings[index];
+
+      }
   }
 }

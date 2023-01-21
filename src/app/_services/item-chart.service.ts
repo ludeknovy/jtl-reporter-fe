@@ -4,7 +4,6 @@ import { commonGraphSettings, errorLineSettings, networkLineSettings, threadLine
 import { logScaleButton } from "../graphs/log-scale-button";
 import { bytesToMbps } from "../item-detail/calculations";
 import { Metrics } from "../item-detail/metrics";
-import {statusCodesChart} from '../graphs/status-codes';
 
 @Injectable({
   providedIn: "root"

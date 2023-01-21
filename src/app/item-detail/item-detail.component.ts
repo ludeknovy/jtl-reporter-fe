@@ -108,6 +108,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.itemData = results;
         this.monitoringAlerts();
         this.itemChartService.setCurrentPlot(this.itemData.plot)
+        this.selectedPlotSubscription()
         this.calculateTotalRequests();
         this.spinner.hide();
       });
@@ -121,11 +122,17 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       ...overallChartSettings("ms")
     };
 
-    this.statusChartOptions = {
-      ...commonGraphSettings("")
-    }
 
 
+
+
+  }
+
+  ngOnDestroy() {
+    this.toastr.clear();
+  }
+
+  private selectedPlotSubscription () {
     this.itemChartService.selectedPlot$.subscribe((value) => {
       this.chartLines = value.chartLines;
 
@@ -134,6 +141,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries))
 
         if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)){
+          // initialize the chart options only when there are the status codes data
+          this.statusChartOptions = {
+            ...commonGraphSettings("")
+          }
           const statusCodesLines = this.chartLines?.statusCodes.get(Metrics.StatusCodeInTime)
           this.statusChartOptions.series = JSON.parse(JSON.stringify(statusCodesLines.data))
         }
@@ -141,10 +152,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
       this.updateChartFlag = true
     });
-  }
-
-  ngOnDestroy() {
-    this.toastr.clear();
   }
 
   private calculateTotalRequests() {

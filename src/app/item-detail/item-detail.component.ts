@@ -6,10 +6,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { DecimalPipe } from "@angular/common";
 import * as Highcharts from "highcharts";
 import exporting from "highcharts/modules/exporting";
-
-exporting(Highcharts);
-
-import { overallChartSettings } from "../graphs/item-detail";
+import { commonGraphSettings, overallChartSettings } from "../graphs/item-detail";
 import { catchError, withLatestFrom } from "rxjs/operators";
 import { of } from "rxjs";
 import { SharedMainBarService } from "../shared-main-bar.service";
@@ -20,6 +17,8 @@ import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
 import { ItemChartService } from "../_services/item-chart.service";
+exporting(Highcharts);
+
 
 @Component({
   selector: "app-item-detail",
@@ -52,6 +51,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     userSettings: null,
   };
   overallChartOptions;
+  statusChartOptions;
   updateChartFlag = false;
   monitoringChart;
   itemParams;
@@ -108,6 +108,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.itemData = results;
         this.monitoringAlerts();
         this.itemChartService.setCurrentPlot(this.itemData.plot)
+        this.selectedPlotSubscription()
         this.calculateTotalRequests();
         this.spinner.hide();
       });
@@ -121,20 +122,35 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       ...overallChartSettings("ms")
     };
 
+
+
+
+
+  }
+
+  ngOnDestroy() {
+    this.toastr.clear();
+  }
+
+  private selectedPlotSubscription () {
     this.itemChartService.selectedPlot$.subscribe((value) => {
       this.chartLines = value.chartLines;
       if (this.chartLines) {
         const overallChartSeries = Array.from(this.chartLines?.overall?.values());
         this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries))
 
+        if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)){
+          // initialize the chart options only when there are the status codes data
+          this.statusChartOptions = {
+            ...commonGraphSettings("")
+          }
+          const statusCodesLines = this.chartLines?.statusCodes.get(Metrics.StatusCodeInTime)
+          this.statusChartOptions.series = JSON.parse(JSON.stringify(statusCodesLines.data))
+        }
       }
 
       this.updateChartFlag = true
     });
-  }
-
-  ngOnDestroy() {
-    this.toastr.clear();
   }
 
   private calculateTotalRequests() {

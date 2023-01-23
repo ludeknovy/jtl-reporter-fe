@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { commonGraphSettings, errorLineSettings, networkLineSettings, threadLineSettings, throughputLineSettings } from "../graphs/item-detail";
-import { logScaleButton } from "../graphs/log-scale-button";
+import { errorLineSettings, networkLineSettings, threadLineSettings, throughputLineSettings } from "../graphs/item-detail";
 import { bytesToMbps } from "../item-detail/calculations";
 import { Metrics } from "../item-detail/metrics";
 
@@ -23,7 +22,7 @@ export class ItemChartService {
       threads, overallTimeResponse,
       overallThroughput, overAllFailRate, overAllNetworkV2,
       responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
-      percentile95, percentile99,
+      percentile95, percentile99, statusCodes
     } = plot;
 
     const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
@@ -32,7 +31,8 @@ export class ItemChartService {
 
     const chartLines = {
       overall: new Map(),
-      labels: new Map()
+      labels: new Map(),
+      statusCodes: new Map()
      }
 
     if (overAllNetworkV2) {
@@ -41,6 +41,11 @@ export class ItemChartService {
       });
       const networkLine = { ...networkLineSettings, data: networkMbps, tooltip: { valueSuffix: " mbps" } };
       chartLines.overall.set(Metrics.Network, networkLine);
+    }
+
+    // not all reports have status code plot data
+    if (statusCodes) {
+      chartLines.statusCodes.set(Metrics.StatusCodeInTime, { data: statusCodes })
     }
 
     chartLines.overall.set(Metrics.ResponseTimeAvg, { ...overallTimeResponse, tooltip: { valueSuffix: " ms" } });

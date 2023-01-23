@@ -5,3 +5,7 @@
 #download {
   display: none;
 }
+
+.expand-button {
+  width: 30px;
+}

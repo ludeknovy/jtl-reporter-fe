@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import * as Highcharts from "highcharts";
 import { commonGraphSettings } from "src/app/graphs/item-detail";
 import * as deepmerge from "deepmerge";
-import { LabelChartLine } from "src/app/_services/item-chart.service";
+import { ChartLine } from "src/app/_services/item-chart.service";
 import { Metrics } from "../metrics";
 
 @Component({
@@ -12,19 +12,20 @@ import { Metrics } from "../metrics";
 })
 export class LabelChartComponent implements OnInit, OnChanges {
 
-  @Input() labelLines: Map<Metrics, LabelChartLine[]>;
+  @Input() chartLines: ChartLine;
   @Input() label: string;
-  @Input() activated: boolean
+  @Input() activated: boolean;
   Highcharts: typeof Highcharts = Highcharts;
-  labelChartMetric = Metrics.ResponseTimeP90;
+  chartMetric = "Response Times";
   labelCompareChartMetric;
   labelChartOptions = commonGraphSettings("reqs/s");
   updateLabelChartFlag = false;
   chartKeys;
   chartShouldExpand = false;
   chart: Highcharts.Chart;
-  chartCallback
+  chartCallback;
   labelCharts = new Map();
+  private responseTimeMetricGroup: string[];
 
   metricChartMap = new Map([
     [Metrics.Throughput, commonGraphSettings("reqs/s")],
@@ -35,22 +36,32 @@ export class LabelChartComponent implements OnInit, OnChanges {
     [Metrics.ResponseTimeP90, commonGraphSettings("ms")],
     [Metrics.ResponseTimeP95, commonGraphSettings("ms")],
     [Metrics.ResponseTimeP99, commonGraphSettings("ms")],
-  ])
+  ]);
 
   constructor() {
     this.chartCallback = chart => {
       this.chart = chart;
     };
+    this.responseTimeMetricGroup = [
+      Metrics.ResponseTimeP90, Metrics.ResponseTimeAvg, Metrics.ResponseTimeMin,
+      Metrics.ResponseTimeMax, Metrics.ResponseTimeP95, Metrics.ResponseTimeP99];
   }
 
   ngOnInit() {
-    const availableMetrics = Array.from(this.labelLines.keys())
-    availableMetrics.forEach(metric => {
-      const labelMetricsData = this.labelLines.get(metric).find(data => data.name === this.label);
-      const chartSettings = this.metricChartMap.get(metric)
-      this.labelCharts.set(metric, { ...chartSettings, series: [labelMetricsData ] })
-    })
-    this.labelChartOptions = commonGraphSettings("ms")
+    const threadLine = this.chartLines.overall.get(Metrics.Threads);
+    const availableMetrics = Array.from(this.chartLines.labels.keys());
+    const responseTimesSeries = [];
+    availableMetrics.forEach((metric: Metrics) => {
+      const labelMetricsData = this.chartLines.labels.get(metric).find(data => data.name === this.label);
+      const chartSettings = this.metricChartMap.get(metric);
+      if (this.responseTimeMetricGroup.includes(metric)) {
+        responseTimesSeries.push({ data: labelMetricsData.data, suffix: labelMetricsData.suffix, name: metric, yAxis: 0 });
+      } else {
+        this.labelCharts.set(metric, { ...chartSettings, series: [labelMetricsData, threadLine] });
+      }
+    });
+    this.labelCharts.set("Response Times", { ...commonGraphSettings("ms"), series: [...responseTimesSeries, threadLine] });
+    this.labelChartOptions = commonGraphSettings("ms");
     this.updateLabelChartFlag = true;
     this.getChartsKey();
 
@@ -58,8 +69,8 @@ export class LabelChartComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.activated.currentValue) {
-      this.changeChart({ target: { innerText: Metrics.ResponseTimeP90 } })
-      this.chart.reflow()
+      this.changeChart({ target: { innerText: this.chartMetric } });
+      this.chart.reflow();
     }
   }
 
@@ -70,8 +81,8 @@ export class LabelChartComponent implements OnInit, OnChanges {
 
 
   changeChart(event) {
-    this.labelChartMetric = event.target.innerText;
-    this.labelChartOptions = deepmerge(this.labelCharts.get(this.labelChartMetric), {})
+    this.chartMetric = event.target.innerText;
+    this.labelChartOptions = deepmerge(this.labelCharts.get(this.chartMetric), {});
     this.updateLabelChartFlag = true;
   }
 
@@ -82,3 +93,5 @@ export class LabelChartComponent implements OnInit, OnChanges {
   }
 
 }
+
+

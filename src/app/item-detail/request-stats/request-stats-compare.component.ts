@@ -20,7 +20,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   @Input() itemData: ItemDetail;
   @Input() isAnonymous: boolean;
   @Input() params: ItemParams;
-  @Input() labelLines;
+  @Input() chartLines;
 
   @ViewChild("screen") screen: ElementRef;
   @ViewChild("canvas") canvas: ElementRef;

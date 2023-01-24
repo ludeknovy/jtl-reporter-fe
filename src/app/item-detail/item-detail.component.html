@@ -323,11 +323,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col tab-charts">
-                  <app-label-chart></app-label-chart>
-                </div>
-              </div>
+
             </ng-template>
           </li>
           <li ngbNavItem [ngbNavItem]="2">
@@ -406,7 +402,7 @@
     </div>
     <div class="row" *ngIf="itemData">
       <div class="col">
-        <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams"></app-request-stats-compare>
+        <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams" [chartLines]="chartLines"></app-request-stats-compare>
       </div>
     </div>
   </div>

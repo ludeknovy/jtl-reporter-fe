@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { HighchartsChartModule } from "highcharts-angular";
 import { LabelChartComponent } from "./label-chart.component";
+import { Metrics } from "../metrics";
 
 describe("LabelChartComponent", () => {
   let component: LabelChartComponent;
@@ -20,8 +21,10 @@ describe("LabelChartComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LabelChartComponent);
     component = fixture.componentInstance;
-    component.labelCharts = new Map([
-      ["Throughput", {}]]);
+    component.chartLines = {
+      labels: new Map([[Metrics.Network, [{ name: "name", suffix: "mbps", data: [] }] ]]),
+      overall: new Map([[Metrics.Threads, { name: "virtual-users", data: [] }]])
+    };
     fixture.detectChanges();
   });
 

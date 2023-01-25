@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import * as Highcharts from "highcharts";
 import { commonGraphSettings } from "src/app/graphs/item-detail";
 import * as deepmerge from "deepmerge";
@@ -10,7 +10,7 @@ import { Metrics } from "../metrics";
   templateUrl: "./label-chart.component.html",
   styleUrls: ["./label-chart.component.css", "../item-detail.component.scss"]
 })
-export class LabelChartComponent implements OnInit, OnChanges {
+export class LabelChartComponent implements OnChanges {
 
   @Input() chartLines: ChartLine;
   @Input() label: string;
@@ -48,7 +48,6 @@ export class LabelChartComponent implements OnInit, OnChanges {
       Metrics.ResponseTimeMax, Metrics.ResponseTimeP95, Metrics.ResponseTimeP99];
   }
 
-  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
 

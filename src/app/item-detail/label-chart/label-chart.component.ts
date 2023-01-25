@@ -25,6 +25,7 @@ export class LabelChartComponent implements OnInit, OnChanges {
   chart: Highcharts.Chart;
   chartCallback;
   labelCharts = new Map();
+  expanded = false
   private responseTimeMetricGroup: string[];
 
   metricChartMap = new Map([
@@ -47,7 +48,29 @@ export class LabelChartComponent implements OnInit, OnChanges {
       Metrics.ResponseTimeMax, Metrics.ResponseTimeP95, Metrics.ResponseTimeP99];
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    // chart expanded
+    if (!changes.activated?.previousValue && changes.activated?.currentValue) {
+      this.setChartAggregation()
+      this.getChartsKey();
+      this.changeChart({ target: { innerText: this.chartMetric } });
+      this.chart.reflow();
+      this.expanded = true
+    }
+    // aggregation changed, we need to refresh the data but only for opened charts
+    if (changes.chartLines?.currentValue && this.expanded) {
+      console.log("AGG RELOAD")
+      this.chartLines = changes.chartLines.currentValue
+      this.setChartAggregation()
+      this.changeChart({ target: { innerText: this.chartMetric } });
+    }
+
+  }
+
+  private setChartAggregation() {
     const threadLine = this.chartLines.overall.get(Metrics.Threads);
     const availableMetrics = Array.from(this.chartLines.labels.keys());
     const responseTimesSeries = [];
@@ -61,17 +84,6 @@ export class LabelChartComponent implements OnInit, OnChanges {
       }
     });
     this.labelCharts.set("Response Times", { ...commonGraphSettings("ms"), series: [...responseTimesSeries, threadLine] });
-    this.labelChartOptions = commonGraphSettings("ms");
-    this.updateLabelChartFlag = true;
-    this.getChartsKey();
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.activated.currentValue) {
-      this.changeChart({ target: { innerText: this.chartMetric } });
-      this.chart.reflow();
-    }
   }
 
 

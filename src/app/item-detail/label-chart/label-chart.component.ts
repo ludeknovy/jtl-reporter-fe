@@ -37,6 +37,7 @@ export class LabelChartComponent implements OnChanges {
     [Metrics.ResponseTimeP90, commonGraphSettings("ms")],
     [Metrics.ResponseTimeP95, commonGraphSettings("ms")],
     [Metrics.ResponseTimeP99, commonGraphSettings("ms")],
+    [Metrics.ErrorRate, commonGraphSettings("%")]
   ]);
 
   constructor() {
@@ -78,7 +79,7 @@ export class LabelChartComponent implements OnChanges {
       if (this.responseTimeMetricGroup.includes(metric)) {
         responseTimesSeries.push({ data: labelMetricsData.data, suffix: labelMetricsData.suffix, name: metric, yAxis: 0 });
       } else {
-        this.labelCharts.set(metric, { ...chartSettings, series: [labelMetricsData, threadLine] });
+        this.labelCharts.set(metric, { ...chartSettings, series: [{ data: labelMetricsData.data, suffix: labelMetricsData.suffix, name: metric }, threadLine] });
       }
     });
     this.labelCharts.set("Response Times", { ...commonGraphSettings("ms"), series: [...responseTimesSeries, threadLine] });

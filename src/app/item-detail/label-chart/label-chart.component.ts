@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import * as Highcharts from "highcharts";
 import { commonGraphSettings } from "src/app/graphs/item-detail";
 import * as deepmerge from "deepmerge";
@@ -10,7 +10,7 @@ import { Metrics } from "../metrics";
   templateUrl: "./label-chart.component.html",
   styleUrls: ["./label-chart.component.css", "../item-detail.component.scss"]
 })
-export class LabelChartComponent implements OnInit, OnChanges {
+export class LabelChartComponent implements OnChanges {
 
   @Input() chartLines: ChartLine;
   @Input() label: string;
@@ -25,6 +25,7 @@ export class LabelChartComponent implements OnInit, OnChanges {
   chart: Highcharts.Chart;
   chartCallback;
   labelCharts = new Map();
+  expanded = false
   private responseTimeMetricGroup: string[];
 
   metricChartMap = new Map([
@@ -47,7 +48,27 @@ export class LabelChartComponent implements OnInit, OnChanges {
       Metrics.ResponseTimeMax, Metrics.ResponseTimeP95, Metrics.ResponseTimeP99];
   }
 
-  ngOnInit() {
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    // chart expanded
+    if (!changes.activated?.previousValue && changes.activated?.currentValue) {
+      this.setChartAggregation()
+      this.getChartsKey();
+      this.changeChart({ target: { innerText: this.chartMetric } });
+      this.chart.reflow();
+      this.expanded = true
+    }
+    // aggregation changed, we need to refresh the data but only for opened charts
+    if (changes.chartLines?.currentValue && this.expanded) {
+      this.chartLines = changes.chartLines.currentValue
+      this.setChartAggregation()
+      this.changeChart({ target: { innerText: this.chartMetric } });
+    }
+
+  }
+
+  private setChartAggregation() {
     const threadLine = this.chartLines.overall.get(Metrics.Threads);
     const availableMetrics = Array.from(this.chartLines.labels.keys());
     const responseTimesSeries = [];
@@ -61,17 +82,6 @@ export class LabelChartComponent implements OnInit, OnChanges {
       }
     });
     this.labelCharts.set("Response Times", { ...commonGraphSettings("ms"), series: [...responseTimesSeries, threadLine] });
-    this.labelChartOptions = commonGraphSettings("ms");
-    this.updateLabelChartFlag = true;
-    this.getChartsKey();
-
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.activated.currentValue) {
-      this.changeChart({ target: { innerText: this.chartMetric } });
-      this.chart.reflow();
-    }
   }
 
 

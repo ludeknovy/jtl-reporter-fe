@@ -62,7 +62,6 @@ export class LabelChartComponent implements OnInit, OnChanges {
     }
     // aggregation changed, we need to refresh the data but only for opened charts
     if (changes.chartLines?.currentValue && this.expanded) {
-      console.log("AGG RELOAD")
       this.chartLines = changes.chartLines.currentValue
       this.setChartAggregation()
       this.changeChart({ target: { innerText: this.chartMetric } });

@@ -22,7 +22,7 @@ export class ItemChartService {
       threads, overallTimeResponse,
       overallThroughput, overAllFailRate, overAllNetworkV2,
       responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
-      percentile95, percentile99, statusCodes
+      percentile95, percentile99, statusCodes, errorRate,
     } = plot;
 
     const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
@@ -77,6 +77,9 @@ export class ItemChartService {
     }
     if (percentile99) {
       chartLines.labels.set(Metrics.ResponseTimeP99, percentile99.map((label) => ({ ...label,  suffix: " ms" })));
+    }
+    if (errorRate) {
+      chartLines.labels.set(Metrics.ErrorRate, errorRate.map((label) => ({ ...label, suffix: " %" })))
     }
     chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime.map((label) => ({ ...label,  suffix: " ms" })));
     chartLines.labels.set(Metrics.Throughput,  throughput.map((label) => ({ ...label,  suffix: " reqs/s" })));

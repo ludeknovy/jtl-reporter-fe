@@ -82,7 +82,7 @@
               <mfDefaultSorter by="throughput">reqs/s {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
-              <mfDefaultSorter by="bytes">network [{{ defaultUnit ? "mbps" : "%" }}]</mfDefaultSorter>
+              <mfDefaultSorter [by]="sortByNetwork">network [{{ defaultUnit ? "mbps" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>

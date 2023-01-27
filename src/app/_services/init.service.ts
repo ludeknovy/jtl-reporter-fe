@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
@@ -9,7 +9,8 @@ export class InitService {
 
   constructor(private http: HttpClient) { }
 
-  fetchInfo(): Observable<{ initialized: boolean }> {
-    return this.http.get<{ initialized: boolean }>("info");
+  fetchInfo(): Observable<HttpResponse<{ initialized: boolean }>> {
+    return this.http.get<{ initialized: boolean }>("info", { observe: "response" });
   }
+
 }

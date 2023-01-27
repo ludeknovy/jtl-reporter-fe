@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AuthenticationService } from "../_services/authentication.service";
 import { first } from "rxjs/operators";
 import { InitService } from "../_services/init.service";
+import { NotificationService } from "../_services/notification.service";
+import { NotificationMessage } from "../notification/notification-messages";
 
 @Component({
   selector: "app-login",
@@ -24,7 +26,10 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private initService: InitService,
-    ) { }
+    private notification: NotificationMessage,
+    private notificationService: NotificationService,
+  ) {
+  }
 
   ngOnInit() {
     // reset login status
@@ -32,12 +37,17 @@ export class LoginComponent implements OnInit {
 
     // slow down to give top panel time to disappear
     new Promise(resolve => setTimeout(resolve, 0)).then();
-    this.initService.fetchInfo().subscribe((res) => {
-      if (res.initialized === false) {
-        this.router.navigate(["init"]);
-      }
-      this.initLoaded = true;
-    });
+    this.initService.fetchInfo()
+      .subscribe((res) => {
+        if (res?.body?.initialized === false) {
+          this.router.navigate(["init"]);
+        }
+        this.initLoaded = true;
+      }, (res) => {
+        const message = this.notification.appInitialization(res);
+        this.notificationService.showNotification(message);
+
+      });
 
 
     this.loginForm = this.formBuilder.group({

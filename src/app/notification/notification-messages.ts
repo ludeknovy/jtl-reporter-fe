@@ -82,6 +82,10 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, "Thresholds were updated");
   }
 
+  appInitialization(response) {
+    return this.statusCodeMessage(response, "")
+  }
+
   private statusCodeMessage(response, successMessage) {
     let message = { success: false, message:  (typeof response === "string" && response?.includes("Unexpected error")) ? response : "Unexpected error occurred" };
     if (response.status >= 200 && response.status < 300) {

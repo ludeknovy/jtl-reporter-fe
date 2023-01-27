@@ -321,6 +321,10 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     return roundNumberTwoDecimals(((item.apdex.satisfaction + ( item.apdex.toleration * 0.5)) / item.samples))
   }
 
+  public sortByNetwork(item) {
+    return roundNumberTwoDecimals(item.bytesPerSecond + item.bytesSentPerSecond)
+  }
+
   private apdexScore(apdexValue: number): string {
     const score = [
       { rangeFrom: 0.94, rangeTo: 1, name: "Excellent" },

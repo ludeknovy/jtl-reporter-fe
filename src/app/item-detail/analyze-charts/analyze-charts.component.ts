@@ -146,8 +146,8 @@ export class AnalyzeChartsComponent implements OnInit {
     // hide all axis
     this.customChartsOptions.yAxis.forEach(axis => axis.visible = false)
     // display only actual axis
-    chartSeries.forEach(serie => {
-      this.customChartsOptions.yAxis[serie.yAxis].visible = true
+    chartSeries.forEach(series => {
+      this.customChartsOptions.yAxis[series.yAxis].visible = true
       })
     this.customChartsOptions.series = JSON.parse(JSON.stringify(chartSeries));
     this.updateLabelChartFlag = true;

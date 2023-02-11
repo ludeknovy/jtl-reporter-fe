@@ -37,6 +37,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     plot: null,
     extraPlotData: null,
     reportStatus: null,
+    histogramPlotData: null,
     hostname: null,
     statistics: [],
     name: null,
@@ -121,11 +122,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.overallChartOptions = {
       ...overallChartSettings("ms")
     };
-
-
-
-
-
   }
 
   ngOnDestroy() {

@@ -204,6 +204,56 @@ export const customChartSettings = () => {
  };
 };
 
+export const responseTimeDistribution = (data) => {
+  return {
+    chart: {
+      type: "column"
+    },
+    title: {
+      text: ""
+    },
+    subtitle: {
+      text: ""
+    },
+    legend:{ enabled:false },
+    xAxis: {
+      crosshair: true,
+      type: "category",
+      min: 0,
+      categories: data.map((value, index) => index * 100)
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: ""
+      }
+    },
+    tooltip: {
+      shared: true,
+      useHTML: true,
+      valueSuffix: "",
+      valueDecimals: 0,
+      formatter: function () {
+        return `${this.y} responses were between ${this.x} and ${this.x + 100} ms`;
+      }
+    },
+    plotOptions: {
+      column: {
+        pointPadding: 0,
+        borderWidth: 0,
+        groupPadding: 0,
+        shadow: false
+      }
+    },
+    series: [{
+      data,
+      type: "column",
+      id: "histogram",
+      name: "Response times"
+    }]
+  }
+}
+
 
 export const threadLineSettings: any = {
   color: "grey",

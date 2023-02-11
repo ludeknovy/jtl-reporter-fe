@@ -39,6 +39,9 @@ export interface ItemDetail {
   environment: string;
   plot: ItemDataPlot;
   extraPlotData: ItemExtraPlot[];
+  histogramPlotData?: {
+    responseTimePerLabelDistribution?: ResponseTimePerLabelDistribution[]
+  }
   statistics: ItemStatistics[];
   thresholds?: {
     passed: boolean,
@@ -285,4 +288,9 @@ export interface UpsertItemChartSettings {
     name: string;
     data: [number, number];
   }];
+}
+
+export interface ResponseTimePerLabelDistribution {
+  label: string
+  values: number[]
 }

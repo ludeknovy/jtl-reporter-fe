@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
 import * as Highcharts from "highcharts";
 import { commonGraphSettings, responseTimeDistribution } from "src/app/graphs/item-detail";
 import * as deepmerge from "deepmerge";

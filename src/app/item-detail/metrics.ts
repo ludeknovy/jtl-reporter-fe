@@ -6,6 +6,7 @@ export enum Metrics {
   ResponseTimeAvg = "Response Time [avg]",
   ResponseTimeMin = "Response Time [min]",
   ResponseTimeMax = "Response Time [max]",
+  ResponseTimeMedian = "Response Time [median]",
   ResponseTimeP90 = "Response Time [P90]",
   ResponseTimeP95 = "Response Time [P95]",
   ResponseTimeP99 = "Response Time [P99]",

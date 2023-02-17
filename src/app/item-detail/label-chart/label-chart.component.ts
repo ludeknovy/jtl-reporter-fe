@@ -35,6 +35,7 @@ export class LabelChartComponent implements OnChanges {
     [Metrics.Throughput, commonGraphSettings("reqs/s")],
     [Metrics.Network, commonGraphSettings("mbps")],
     [Metrics.ResponseTimeAvg, commonGraphSettings("ms")],
+    [Metrics.ResponseTimeMedian, commonGraphSettings("ms")],
     [Metrics.ResponseTimeMax, commonGraphSettings("ms")],
     [Metrics.ResponseTimeMin, commonGraphSettings("ms")],
     [Metrics.ResponseTimeP90, commonGraphSettings("ms")],
@@ -49,7 +50,9 @@ export class LabelChartComponent implements OnChanges {
     };
     this.responseTimeMetricGroup = [
       Metrics.ResponseTimeP90, Metrics.ResponseTimeAvg, Metrics.ResponseTimeMin,
-      Metrics.ResponseTimeMax, Metrics.ResponseTimeP95, Metrics.ResponseTimeP99];
+      Metrics.ResponseTimeMax, Metrics.ResponseTimeP95, Metrics.ResponseTimeP99,
+      Metrics.ResponseTimeMedian,
+    ];
   }
 
 

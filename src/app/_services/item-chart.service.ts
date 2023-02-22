@@ -3,6 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { errorLineSettings, networkLineSettings, threadLineSettings, throughputLineSettings } from "../graphs/item-detail";
 import { bytesToMbps } from "../item-detail/calculations";
 import { Metrics } from "../item-detail/metrics";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: "root"
@@ -22,7 +23,7 @@ export class ItemChartService {
       threads, overallTimeResponse,
       overallThroughput, overAllFailRate, overAllNetworkV2,
       responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
-      percentile95, percentile99, statusCodes, errorRate,
+      percentile95, percentile99, statusCodes, errorRate, scatterPlotData
     } = plot;
 
     const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
@@ -31,6 +32,7 @@ export class ItemChartService {
 
     const chartLines = {
       overall: new Map(),
+      scatter: new Map(),
       labels: new Map(),
       statusCodes: new Map()
      }
@@ -52,6 +54,7 @@ export class ItemChartService {
     chartLines.overall.set(Metrics.Threads, threadLine);
     chartLines.overall.set(Metrics.ErrorRate, errorLine);
     chartLines.overall.set(Metrics.Throughput, throughputLine);
+    chartLines.scatter.set(Metrics.ResponseTimeRaw, scatterPlotData)
 
     if (networkV2) {
       const networkMbps = networkV2.map((_) => {
@@ -99,6 +102,7 @@ interface ChartLines {
 export interface ChartLine {
   labels: Map<string, LabelChartLine[]>
   overall: Map<string, { name: string, data: [] }>
+  scatter: Map<string,{ data: [] } >
 }
 
 export interface LabelChartLine {

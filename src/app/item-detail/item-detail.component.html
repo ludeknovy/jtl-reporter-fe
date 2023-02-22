@@ -310,6 +310,30 @@
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div class="row charts">
+                <div class="col tab-charts" *ngIf="statusChartOptions">
+                  <div class="card card-shadow" *ngIf="scatterChartOptions">
+                    <h6 class="card-header bg-transparent">
+                      Response Time - Scatter Chart
+                    </h6>
+                    <div class="card-body">
+                      <div class="chart" id="scatterChartAnchor">
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="scatterChartOptions"
+                                          [(update)]="updateScatterChartFlag" style="width: 100%; height: 350px; display: block;">
+                        </highcharts-chart>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+                </div>
+              <div class="row charts">
                 <div class="col tab-charts" *ngIf="statusChartOptions">
                   <div class="card overview-chart-card card-shadow">
                     <h6 class="card-header bg-transparent">Status Codes Chart</h6>
@@ -323,6 +347,8 @@
                   </div>
                 </div>
               </div>
+
+
 
             </ng-template>
           </li>

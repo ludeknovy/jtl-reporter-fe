@@ -276,5 +276,63 @@ export const networkLineSettings: any = {
   name: "network"
 };
 
-export const responseTimeLineSettings: any = {
-};
+export const scatterChart = {
+  chart: {
+    type: "scatter",
+    zoomType: "xy"
+  },
+  title: {
+    text: ""
+  },
+  time: {
+    getTimezoneOffset: function (timestamp) {
+      const d = new Date();
+      const timezoneOffset = d.getTimezoneOffset();
+      return timezoneOffset;
+    }
+  },
+  xAxis: {
+    showLastLabel: true,
+    type: "datetime",
+    legend: {
+      enabled: false,
+    },
+  },
+  tooltip: {
+    pointFormat: "{point.y} ms"
+  },
+  yAxis: {
+    lineWidth: 0,
+    gridLineColor: "#f2f2f2",
+    title: {
+      text: "ms"
+    },
+    labels: {
+      format: "{value} ms"
+    }
+  },
+  legend: {
+    enabled: false
+  },
+  series: null,
+  plotOptions: {
+    scatter: {
+      marker: {
+        radius: 2.5,
+        symbol: "circle",
+        states: {
+          hover: {
+            enabled: true,
+          }
+        }
+      },
+      states: {
+        hover: {
+          marker: {
+            enabled: false
+          }
+        }
+      }
+    }
+  },
+}

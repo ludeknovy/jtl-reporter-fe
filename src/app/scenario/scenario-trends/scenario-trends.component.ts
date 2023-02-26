@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Router } from "@angular/router";
 import * as Highcharts from "highcharts";
 import * as moment from "moment";
@@ -60,6 +60,9 @@ export class ScenarioTrendsComponent implements OnInit {
 
   ngOnInit() {
     this.scenarioService.trends$.subscribe((_: { aggregatedTrends: ScenarioTrendsData[], labelTrends: LabelTrendsData[], userSettings: ScenarioTrendsUserSettings }) => {
+      if (!_) {
+        return
+      }
       this.userSettings = _.userSettings
       this.generateAggregateChartLines(_.aggregatedTrends);
       this.generateLabelChartLines(_.labelTrends);

@@ -320,4 +320,9 @@ export interface ResponseTimePerLabelDistribution {
 
 export interface ScenarioTrendsUserSettings {
   aggregatedTrends: boolean
+  labelMetrics: {
+    errorRate: boolean
+    percentile90: boolean
+    throughput: boolean
+  }
 }

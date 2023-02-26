@@ -28,6 +28,9 @@ export class ScenarioTrendsComponent implements OnInit {
   labelScenarioTrendChartThroughputOption = {
     ...commonGraphSettings("req/s", "Throughput"), series: []
   };
+  labelScenarioTrendChartErrorRateOption = {
+    ...commonGraphSettings("%", "ErrorRate"), series: []
+  }
   userSettings: ScenarioTrendsUserSettings;
   chartDataMapping;
   itemIds;
@@ -119,6 +122,7 @@ export class ScenarioTrendsComponent implements OnInit {
     }
     this.labelScenarioTrendChartP90Option.series = JSON.parse(JSON.stringify(seriesP90));
     this.labelScenarioTrendChartThroughputOption.series = JSON.parse(JSON.stringify(seriesThroughput))
+    this.labelScenarioTrendChartErrorRateOption.series = JSON.parse(JSON.stringify(seriesErrorRate))
     this.updateLabelScenarioTrendsChartFlag = true;
   }
 

@@ -23,7 +23,7 @@ import {
 } from "./external-notification/delete-external-notification/delete-external-notification.component";
 import { RoleModule } from "../_directives/role.module";
 import { AddNewItemModule } from "./add-new-item/add-new-item.module";
-import { ScenarioTrendsSettingsComponent } from './scenario-trends/scenario-trends-settings/scenario-trends-settings.component';
+import { ScenarioTrendsSettingsComponent } from "./scenario-trends/scenario-trends-settings/scenario-trends-settings.component";
 
 
 const routes: Routes = [

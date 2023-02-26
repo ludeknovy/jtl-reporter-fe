@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ScenarioTrendsSettingsComponent } from './scenario-trends-settings.component';
+import { ScenarioTrendsSettingsComponent } from "./scenario-trends-settings.component";
 
-describe('ScenarioTrendsSettingsComponent', () => {
+describe("ScenarioTrendsSettingsComponent", () => {
   let component: ScenarioTrendsSettingsComponent;
   let fixture: ComponentFixture<ScenarioTrendsSettingsComponent>;
 
@@ -19,7 +19,7 @@ describe('ScenarioTrendsSettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

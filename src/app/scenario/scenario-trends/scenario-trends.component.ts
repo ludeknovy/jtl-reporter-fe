@@ -50,6 +50,14 @@ export class ScenarioTrendsComponent implements OnInit {
     ]);
   }
 
+  chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
+    setTimeout(() => {
+      chart.reflow();
+    }, 0);
+  };
+
+
+
   ngOnInit() {
     this.scenarioService.trends$.subscribe((_: { aggregatedTrends: ScenarioTrendsData[], labelTrends: LabelTrendsData[], userSettings: ScenarioTrendsUserSettings }) => {
       this.userSettings = _.userSettings

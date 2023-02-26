@@ -1,7 +1,7 @@
 const EXPORTING_SOURCE_WIDTH = 1920
 const EXPORTING_SOURCE_HEIGHT = 500
 
-export const commonGraphSettings: any = (text) => {
+export const commonGraphSettings: any = (text, title = "") => {
   return {
     chart: {
       type: "line",
@@ -26,7 +26,7 @@ export const commonGraphSettings: any = (text) => {
       },
     },
     title: {
-      text: ""
+      text: title,
     },
     colors: ["#5DADE2", "#2ECC71", "#F4D03F", "#D98880",
       "#707B7C", "#7DCEA0", "#21618C", "#873600", "#AF7AC5", "#B7950B"],

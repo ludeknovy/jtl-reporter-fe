@@ -78,8 +78,8 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, "Link was deleted");
   }
 
-  scenarioThresholdUpdate(response) {
-    return this.statusCodeMessage(response, "Thresholds were updated");
+  scenarioTrendsSettingsNotification(response) {
+    return this.statusCodeMessage(response, "Scenario trend settings updated");
   }
 
   appInitialization(response) {

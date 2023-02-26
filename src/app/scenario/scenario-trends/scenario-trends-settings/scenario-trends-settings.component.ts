@@ -99,6 +99,7 @@ export class ScenarioTrendsSettingsComponent implements OnInit {
           this.scenarioService.updateScenarioTrends({ userSettings: body })
         })
       this.modalService.dismissAll()
+      this.scenarioTrendsSettingsForm.reset()
 
     }
   }

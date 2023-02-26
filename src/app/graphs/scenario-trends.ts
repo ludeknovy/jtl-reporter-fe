@@ -261,14 +261,6 @@ export const labelTrends: any = (text, title = "") => {
         text
       },
     },
-      {
-        gridLineColor: "#f2f2f2",
-        lineWidth: 0,
-        opposite: true,
-        title: {
-          text: "virtual users"
-        }
-      },
     ],
   };
 };

@@ -1,13 +1,12 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as Highcharts from "highcharts";
 import * as moment from "moment";
-import { customScenarioTrends } from "src/app/graphs/scenario-trends";
+import { customScenarioTrends, labelTrends } from "src/app/graphs/scenario-trends";
 import { Series } from "src/app/graphs/series.model";
 import { bytesToMbps } from "src/app/item-detail/calculations";
 import { LabelTrendsData, ScenarioTrendsData, ScenarioTrendsUserSettings } from "src/app/items.service.model";
 import { ScenarioService } from "src/app/scenario.service";
-import { commonGraphSettings } from "../../graphs/item-detail";
 
 @Component({
   selector: "app-scenario-trends",
@@ -23,18 +22,18 @@ export class ScenarioTrendsComponent implements OnInit {
     ...customScenarioTrends(), series: []
   };
   labelScenarioTrendChartP90Option = {
-    ...commonGraphSettings("ms", "Response Time [P90]"), series: []
+    ...labelTrends("ms", "Response Time [P90]"), series: []
   };
   labelScenarioTrendChartThroughputOption = {
-    ...commonGraphSettings("req/s", "Throughput"), series: []
+    ...labelTrends("req/s", "Throughput"), series: []
   };
   labelScenarioTrendChartErrorRateOption = {
-    ...commonGraphSettings("%", "ErrorRate"), series: []
-  }
+    ...labelTrends("%", "ErrorRate"), series: []
+  };
   userSettings: ScenarioTrendsUserSettings;
   chartDataMapping;
-  itemIds;
-  labelDataTruncated = false
+  itemIds = new Set();
+  labelDataTruncated = false;
 
   constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
@@ -57,13 +56,12 @@ export class ScenarioTrendsComponent implements OnInit {
   };
 
 
-
   ngOnInit() {
     this.scenarioService.trends$.subscribe((_: { aggregatedTrends: ScenarioTrendsData[], labelTrends: LabelTrendsData[], userSettings: ScenarioTrendsUserSettings }) => {
       if (!_) {
-        return
+        return;
       }
-      this.userSettings = _.userSettings
+      this.userSettings = _.userSettings;
       this.generateAggregateChartLines(_.aggregatedTrends);
       this.generateLabelChartLines(_.labelTrends);
     });
@@ -116,24 +114,25 @@ export class ScenarioTrendsComponent implements OnInit {
     }
 
     const seriesP90 = [];
-    const seriesErrorRate = []
-    const seriesThroughput = []
+    const seriesErrorRate = [];
+    const seriesThroughput = [];
 
     for (const key of Object.keys(data)) {
       if (seriesP90.length < 20) {
-        seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => [moment(dataValue[0]).valueOf(), dataValue[1]]) });
-        seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => [moment(dataValue[0]).valueOf(), dataValue[1]]) });
-        seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => [moment(dataValue[0]).valueOf(), dataValue[1]]) });
+        data[key].percentile90.forEach(dataValue => this.itemIds.add(dataValue[2]))
+        seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
+        seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
+        seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
       } else {
-        this.labelDataTruncated = true
-        break
+        this.labelDataTruncated = true;
+        break;
       }
 
 
     }
-    this.labelScenarioTrendChartP90Option.series = JSON.parse(JSON.stringify(seriesP90));
-    this.labelScenarioTrendChartThroughputOption.series = JSON.parse(JSON.stringify(seriesThroughput))
-    this.labelScenarioTrendChartErrorRateOption.series = JSON.parse(JSON.stringify(seriesErrorRate))
+    this.updateLabelChart(this.labelScenarioTrendChartP90Option, seriesP90);
+    this.updateLabelChart(this.labelScenarioTrendChartThroughputOption, seriesThroughput);
+    this.updateLabelChart(this.labelScenarioTrendChartErrorRateOption, seriesErrorRate);
     this.updateLabelScenarioTrendsChartFlag = true;
   }
 
@@ -143,6 +142,11 @@ export class ScenarioTrendsComponent implements OnInit {
       const { projectName, scenarioName } = this.params;
       this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
     }
+  }
+
+  private updateLabelChart(chartOptions, series) {
+    chartOptions.series = JSON.parse(JSON.stringify(series));
+    chartOptions.xAxis.categories = this.itemIds;
   }
 
   private networkTransform = (data) => {

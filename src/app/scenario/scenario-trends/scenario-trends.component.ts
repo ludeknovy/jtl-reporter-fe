@@ -107,7 +107,6 @@ export class ScenarioTrendsComponent implements OnInit {
 
     for (const key of Object.keys(data)) {
       if (seriesP90.length < 20) {
-        console.log(data[key])
         seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => [moment(dataValue[0]).valueOf(), dataValue[1]]) });
         seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => [moment(dataValue[0]).valueOf(), dataValue[1]]) });
         seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => [moment(dataValue[0]).valueOf(), dataValue[1]]) });

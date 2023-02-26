@@ -37,7 +37,6 @@ export class ScenarioTrendsSettingsComponent implements OnInit {
   }
 
   createFormControls(settings) {
-    console.log(settings.aggregatedTrends);
     this.formControls.aggregatedTrends = new FormControl(settings.aggregatedTrends.toString(), [
       Validators.required
     ]);

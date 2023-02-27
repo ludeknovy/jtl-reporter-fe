@@ -88,18 +88,18 @@ export class ScenarioTrendsComponent implements OnInit {
     }, {});
 
     for (const key of Object.keys(seriesData)) {
-      const chartSerieSettings = this.chartDataMapping.get(key);
-      if (!chartSerieSettings) {
+      const chartSeriesSettings = this.chartDataMapping.get(key);
+      if (!chartSeriesSettings) {
         continue;
       }
       series.push({
-        name: chartSerieSettings.name || key,
-        data: chartSerieSettings.transform ? chartSerieSettings.transform(seriesData[key]) : seriesData[key],
-        yAxis: chartSerieSettings.yAxis || 0,
-        visible: chartSerieSettings.onLoad || false,
-        color: chartSerieSettings.color,
-        type: chartSerieSettings.type,
-        tooltip: chartSerieSettings.tooltip,
+        name: chartSeriesSettings.name || key,
+        data: chartSeriesSettings.transform ? chartSeriesSettings.transform(seriesData[key]) : seriesData[key],
+        yAxis: chartSeriesSettings.yAxis || 0,
+        visible: chartSeriesSettings.onLoad || false,
+        color: chartSeriesSettings.color,
+        type: chartSeriesSettings.type,
+        tooltip: chartSeriesSettings.tooltip,
       });
     }
     this.aggregatedScenarioTrendChartOption.series = JSON.parse(JSON.stringify(series));
@@ -138,7 +138,7 @@ export class ScenarioTrendsComponent implements OnInit {
 
   onPointSelect(event) {
     if (event && event.point && event.point) {
-      const itemId = this.itemIds[event.point.index];
+      const itemId = Array.from(this.itemIds)[event.point.index];
       const { projectName, scenarioName } = this.params;
       this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
     }

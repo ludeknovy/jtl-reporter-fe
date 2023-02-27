@@ -18,10 +18,7 @@ const OFFSET = 15;
   styleUrls: ["./scenario.component.scss", "../shared-styles.css"],
 })
 export class ScenarioComponent implements OnInit, OnDestroy {
-  overview$: Observable<ProjectOverview>;
   items$: Observable<Items>;
-  trends$: Observable<Record<string, unknown>>;
-  processingItems$: Observable<Record<string, unknown>>;
   params;
   page = 1;
   pageSize = LIMIT;
@@ -39,12 +36,12 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     private sharedMainBarService: SharedMainBarService,
   ) {
     this.items$ = itemsService.items$;
-    this.trends$ = scenarioService.trends$;
   }
 
   ngOnDestroy() {
     this.itemsService.interval.unsubscribe();
     this.subscription.unsubscribe();
+    this.scenarioService.updateScenarioTrends(undefined)
   }
 
   ngOnInit() {

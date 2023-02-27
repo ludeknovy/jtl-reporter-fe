@@ -30,4 +30,8 @@ export class ScenarioService {
       .subscribe(_ => this.notifications.next(_));
   }
 
+  updateScenarioTrends(value) {
+    this.trends.next(value)
+  }
+
 }

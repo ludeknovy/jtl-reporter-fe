@@ -113,7 +113,6 @@ export class LabelChartComponent implements OnChanges {
       this.componentRef.chart = null;
     }
     this.labelChartOptions = deepmerge(this.labelCharts.get(this.chartMetric), {});
-    console.log(this.labelChartOptions)
     this.updateLabelChartFlag = true;
   }
 

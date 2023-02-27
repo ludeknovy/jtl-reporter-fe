@@ -176,6 +176,29 @@ export interface ScenarioTrendsData {
   id: string;
 }
 
+export interface LabelTrendsData {
+  labelStats: [{
+    avgResponseTime: number
+    bytesPerSecond: number
+    bytesSentPerSecond: number
+    connect: number
+    errorRate: number
+    label: string
+    latency: number
+    maxResponseTime: number
+    medianResponseTime: number
+    minResponseTime: number
+    n0: number
+    n5: number
+    n9: number
+    samples: number
+    throughput: number
+  },]
+  id: string,
+  startDate: string
+
+}
+
 export interface ItemHistoryDetail {
   label: string;
   samples: number;
@@ -293,4 +316,13 @@ export interface UpsertItemChartSettings {
 export interface ResponseTimePerLabelDistribution {
   label: string
   values: number[]
+}
+
+export interface ScenarioTrendsUserSettings {
+  aggregatedTrends: boolean
+  labelMetrics: {
+    errorRate: boolean
+    percentile90: boolean
+    throughput: boolean
+  }
 }

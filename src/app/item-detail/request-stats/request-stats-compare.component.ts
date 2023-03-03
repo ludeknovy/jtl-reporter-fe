@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
+import {Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 import { bytesToMbps, roundNumberTwoDecimals } from "../calculations";
 import { AnalyzeChartService } from "../../analyze-chart.service";
@@ -8,6 +8,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import html2canvas from "html2canvas";
 import { ExcelService } from "src/app/_services/excel.service";
 import { ItemDetail } from "../../items.service.model";
+import {ComparisonChartService} from '../../_services/comparison-chart.service';
 
 
 @Component({
@@ -43,6 +44,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     private analyzeChartService: AnalyzeChartService,
     private modalService: NgbModal,
     private excelService: ExcelService,
+    private comparisonChartService: ComparisonChartService
   ) {
   }
 
@@ -65,6 +67,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.comparedData = null;
     this.labelsData = this.itemData.statistics;
     this.defaultUnit = true;
+    this.comparisonChartService.resetPlot()
   }
 
   search(query: string) {
@@ -122,6 +125,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   itemToCompare(data) {
     this.resetStatsData();
+    console.log(data)
+    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData)
     this.comparingData = data;
     this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
     if (data.maxVu !== this.itemData.overview.maxVu) {
@@ -205,7 +210,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       this.comparedData = this.labelsData.map((_) => {
         const labelToBeCompared = this.comparingData.statistics.find((__) => __.label === _.label);
         if (labelToBeCompared) {
-          console.log(_.bytes, labelToBeCompared);
           return {
             ..._,
             avgResponseTime: this.calculatePercDifference(_.avgResponseTime, labelToBeCompared.avgResponseTime),
@@ -348,5 +352,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
         this.collapsableSettings[index] = !this.collapsableSettings[index];
 
       }
+  }
+  identify(index, item){
+    return item.label;
   }
 }

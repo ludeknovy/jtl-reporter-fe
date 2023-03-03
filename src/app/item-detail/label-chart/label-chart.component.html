@@ -1,7 +1,7 @@
 <div class="card card-shadow" *ngIf="labelChartOptions">
   <h6 class="card-header bg-transparent">
     Label Chart - {{chartMetric}}
-    <span *ngIf="!labelCompareChartOptions" class="float-right">
+    <span class="float-right">
 
 
       <button class="jtl-no-glow btn btn-sm jtl-ico-btn-light" (click)="collapseChart()"><i class="fa"
@@ -15,7 +15,7 @@
             class="arrow"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <button class="btn btn-sm" *ngFor="let _ of chartKeys" ngbDropdownItem
-            (click)="changeChart($event)">{{_}}</button>
+            (click)="changeChartAggregation($event)">{{_}}</button>
         </div>
       </div>
     </span>
@@ -25,6 +25,11 @@
       <highcharts-chart #labelChart [Highcharts]="Highcharts" [options]="labelChartOptions" [callbackFunction]="chartCallback" [(update)]="updateLabelChartFlag"
         class="highchart-chart"
         style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+      <div *ngIf="comparisonLabelChartOptions">
+        <highcharts-chart #labelComparisonChart [Highcharts]="Highcharts" [options]="comparisonLabelChartOptions" [callbackFunction]="comparisonChartCallback" [(update)]="updateLabelChartFlag"
+                          class="highchart-chart"
+                          style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+      </div>
     </div>
   </div>
 

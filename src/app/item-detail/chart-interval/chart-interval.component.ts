@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ItemDataPlot, ItemExtraPlot } from "src/app/items.service.model";
 import { ItemChartService } from "src/app/_services/item-chart.service";
+import {interval} from 'rxjs';
 
 @Component({
   selector: "app-chart-interval",
@@ -29,6 +30,7 @@ export class ChartIntervalComponent implements OnInit {
     } else {
       newPlotData = this.intervals.extraIntervals.find(interval => interval.interval === inputInterval)?.data
     }
+    this.itemChartService.setInterval(interval)
     this.itemChartService.setCurrentPlot(newPlotData)
   }
 

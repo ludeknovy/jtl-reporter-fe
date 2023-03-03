@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from "@angular/core";
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 import { bytesToMbps, roundNumberTwoDecimals } from "../calculations";
 import { AnalyzeChartService } from "../../analyze-chart.service";
@@ -8,7 +8,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import html2canvas from "html2canvas";
 import { ExcelService } from "src/app/_services/excel.service";
 import { ItemDetail } from "../../items.service.model";
-import {ComparisonChartService} from '../../_services/comparison-chart.service';
+import { ComparisonChartService } from "../../_services/comparison-chart.service";
 
 
 @Component({

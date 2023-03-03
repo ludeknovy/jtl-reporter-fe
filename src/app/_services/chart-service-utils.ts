@@ -69,7 +69,6 @@ export const getChartLines = (plot): ChartLines => {
   chartLines.labels.set(Metrics.ResponseTimeAvg, responseTime.map((label) => ({ ...label, suffix: " ms" })));
   chartLines.labels.set(Metrics.Throughput, throughput.map((label) => ({ ...label, suffix: " reqs/s" })));
 
-  console.log({ chartLines })
   return { chartLines };
 
 };

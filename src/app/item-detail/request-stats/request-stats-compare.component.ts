@@ -125,8 +125,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   itemToCompare(data) {
     this.resetStatsData();
-    console.log(data)
     this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData)
+    this.comparisonChartService.setHistogramPlot(data.histogramPlotData)
     this.comparingData = data;
     this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
     if (data.maxVu !== this.itemData.overview.maxVu) {
@@ -186,6 +186,9 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       statistics: _.statistics,
       maxVu: _.overview.maxVu,
       environment: _.environment,
+      plot: _.plot,
+      histogramPlotData: _.histogramPlotData,
+      extraPlotData: _.extraPlotData,
       id
     }));
   }

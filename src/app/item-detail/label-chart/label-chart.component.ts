@@ -74,9 +74,13 @@ export class LabelChartComponent implements OnChanges {
     if (!changes.activated?.previousValue && changes.activated?.currentValue) {
       this.setChartAggregation(this.chartLines, LabelChartType.Default);
       this.getChartsKey(LabelChartType.Default);
-      this.setHistogramChart();
+      this.setHistogramChart(this.histogramData, LabelChartType.Default);
       this.setChart(this.chartMetric, LabelChartType.Default);
       this.expanded = true;
+
+      this.comparisonChartService.histogram$.subscribe(plot => {
+        this.setHistogramChart(plot.responseTimePerLabelDistribution, LabelChartType.Comparison);
+      })
 
       this.comparisonChartService.selectedPlot$.subscribe(plot => {
         if (!plot) {
@@ -88,12 +92,9 @@ export class LabelChartComponent implements OnChanges {
         if (!plot?.chartLines) {
           return;
         }
-        console.log({ plot })
-        this.comparisonLabelChartOptions = commonGraphSettings("ms")
         this.setChartAggregation(plot.chartLines, LabelChartType.Comparison);
         this.getChartsKey(LabelChartType.Comparison);
         this.setChart(this.chartMetric, LabelChartType.Comparison);
-        console.log("COMPARSION CHART CREATED")
       });
     }
     // aggregation changed, we need to refresh the data but only for opened charts
@@ -109,6 +110,9 @@ export class LabelChartComponent implements OnChanges {
     const responseTimesSeries = [];
     availableMetrics.forEach((metric: Metrics) => {
       const labelMetricsData = chartLines.labels.get(metric).find(data => data.name === this.label);
+      if (!labelMetricsData) {
+        return
+      }
       const chartSettings = this.metricChartMap.get(metric);
       if (this.responseTimeMetricGroup.includes(metric)) {
         responseTimesSeries.push({ data: labelMetricsData.data, suffix: labelMetricsData.suffix, name: metric, yAxis: 0, id: metric });
@@ -130,15 +134,20 @@ export class LabelChartComponent implements OnChanges {
     if (chartType === LabelChartType.Default) {
       this.labelCharts.set("Response Times", { ...commonGraphSettings("ms"), series: [...responseTimesSeries, threadLine] });
     } else {
-      this.comparisonLabelCharts.set("Response Times", { ...commonGraphSettings("ms"), series: [...responseTimesSeries, threadLine] });
+      if (responseTimesSeries.length > 0) {
+        this.comparisonLabelCharts.set("Response Times", { ...commonGraphSettings("ms"), series: [...responseTimesSeries, threadLine] });
+      }
     }
   }
 
-  private setHistogramChart() {
-    if (this.histogramData) {
+  private setHistogramChart(histogramData, chartType: LabelChartType) {
+    if (chartType === LabelChartType.Default) {
       this.chartKeys.push("Histogram");
-      const histogram = this.histogramData.find(data => data.label === this.label);
+      const histogram = histogramData.find(data => data.label === this.label);
       this.labelCharts.set("Histogram", responseTimeDistribution(histogram.values));
+    } else {
+      const histogram = histogramData.find(data => data.label === this.label);
+      this.comparisonLabelCharts.set("Histogram", responseTimeDistribution(histogram.values));
     }
   }
 
@@ -170,10 +179,12 @@ export class LabelChartComponent implements OnChanges {
     } else {
       if (this.comparisonChart) {
         this.comparisonChart.destroy();
-        this.componentRef.chart = null;
+        this.labelComparisonChartComponentRef.chart = null;
       }
-      console.log(this.comparisonLabelCharts.get(metric))
-      this.comparisonLabelChartOptions = deepmerge(this.comparisonLabelCharts.get(metric), {});
+      const chart = this.comparisonLabelCharts.get(metric)
+      if (chart) {
+        this.comparisonLabelChartOptions = deepmerge(this.comparisonLabelCharts.get(metric), {});
+      }
 
     }
     this.updateLabelChartFlag = true;

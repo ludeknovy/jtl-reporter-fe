@@ -11,13 +11,13 @@ export class ComparisonChartService {
   private plot$ = new BehaviorSubject<ChartLines>({ chartLines: null });
   private histogramPlot$ = new BehaviorSubject<{ responseTimePerLabelDistribution: []}>(null);
 
-  private interval;
+  private interval$ = new BehaviorSubject<string>(null);
   selectedPlot$ = this.plot$.asObservable();
   histogram$ = this.histogramPlot$.asObservable()
 
 
   setInterval(interval) {
-    this.interval = interval;
+    this.interval$.next(interval);
   }
 
   setHistogramPlot(plot) {
@@ -30,12 +30,16 @@ export class ComparisonChartService {
   }
 
   setComparisonPlot(defaultPlot, extraPlots) {
-    let comparisonPlot = null
-    if (this.interval === undefined || this.interval === "Auto") {
-      comparisonPlot = defaultPlot
-    } else {
-      comparisonPlot = extraPlots?.extraIntervals?.find(interval => interval.interval === this.interval)?.data
-    }
-    this.plot$.next(getChartLines(comparisonPlot))
+    this.interval$.subscribe(interval => {
+      let comparisonPlot = null
+      if (!interval || interval === "Auto") {
+        comparisonPlot = defaultPlot
+      } else {
+        const extraPlotIntervalData = extraPlots?.find(extraPlot => extraPlot.interval === interval)?.data
+        comparisonPlot = extraPlotIntervalData || defaultPlot
+      }
+      this.plot$.next(comparisonPlot ? getChartLines(comparisonPlot): null)
+    })
+
   }
 }

@@ -3,7 +3,8 @@ import { customChartSettings } from "src/app/graphs/item-detail";
 import * as Highcharts from "highcharts";
 import { ItemsApiService } from "src/app/items-api.service";
 import { AnalyzeChartService } from "../../analyze-chart.service";
-import { ChartLine, ItemChartService } from "src/app/_services/item-chart.service";
+import { ItemChartService } from "src/app/_services/item-chart.service";
+import { ChartLine } from "../../_services/chart-service-utils";
 
 @Component({
   selector: "app-analyze-charts",

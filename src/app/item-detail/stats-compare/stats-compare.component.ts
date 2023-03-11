@@ -61,7 +61,10 @@ export class StatsCompareComponent implements OnInit {
             statistics: _.statistics,
             maxVu: _.overview.maxVu,
             id: this.selectedTestItem,
-            environment: _.environment
+            environment: _.environment,
+            plot: _.plot,
+            histogramPlotData: _.histogramPlotData,
+            extraPlotData: _.extraPlotData
           });
           this.page = 0;
           this.modalService.dismissAll();

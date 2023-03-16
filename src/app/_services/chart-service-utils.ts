@@ -38,7 +38,10 @@ export const getChartLines = (plot): ChartLines => {
   chartLines.overall.set(Metrics.Threads, threadLine);
   chartLines.overall.set(Metrics.ErrorRate, errorLine);
   chartLines.overall.set(Metrics.Throughput, throughputLine);
-  chartLines.scatter.set(Metrics.ResponseTimeRaw, scatterPlotData)
+
+  if (scatterPlotData && scatterPlotData.length > 0) {
+    chartLines.scatter.set(Metrics.ResponseTimeRaw, scatterPlotData)
+  }
 
   if (networkV2) {
     const networkMbps = networkV2.map((_) => {

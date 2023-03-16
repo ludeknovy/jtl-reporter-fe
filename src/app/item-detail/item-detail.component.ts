@@ -52,7 +52,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     userSettings: null,
   };
   overallChartOptions;
-  scatterChartOptions = scatterChart;
+  scatterChartOptions;
   statusChartOptions;
   updateChartFlag = false;
   updateScatterChartFlag = false
@@ -139,9 +139,14 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries))
         const scatterResponseTimeData = value.chartLines.scatter.get(Metrics.ResponseTimeRaw)
 
-        this.scatterChartOptions.series = [{ data: scatterResponseTimeData, name: "Response Time", marker: {
-            radius: 1
-          }, }]
+        if (this.chartLines?.scatter?.has(Metrics.ResponseTimeRaw)) {
+          this.scatterChartOptions = scatterChart
+          this.scatterChartOptions.series = [{ data: scatterResponseTimeData, name: "Response Time", marker: {
+              radius: 1
+            }, }]
+        }
+
+
         if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)){
           // initialize the chart options only when there are the status codes data
           this.statusChartOptions = {

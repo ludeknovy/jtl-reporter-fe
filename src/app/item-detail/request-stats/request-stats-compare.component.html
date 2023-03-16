@@ -97,7 +97,7 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let _ of mf.data; index as i">
+          <ng-container *ngFor="let _ of mf.data; index as i; trackBy:identify">
             <tr>
               <th> <button
                 type="button"
@@ -157,7 +157,9 @@
               </td>
             </tr>
             <tr class="collapse-row collapse" #collapse="ngbCollapse" [(ngbCollapse)]="!collapsableSettings[i]" [attr.id]="'collapse-row-' + i">
-              <td colspan="100"><app-label-chart [chartLines]="chartLines" [histogramData]="itemData?.histogramPlotData?.responseTimePerLabelDistribution" [label]="_.label" [activated]="collapsableSettings[i]"></app-label-chart></td>
+              <td colspan="100">
+                <app-label-chart [chartLines]="chartLines" [histogramData]="itemData?.histogramPlotData?.responseTimePerLabelDistribution" [label]="_.label" [activated]="collapsableSettings[i]"></app-label-chart>
+              </td>
             </tr>
           </ng-container>
 

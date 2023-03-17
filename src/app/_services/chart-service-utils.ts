@@ -86,7 +86,7 @@ export interface ChartLines {
 export interface ChartLine {
   labels: Map<string, LabelChartLine[]>;
   overall: Map<string, { name: string, data: [] }>;
-  scatter: Map<string,{ data: [] } >
+  scatter: Map<string,[] >
 }
 
 export interface LabelChartLine {

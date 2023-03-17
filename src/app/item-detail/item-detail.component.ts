@@ -55,7 +55,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   scatterChartOptions;
   statusChartOptions;
   updateChartFlag = false;
-  updateScatterChartFlag = false
+  updateScatterChartFlag = false;
   monitoringChart;
   itemParams;
   hasErrorsAttachment;
@@ -111,8 +111,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       .subscribe((results) => {
         this.itemData = results;
         this.monitoringAlerts();
-        this.itemChartService.setCurrentPlot(this.itemData.plot)
-        this.selectedPlotSubscription()
+        this.itemChartService.setCurrentPlot(this.itemData.plot);
+        this.selectedPlotSubscription();
         this.calculateTotalRequests();
         this.spinner.hide();
       });
@@ -131,33 +131,34 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.toastr.clear();
   }
 
-  private selectedPlotSubscription () {
+  private selectedPlotSubscription() {
     this.itemChartService.selectedPlot$.subscribe((value) => {
       this.chartLines = value.chartLines;
       if (this.chartLines) {
         const overallChartSeries = Array.from(this.chartLines?.overall?.values());
-        this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries))
-        const scatterResponseTimeData = value.chartLines.scatter.get(Metrics.ResponseTimeRaw)
+        this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries));
+        const scatterResponseTimeData = value.chartLines.scatter.get(Metrics.ResponseTimeRaw);
 
         if (this.chartLines?.scatter?.has(Metrics.ResponseTimeRaw)) {
           this.scatterChartOptions = scatterChart
           this.scatterChartOptions.series = [{ data: scatterResponseTimeData, name: "Response Time", marker: {
               radius: 1
             }, }]
+          this.updateScatterChartFlag = true
         }
 
 
-        if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)){
+        if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)) {
           // initialize the chart options only when there are the status codes data
           this.statusChartOptions = {
             ...commonGraphSettings("")
-          }
-          const statusCodesLines = this.chartLines?.statusCodes.get(Metrics.StatusCodeInTime)
-          this.statusChartOptions.series = JSON.parse(JSON.stringify(statusCodesLines.data))
+          };
+          const statusCodesLines = this.chartLines?.statusCodes.get(Metrics.StatusCodeInTime);
+          this.statusChartOptions.series = JSON.parse(JSON.stringify(statusCodesLines.data));
         }
       }
 
-      this.updateChartFlag = true
+      this.updateChartFlag = true;
     });
   }
 
@@ -168,12 +169,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
 
-
   itemDetailChanged({ note, environment, hostname, name }) {
     this.itemData.note = note;
     this.itemData.environment = environment;
     this.itemData.hostname = hostname;
-    this.itemData.name = name
+    this.itemData.name = name;
   }
 
   monitoringAlerts() {
@@ -250,7 +250,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
-        chart.reflow();
-    },0);
-  }
+      chart.reflow();
+    }, 0);
+  };
 }

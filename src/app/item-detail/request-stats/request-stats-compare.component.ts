@@ -35,7 +35,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   comparedMetadata;
   defaultUnit = true;
   externalSearchTerm = "";
-  displayApdexColumn = false;
   collapsableSettings = {}
 
   constructor(
@@ -56,7 +55,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
         this.externalSearchTerm = data.label;
       }
     });
-    this.displayApdexColumn = !!this.itemData.statistics.find(stats => stats.apdex?.satisfaction && stats.apdex?.toleration)
   }
 
   ngOnDestroy() {
@@ -312,9 +310,9 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`);
   }
 
-  displayColumn(value) {
+  displayColumn(value, defaultValue = true) {
     if (typeof value === "undefined" || value === null) {
-      return true;
+      return defaultValue;
     }
     return value;
   }
@@ -342,11 +340,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     ]
     return score.find(sc => apdexValue >=  sc.rangeFrom && apdexValue <= sc.rangeTo)?.name
   }
-
-  shouldApdexColumnBeDisplayed(): boolean {
-    return this.displayApdexColumn
-  }
-
 
   toggleSectionVisibility(event, index) {
     // eslint-disable-next-line no-prototype-builtins

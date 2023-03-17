@@ -13,6 +13,8 @@
         (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
           <i class="fa" [ngClass]="{'fa-percent': defaultUnit, 'fa-stopwatch': !defaultUnit}"></i></span>
       </button>
+      <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+
 
       <div *ngIf="!isAnonymous" class="btn-group mr-3">
         <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
@@ -24,7 +26,6 @@
               *ngIf="(itemData.baseId && itemData.baseId !== params.id)" (click)="quickBaseComparison(itemData.baseId)"
               ngbDropdownItem>
                 Compare to base run</button>
-            <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
 
             <button class="btn btn-sm" (click)="downloadAsPng()" ngbDropdownItem>Download as PNG</button>
             <button class="btn btn-sm" (click)="downloadAsXLXS()" ngbDropdownItem>Download as XLXS</button>
@@ -90,7 +91,7 @@
             <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
             </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex) && shouldApdexColumnBeDisplayed()">
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex, false)">
               <mfDefaultSorter [by]="sortByApdex">apdex</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
@@ -144,7 +145,7 @@
               <span
                 [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate | number: '1.0-2'}}</span>
               </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex) && shouldApdexColumnBeDisplayed()">
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex, false)">
               <span>
                  {{ calculateApdex(_.apdex?.satisfaction,_.apdex?.toleration, _.samples)}}
                 </span>

@@ -7,7 +7,7 @@ export const getChartLines = (plot): ChartLines => {
     threads, overallTimeResponse,
     overallThroughput, overAllFailRate, overAllNetworkV2,
     responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
-    percentile95, percentile99, statusCodes, errorRate,
+    percentile95, percentile99, statusCodes, errorRate, scatterPlotData,
   } = plot;
 
   const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
@@ -17,7 +17,8 @@ export const getChartLines = (plot): ChartLines => {
   const chartLines = {
     overall: new Map(),
     labels: new Map(),
-    statusCodes: new Map()
+    statusCodes: new Map(),
+    scatter: new Map(),
   };
 
   if (overAllNetworkV2) {
@@ -37,6 +38,10 @@ export const getChartLines = (plot): ChartLines => {
   chartLines.overall.set(Metrics.Threads, threadLine);
   chartLines.overall.set(Metrics.ErrorRate, errorLine);
   chartLines.overall.set(Metrics.Throughput, throughputLine);
+
+  if (scatterPlotData && scatterPlotData.length > 0) {
+    chartLines.scatter.set(Metrics.ResponseTimeRaw, scatterPlotData)
+  }
 
   if (networkV2) {
     const networkMbps = networkV2.map((_) => {
@@ -81,6 +86,7 @@ export interface ChartLines {
 export interface ChartLine {
   labels: Map<string, LabelChartLine[]>;
   overall: Map<string, { name: string, data: [] }>;
+  scatter: Map<string,{ data: [] } >
 }
 
 export interface LabelChartLine {

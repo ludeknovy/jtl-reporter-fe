@@ -23,7 +23,8 @@ describe("LabelChartComponent", () => {
     component = fixture.componentInstance;
     component.chartLines = {
       labels: new Map([[Metrics.Network, [{ name: "name", suffix: "mbps", data: [] }] ]]),
-      overall: new Map([[Metrics.Threads, { name: "virtual-users", data: [] }]])
+      overall: new Map([[Metrics.Threads, { name: "virtual-users", data: [] }]]),
+      scatter: new Map([[Metrics.ResponseTimeRaw, { data: [] }]])
     };
     fixture.detectChanges();
   });

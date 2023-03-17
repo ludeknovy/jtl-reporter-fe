@@ -65,7 +65,7 @@
               <mfDefaultSorter by="avgResponseTime">avg [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.standardDeviation)">
-              <mfDefaultSorter by="avgResponseTime">std {{ defaultUnit ? "" : "[%]" }}</mfDefaultSorter>
+              <mfDefaultSorter by="standardDeviation">std {{ defaultUnit ? "" : "[%]" }}</mfDefaultSorter>
             </th>
             <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)">
               <mfDefaultSorter by="minResponseTime">min [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>

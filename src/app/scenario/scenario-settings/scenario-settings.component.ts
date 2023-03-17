@@ -64,6 +64,7 @@ export class SettingsScenarioComponent implements OnInit {
     network: null,
     errorRate: null,
     apdex: null,
+    standardDeviation: null
   };
   apdexFormControls = {
     apdexEnabled: null,
@@ -204,6 +205,7 @@ export class SettingsScenarioComponent implements OnInit {
 
     this.requestStatsCormControls.samples = new FormControl(settings.userSettings.requestStats.samples, [Validators.required]);
     this.requestStatsCormControls.avg = new FormControl(settings.userSettings.requestStats.avg, [Validators.required]);
+    this.requestStatsCormControls.standardDeviation = new FormControl(settings.userSettings.requestStats.standardDeviation || true, [Validators.required]);
     this.requestStatsCormControls.min = new FormControl(settings.userSettings.requestStats.min, [Validators.required]);
     this.requestStatsCormControls.max = new FormControl(settings.userSettings.requestStats.max, [Validators.required]);
     this.requestStatsCormControls.p90 = new FormControl(settings.userSettings.requestStats.p90, [Validators.required]);
@@ -262,6 +264,7 @@ export class SettingsScenarioComponent implements OnInit {
       network: this.requestStatsCormControls.network,
       errorRate: this.requestStatsCormControls.errorRate,
       apdex: this.requestStatsCormControls.apdex,
+      standardDeviation: this.requestStatsCormControls.standardDeviation,
     });
     this.labelFiltersForm = new FormGroup({});
     this.apdexSettingsForm = new FormGroup({

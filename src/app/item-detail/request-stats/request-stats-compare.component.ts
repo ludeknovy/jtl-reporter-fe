@@ -292,7 +292,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       avg: true, min: true,
       max: true,  p90: true, p95: true,
       p99: true, throughput: true, network: true,
-      errorRate: true }
+      errorRate: true, standardDeviation: true }
     } = this.itemData.userSettings;
     const dataToBeSaved = this.labelsData.map((label) => {
       return {
@@ -346,6 +346,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   shouldApdexColumnBeDisplayed(): boolean {
     return this.displayApdexColumn
   }
+
 
   toggleSectionVisibility(event, index) {
     // eslint-disable-next-line no-prototype-builtins

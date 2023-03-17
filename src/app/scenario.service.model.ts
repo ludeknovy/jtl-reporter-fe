@@ -28,4 +28,5 @@ export interface RequestStats {
   samples: boolean
   throughput: boolean
   apdex: boolean
+  standardDeviation: boolean
 }

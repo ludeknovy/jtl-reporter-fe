@@ -63,6 +63,9 @@
             <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)">
               <mfDefaultSorter by="avgResponseTime">avg [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
+            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.standardDeviation)">
+              <mfDefaultSorter by="avgResponseTime">std {{ defaultUnit ? "" : "[%]" }}</mfDefaultSorter>
+            </th>
             <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)">
               <mfDefaultSorter by="minResponseTime">min [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
             </th>
@@ -112,6 +115,9 @@
                 [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.samples | number }}</span> </td>
               <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)"><span
                 [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime | number: '1.0-2'}}</span>
+              </td>
+              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.standardDeviation)"><span
+                [className]="comparedData ? _.standardDeviation > 0 ? 'value-positive' : 'value-negative' : ''">{{_.standardDeviation | number: '1.0-2'}}</span>
               </td>
               <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)"><span
                 [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime | number: '1.0-2'}}</span>

@@ -318,6 +318,9 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   calculateApdex(satisfaction, toleration, samples) {
+    if (satisfaction === null || toleration === null) {
+      return
+    }
     const apdexValue = roundNumberTwoDecimals((satisfaction + (toleration * 0.5)) / samples)
     return this.apdexScore(apdexValue)
   }

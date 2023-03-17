@@ -13,6 +13,8 @@
         (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
           <i class="fa" [ngClass]="{'fa-percent': defaultUnit, 'fa-stopwatch': !defaultUnit}"></i></span>
       </button>
+      <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+
 
       <div *ngIf="!isAnonymous" class="btn-group mr-3">
         <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
@@ -24,7 +26,6 @@
               *ngIf="(itemData.baseId && itemData.baseId !== params.id)" (click)="quickBaseComparison(itemData.baseId)"
               ngbDropdownItem>
                 Compare to base run</button>
-            <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
 
             <button class="btn btn-sm" (click)="downloadAsPng()" ngbDropdownItem>Download as PNG</button>
             <button class="btn btn-sm" (click)="downloadAsXLXS()" ngbDropdownItem>Download as XLXS</button>

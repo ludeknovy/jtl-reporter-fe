@@ -21,3 +21,7 @@ thead {
   white-space: nowrap;
   overflow: hidden;
 }
+
+.compare-btn {
+  margin-right: 1rem;
+}

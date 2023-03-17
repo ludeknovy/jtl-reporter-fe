@@ -24,7 +24,7 @@ describe("LabelChartComponent", () => {
     component.chartLines = {
       labels: new Map([[Metrics.Network, [{ name: "name", suffix: "mbps", data: [] }] ]]),
       overall: new Map([[Metrics.Threads, { name: "virtual-users", data: [] }]]),
-      scatter: new Map([[Metrics.ResponseTimeRaw, { data: [] }]])
+      scatter: new Map([[Metrics.ResponseTimeRaw, [] ]])
     };
     fixture.detectChanges();
   });

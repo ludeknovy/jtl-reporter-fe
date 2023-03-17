@@ -79,6 +79,7 @@ describe("RequestStatsCompareComponent", () => {
           min: true,
           p95: true,
           apdex: true,
+          standardDeviation: true,
         }
       },
       baseId: "",

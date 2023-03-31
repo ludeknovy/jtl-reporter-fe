@@ -13,6 +13,7 @@ export interface Scenario {
   userSettings: {
     requestStats?: RequestStats
   };
+  baselineReport: string;
 }
 
 

@@ -132,12 +132,17 @@
 
               <div class="form-group form-settings pt-3">
                 <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-                  <small> Scenario thresholds will raise an alert in a report detail in case the given metrics diverge from the previous reports' average by more than the specified threshold percentage.</small></div>
+                  <small> Scenario thresholds will raise an alert in a report detail in case the given metrics diverge from the baseline report by more than the specified threshold percentage.</small>
+                </div>
+
+                <div *ngIf="!hasBaselineReport" class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                  <small> You need to select a baseline report first.</small>
+                </div>
 
                 <div class="form-group">
                   <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="thresholdEnabled"
-                           formControlName="thresholdEnabled">
+                           formControlName="thresholdEnabled" >
                     <label class="custom-control-label" for="thresholdEnabled">Enabled</label>
                   </div>
                 </div>

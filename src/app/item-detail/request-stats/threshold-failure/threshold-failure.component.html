@@ -1,0 +1,12 @@
+<div>
+  <p *ngIf="thresholdResult.result.percentile.passed">
+    <i class="fas fa-exclamation-triangle text-danger"></i>
+    90% Percentile performance regressed about {{thresholdResult.result.percentile.diffValue}}% in comparison with baseline report.
+  </p>
+  <p><i class="fas fa-exclamation-triangle text-danger"></i>
+    Throughput performance regressed about {{thresholdResult.result.throughput.diffValue}}% in comparison with baseline report.
+  </p>
+  <p><i class="fas fa-exclamation-triangle text-danger"></i>
+    Error Rate performance regressed about {{thresholdResult.result.errorRate.diffValue}}% in comparison with baseline report.
+  </p>
+</div>

@@ -1,4 +1,4 @@
-import { RequestStats } from "./scenario.service.model";
+import {RequestStats} from './scenario.service.model';
 
 export interface ItemsListing {
   id: string;
@@ -7,8 +7,8 @@ export interface ItemsListing {
   environment: string;
   status: string;
   zeroErrorToleranceEnabled: boolean;
-  thresholdPassed?: boolean
-  overview: ItemOverview
+  thresholdPassed?: boolean;
+  overview: ItemOverview;
 
 }
 
@@ -19,9 +19,9 @@ export interface Items {
 }
 
 export enum ReportStatus {
-  InProgress = "in_progress",
-  Error = "error",
-  Ready = "ready"
+  InProgress = 'in_progress',
+  Error = 'error',
+  Ready = 'ready'
 }
 
 export interface ItemDetail {
@@ -41,10 +41,15 @@ export interface ItemDetail {
   extraPlotData: ItemExtraPlot[];
   histogramPlotData?: {
     responseTimePerLabelDistribution?: ResponseTimePerLabelDistribution[]
-  }
+  };
   statistics: ItemStatistics[];
   thresholds?: {
     passed: boolean,
+    results: Array<{
+      label: string
+      passed: string
+      result: ThresholdResult
+    }>
     diff: {
       errorRateDiff: number,
       percentileRateDiff: number,
@@ -54,7 +59,7 @@ export interface ItemDetail {
   topMetricsSettings: TopMetricsSettings;
   userSettings: {
     requestStats: RequestStats
-  }
+  };
 }
 
 interface TopMetricsSettings {
@@ -116,8 +121,8 @@ export interface ItemDataPlot {
 }
 
 export interface ItemExtraPlot {
-  interval: string
-  data: ItemDataPlot
+  interval: string;
+  data: ItemDataPlot;
 }
 
 interface LabelSeries {
@@ -141,7 +146,7 @@ export interface ItemStatistics {
   apdex: {
     satisfaction?: number
     toleration?: number
-  }
+  };
 }
 
 interface ResponseMessageFailure {
@@ -150,11 +155,11 @@ interface ResponseMessageFailure {
 }
 
 interface MonitoringData {
-  "bytes-recv"?: string;
-  "bytes-sent"?: string;
-  "conn-all"?: string;
+  'bytes-recv'?: string;
+  'bytes-sent'?: string;
+  'conn-all'?: string;
   cpu?: string;
-  "diskSpace"?: string;
+  'diskSpace'?: string;
   mem?: string;
   ts?: string;
 }
@@ -265,31 +270,31 @@ export interface ProjectsOverallStats {
 }
 
 export interface LabelTrend {
-    chartSeries: {
-      timePoints: string[];
-      errorRate: number[];
-      id: string;
-      p90: number[];
-      p95: number[];
-      p99: number[];
-      throughput: number[];
-      virtualUsers: number[];
-      avgLatency: number[],
-      avgConnectionTime: number[],
-      avgResponseTime: number[],
-      name: string[],
-    },
-    chartSettings: {
-      virtualUsers: boolean,
-      throughput: boolean,
-      avgLatency: boolean,
-      avgConnectionTime: boolean,
-      avgResponseTime: boolean,
-      p90: boolean,
-      p95: boolean,
-      p99: boolean,
-      errorRate: boolean,
-    }
+  chartSeries: {
+    timePoints: string[];
+    errorRate: number[];
+    id: string;
+    p90: number[];
+    p95: number[];
+    p99: number[];
+    throughput: number[];
+    virtualUsers: number[];
+    avgLatency: number[],
+    avgConnectionTime: number[],
+    avgResponseTime: number[],
+    name: string[],
+  },
+  chartSettings: {
+    virtualUsers: boolean,
+    throughput: boolean,
+    avgLatency: boolean,
+    avgConnectionTime: boolean,
+    avgResponseTime: boolean,
+    p90: boolean,
+    p95: boolean,
+    p99: boolean,
+    errorRate: boolean,
+  }
 
 }
 
@@ -314,15 +319,30 @@ export interface UpsertItemChartSettings {
 }
 
 export interface ResponseTimePerLabelDistribution {
-  label: string
-  values: number[]
+  label: string;
+  values: number[];
 }
 
 export interface ScenarioTrendsUserSettings {
-  aggregatedTrends: boolean
+  aggregatedTrends: boolean;
   labelMetrics: {
     errorRate: boolean
     percentile90: boolean
     throughput: boolean
+  };
+}
+
+export interface ThresholdResult {
+  errorRate: {
+    diffValue: number,
+    passed: boolean
+  }
+  percentile: {
+    diffValue: number,
+    passed: boolean
+  }
+  throughput: {
+    diffValue: number,
+    passed: boolean
   }
 }

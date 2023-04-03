@@ -48,7 +48,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.itemData.thresholds.passed) {
+    if (!this.itemData?.thresholds?.passed) {
       this.labelsData = this.itemData.statistics.map(labelData => {
         const thresholdResult = this.itemData.thresholds.results.find(thresholdResult =>
           thresholdResult.label === labelData.label);
@@ -64,7 +64,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       });
     } else {
       this.labelsData = this.itemData.statistics;
-
     }
     this.analyzeChartService.currentData.subscribe(data => {
       if (data && data.label) {

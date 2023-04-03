@@ -116,7 +116,8 @@
                 [attr.aria-expanded]="collapsableSettings[i]"
                 [attr.aria-controls]="'collapse-row-' + i"
               >
-                <i [ngClass]="collapsableSettings[i] ?  'fas fa-chevron-down ' : 'fas fa-chevron-left'"><i class="fas fa-exclamation-triangle text-danger performance-regression-icon"></i></i>
+                <i [ngClass]="collapsableSettings[i] ?  'fas fa-chevron-down label-control' : 'fas fa-chevron-left label-control'">
+                  <i class="fas fa-exclamation-triangle text-danger performance-regression-icon" *ngIf="_.thresholdResult?.passed === false"></i></i>
               </button>
 
             </th>
@@ -182,7 +183,7 @@
           <tr class="collapse-row collapse" #collapse="ngbCollapse" [(ngbCollapse)]="!collapsableSettings[i]"
               [attr.id]="'collapse-row-' + i">
             <td colspan="100">
-              <app-threshold-failure [thresholdResult]="_.thresholdResult"></app-threshold-failure>
+              <app-threshold-failure [thresholdResult]="_.thresholdResult" *ngIf="!_.thresholdResult?.passed"></app-threshold-failure>
 
               <app-label-chart [chartLines]="chartLines"
                                [histogramData]="itemData?.histogramPlotData?.responseTimePerLabelDistribution"

@@ -16,4 +16,5 @@ export class ThresholdFailureComponent implements OnInit {
     console.log(this.thresholdResult)
   }
 
+  protected readonly Math = Math;
 }

@@ -11,7 +11,6 @@ import { StatsCompareComponent } from "../stats-compare/stats-compare.component"
 import { LabelHealthComponent } from "./label-health/label-health.component";
 
 import { RequestStatsCompareComponent } from "./request-stats-compare.component";
-import { Metrics } from "../metrics";
 
 describe("RequestStatsCompareComponent", () => {
   let component: RequestStatsCompareComponent;

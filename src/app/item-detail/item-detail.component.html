@@ -57,7 +57,7 @@
 
     <div class="overview-info">
 
-      <div class="row" *ngIf="itemData.thresholds && itemData.thresholds?.passed">
+      <div class="row" *ngIf="itemData.thresholds && itemData.thresholds?.passed === false">
         <div class="col">
           <app-regression-alert [itemData]="itemData"></app-regression-alert>
         </div>

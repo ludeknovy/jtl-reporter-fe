@@ -48,7 +48,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.itemData?.thresholds?.passed) {
+    if (this.itemData?.thresholds?.passed === false) {
       this.labelsData = this.itemData.statistics.map(labelData => {
         const thresholdResult = this.itemData.thresholds.results.find(thresholdResult =>
           thresholdResult.label === labelData.label);

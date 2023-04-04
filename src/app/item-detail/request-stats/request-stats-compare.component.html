@@ -116,7 +116,7 @@
                 [attr.aria-expanded]="collapsableSettings[i]"
                 [attr.aria-controls]="'collapse-row-' + i"
               >
-                <i [ngClass]="collapsableSettings[i] ?  'fas fa-chevron-down label-control' : 'fas fa-chevron-left label-control'">
+                <i [ngClass]="collapsableSettings[i] ?  'fas fa-chevron-up label-control' : 'fas fa-chevron-down label-control'">
                   <i class="fas fa-exclamation-triangle text-danger performance-regression-icon" *ngIf="_.thresholdResult?.passed === false"></i></i>
               </button>
 

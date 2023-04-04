@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ThresholdFailureComponent } from './threshold-failure.component';
+import { ThresholdFailureComponent } from "./threshold-failure.component";
 
-describe('ThresholdFailureComponent', () => {
+describe("ThresholdFailureComponent", () => {
   let component: ThresholdFailureComponent;
   let fixture: ComponentFixture<ThresholdFailureComponent>;
 
@@ -19,7 +19,7 @@ describe('ThresholdFailureComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

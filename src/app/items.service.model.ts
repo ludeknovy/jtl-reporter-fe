@@ -1,4 +1,4 @@
-import {RequestStats} from './scenario.service.model';
+import { RequestStats } from "./scenario.service.model";
 
 export interface ItemsListing {
   id: string;
@@ -19,9 +19,9 @@ export interface Items {
 }
 
 export enum ReportStatus {
-  InProgress = 'in_progress',
-  Error = 'error',
-  Ready = 'ready'
+  InProgress = "in_progress",
+  Error = "error",
+  Ready = "ready"
 }
 
 export interface ItemDetail {
@@ -155,11 +155,11 @@ interface ResponseMessageFailure {
 }
 
 interface MonitoringData {
-  'bytes-recv'?: string;
-  'bytes-sent'?: string;
-  'conn-all'?: string;
+  "bytes-recv"?: string;
+  "bytes-sent"?: string;
+  "conn-all"?: string;
   cpu?: string;
-  'diskSpace'?: string;
+  "diskSpace"?: string;
   mem?: string;
   ts?: string;
 }

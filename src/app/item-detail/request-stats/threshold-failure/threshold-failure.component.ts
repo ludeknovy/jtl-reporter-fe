@@ -10,8 +10,6 @@ export class ThresholdFailureComponent implements OnInit {
 
   @Input() thresholdResult: { passed: boolean, result: ThresholdResult };
 
-  constructor() {}
-
   ngOnInit(): void {
     console.log(this.thresholdResult)
   }

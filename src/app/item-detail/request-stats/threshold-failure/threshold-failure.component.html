@@ -1,4 +1,4 @@
-<div>
+<div id="threshold-failure">
   <p *ngIf="thresholdResult?.result?.percentile?.passed === false">
     <i class="fas fa-exclamation-triangle text-danger"></i>
     90% Percentile performance regressed about {{thresholdResult?.result?.percentile?.diffValue - 100  | number: '1.0-2'}}% in comparison with baseline report.

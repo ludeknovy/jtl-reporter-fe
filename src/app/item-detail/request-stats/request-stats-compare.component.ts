@@ -35,7 +35,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   comparedMetadata;
   defaultUnit = true;
   externalSearchTerm = "";
-  collapsableSettings = {}
+  collapsableSettings = {};
 
   constructor(
     private itemsService: ItemsApiService,
@@ -48,7 +48,23 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.labelsData = this.itemData.statistics;
+    if (this.itemData?.thresholds?.passed === false) {
+      this.labelsData = this.itemData.statistics.map(labelData => {
+        const thresholdResult = this.itemData.thresholds.results.find(thresholdResult =>
+          thresholdResult.label === labelData.label);
+        if (thresholdResult) {
+          return Object.assign(labelData, {
+            thresholdResult: {
+              passed: thresholdResult.passed,
+              result: thresholdResult.result
+            }
+          });
+        }
+        return labelData;
+      });
+    } else {
+      this.labelsData = this.itemData.statistics;
+    }
     this.analyzeChartService.currentData.subscribe(data => {
       if (data && data.label) {
         this.search(data.label);
@@ -65,7 +81,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.comparedData = null;
     this.labelsData = this.itemData.statistics;
     this.defaultUnit = true;
-    this.comparisonChartService.resetPlot()
+    this.comparisonChartService.resetPlot();
   }
 
   search(query: string) {
@@ -123,8 +139,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   itemToCompare(data) {
     this.resetStatsData();
-    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData)
-    this.comparisonChartService.setHistogramPlot(data.histogramPlotData)
+    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData);
+    this.comparisonChartService.setHistogramPlot(data.histogramPlotData);
     this.comparingData = data;
     this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
     if (data.maxVu !== this.itemData.overview.maxVu) {
@@ -285,12 +301,14 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   downloadAsXLXS() {
-    const { requestStats = {
-      samples: true,
-      avg: true, min: true,
-      max: true,  p90: true, p95: true,
-      p99: true, throughput: true, network: true,
-      errorRate: true, standardDeviation: true }
+    const {
+      requestStats = {
+        samples: true,
+        avg: true, min: true,
+        max: true, p90: true, p95: true,
+        p99: true, throughput: true, network: true,
+        errorRate: true, standardDeviation: true
+      }
     } = this.itemData.userSettings;
     const dataToBeSaved = this.labelsData.map((label) => {
       return {
@@ -319,18 +337,18 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   calculateApdex(satisfaction, toleration, samples) {
     if (satisfaction === null || toleration === null) {
-      return
+      return;
     }
-    const apdexValue = roundNumberTwoDecimals((satisfaction + (toleration * 0.5)) / samples)
-    return this.apdexScore(apdexValue)
+    const apdexValue = roundNumberTwoDecimals((satisfaction + (toleration * 0.5)) / samples);
+    return this.apdexScore(apdexValue);
   }
 
   public sortByApdex(item) {
-    return roundNumberTwoDecimals(((item.apdex.satisfaction + ( item.apdex.toleration * 0.5)) / item.samples))
+    return roundNumberTwoDecimals(((item.apdex.satisfaction + (item.apdex.toleration * 0.5)) / item.samples));
   }
 
   public sortByNetwork(item) {
-    return roundNumberTwoDecimals(item.bytesPerSecond + item.bytesSentPerSecond)
+    return roundNumberTwoDecimals(item.bytesPerSecond + item.bytesSentPerSecond);
   }
 
   private apdexScore(apdexValue: number): string {
@@ -340,20 +358,21 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       { rangeFrom: 0.7, rangeTo: 0.83, name: "Fair", },
       { rangeFrom: 0.5, rangeTo: 0.69, name: "Poor", },
       { rangeFrom: 0, rangeTo: 0.49, name: "Unacceptable" }
-    ]
-    return score.find(sc => apdexValue >=  sc.rangeFrom && apdexValue <= sc.rangeTo)?.name
+    ];
+    return score.find(sc => apdexValue >= sc.rangeFrom && apdexValue <= sc.rangeTo)?.name;
   }
 
   toggleSectionVisibility(event, index) {
     // eslint-disable-next-line no-prototype-builtins
-      if (!this.collapsableSettings.hasOwnProperty(index)) {
-        this.collapsableSettings[index] = true
-      } else {
-        this.collapsableSettings[index] = !this.collapsableSettings[index];
+    if (!this.collapsableSettings.hasOwnProperty(index)) {
+      this.collapsableSettings[index] = true;
+    } else {
+      this.collapsableSettings[index] = !this.collapsableSettings[index];
 
-      }
+    }
   }
-  identify(index, item){
+
+  identify(index, item) {
     return item.label;
   }
 }

@@ -3,14 +3,14 @@
   <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
 
       <span class="comparison-desc" *ngIf="comparedData">Comparing to test: <a
-          href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}">{{comparedMetadata.id}}
-          with
-          {{comparedMetadata.maxVu}} VU</a></span>
+        href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}">{{comparedMetadata.id}}
+        with
+        {{comparedMetadata.maxVu}} VU</a></span>
       <button class="remove-comparison btn btn-sm jtl-btn-light" *ngIf="comparedData" (click)="resetStatsData()"><span
-          class="compare-desc-btn">Remove</span>
+        class="compare-desc-btn">Remove</span>
       </button>
       <button class="remove-comparison btn btn-sm jtl-btn-light jtl-no-glow" *ngIf="comparedData"
-        (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
+              (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
           <i class="fa" [ngClass]="{'fa-percent': defaultUnit, 'fa-stopwatch': !defaultUnit}"></i></span>
       </button>
       <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
@@ -18,13 +18,14 @@
 
       <div *ngIf="!isAnonymous" class="btn-group mr-3">
         <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
-          aria-label="Button group with nested dropdown">
+             aria-label="Button group with nested dropdown">
           <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
-              class="fas fa-bars"></i></button>
+            class="fas fa-bars"></i></button>
           <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
             <button class="btn btn-sm"
-              *ngIf="(itemData.baseId && itemData.baseId !== params.id)" (click)="quickBaseComparison(itemData.baseId)"
-              ngbDropdownItem>
+                    *ngIf="(itemData.baseId && itemData.baseId !== params.id)"
+                    (click)="quickBaseComparison(itemData.baseId)"
+                    ngbDropdownItem>
                 Compare to base run</button>
 
             <button class="btn btn-sm" (click)="downloadAsPng()" ngbDropdownItem>Download as PNG</button>
@@ -41,9 +42,9 @@
         <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
       </div>
       <input class="form-control" id="label-filter" type="search" placeholder="label"
-        (keyup)='search($event.target.value)' [value]="externalSearchTerm">
+             (keyup)='search($event.target.value)' [value]="externalSearchTerm">
       <button type="button" class="btn bg-transparent jtl-no-glow" style="margin-left: -40px; z-index: 100;"
-        (click)="clearSearch()">
+              (click)="clearSearch()">
         <i class="fa fa-times"></i></button>
       <button type="button" class="btn btn-secondary jtl-no-glow" (click)="openSearchHelp(content)">
         <i class="fas fa-info"></i>
@@ -53,122 +54,143 @@
     <div class="labels-detail table-responsive">
       <table #screen class="table" [mfData]="labelsData" #mf="mfDataTable">
         <thead>
-          <tr>
-            <th></th>
-            <th scope="col" class="hd jtl-head-color">
-              <mfDefaultSorter by="label">label</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)">
-              <mfDefaultSorter by="samples">samples {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)">
-              <mfDefaultSorter by="avgResponseTime">avg [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.standardDeviation)">
-              <mfDefaultSorter by="standardDeviation">std {{ defaultUnit ? "" : "[%]" }}</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)">
-              <mfDefaultSorter by="minResponseTime">min [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)">
-              <mfDefaultSorter by="maxResponseTime">max [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)">
-              <mfDefaultSorter by="n0">P90 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p95)">
-              <mfDefaultSorter by="n5">P95 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p99)">
-              <mfDefaultSorter by="n9">P99 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.throughput)">
-              <mfDefaultSorter by="throughput">reqs/s {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
-              <mfDefaultSorter [by]="sortByNetwork">network [{{ defaultUnit ? "mbps" : "%" }}]</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
-              <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex, false)">
-              <mfDefaultSorter [by]="sortByApdex">apdex</mfDefaultSorter>
-            </th>
-            <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
-            </th>
-            <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
-            </th>
-          </tr>
+        <tr>
+          <th></th>
+          <th scope="col" class="hd jtl-head-color">
+            <mfDefaultSorter by="label">label</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)">
+            <mfDefaultSorter by="samples">samples {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)">
+            <mfDefaultSorter by="avgResponseTime">avg [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color"
+              *ngIf="displayColumn(itemData.userSettings?.requestStats?.standardDeviation)">
+            <mfDefaultSorter by="standardDeviation">std {{ defaultUnit ? "" : "[%]" }}</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)">
+            <mfDefaultSorter by="minResponseTime">min [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)">
+            <mfDefaultSorter by="maxResponseTime">max [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)">
+            <mfDefaultSorter by="n0">P90 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p95)">
+            <mfDefaultSorter by="n5">P95 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p99)">
+            <mfDefaultSorter by="n9">P99 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color"
+              *ngIf="displayColumn(itemData.userSettings?.requestStats?.throughput)">
+            <mfDefaultSorter by="throughput">reqs/s {{defaultUnit ? "" : "[%]"  }}</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
+            <mfDefaultSorter [by]="sortByNetwork">network [{{ defaultUnit ? "mbps" : "%" }}]</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color"
+              *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
+            <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color"
+              *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex, false)">
+            <mfDefaultSorter [by]="sortByApdex">apdex</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
+          </th>
+          <th scope="col" class="hd jtl-head-color" data-html2canvas-ignore="true">
+          </th>
+        </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let _ of mf.data; index as i; trackBy:identify">
-            <tr>
-              <th> <button
+        <ng-container *ngFor="let _ of mf.data; index as i; trackBy:identify">
+          <tr>
+            <th>
+              <button
                 type="button"
                 class="btn btn-sm jtl-btn-light expand-button"
                 (click)="toggleSectionVisibility($event, i)"
                 [attr.aria-expanded]="collapsableSettings[i]"
                 [attr.aria-controls]="'collapse-row-' + i"
-              ><i [ngClass]="collapsableSettings[i] ?  'fas fa-chevron-down' : 'fas fa-chevron-left'"></i></button>
-              </th>
-              <td>{{_.label}} </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)"><span
-                [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.samples | number }}</span> </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)"><span
-                [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.standardDeviation)"><span
-                [className]="comparedData ? _.standardDeviation > 0 ? 'value-positive' : 'value-negative' : ''">{{_.standardDeviation | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)"><span
-                [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)"><span
-                [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0 | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p95)"><span [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5 | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p99)"><span [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9 | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.throughput)">
+              >
+                <i [ngClass]="collapsableSettings[i] ?  'fas fa-chevron-up label-control' : 'fas fa-chevron-down label-control'">
+                  <i class="fas fa-exclamation-triangle text-danger performance-regression-icon" *ngIf="_.thresholdResult?.passed === false"></i></i>
+              </button>
+
+            </th>
+            <td>{{_.label}} </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.samples)"><span
+              [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.samples | number }}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.avg)"><span
+              [className]="comparedData ? _.avgResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.avgResponseTime | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.standardDeviation)"><span
+              [className]="comparedData ? _.standardDeviation > 0 ? 'value-positive' : 'value-negative' : ''">{{_.standardDeviation | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.min)"><span
+              [className]="comparedData ? _.minResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.minResponseTime | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)"><span
+              [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span
+              [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0 | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p95)"><span
+              [className]="comparedData ? _.n5 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n5 | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p99)"><span
+              [className]="comparedData ? _.n9 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n9 | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.throughput)">
               <span
                 [className]="comparedData ? _.throughput > 0 ?  'value-negative' : 'value-positive' : ''">{{_.throughput | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.network)">
               <span
                 [className]="comparedData ? convertBytesToMbps(_.bytesPerSecond + _.bytesSentPerSecond) > 0 ? 'value-positive' : 'value-negative' : ''">{{convertBytesToMbps(_.bytesPerSecond
                 + _.bytesSentPerSecond) || 0 | number: '1.0-2' }}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <span
                 [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate | number: '1.0-2'}}</span>
-              </td>
-              <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex, false)">
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex, false)">
               <span>
-                 {{ calculateApdex(_.apdex?.satisfaction,_.apdex?.toleration, _.samples)}}
+                 {{ calculateApdex(_.apdex?.satisfaction, _.apdex?.toleration, _.samples)}}
                 </span>
-              </td>
-              <td>
-                <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes" [responseFailures]="_.responseMessageFailures" [labelName]="_.label" [errorRate]="_.errorRate" data-html2canvas-ignore="true">
-                </app-label-health>
-              </td>
-              <td>
-                <app-label-trend *ngIf="!isAnonymous" data-html2canvas-ignore="true"
-                                 [trendInput]="{ environment: itemData.environment, labelName: _.label }" [params]="params">
-                </app-label-trend>
+            </td>
+            <td>
+              <app-label-health *ngIf="_.statusCodes && _.statusCodes.length > 0" [statusCodes]="_.statusCodes"
+                                [responseFailures]="_.responseMessageFailures" [labelName]="_.label"
+                                [errorRate]="_.errorRate" data-html2canvas-ignore="true">
+              </app-label-health>
+            </td>
+            <td>
+              <app-label-trend *ngIf="!isAnonymous" data-html2canvas-ignore="true"
+                               [trendInput]="{ environment: itemData.environment, labelName: _.label }"
+                               [params]="params">
+              </app-label-trend>
 
-                <a class="jtl-a-primary label-focus" (click)="focusLabel(_.label)" data-html2canvas-ignore="true"><i
-                  class="fas fa-search-location fa-sm"></i></a>
-              </td>
-            </tr>
-            <tr class="collapse-row collapse" #collapse="ngbCollapse" [(ngbCollapse)]="!collapsableSettings[i]" [attr.id]="'collapse-row-' + i">
-              <td colspan="100">
-                <app-label-chart [chartLines]="chartLines" [histogramData]="itemData?.histogramPlotData?.responseTimePerLabelDistribution" [label]="_.label" [activated]="collapsableSettings[i]"></app-label-chart>
-              </td>
-            </tr>
-          </ng-container>
+              <a class="jtl-a-primary label-focus" (click)="focusLabel(_.label)" data-html2canvas-ignore="true"><i
+                class="fas fa-search-location fa-sm"></i></a>
+            </td>
+          </tr>
+          <tr class="collapse-row collapse" #collapse="ngbCollapse" [(ngbCollapse)]="!collapsableSettings[i]"
+              [attr.id]="'collapse-row-' + i">
+            <td colspan="100">
+              <app-threshold-failure [thresholdResult]="_.thresholdResult" *ngIf="!_.thresholdResult?.passed"></app-threshold-failure>
+
+              <app-label-chart [chartLines]="chartLines"
+                               [histogramData]="itemData?.histogramPlotData?.responseTimePerLabelDistribution"
+                               [label]="_.label" [activated]="collapsableSettings[i]"></app-label-chart>
+            </td>
+          </tr>
+        </ng-container>
 
         </tbody>
       </table>
@@ -177,7 +199,7 @@
       <div class="modal-header">
         <h5 class="modal-title" id="modal-basic-title">Search help</h5>
         <button type="button" style="outline: none;" class="close" aria-label="Close"
-          (click)="modal.dismiss('Cross click')">
+                (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -185,18 +207,22 @@
         <ul>
           <li>
             <strong>Label with spaces:</strong>
-          <p>If the searched label contains one or more spaces, you need to enclose it into double-quotes. Eg: <mark>"my search"</mark>
+            <p>If the searched label contains one or more spaces, you need to enclose it into double-quotes. Eg:
+              <mark>"my search"</mark>
             </p>
           </li>
           <li>
             <strong>Not operator:</strong>
             <p>If you want to exclude a particular label, the search needs to start with the <strong>not</strong>
-              keyword and followed by search term. Eg: <mark><strong>not</strong> "my search term"</mark></p>
+              keyword and followed by search term. Eg:
+              <mark><strong>not</strong> "my search term"</mark>
+            </p>
           </li>
           <li>
             <strong>OR operator:</strong>
             <p> If you want to include only specific labels, you can join them by using the <strong>or</strong> keyword
-              and followed by search term. Eg: <mark>"my search term" <strong>or</strong> "another search term"</mark>
+              and followed by search term. Eg:
+              <mark>"my search term" <strong>or</strong> "another search term"</mark>
             </p>
           </li>
         </ul>

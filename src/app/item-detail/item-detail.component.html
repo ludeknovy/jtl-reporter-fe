@@ -16,7 +16,7 @@
             class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-item *ngIf="itemData.environment"
-            [itemDetailData]="{note: itemData.note, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams, name: itemData.name}"
+            [itemDetailData]="{note: itemData.note, resourcesLink: itemData.resourcesLink, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams, name: itemData.name}"
             (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
           <app-share [params]=itemParams></app-share>
           <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
@@ -272,6 +272,12 @@
                 <div class="row">
                   <div class="col-sm mb-1 summary-bold">Note</div>
                   <div class="col-sm mb-1">{{itemData.note}}</div>
+                </div>
+                <div class="row">
+                  <i class="fas fa-external-link text-carrot"></i>
+                  <div class="col-sm mb-1 summary-bold">External Link</div>
+                  <div class="col-sm mb-1"><a target="_blank" href="{{itemData.resourcesLink}}"><i class="fas fa-link"></i> <span> Resources</span>
+                  </a></div>
                 </div>
                 <div class="row" *ngIf="itemData.monitoring.cpu.data.length > 0">
                   <div class="col-sm mb-1 summary-bold">Max CPU usage</div>

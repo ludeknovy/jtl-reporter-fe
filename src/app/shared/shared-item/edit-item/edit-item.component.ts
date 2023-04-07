@@ -24,6 +24,7 @@ export class EditItemComponent implements OnInit {
   isBase;
   disabled;
   name;
+  resourcesLink;
 
   @Input() reloadItems: boolean;
   @Input() itemDetailData: ItemInput;
@@ -59,6 +60,8 @@ export class EditItemComponent implements OnInit {
     this.name = new FormControl(this.itemDetailData.name, [
       Validators.maxLength(200)
     ])
+    this.resourcesLink = new FormControl(this.itemDetailData.resourcesLink,
+      [Validators.maxLength(350)])
   }
 
   createForm() {
@@ -67,7 +70,8 @@ export class EditItemComponent implements OnInit {
       environment: this.environment,
       hostname: this.hostname,
       base: this.base,
-      name: this.name
+      name: this.name,
+      resourcesLink: this.resourcesLink,
     });
   }
 
@@ -77,9 +81,10 @@ export class EditItemComponent implements OnInit {
 
   onSubmit() {
     if (this.myform.valid) {
-      const { note, environment, base, hostname, name } = this.myform.value;
+      const { note, environment, base, hostname, name, resourcesLink } = this.myform.value;
       const { projectName, id, scenarioName } = this.itemDetailData.params;
-      this.itemsApiService.updateItemInfo(id, projectName, scenarioName, { environment, note, base, hostname, name })
+      this.itemsApiService.updateItemInfo(id, projectName, scenarioName,
+        { environment, note, base, hostname, name, resourcesLink })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           this.itemDetailChange.emit({ note, environment, hostname, name });

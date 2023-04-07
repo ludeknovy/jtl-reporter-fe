@@ -11,4 +11,5 @@ export interface ItemInput {
   hostname?: string;
   params: ItemParams;
   name: string;
+  resourcesLink?: string;
 }

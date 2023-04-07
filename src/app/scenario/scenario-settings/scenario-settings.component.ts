@@ -107,6 +107,7 @@ export class SettingsScenarioComponent implements OnInit {
 
   labelFilterOperators = ["includes", "match"];
   labelFilters: FormArray;
+  hasBaselineReport = false
 
 
   constructor(
@@ -120,12 +121,16 @@ export class SettingsScenarioComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
     this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
+      this.hasBaselineReport = !!_.baselineReport
+      console.log(this.hasBaselineReport)
       if (_.name) {
         this.createFormControls(_);
         this.createForm();
         this.labelFilters = new FormArray(
           _.labelFilterSettings.map(filter => new FormArray([new FormControl(filter.labelTerm, Validators.required), new FormControl(filter.operator, Validators.required)])));
       }
+
+
 
 
       this.apdexSettingsForm.valueChanges.subscribe(value => {
@@ -171,7 +176,7 @@ export class SettingsScenarioComponent implements OnInit {
       Validators.max(100),
       Validators.required
     ]);
-    this.formControls.enabled = new FormControl(settings.thresholds.enabled, [
+    this.formControls.enabled = new FormControl({ value: settings.thresholds.enabled, disabled: !this.hasBaselineReport }, [
       Validators.required,
     ]);
     this.formControls.analysisEnabled = new FormControl(settings.analysisEnabled, [
@@ -307,7 +312,7 @@ export class SettingsScenarioComponent implements OnInit {
         generateShareToken,
         extraAggregations,
         thresholds: {
-          enabled: thresholdEnabled,
+          enabled: !!thresholdEnabled,
           errorRate: parseFloat(thresholdErrorRate),
           throughput: parseFloat(thresholdThroughput),
           percentile: parseFloat(thresholdPercentile)

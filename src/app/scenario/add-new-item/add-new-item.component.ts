@@ -19,7 +19,6 @@ import { ScenarioService } from "src/app/scenario.service";
 
 })
 export class AddNewItemComponent implements OnInit {
-  closeResult: string;
   addItemForm: FormGroup;
   kpiFile: FormControl;
   monitoringFile: FormControl;
@@ -28,6 +27,7 @@ export class AddNewItemComponent implements OnInit {
   status: FormControl;
   hostname: FormControl;
   name: FormControl;
+  resourcesLink: FormControl;
   routeParams;
   statuses = Object.values(ItemStatus);
   DEFAULT_STATUS = ItemStatus.None;
@@ -67,6 +67,7 @@ export class AddNewItemComponent implements OnInit {
     this.name = new FormControl("", [
       Validators.maxLength(200)
     ])
+    this.resourcesLink = new FormControl("", [Validators.maxLength(350)])
   }
 
   createForm() {
@@ -77,7 +78,8 @@ export class AddNewItemComponent implements OnInit {
       note: this.note,
       hostname: this.hostname,
       status: this.status,
-      name: this.name
+      name: this.name,
+      resourcesLink: this.resourcesLink
     });
   }
 
@@ -96,12 +98,12 @@ export class AddNewItemComponent implements OnInit {
     this.formCheck();
     if (this.addItemForm.valid) {
       this.spinner.show();
-      const { kpiFile, errorFile, monitoringFile, environment, note, hostname, status, name } = this.addItemForm.value;
+      const { kpiFile, errorFile, monitoringFile, environment, note, hostname, status, name, resourcesLink } = this.addItemForm.value;
       this.itemsApiService.addNewTestItem(
         this.routeParams.projectName,
         this.routeParams.scenarioName,
         environment, note, hostname, ItemStatusValue[status],
-        kpiFile, name, errorFile, monitoringFile)
+        kpiFile, name, resourcesLink, errorFile, monitoringFile)
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newTestItemNotificationMessage(_);

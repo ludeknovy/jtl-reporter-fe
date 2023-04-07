@@ -47,6 +47,15 @@
       </div>
 
       <div class="form-group mb-3">
+        <label for="resourcesLink">External Link</label>
+        <input type="hostname" id="resourcesLink" class="form-control" formControlName="resourcesLink" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="resourcesLink.errors && (resourcesLink.dirty || resourcesLink.touched)">
+          <p class="form-validation-error" *ngIf="resourcesLink.errors.maxlenght">Link is too long. Max length is 350.</p>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
         <label for="status">Status</label>
         <select id="status" class="form-control custom-select" formControlName="status">
           <option *ngFor="let s of statuses" [value]="s">

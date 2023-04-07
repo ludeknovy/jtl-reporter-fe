@@ -35,6 +35,7 @@ export interface ItemDetail {
   baseId: string;
   name: string;
   note: string;
+  resourcesLink?: string;
   hostname: string;
   environment: string;
   plot: ItemDataPlot;

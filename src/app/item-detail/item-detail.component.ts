@@ -35,6 +35,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     baseId: null,
     note: null,
     plot: null,
+    resourcesLink: null,
     extraPlotData: null,
     reportStatus: null,
     histogramPlotData: null,
@@ -56,9 +57,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   statusChartOptions;
   updateChartFlag = false;
   updateScatterChartFlag = false;
-  monitoringChart;
   itemParams;
-  hasErrorsAttachment;
   Math: any;
   token: string;
   isAnonymous = false;
@@ -68,7 +67,6 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   performanceAnalysisLines = null;
   externalSearchTerm = null;
   totalRequests = null;
-  overallChart = null;
 
 
   constructor(

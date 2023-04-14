@@ -5,6 +5,7 @@ import { ItemsApiService } from "src/app/items-api.service";
 import { AnalyzeChartService } from "../../analyze-chart.service";
 import { ItemChartService } from "src/app/_services/item-chart.service";
 import { ChartLine } from "../../_services/chart-service-utils";
+import { Metrics } from "../metrics";
 
 @Component({
   selector: "app-analyze-charts",
@@ -25,14 +26,14 @@ export class AnalyzeChartsComponent implements OnInit {
   updateLabelChartFlag = false;
   labels: string[];
   yAxisId = new Map([
-    ["Throughput", 0],
+    [Metrics.Throughput, 0],
     ["Response Time", 1],
-    ["Threads", 2],
-    ["Error Rate", 3],
-    ["Network", 4]
+    [Metrics.Threads, 2],
+    [Metrics.ErrorRate, 3],
+    [Metrics.Network, 4]
   ]);
   preloadedSeries;
-  isTemporaryChart = false
+  isTemporaryChart = false;
 
   constructor(
     private itemApiService: ItemsApiService,
@@ -46,19 +47,19 @@ export class AnalyzeChartsComponent implements OnInit {
       return;
     }
     this.itemApiService
-    .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
-    .subscribe(_ => {
-      this.updateChart(_);
-      this.preloadedSeries = _;
-    });
+      .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
+      .subscribe(_ => {
+        this.updateChart(_);
+        this.preloadedSeries = _;
+      });
     this.analyzeChartService.currentData.subscribe(data => {
       let chartLines;
       if (data) {
         const { label, metrics } = data;
-        this.isTemporaryChart = true
+        this.isTemporaryChart = true;
         if (metrics && metrics.length > 0) {
           chartLines = metrics.map(_ => ({ name: label, metric: _ }));
-        } else  {
+        } else {
           // add all available lines
           const labelLines = [];
           this.chartLines.labels.forEach((value, key) => {
@@ -75,28 +76,27 @@ export class AnalyzeChartsComponent implements OnInit {
 
 
     this.itemChartService.selectedPlot$.subscribe(plot => {
-      const currentChartSeries = this.customChartsOptions.series
+      const currentChartSeries = this.customChartsOptions.series;
 
       if (Array.isArray(currentChartSeries) && currentChartSeries.length > 0) {
-        this.chartLines = plot.chartLines
+        this.chartLines = plot.chartLines;
 
         const updatedChartSeries = currentChartSeries.map(series => {
-          const labelChart = series.label
+          const labelChart = series.label;
           const name = labelChart
             ? labelChart
-            : "overall"
+            : "overall";
 
           return {
             name,
             metric: series.metric
-          }
-        })
-        this.updateChart(updatedChartSeries)
+          };
+        });
+        this.updateChart(updatedChartSeries);
       }
-    })
+    });
 
   }
-
 
 
   chartUpdated(event: [{ name: string, metric: string }]) {
@@ -106,9 +106,9 @@ export class AnalyzeChartsComponent implements OnInit {
 
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
-        chart.reflow();
-    },0);
-}
+      chart.reflow();
+    }, 0);
+  };
 
   private updateChart(series) {
     const chartSeries: Line[] = [];
@@ -145,18 +145,18 @@ export class AnalyzeChartsComponent implements OnInit {
       }
     });
     // hide all axis
-    this.customChartsOptions.yAxis.forEach(axis => axis.visible = false)
+    this.customChartsOptions.yAxis.forEach(axis => axis.visible = false);
     // display only actual axis
     chartSeries.forEach(series => {
-      this.customChartsOptions.yAxis[series.yAxis].visible = true
-      })
+      this.customChartsOptions.yAxis[series.yAxis].visible = true;
+    });
     this.customChartsOptions.series = JSON.parse(JSON.stringify(chartSeries));
     this.updateLabelChartFlag = true;
   }
 
   loadSavedCustomChart() {
-    this.isTemporaryChart = false
-    this.updateChart(this.preloadedSeries)
+    this.isTemporaryChart = false;
+    this.updateChart(this.preloadedSeries);
   }
 
   private saveChartSettings(event) {

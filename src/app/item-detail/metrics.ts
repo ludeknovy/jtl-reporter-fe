@@ -1,7 +1,7 @@
 export enum Metrics {
   Network = "Network",
   ErrorRate = "Error Rate",
-  Threads = "Threads",
+  Threads = "Virtual Users",
   Throughput = "Throughput",
   ResponseTimeAvg = "Response Time [avg]",
   ResponseTimeMin = "Response Time [min]",

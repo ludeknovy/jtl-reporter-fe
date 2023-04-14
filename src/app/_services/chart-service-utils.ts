@@ -10,9 +10,9 @@ export const getChartLines = (plot): ChartLines => {
     percentile95, percentile99, statusCodes, errorRate, scatterPlotData,
   } = plot;
 
-  const threadLine = { ...threadLineSettings, name: "virtual users", data: threads, tooltip: { valueSuffix: "" } };
-  const errorLine = { ...errorLineSettings, ...overAllFailRate, tooltip: { valueSuffix: " %" } };
-  const throughputLine = { ...throughputLineSettings, ...overallThroughput, tooltip: { valueSuffix: " reqs/s" } };
+  const threadLine = { ...threadLineSettings, data: threads, tooltip: { valueSuffix: "" } };
+  const errorLine = { ...errorLineSettings, name: Metrics.ErrorRate, data: overAllFailRate?.data, tooltip: { valueSuffix: " %" } };
+  const throughputLine = { ...throughputLineSettings, name: Metrics.Throughput, data: overallThroughput?.data, tooltip: { valueSuffix: " reqs/s" } };
 
   const chartLines = {
     overall: new Map(),
@@ -34,7 +34,7 @@ export const getChartLines = (plot): ChartLines => {
     chartLines.statusCodes.set(Metrics.StatusCodeInTime, { data: statusCodes });
   }
 
-  chartLines.overall.set(Metrics.ResponseTimeAvg, { ...overallTimeResponse, tooltip: { valueSuffix: " ms" } });
+  chartLines.overall.set(Metrics.ResponseTimeAvg, { data: overallTimeResponse?.data, name: Metrics.ResponseTimeAvg, tooltip: { valueSuffix: " ms" } });
   chartLines.overall.set(Metrics.Threads, threadLine);
   chartLines.overall.set(Metrics.ErrorRate, errorLine);
   chartLines.overall.set(Metrics.Throughput, throughputLine);

@@ -17,6 +17,7 @@ import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
 import { ItemChartService } from "../_services/item-chart.service";
+
 exporting(Highcharts);
 
 
@@ -200,16 +201,16 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   toggleThroughputBand({ element, perfAnalysis }) {
-    this.overallChartOptions.series.forEach(serie => {
-      if (["response time", "errors", "network"].includes(serie.name)) {
-        serie.visible = this.toggleThroughputBandFlag;
+    this.overallChartOptions.series.forEach(series => {
+      if ([Metrics.ResponseTimeAvg, Metrics.ErrorRate, Metrics.Network].includes(series.name)) {
+        series.visible = this.toggleThroughputBandFlag;
       }
-      if (serie.name === "throughput") {
+      if (series.name === Metrics.Throughput) {
         if (this.toggleThroughputBandFlag) {
-          serie.zones = [];
+          series.zones = [];
           return;
         }
-        serie.zones = [{
+        series.zones = [{
           value: this.itemData.overview.throughput,
           color: "#e74c3c"
         }];

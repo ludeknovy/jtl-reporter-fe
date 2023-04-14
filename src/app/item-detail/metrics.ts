@@ -10,5 +10,7 @@ export enum Metrics {
   ResponseTimeP95 = "Response Time [P95]",
   ResponseTimeP99 = "Response Time [P99]",
   StatusCodeInTime = "Status Code In Time",
-  ResponseTimeRaw = "Raw Response Time"
+  ResponseTimeRaw = "Raw Response Time",
+  LatencyAvg = "Latency [avg]",
+  ConnectAvg = "Connection [avg]",
 }

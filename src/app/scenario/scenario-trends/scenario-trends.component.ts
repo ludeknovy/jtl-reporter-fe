@@ -3,10 +3,10 @@ import { Router } from "@angular/router";
 import * as Highcharts from "highcharts";
 import * as moment from "moment";
 import { customScenarioTrends, labelTrends } from "src/app/graphs/scenario-trends";
-import { Series } from "src/app/graphs/series.model";
 import { bytesToMbps } from "src/app/item-detail/calculations";
 import { LabelTrendsData, ScenarioTrendsData, ScenarioTrendsUserSettings } from "src/app/items.service.model";
 import { ScenarioService } from "src/app/scenario.service";
+import { Metrics } from "../../item-detail/metrics";
 
 @Component({
   selector: "app-scenario-trends",
@@ -38,14 +38,14 @@ export class ScenarioTrendsComponent implements OnInit {
   constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
     this.chartDataMapping = new Map([
-      ["percentil", { name: Series.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)", tooltip: { valueSuffix: " ms" } }],
-      ["avgResponseTime", { name: Series.ResponseTimeAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
-      ["avgLatency", { name: Series.LatencyAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
-      ["avgConnect", { name: Series.ConnetcAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
-      ["throughput", { name: Series.Throughput, yAxis: 2, onLoad: true, color: "rgb(41,128,187, 0.8)", tooltip: { valueSuffix: " reqs/s" } }],
-      ["maxVu", { name: "vu", yAxis: 1, onLoad: true, type: "spline", color: "grey", }],
-      ["errorRate", { name: Series.ErrorRate, yAxis: 3, onLoad: true, color: "rgb(231,76,60, 0.8)", tooltip: { valueSuffix: " %" } }],
-      ["network", { name: Series.Network, yAxis: 4, onLoad: false, transform: this.networkTransform, tooltip: { valueSuffix: " mbps" } }],
+      ["percentil", { name: Metrics.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)", tooltip: { valueSuffix: " ms" } }],
+      ["avgResponseTime", { name: Metrics.ResponseTimeAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
+      ["avgLatency", { name: Metrics.LatencyAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
+      ["avgConnect", { name: Metrics.ConnectAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
+      ["throughput", { name: Metrics.Throughput, yAxis: 2, onLoad: true, color: "rgb(41,128,187, 0.8)", tooltip: { valueSuffix: " reqs/s" } }],
+      ["maxVu", { name: Metrics.Threads, yAxis: 1, onLoad: true, type: "spline", color: "grey", }],
+      ["errorRate", { name: Metrics.ErrorRate, yAxis: 3, onLoad: true, color: "rgb(231,76,60, 0.8)", tooltip: { valueSuffix: " %" } }],
+      ["network", { name: Metrics.Network, yAxis: 4, onLoad: false, transform: this.networkTransform, tooltip: { valueSuffix: " mbps" } }],
     ]);
   }
 
@@ -57,7 +57,11 @@ export class ScenarioTrendsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.scenarioService.trends$.subscribe((_: { aggregatedTrends: ScenarioTrendsData[], labelTrends: LabelTrendsData[], userSettings: ScenarioTrendsUserSettings }) => {
+    this.scenarioService.trends$.subscribe((_: {
+      aggregatedTrends: ScenarioTrendsData[],
+      labelTrends: LabelTrendsData[],
+      userSettings: ScenarioTrendsUserSettings
+    }) => {
       if (!_) {
         return;
       }
@@ -92,6 +96,7 @@ export class ScenarioTrendsComponent implements OnInit {
       if (!chartSeriesSettings) {
         continue;
       }
+      console.log({ chartSeriesSettings });
       series.push({
         name: chartSeriesSettings.name || key,
         data: chartSeriesSettings.transform ? chartSeriesSettings.transform(seriesData[key]) : seriesData[key],
@@ -119,7 +124,7 @@ export class ScenarioTrendsComponent implements OnInit {
 
     for (const key of Object.keys(data)) {
       if (seriesP90.length < 20) {
-        data[key].percentile90.forEach(dataValue => this.itemIds.add(dataValue[2]))
+        data[key].percentile90.forEach(dataValue => this.itemIds.add(dataValue[2]));
         seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
         seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
         seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });

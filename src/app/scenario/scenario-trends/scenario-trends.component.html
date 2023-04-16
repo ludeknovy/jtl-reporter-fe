@@ -36,8 +36,8 @@
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
            aria-label="">
             <app-scenario-trends-settings *ngIf="userSettings" [params]="params" [userSettings]="userSettings"></app-scenario-trends-settings>
-                          <button class="jtl-no-glow add-item jtl-btn-light btn btn-sm" (click)="toggleDegradationCurve()"
-                                  ngbDropdownItem><i class="fas fa-chart-line"></i> {{degradationCurveDisplayed ? "Trends": "Degradation Curve"}}</button>
+         <button class="jtl-no-glow add-item jtl-btn-light btn btn-sm" (click)="toggleDegradationCurve()"
+         ><i class="fas fa-chart-line"></i> {{degradationCurveDisplayed ? "Trends": "Degradation Curve"}}</button>
       </div>
     </span>
     <span ngbTooltip="Number of labels displayed is limited" class="float-right data-truncated-warning text-warning" *ngIf="labelDataTruncated">

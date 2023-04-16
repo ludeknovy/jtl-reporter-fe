@@ -25,7 +25,6 @@ import { RoleModule } from "../_directives/role.module";
 import { AddNewItemModule } from "./add-new-item/add-new-item.module";
 import { ScenarioTrendsSettingsComponent } from "./scenario-trends/scenario-trends-settings/scenario-trends-settings.component";
 
-
 const routes: Routes = [
   {
     path: "project/:projectName/scenario/:scenarioName/items", component: ScenarioComponent,

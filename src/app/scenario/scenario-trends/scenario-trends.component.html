@@ -5,7 +5,7 @@
     <span class="float-right">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
            aria-label="">
-            <app-scenario-trends-settings *ngIf="userSettings" [params]="params" [userSettings]="userSettings"></app-scenario-trends-settings>
+            <app-scenario-trends-settings *ngIf="userSettings && !degradationCurveDisplayed" [params]="params" [userSettings]="userSettings"></app-scenario-trends-settings>
                   <button class="jtl-no-glow add-item jtl-btn-light btn btn-sm" (click)="toggleDegradationCurve()"
                           ><i class="fas fa-chart-line"></i> {{degradationCurveDisplayed ? "Trends": "Degradation Curve"}}</button>
       </div>

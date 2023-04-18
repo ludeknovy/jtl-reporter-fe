@@ -276,7 +276,7 @@
                 <div class="row">
                   <i class="fas fa-external-link text-carrot"></i>
                   <div class="col-sm mb-1 summary-bold">External Link</div>
-                  <div class="col-sm mb-1"><a target="_blank" href="{{itemData.resourcesLink}}"><i class="fas fa-link"></i> <span> Resources</span>
+                  <div class="col-sm mb-1" *ngIf="itemData.resourcesLink"><a target="_blank" href="{{itemData.resourcesLink}}"><i class="fas fa-link"></i> <span> Resources</span>
                   </a></div>
                 </div>
                 <div class="row" *ngIf="itemData.monitoring.cpu.data.length > 0">

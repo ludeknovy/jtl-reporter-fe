@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as Highcharts from "highcharts";
 import * as moment from "moment";
-import {customScenarioTrends, labelTrends, responseTimeDegradationCurveOption} from 'src/app/graphs/scenario-trends';
+import { customScenarioTrends, labelTrends, responseTimeDegradationCurveOption } from "src/app/graphs/scenario-trends";
 import { bytesToMbps } from "src/app/item-detail/calculations";
 import { LabelTrendsData, ScenarioTrendsData, ScenarioTrendsUserSettings } from "src/app/items.service.model";
 import { ScenarioService } from "src/app/scenario.service";
@@ -39,8 +39,8 @@ export class ScenarioTrendsComponent implements OnInit {
   chartDataMapping;
   itemIds = new Set();
   labelDataTruncated = false;
-  responseTimeDegradationCurve
-  degradationCurveDisplayed = false
+  responseTimeDegradationCurve;
+  degradationCurveDisplayed = false;
 
   constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
@@ -76,7 +76,7 @@ export class ScenarioTrendsComponent implements OnInit {
       this.userSettings = _.userSettings;
       this.generateAggregateChartLines(_.aggregatedTrends);
       this.generateLabelChartLines(_.labelTrends);
-      this.generateDegradationCurve(_.responseTimeDegradationCurve)
+      this.generateDegradationCurve(_.responseTimeDegradationCurve);
     });
   }
 
@@ -153,7 +153,7 @@ export class ScenarioTrendsComponent implements OnInit {
     if (!degradationCurve) {
       return;
     }
-    console.log(degradationCurve)
+    console.log(degradationCurve);
     this.responseTimeDegradationChartOption.series = JSON.parse(JSON.stringify(degradationCurve));
     this.updateDegradationCurveChartFlag = true;
 
@@ -168,8 +168,8 @@ export class ScenarioTrendsComponent implements OnInit {
   }
 
   toggleDegradationCurve() {
-    console.log("toggleDegradationCurve")
-    this.degradationCurveDisplayed = !this.degradationCurveDisplayed
+    console.log("toggleDegradationCurve");
+    this.degradationCurveDisplayed = !this.degradationCurveDisplayed;
   }
 
   private updateLabelChart(chartOptions, series) {

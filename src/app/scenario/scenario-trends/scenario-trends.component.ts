@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as Highcharts from "highcharts";
 import * as moment from "moment";
-import { customScenarioTrends, labelTrends } from "src/app/graphs/scenario-trends";
+import { customScenarioTrends, labelTrends, responseTimeDegradationCurveOption } from "src/app/graphs/scenario-trends";
 import { bytesToMbps } from "src/app/item-detail/calculations";
 import { LabelTrendsData, ScenarioTrendsData, ScenarioTrendsUserSettings } from "src/app/items.service.model";
 import { ScenarioService } from "src/app/scenario.service";
@@ -18,6 +18,8 @@ export class ScenarioTrendsComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   updateAggregatedScenarioTrendsChartFlag = false;
   updateLabelScenarioTrendsChartFlag = false;
+  updateDegradationCurveChartFlag = false;
+
   aggregatedScenarioTrendChartOption = {
     ...customScenarioTrends(), series: []
   };
@@ -30,10 +32,15 @@ export class ScenarioTrendsComponent implements OnInit {
   labelScenarioTrendChartErrorRateOption = {
     ...labelTrends("%", "ErrorRate"), series: []
   };
+  responseTimeDegradationChartOption = {
+    ...responseTimeDegradationCurveOption(), series: []
+  };
   userSettings: ScenarioTrendsUserSettings;
   chartDataMapping;
   itemIds = new Set();
   labelDataTruncated = false;
+  responseTimeDegradationCurve;
+  degradationCurveDisplayed = false;
 
   constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
@@ -61,6 +68,7 @@ export class ScenarioTrendsComponent implements OnInit {
       aggregatedTrends: ScenarioTrendsData[],
       labelTrends: LabelTrendsData[],
       userSettings: ScenarioTrendsUserSettings
+      responseTimeDegradationCurve,
     }) => {
       if (!_) {
         return;
@@ -68,6 +76,7 @@ export class ScenarioTrendsComponent implements OnInit {
       this.userSettings = _.userSettings;
       this.generateAggregateChartLines(_.aggregatedTrends);
       this.generateLabelChartLines(_.labelTrends);
+      this.generateDegradationCurve(_.responseTimeDegradationCurve);
     });
   }
 
@@ -96,7 +105,6 @@ export class ScenarioTrendsComponent implements OnInit {
       if (!chartSeriesSettings) {
         continue;
       }
-      console.log({ chartSeriesSettings });
       series.push({
         name: chartSeriesSettings.name || key,
         data: chartSeriesSettings.transform ? chartSeriesSettings.transform(seriesData[key]) : seriesData[key],
@@ -141,12 +149,27 @@ export class ScenarioTrendsComponent implements OnInit {
     this.updateLabelScenarioTrendsChartFlag = true;
   }
 
+  generateDegradationCurve(degradationCurve) {
+    if (!degradationCurve) {
+      return;
+    }
+    console.log(degradationCurve);
+    this.responseTimeDegradationChartOption.series = JSON.parse(JSON.stringify(degradationCurve));
+    this.updateDegradationCurveChartFlag = true;
+
+  }
+
   onPointSelect(event) {
     if (event && event.point && event.point) {
       const itemId = Array.from(this.itemIds)[event.point.index];
       const { projectName, scenarioName } = this.params;
       this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
     }
+  }
+
+  toggleDegradationCurve() {
+    console.log("toggleDegradationCurve");
+    this.degradationCurveDisplayed = !this.degradationCurveDisplayed;
   }
 
   private updateLabelChart(chartOptions, series) {

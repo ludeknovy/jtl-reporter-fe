@@ -54,7 +54,7 @@ export class AddNewItemComponent implements OnInit {
     this.monitoringFile = new FormControl("", []);
     this.environment = new FormControl("", [
       Validators.required,
-      Validators.maxLength(150)
+      Validators.maxLength(100)
     ]);
     this.note = new FormControl("", [
       Validators.maxLength(150)

@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { ScenarioNotifications } from "./items.service.model";
 import { ScenarioApiService } from "./scenario-api.service";
+import { EnvironmentService } from "./_services/environment.service";
 
 @Injectable({
   providedIn: "root"
@@ -17,17 +18,20 @@ export class ScenarioService {
 
   private notifications = new BehaviorSubject<ScenarioNotifications[]>([]);
   public notifications$ = this.notifications.asObservable();
-
-  private environment = ""
+  private environment: string;
 
   constructor(
-    private scenarioApiService: ScenarioApiService
-  ) { }
+    private scenarioApiService: ScenarioApiService,
+    private environmentService: EnvironmentService
+  ) {
+    this.environmentService.environment$.subscribe(value => {
+      this.environment = value;
+    })
+  }
 
 
   fetchScenarioTrends(projectName, scenarioName) {
     const queryParams = { environment: this.environment };
-    console.log("fetchScenarioTrends", queryParams);
     this.scenarioApiService.fetchScenarioTrend(projectName, scenarioName, queryParams)
       .subscribe(_ => this.trends.next(_));
   }
@@ -42,12 +46,8 @@ export class ScenarioService {
       .subscribe(_ => this.environments.next(_));
   }
 
-  setEnvironment(environment: string) {
-    this.environment = environment
-  }
-
   updateScenarioTrends(value) {
-    this.trends.next(value)
+    this.trends.next(value);
   }
 
 }

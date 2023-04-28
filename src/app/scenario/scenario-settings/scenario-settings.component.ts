@@ -122,7 +122,6 @@ export class SettingsScenarioComponent implements OnInit {
     this.route.params.subscribe(_ => this.params = _);
     this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
       this.hasBaselineReport = !!_.baselineReport
-      console.log(this.hasBaselineReport)
       if (_.name) {
         this.createFormControls(_);
         this.createForm();

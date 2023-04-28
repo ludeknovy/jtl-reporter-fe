@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { ScenarioService } from "../../scenario.service";
 import { ItemsService } from "../../items.service";
+import { EnvironmentService } from "../../_services/environment.service";
 
 @Component({
   selector: "app-environments",
@@ -17,6 +18,7 @@ export class EnvironmentsComponent implements OnInit {
   constructor(
     private scenarioService: ScenarioService,
     private itemsService: ItemsService,
+    private environmentService: EnvironmentService,
   ) {
     this.$environments = scenarioService.environments$;
   }
@@ -35,8 +37,7 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   private reloadData(environment) {
-    this.itemsService.setEnvironment(environment)
-    this.scenarioService.setEnvironment(environment)
+    this.environmentService.setEnvironment(environment)
     this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: 15, offset: 0 });
     this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName)
     this.itemsService.setProcessingItemsIntervalSubscription(this.params.projectName, this.params.scenarioName);

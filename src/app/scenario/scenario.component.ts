@@ -8,6 +8,7 @@ import { SharedMainBarService } from "../shared-main-bar.service";
 import { ScenarioService } from "../scenario.service";
 import { ScenarioApiService } from "../scenario-api.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
+import { EnvironmentService } from "../_services/environment.service";
 
 const LIMIT = 15;
 const OFFSET = 15;
@@ -19,6 +20,7 @@ const OFFSET = 15;
 })
 export class ScenarioComponent implements OnInit, OnDestroy {
   items$: Observable<Items>;
+  environment$: Subscription;
   params;
   page = 1;
   pageSize = LIMIT;
@@ -34,8 +36,10 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     private itemsService: ItemsService,
     private router: Router,
     private sharedMainBarService: SharedMainBarService,
+    private environmentService: EnvironmentService,
   ) {
     this.items$ = itemsService.items$;
+    this.environment$ = environmentService.environment$.subscribe(value => this.page = 1);
   }
 
   ngOnDestroy() {

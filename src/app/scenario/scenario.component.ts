@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { of, Observable, Subscription } from "rxjs";
 import { switchMap, catchError } from "rxjs/operators";
-import { ProjectOverview, Items } from "../items.service.model";
+import { Items } from "../items.service.model";
 import { ItemsService } from "../items.service";
 import { SharedMainBarService } from "../shared-main-bar.service";
 import { ScenarioService } from "../scenario.service";
@@ -39,9 +39,9 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.itemsService.interval.unsubscribe();
+    this.itemsService.intervalSubscription.unsubscribe();
     this.subscription.unsubscribe();
-    this.scenarioService.updateScenarioTrends(undefined)
+    this.scenarioService.updateScenarioTrends(undefined);
   }
 
   ngOnInit() {
@@ -49,12 +49,9 @@ export class ScenarioComponent implements OnInit, OnDestroy {
       switchMap(routeParams => {
         this.params = routeParams;
         this.sharedMainBarService.setProjectName(this.params.projectName);
-        this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
-        this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
         this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
           this.zeroErrorToleranceEnabled = _.zeroErrorToleranceEnabled;
         });
-        this.itemsService.processingItemsInterval(this.params.projectName, this.params.scenarioName);
         return new Observable().pipe(catchError(err => of([])));
       })
     ).subscribe(_ => _);
@@ -67,11 +64,11 @@ export class ScenarioComponent implements OnInit, OnDestroy {
         if (reloadItems) {
           this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
           this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
+          this.scenarioService.fetchEnvironments(this.params.projectName, this.params.scenarioName);
         }
         return this.currentProcessingItems = inprogress.map((item) => item.id);
       }
     });
-
   }
 
   loadMore() {

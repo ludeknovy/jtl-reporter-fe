@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, interval } from "rxjs";
+import { BehaviorSubject, interval, Observable, Subscription } from "rxjs";
 import { Items } from "./items.service.model";
 import { ItemsApiService } from "./items-api.service";
 
@@ -8,7 +8,7 @@ import { ItemsApiService } from "./items-api.service";
 })
 
 export class ItemsService {
-  public interval;
+  private interval;
 
   private processingItems = new BehaviorSubject<[]>([]);
   public processingItems$ = this.processingItems.asObservable();
@@ -19,23 +19,33 @@ export class ItemsService {
   private shareTokens = new BehaviorSubject<[]>([]);
   public shareTokens$ = this.shareTokens.asObservable();
 
-  constructor(
-    private itemsApiService: ItemsApiService
-  ) { }
+  public intervalSubscription: Subscription;
 
-  fetchItems(projectName, scenarioName, query = { limit: 15, offset: 0 }) {
-    this.itemsApiService.fetchItems(projectName, scenarioName, query)
+  private environment = ""
+
+
+  constructor(
+    private itemsApiService: ItemsApiService,
+  ) {
+  }
+
+  fetchItems(projectName, scenarioName, query: ItemsQuery = { limit: 15, offset: 0 }) {
+    const queryParams = { ...query, environment: this.environment };
+    this.itemsApiService.fetchItems(projectName, scenarioName, queryParams)
       .subscribe(_ => this.items.next(_));
   }
 
-  fetchProcessingItems(projectName, scenarioName) {
-    return this.itemsApiService.fetchProcessingItems(projectName, scenarioName).subscribe((_) => this.processingItems.next(_));
+  fetchProcessingItems(projectName, scenarioName, queryParams) {
+    return this.itemsApiService.fetchProcessingItems(projectName, scenarioName, queryParams).subscribe((_) => this.processingItems.next(_));
   }
 
-  processingItemsInterval(projectName, scenarioName) {
-    this.fetchProcessingItems(projectName, scenarioName);
-    this.interval = interval(5000).subscribe(() => {
-      return this.fetchProcessingItems(projectName, scenarioName);
+  setProcessingItemsIntervalSubscription(projectName, scenarioName) {
+    this.fetchProcessingItems(projectName, scenarioName, { environment: this.environment });
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+    }
+    this.intervalSubscription = interval(5000).subscribe(() => {
+      return this.fetchProcessingItems(projectName, scenarioName, { environment: this.environment });
     });
   }
 
@@ -43,4 +53,15 @@ export class ItemsService {
     this.itemsApiService.fetchItemShareTokens(projectName, scenarioName, itemId).subscribe((_) => this.shareTokens.next(_));
   }
 
+  // some of the above methods are called from various places, this way we can propagate the environment to all of them
+  setEnvironment(environment) {
+    this.environment = environment;
+  }
+
+}
+
+interface ItemsQuery {
+  limit: number,
+  offset: number,
+  environment?: string
 }

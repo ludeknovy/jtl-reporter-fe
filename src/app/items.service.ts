@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, interval, Observable, Subscription } from "rxjs";
 import { Items } from "./items.service.model";
 import { ItemsApiService } from "./items-api.service";
-import {EnvironmentService} from './_services/environment.service';
+import { EnvironmentService } from "./_services/environment.service";
 
 @Injectable({
   providedIn: "root"

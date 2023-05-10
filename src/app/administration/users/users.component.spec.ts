@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { DeleteUserComponent } from "./delete-user/delete-user.component";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptior";
+import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptor";
 
 
 

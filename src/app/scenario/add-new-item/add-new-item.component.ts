@@ -107,8 +107,6 @@ export class AddNewItemComponent implements OnInit {
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           const message = this.notification.newTestItemNotificationMessage(_);
-          this.itemService.fetchProcessingItems(this.routeParams.projectName, this.routeParams.scenarioName);
-          this.scenarioService.fetchScenarioTrends(this.routeParams.projectName, this.routeParams.scenarioName);
           this.spinner.hide();
           return this.itemsApiService.setData(message);
         });

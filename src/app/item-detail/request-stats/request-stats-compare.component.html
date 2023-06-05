@@ -96,6 +96,10 @@
             <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
           </th>
           <th scope="col" class="hd jtl-head-color"
+              *ngIf="displayColumn(itemData.userSettings?.requestStats?.failures, false)">
+            <mfDefaultSorter by="failures">failures</mfDefaultSorter>
+          </th>
+          <th scope="col" class="hd jtl-head-color"
               *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex, false)">
             <mfDefaultSorter [by]="sortByApdex">apdex</mfDefaultSorter>
           </th>
@@ -158,6 +162,10 @@
             <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.errorRate)">
               <span
                 [className]="comparedData ? _.errorRate > 0 ? 'value-positive' : 'value-negative' : ''">{{_.errorRate | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.failures, false)">
+              <span
+                [className]="comparedData ? _.failures > 0 ? 'value-positive' : 'value-negative' : ''">{{_.failures | number: '1.0-2'}}</span>
             </td>
             <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.apdex, false)">
               <span>

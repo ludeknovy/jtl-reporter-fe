@@ -79,6 +79,7 @@ describe("RequestStatsCompareComponent", () => {
           p95: true,
           apdex: true,
           standardDeviation: true,
+          failures: true,
         }
       },
       baseId: "",

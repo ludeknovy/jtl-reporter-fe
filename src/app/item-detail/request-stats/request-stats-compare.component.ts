@@ -48,6 +48,18 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // enrich the data with failure count
+    this.itemData.statistics.map(labelData => {
+      const failureCount = labelData.responseMessageFailures.reduce(
+        (previousValue, currentValue) => {
+          previousValue.count += currentValue.count
+          return previousValue
+        },{ count: 0 })
+
+      Object.assign(labelData, { failures: failureCount.count })
+      return labelData
+    })
+
     if (this.itemData?.thresholds?.passed === false) {
       this.labelsData = this.itemData.statistics.map(labelData => {
         const thresholdResult = this.itemData.thresholds.results.find(thresholdResult =>
@@ -65,6 +77,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     } else {
       this.labelsData = this.itemData.statistics;
     }
+    console.log(this.labelsData)
     this.analyzeChartService.currentData.subscribe(data => {
       if (data && data.label) {
         this.search(data.label);

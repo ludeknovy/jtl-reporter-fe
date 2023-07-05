@@ -222,7 +222,7 @@ export class SettingsScenarioComponent implements OnInit {
     this.requestStatsCormControls.throughput = new FormControl(settings.userSettings.requestStats.throughput, [Validators.required]);
     this.requestStatsCormControls.network = new FormControl(settings.userSettings.requestStats.network, [Validators.required]);
     this.requestStatsCormControls.errorRate = new FormControl(settings.userSettings.requestStats.errorRate, [Validators.required]);
-    this.requestStatsCormControls.failures = new FormControl(settings.userSettings.requestStats.failures, [Validators.required]);
+    this.requestStatsCormControls.failures = new FormControl(settings.userSettings.requestStats.failures || false, [Validators.required]);
     this.requestStatsCormControls.apdex = new FormControl(settings.userSettings.requestStats.apdex || false, [Validators.required]);
 
     this.apdexFormControls.satisfyingThreshold = new FormControl(settings?.apdexSettings?.satisfyingThreshold, [

@@ -1,0 +1,44 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Chart zoom range</h4>
+    <button type="button" style="outline: none;" class="close" aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="form-group col-sm-6">
+
+          <label for="startDate">Start Date</label>
+          <app-date-time-picker formControlName="startDate" id="startDate" name="startDate" [dateString]="reportStartDate"></app-date-time-picker>
+          <div class="text-danger" *ngIf="formGroup.get('startDate').errors?.required">Start Date is required.</div>
+          <div class="text-danger"
+               *ngIf="formGroup.get('startDate')?.value && formGroup.get('startDate')?.errors?.isValid">Start Date must
+            be a valid date.
+          </div>
+
+          <br/>
+          <label for="endDate">End Date</label>
+          <app-date-time-picker formControlName="endDate" id="endDate" name="endDate"></app-date-time-picker>
+          <div class="text-danger" *ngIf="formGroup.get('endDate').errors?.required">End Date is required.</div>
+          <div class="text-danger" *ngIf="formGroup.get('endDate')?.value && formGroup.get('endDate')?.errors?.isValid">
+            End Date must be a valid date.
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+
+</ng-template>
+
+<button class="btn btn-sm btn-outline-dark chart-range" (click)="open(content)">Chart Range <i class="fas fa-search"></i></button>

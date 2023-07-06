@@ -36,7 +36,6 @@ export class LabelChartComponent implements OnChanges {
   labelCharts = new Map();
   comparisonLabelCharts = new Map()
   expanded = false;
-  chartEnum = LabelChartType
   private responseTimeMetricGroup: string[];
 
   metricChartMap = new Map([
@@ -50,8 +49,6 @@ export class LabelChartComponent implements OnChanges {
     [Metrics.ResponseTimeP99, commonGraphSettings("ms")],
     [Metrics.ErrorRate, commonGraphSettings("%")]
   ]);
-  LabelChartType: LabelChartType;
-
   constructor(
     private comparisonChartService: ComparisonChartService
   ) {
@@ -97,7 +94,7 @@ export class LabelChartComponent implements OnChanges {
         this.setChart(this.chartMetric, LabelChartType.Comparison);
       });
     }
-    // aggregation changed, we need to refresh the data but only for opened charts
+    // aggregation changed, we need to refresh the data but only for open charts
     if (changes.chartLines?.currentValue && this.expanded) {
       this.setChartAggregation(changes.chartLines.currentValue,  LabelChartType.Default);
       this.setChart(this.chartMetric,LabelChartType.Default);

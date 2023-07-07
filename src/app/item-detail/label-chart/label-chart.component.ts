@@ -164,7 +164,8 @@ export class LabelChartComponent implements OnChanges {
     this.itemChartService.plotRange$.subscribe((value) => {
       if (value.start && value.end) {
         for (const chartOptions of [this.labelChartOptions]) {
-          if (chartOptions) {
+          // needs to be skipped for histogram chart (column type)
+          if (chartOptions && chartOptions?.chart?.type !== "column") {
             this.setPlotRange(chartOptions, value.start, value.end);
 
           }
@@ -195,10 +196,13 @@ export class LabelChartComponent implements OnChanges {
         this.componentRef.chart = null;
       }
       this.labelChartOptions = deepmerge(this.labelCharts.get(metric), {});
-      // the chart was destroyed, so it's necessary to set it again
-      this.setPlotRange(this.labelChartOptions, currentRange.start, currentRange.end);
-      // we need to subscribe to it again because the original chart was destroyed
-      this.plotRangeSubscription();
+      if (metric !== "Histogram") {
+        // the chart was destroyed, so it's necessary to set it again
+        this.setPlotRange(this.labelChartOptions, currentRange.start, currentRange.end);
+        // we need to subscribe to it again because the original chart was destroyed
+        this.plotRangeSubscription();
+      }
+
     } else {
       if (this.comparisonChart) {
         this.comparisonChart.destroy();

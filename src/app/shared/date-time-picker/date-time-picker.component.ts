@@ -126,7 +126,6 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit, Af
     this.datetime.day = date.day;
 
     this.dp.navigateTo({ year: this.datetime.year, month: this.datetime.month });
-    console.log("test");
     this.setDateStringModel();
   }
 

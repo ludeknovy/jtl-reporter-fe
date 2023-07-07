@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NgbDateStruct, NgbModal, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
-import {ItemChartService} from '../../_services/item-chart.service';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ItemChartService } from "../../_services/item-chart.service";
 
 @Component({
   selector: "app-zoom-charts",

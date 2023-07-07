@@ -113,7 +113,6 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit, Af
     const date = DateTimeModel.fromLocalString($event as string);
 
     if (!date) {
-      this.dateString = this.dateString;
       return;
     }
 

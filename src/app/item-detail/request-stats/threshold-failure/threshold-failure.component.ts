@@ -10,8 +10,9 @@ export class ThresholdFailureComponent implements OnInit {
 
   @Input() thresholdResult: { passed: boolean, result: ThresholdResult };
 
+  protected readonly Math = Math;
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
   }
-
-  protected readonly Math = Math;
 }

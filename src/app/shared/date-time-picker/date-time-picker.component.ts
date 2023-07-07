@@ -23,7 +23,7 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit, Af
   dateString: string;
 
   @Input()
-  inputDatetimeFormat = "M/d/yyyy H:mm:ss";
+  inputDatetimeFormat = "d. M. yyyy H:mm:ss";
   @Input()
   hourStep = 1;
   @Input()

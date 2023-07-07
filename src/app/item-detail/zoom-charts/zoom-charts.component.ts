@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbDateStruct, NgbModal, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
+import {ItemChartService} from '../../_services/item-chart.service';
 
 @Component({
   selector: "app-zoom-charts",
@@ -12,7 +13,10 @@ export class ZoomChartsComponent implements OnInit {
   @Input() reportStartDate: string;
   @Input() reportEndDate: string;
 
-  constructor(private modalService: NgbModal) {
+  constructor(
+    private modalService: NgbModal,
+    private itemChartService: ItemChartService
+    ) {
   }
 
   formGroup: FormGroup;
@@ -20,8 +24,7 @@ export class ZoomChartsComponent implements OnInit {
   endDateControl = null;
 
   ngOnInit() {
-    console.log(this.reportStartDate);
-    console.log(this.reportEndDate);
+    this.itemChartService.setPlotRange({ start: new Date(this.reportStartDate), end: new Date(this.reportEndDate) })
 
     this.startDateControl = new FormControl(new Date(this.reportStartDate), { validators: [Validators.required, DateTimeValidator] });
     this.endDateControl = new FormControl(new Date(this.reportEndDate), { validators: [Validators.required, DateTimeValidator] });
@@ -37,10 +40,8 @@ export class ZoomChartsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formGroup.value);
-
+    this.itemChartService.setPlotRange({ start: new Date(this.formGroup.value.startDate), end: new Date(this.formGroup.value.endDate) })
     this.modalService.dismissAll();
-
   }
 
 }

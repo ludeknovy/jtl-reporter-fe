@@ -11,7 +11,6 @@ export class ThresholdFailureComponent implements OnInit {
   @Input() thresholdResult: { passed: boolean, result: ThresholdResult };
 
   ngOnInit(): void {
-    console.log(this.thresholdResult)
   }
 
   protected readonly Math = Math;

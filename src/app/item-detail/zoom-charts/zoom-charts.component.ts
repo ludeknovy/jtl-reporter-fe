@@ -13,6 +13,7 @@ export class ZoomChartsComponent implements OnInit {
   @Input() reportStartDate: string;
   @Input() reportEndDate: string;
 
+
   constructor(
     private modalService: NgbModal,
     private itemChartService: ItemChartService
@@ -42,6 +43,14 @@ export class ZoomChartsComponent implements OnInit {
   onSubmit() {
     this.itemChartService.setPlotRange({ start: new Date(this.formGroup.value.startDate), end: new Date(this.formGroup.value.endDate) })
     this.modalService.dismissAll();
+  }
+
+  setOriginalStartDate() {
+    this.startDateControl.setValue(this.reportStartDate)
+  }
+
+  setOriginalEndDate() {
+    this.endDateControl.setValue(this.reportEndDate)
   }
 
 }

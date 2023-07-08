@@ -77,7 +77,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     } else {
       this.labelsData = this.itemData.statistics;
     }
-    console.log(this.labelsData)
     this.analyzeChartService.currentData.subscribe(data => {
       if (data && data.label) {
         this.search(data.label);

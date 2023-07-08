@@ -18,7 +18,7 @@ import { noop } from "rxjs";
     }
   ]
 })
-export class DateTimePickerComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+export class DateTimePickerComponent implements ControlValueAccessor, OnInit {
   @Input()
   dateString: string;
 
@@ -36,7 +36,6 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit, Af
   @Input()
   disabled = false;
 
-  private showTimePickerToggle = false;
 
   private datetime: DateTimeModel = new DateTimeModel();
   private firstTimeAssign = true;
@@ -59,12 +58,6 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit, Af
 
   ngOnInit(): void {
     this.ngControl = this.inj.get(NgControl);
-  }
-
-  ngAfterViewInit(): void {
-    this.popover.hidden.subscribe($event => {
-      this.showTimePickerToggle = false;
-    });
   }
 
   writeValue(newModel: string) {
@@ -124,7 +117,6 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit, Af
     this.datetime.month = date.month;
     this.datetime.day = date.day;
 
-    this.dp.navigateTo({ year: this.datetime.year, month: this.datetime.month });
     this.setDateStringModel();
   }
 
@@ -145,9 +137,11 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit, Af
       // Skip very first assignment to null done by Angular
       if (this.dateString !== null) {
         this.firstTimeAssign = false;
+
       }
     }
   }
+
 
   inputBlur($event) {
     this.onTouched();

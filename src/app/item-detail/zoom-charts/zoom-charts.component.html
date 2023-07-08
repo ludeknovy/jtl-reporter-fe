@@ -13,8 +13,17 @@
       <div class="row">
         <div class="form-group col-sm-6">
 
-          <label for="startDate">Start Date</label>
-          <app-date-time-picker formControlName="startDate" id="startDate" name="startDate" [dateString]="reportStartDate"></app-date-time-picker>
+          <div>
+            <label for="startDate">Start Date   <a class="text-primary small" (click)="setOriginalStartDate()">reset</a>
+
+            </label>
+            <div>
+              <app-date-time-picker formControlName="startDate" id="startDate" name="startDate" [dateString]="reportStartDate">
+            </app-date-time-picker>
+            </div>
+          </div>
+
+
           <div class="text-danger" *ngIf="formGroup.get('startDate').errors?.required">Start Date is required.</div>
           <div class="text-danger"
                *ngIf="formGroup.get('startDate')?.value && formGroup.get('startDate')?.errors?.isValid">Start Date must
@@ -22,8 +31,9 @@
           </div>
 
           <br/>
-          <label for="endDate">End Date</label>
+          <label for="endDate">End Date           <a class="text-primary small" (click)="setOriginalEndDate()">reset</a></label>
           <app-date-time-picker formControlName="endDate" id="endDate" name="endDate"></app-date-time-picker>
+
           <div class="text-danger" *ngIf="formGroup.get('endDate').errors?.required">End Date is required.</div>
           <div class="text-danger" *ngIf="formGroup.get('endDate')?.value && formGroup.get('endDate')?.errors?.isValid">
             End Date must be a valid date.

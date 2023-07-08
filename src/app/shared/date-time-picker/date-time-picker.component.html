@@ -10,8 +10,8 @@
 
 <ng-template #calendarContent>
   <div>
-    <div>
-      <ngb-datepicker #dp name="datepicker" [ngModel]="datetime"
+    <div >
+      <ngb-datepicker #dp name="datepicker"  [ngModel]="datetime" [startDate]="datetime"
                       (ngModelChange)="onDateChange($event)"></ngb-datepicker>
 
     </div>

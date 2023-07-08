@@ -49,7 +49,7 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit {
   private onTouched: () => void = noop;
   private onChange: (_: any) => void = noop;
 
-  private ngControl: NgControl;
+  public ngControl: NgControl;
 
   constructor(private config: NgbPopoverConfig, private inj: Injector ) {
     config.autoClose = "outside";

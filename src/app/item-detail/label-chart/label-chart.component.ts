@@ -6,6 +6,7 @@ import { Metrics } from "../metrics";
 import { ResponseTimePerLabelDistribution } from "../../items.service.model";
 import { ChartLine } from "../../_services/chart-service-utils";
 import { ComparisonChartService } from "../../_services/comparison-chart.service";
+import { ItemChartService } from "../../_services/item-chart.service";
 
 @Component({
   selector: "app-label-chart",
@@ -19,7 +20,7 @@ export class LabelChartComponent implements OnChanges {
   @Input() activated: boolean;
   @Input() histogramData: ResponseTimePerLabelDistribution[];
   @ViewChild("labelChart") componentRef;
-  @ViewChild("labelComparisonChart") labelComparisonChartComponentRef
+  @ViewChild("labelComparisonChart") labelComparisonChartComponentRef;
 
   Highcharts: typeof Highcharts = Highcharts;
   chartMetric = "Response Times";
@@ -34,9 +35,8 @@ export class LabelChartComponent implements OnChanges {
   chartCallback;
   comparisonChartCallback;
   labelCharts = new Map();
-  comparisonLabelCharts = new Map()
+  comparisonLabelCharts = new Map();
   expanded = false;
-  chartEnum = LabelChartType
   private responseTimeMetricGroup: string[];
 
   metricChartMap = new Map([
@@ -50,10 +50,10 @@ export class LabelChartComponent implements OnChanges {
     [Metrics.ResponseTimeP99, commonGraphSettings("ms")],
     [Metrics.ErrorRate, commonGraphSettings("%")]
   ]);
-  LabelChartType: LabelChartType;
 
   constructor(
-    private comparisonChartService: ComparisonChartService
+    private comparisonChartService: ComparisonChartService,
+    private itemChartService: ItemChartService
   ) {
     this.chartCallback = chart => {
       this.chart = chart;
@@ -67,9 +67,7 @@ export class LabelChartComponent implements OnChanges {
   }
 
 
-
   ngOnChanges(changes: SimpleChanges) {
-
     // chart expanded
     if (!changes.activated?.previousValue && changes.activated?.currentValue) {
       this.setChartAggregation(this.chartLines, LabelChartType.Default);
@@ -77,16 +75,17 @@ export class LabelChartComponent implements OnChanges {
       this.setHistogramChart(this.histogramData, LabelChartType.Default);
       this.setChart(this.chartMetric, LabelChartType.Default);
       this.expanded = true;
-
       this.comparisonChartService.histogram$.subscribe(plot => {
-        this.setHistogramChart(plot.responseTimePerLabelDistribution, LabelChartType.Comparison);
-      })
+        if (plot && plot.responseTimePerLabelDistribution) {
+          this.setHistogramChart(plot.responseTimePerLabelDistribution, LabelChartType.Comparison);
+        }
+      });
 
       this.comparisonChartService.selectedPlot$.subscribe(plot => {
         if (!plot) {
           if (this.comparisonChart) {
-            this.comparisonLabelChartOptions = null
-            this.comparisonChart = null
+            this.comparisonLabelChartOptions = null;
+            this.comparisonChart = null;
           }
         }
         if (!plot?.chartLines) {
@@ -96,11 +95,12 @@ export class LabelChartComponent implements OnChanges {
         this.getChartsKey(LabelChartType.Comparison);
         this.setChart(this.chartMetric, LabelChartType.Comparison);
       });
+      this.plotRangeSubscription();
     }
-    // aggregation changed, we need to refresh the data but only for opened charts
+    // aggregation changed, we need to refresh the data but only for open charts
     if (changes.chartLines?.currentValue && this.expanded) {
-      this.setChartAggregation(changes.chartLines.currentValue,  LabelChartType.Default);
-      this.setChart(this.chartMetric,LabelChartType.Default);
+      this.setChartAggregation(changes.chartLines.currentValue, LabelChartType.Default);
+      this.setChart(this.chartMetric, LabelChartType.Default);
     }
   }
 
@@ -111,7 +111,7 @@ export class LabelChartComponent implements OnChanges {
     availableMetrics.forEach((metric: Metrics) => {
       const labelMetricsData = chartLines.labels.get(metric).find(data => data.name === this.label);
       if (!labelMetricsData) {
-        return
+        return;
       }
       const chartSettings = this.metricChartMap.get(metric);
       if (this.responseTimeMetricGroup.includes(metric)) {
@@ -155,38 +155,66 @@ export class LabelChartComponent implements OnChanges {
   private getChartsKey(chartType: LabelChartType) {
     if (chartType === LabelChartType.Default) {
       this.chartKeys = Array.from(this.labelCharts.keys());
-    }
-    else {
+    } else {
       this.comparisonChartKeys = Array.from(this.comparisonLabelCharts.keys());
     }
+  }
 
+  private plotRangeSubscription() {
+    this.itemChartService.plotRange$.subscribe((value) => {
+      if (value.start && value.end) {
+        for (const chartOptions of [this.labelChartOptions]) {
+          // needs to be skipped for histogram chart (column type)
+          if (chartOptions && chartOptions?.chart?.type !== "column") {
+            this.setPlotRange(chartOptions, value.start, value.end);
+
+          }
+        }
+        this.updateLabelChartFlag = true
+      }
+    });
+  }
+
+  private setPlotRange(chartOptions, min, max) {
+    chartOptions.xAxis.min = min.getTime();
+    chartOptions.xAxis.max = max.getTime();
   }
 
   changeChartAggregation(event) {
     this.chartMetric = event.target.innerText;
-    this.setChart(this.chartMetric, LabelChartType.Comparison)
-    this.setChart(this.chartMetric, LabelChartType.Default)
+    this.setChart(this.chartMetric, LabelChartType.Comparison);
+    this.setChart(this.chartMetric, LabelChartType.Default);
   }
 
 
   setChart(metric, chartType: LabelChartType) {
+    const currentRange = this.itemChartService.getPlotRange();
+
     if (chartType === LabelChartType.Default) {
       if (this.chart) {
         this.chart.destroy();
         this.componentRef.chart = null;
       }
       this.labelChartOptions = deepmerge(this.labelCharts.get(metric), {});
+      if (metric !== "Histogram") {
+        // the chart was destroyed, so it's necessary to set it again
+        this.setPlotRange(this.labelChartOptions, currentRange.start, currentRange.end);
+        // we need to subscribe to it again because the original chart was destroyed
+        this.plotRangeSubscription();
+      }
+
     } else {
       if (this.comparisonChart) {
         this.comparisonChart.destroy();
         this.labelComparisonChartComponentRef.chart = null;
       }
-      const chart = this.comparisonLabelCharts.get(metric)
+      const chart = this.comparisonLabelCharts.get(metric);
       if (chart) {
         this.comparisonLabelChartOptions = deepmerge(this.comparisonLabelCharts.get(metric), {});
       }
-
     }
+
+
     this.updateLabelChartFlag = true;
   }
 
@@ -195,6 +223,7 @@ export class LabelChartComponent implements OnChanges {
     this.chartShouldExpand = !this.chartShouldExpand;
     this.chart.setSize(undefined, this.chartShouldExpand ? 650 : 350);
   }
+
 
 }
 

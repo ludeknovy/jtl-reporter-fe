@@ -61,6 +61,7 @@ export interface ItemDetail {
   userSettings: {
     requestStats: RequestStats
   };
+  errorSummary: ErrorSummary
 }
 
 interface TopMetricsSettings {
@@ -347,3 +348,27 @@ export interface ThresholdResult {
     passed: boolean
   }
 }
+
+export interface ErrorSummary {
+  groupedErrors: Errors[]
+  topErrorsByLabel: Top5Errors[]
+}
+
+interface Errors {
+  count: number
+  statusCode: string
+  responseMessage: string
+  failureMessage: string
+}
+
+interface Top5Errors {
+  label: string
+  error1: LabelError
+  error2: LabelError
+  error3: LabelError
+  error4: LabelError
+  error5: LabelError
+}
+
+interface LabelError { count: number; error: string }
+

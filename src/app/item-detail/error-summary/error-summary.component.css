@@ -1,0 +1,9 @@
+.card {
+  margin-top: 20px;
+}
+
+.error-break-line {
+  max-width: 25rem;
+  word-wrap:break-word;
+
+}

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ChartIntervalComponent } from "./chart-interval.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 describe("ChartIntervalComponent", () => {
   let component: ChartIntervalComponent;
@@ -8,9 +9,10 @@ describe("ChartIntervalComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChartIntervalComponent ]
+      declarations: [ChartIntervalComponent],
+      imports: [ReactiveFormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

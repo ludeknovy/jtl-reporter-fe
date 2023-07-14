@@ -312,7 +312,7 @@
         <ul ngbNav #nav="ngbNav" class="nav-tabs justify-content-center" [destroyOnHide]="false"
             [(activeId)]="activeId">
           <li ngbNavItem [ngbNavItem]="1">
-            <a ngbNavLink class="nav-link bg-transparent">Overview charts</a>
+            <a ngbNavLink class="nav-link bg-transparent">Performance Report</a>
             <ng-template ngbNavContent>
               <div class="row charts">
                 <div class="col tab-charts overallChart">
@@ -368,6 +368,74 @@
                 </div>
               </div>
 
+              <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
+                <div class="col">
+                  <div class="card table-stats card-shadow">
+                    <h6 class="card-header bg-transparent">Target System Statistics <span class="compare">
+            </span></h6>
+                    <div class="card-body card-body-request-stats">
+                      <div class="labels-detail table-responsive">
+                        <table class="table" [mfData]="itemData.sutOverview" #mf="mfDataTable">
+                          <thead>
+                          <tr>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="sutHostname">SUT</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
+                            </th>
+
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="percentile">P90 [ms]</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="throughput">reqs/s</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="bytesPerSecond">network [mbps]</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                            </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let _ of mf.data">
+                            <td>{{_.sutHostname || "other"}}
+                              <i *ngIf="!_.sutHostname" placement="bottom"
+                                 ngbTooltip="All samples for which we could not parse the hostname."><i
+                                class="far fa-question-circle icon"></i></i>
+                            </td>
+                            <td>{{_.avgResponseTime | number: '1.0-2'}}</td>
+                            <td>{{_.percentile | number: '1.0-2'}}</td>
+                            <td>{{_.throughput | number: '1.0-2' || "n/a"}} </td>
+                            <td>{{convertBytesToMbps(_.bytesPerSecond) | number: '1.0-2' || "n/a" }}</td>
+                            <td>{{_.errorRate | number: '1.0-2'}} %</td>
+                            <td></td>
+                            <td>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="itemData">
+                <div class="col">
+                  <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams"
+                                             [chartLines]="chartLines"></app-request-stats-compare>
+                </div>
+              </div>
+
 
             </ng-template>
           </li>
@@ -402,73 +470,7 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
-      <div class="col">
-        <div class="card table-stats card-shadow">
-          <h6 class="card-header bg-transparent">Target System Statistics <span class="compare">
-            </span></h6>
-          <div class="card-body card-body-request-stats">
-            <div class="labels-detail table-responsive">
-              <table class="table" [mfData]="itemData.sutOverview" #mf="mfDataTable">
-                <thead>
-                <tr>
-                  <th scope="col" class="hd jtl-head-color">
-                    <mfDefaultSorter by="sutHostname">SUT</mfDefaultSorter>
-                  </th>
-                  <th scope="col" class="hd jtl-head-color">
-                    <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
-                  </th>
 
-                  <th scope="col" class="hd jtl-head-color">
-                    <mfDefaultSorter by="percentile">P90 [ms]</mfDefaultSorter>
-                  </th>
-                  <th scope="col" class="hd jtl-head-color">
-                    <mfDefaultSorter by="throughput">reqs/s</mfDefaultSorter>
-                  </th>
-                  <th scope="col" class="hd jtl-head-color">
-                    <mfDefaultSorter by="bytesPerSecond">network [mbps]</mfDefaultSorter>
-                  </th>
-                  <th scope="col" class="hd jtl-head-color">
-                    <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
-                  </th>
-                  <th scope="col" class="hd jtl-head-color">
-                    <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
-                  </th>
-                  <th scope="col" class="hd jtl-head-color">
-                  </th>
-                  <th scope="col" class="hd jtl-head-color">
-                  </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let _ of mf.data">
-                  <td>{{_.sutHostname || "other"}}
-                    <i *ngIf="!_.sutHostname" placement="bottom"
-                       ngbTooltip="All samples for which we could not parse the hostname."><i
-                      class="far fa-question-circle icon"></i></i>
-                  </td>
-                  <td>{{_.avgResponseTime | number: '1.0-2'}}</td>
-                  <td>{{_.percentile | number: '1.0-2'}}</td>
-                  <td>{{_.throughput | number: '1.0-2' || "n/a"}} </td>
-                  <td>{{convertBytesToMbps(_.bytesPerSecond) | number: '1.0-2' || "n/a" }}</td>
-                  <td>{{_.errorRate | number: '1.0-2'}} %</td>
-                  <td></td>
-                  <td>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row" *ngIf="itemData">
-      <div class="col">
-        <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams"
-                                   [chartLines]="chartLines"></app-request-stats-compare>
-      </div>
-    </div>
   </div>
 </div>
 

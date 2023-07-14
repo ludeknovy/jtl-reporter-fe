@@ -27,8 +27,8 @@
             <tbody>
             <tr *ngFor="let _ of mf.data">
               <td>{{_.count}}</td>
-              <td>{{_.failureMessage}}</td>
-              <td>{{_.responseMessage}}</td>
+              <td class="error-break-line">{{_.failureMessage}}</td>
+              <td class="error-break-line">{{_.responseMessage}}</td>
               <td>{{_.statusCode}}</td>
             </tr>
             </tbody>
@@ -91,8 +91,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let _ of mf.data">
-              <td>{{_.label}}</td>
-              <td class="error-break-line ">{{_?.error1?.error}}</td>
+              <td class="label">{{_.label}}</td>
+              <td class="error-break-line">{{_?.error1?.error}}</td>
               <td>{{_?.error1?.count}}</td>
               <td class="error-break-line ">{{_?.error2?.error}}</td>
               <td>{{_?.error2?.count}}</td>

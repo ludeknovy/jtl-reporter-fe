@@ -1,0 +1,9 @@
+<div ngbDropdown class="d-inline-block" *ngIf="$environments | async; let environments">
+  <button type="button" class="btn btn btn-sm jtl-no-glow" id="dropdownBasic1" ngbDropdownToggle>
+    {{selectedEnvironment || defaultEnvironment}}
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+    <button ngbDropdownItem *ngFor="let _ of environments" (click)="filterEnvironment(_)">{{_}}</button>
+    <button ngbDropdownItem (click)="filterEnvironment(defaultEnvironment)">{{defaultEnvironment}}</button>
+  </div>
+</div>

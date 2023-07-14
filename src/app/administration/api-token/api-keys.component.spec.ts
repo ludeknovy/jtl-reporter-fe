@@ -8,7 +8,7 @@ import { DeleteTokenComponent } from "./delete-token/delete-token.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptior";
+import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptor";
 
 
 describe("ApiKeysComponent", () => {

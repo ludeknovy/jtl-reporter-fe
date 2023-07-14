@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
-import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptior";
+import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptor";
 import { CreateNewShareLinkComponent } from "./create-new-share-link/create-new-share-link.component";
 import { DeleteShareLinkComponent } from "./delete-share-link/delete-share-link.component";
 

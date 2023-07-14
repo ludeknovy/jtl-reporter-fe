@@ -14,7 +14,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import { ExternalNotificationComponent } from "./external-notification/external-notification.component";
 import { ScenarioTrendsComponent } from "./scenario-trends/scenario-trends.component";
-import { HttpRequestInterceptorMock } from "../_interceptors/mock-interceptior";
+import { HttpRequestInterceptorMock } from "../_interceptors/mock-interceptor";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe("ScenarioComponent", () => {

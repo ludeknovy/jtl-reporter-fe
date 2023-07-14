@@ -142,7 +142,11 @@ describe("RequestStatsCompareComponent", () => {
           toleration: 10,
           satisfaction: 40,
         }
-      }, ]
+      }, ],
+      errorSummary: {
+        groupedErrors: [],
+        topErrorsByLabel: []
+      }
     };
     fixture.detectChanges();
   });

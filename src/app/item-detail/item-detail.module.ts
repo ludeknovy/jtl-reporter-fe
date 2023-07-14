@@ -30,7 +30,7 @@ import { ChartIntervalComponent } from "./chart-interval/chart-interval.componen
 import { ForbiddenComponent } from "../forbidden/forbidden.component";
 import { ThresholdFailureComponent } from "./request-stats/threshold-failure/threshold-failure.component";
 import { ZoomChartsComponent } from "./zoom-charts/zoom-charts.component";
-import { ErrorSummaryComponent } from './error-summary/error-summary.component';
+import { ErrorSummaryComponent } from "./error-summary/error-summary.component";
 
 
 const routes: Routes = [{

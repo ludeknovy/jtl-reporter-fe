@@ -10,9 +10,8 @@ export class ErrorSummaryComponent implements OnInit {
 
   @Input() errorSummary: ErrorSummary;
 
-  constructor() {
-  }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   ngOnInit(): void {
   }
 

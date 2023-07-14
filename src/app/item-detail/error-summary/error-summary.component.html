@@ -1,4 +1,4 @@
-<div class="row" *ngIf="errorSummary && errorSummary.groupedErrors.length > 1">
+<div class="row" *ngIf="errorSummary && errorSummary.groupedErrors.length > 0">
   <div class="col">
     <div class="card table-stats card-shadow">
       <h6 class="card-header bg-transparent">Error Summary <span class="compare">
@@ -39,7 +39,7 @@
   </div>
 </div>
 
-<div class="row" *ngIf="errorSummary && errorSummary.topErrorsByLabel.length > 1">
+<div class="row" *ngIf="errorSummary && errorSummary.topErrorsByLabel.length > 0">
   <div class="col">
     <div class="card table-stats card-shadow">
       <h6 class="card-header bg-transparent">Top 5 Errors by Label <span class="compare">

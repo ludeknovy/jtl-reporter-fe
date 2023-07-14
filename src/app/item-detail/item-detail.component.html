@@ -452,7 +452,7 @@
             </ng-template>
           </li>
           <li>
-          <li ngbNavItem [ngbNavItem]="3">
+          <li ngbNavItem [ngbNavItem]="3" *ngIf="itemData.errorSummary?.topErrorsByLabel?.length !== 0">
             <a ngbNavLink class="nav-link bg-transparent">Error Summary</a>
             <ng-template ngbNavContent>
               <div class="row charts">

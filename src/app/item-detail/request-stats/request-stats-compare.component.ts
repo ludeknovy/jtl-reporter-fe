@@ -48,6 +48,18 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // enrich the data with failure count
+    this.itemData.statistics.map(labelData => {
+      const failureCount = labelData.responseMessageFailures.reduce(
+        (previousValue, currentValue) => {
+          previousValue.count += currentValue.count
+          return previousValue
+        },{ count: 0 })
+
+      Object.assign(labelData, { failures: failureCount.count })
+      return labelData
+    })
+
     if (this.itemData?.thresholds?.passed === false) {
       this.labelsData = this.itemData.statistics.map(labelData => {
         const thresholdResult = this.itemData.thresholds.results.find(thresholdResult =>
@@ -239,7 +251,9 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             bytesPerSecond: this.calculatePercDifference(_.bytesPerSecond, labelToBeCompared.bytesPerSecond),
             bytesSentPerSecond: this.calculatePercDifference(_.bytesSentPerSecond, labelToBeCompared.bytesSentPerSecond),
             errorRate: this.calculatePercDifference(_.errorRate, labelToBeCompared.errorRate),
-            throughput: this.calculatePercDifference(_.throughput, labelToBeCompared.throughput)
+            throughput: this.calculatePercDifference(_.throughput, labelToBeCompared.throughput),
+            failures: this.calculatePercDifference(_.failures, labelToBeCompared.failures),
+            standardDeviation: this.calculatePercDifference(_.standardDeviation, labelToBeCompared.standardDeviation),
           };
         } else {
           this.comparisonWarning.push(`${_.label} label not found`);
@@ -254,6 +268,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             errorRate: null,
             throughput: null,
             bytes: null,
+            failures: null,
+            standardDeviation: null,
           };
         }
       });

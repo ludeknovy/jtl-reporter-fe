@@ -1,0 +1,112 @@
+<div class="row" *ngIf="errorSummary && errorSummary.groupedErrors.length > 0">
+  <div class="col">
+    <div class="card table-stats card-shadow">
+      <h6 class="card-header bg-transparent">Error Summary <span class="compare">
+            </span></h6>
+      <div class="card-body card-body-request-stats">
+        <div class="labels-detail table-responsive">
+          <table class="table" [mfData]="errorSummary.groupedErrors" #mf="mfDataTable">
+            <thead>
+            <tr>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="count">#Error</mfDefaultSorter>
+              </th>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="failureMessage">Failure Message</mfDefaultSorter>
+              </th>
+
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="responseMessage">Response Message</mfDefaultSorter>
+              </th>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="statusCode">Status Code</mfDefaultSorter>
+              </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let _ of mf.data">
+              <td>{{_.count}}</td>
+              <td class="error-break-line">{{_.failureMessage}}</td>
+              <td class="error-break-line">{{_.responseMessage}}</td>
+              <td>{{_.statusCode}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="errorSummary && errorSummary.topErrorsByLabel.length > 0">
+  <div class="col">
+    <div class="card table-stats card-shadow">
+      <h6 class="card-header bg-transparent">Top 5 Errors by Label <span class="compare">
+            </span></h6>
+      <div class="card-body card-body-request-stats">
+        <div class="labels-detail table-responsive">
+          <table class="table" [mfData]="errorSummary.topErrorsByLabel" #mf="mfDataTable">
+            <thead>
+            <tr>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="label">Label</mfDefaultSorter>
+              </th>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error1.error">Error1</mfDefaultSorter>
+              </th>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error1.count">#Error1</mfDefaultSorter>
+              </th>
+
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error2.error">Error2</mfDefaultSorter>
+              </th>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error2.count">#Error2</mfDefaultSorter>
+              </th>
+
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error3.error">Error3</mfDefaultSorter>
+              </th>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error3.count">#Error3</mfDefaultSorter>
+              </th>
+
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error4.error">Error4</mfDefaultSorter>
+              </th>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error4.count">#Error4</mfDefaultSorter>
+              </th>
+
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error5.error">Error5</mfDefaultSorter>
+              </th>
+              <th scope="col" class="hd jtl-head-color">
+                <mfDefaultSorter by="error5.count">#Error5</mfDefaultSorter>
+              </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let _ of mf.data">
+              <td class="label">{{_.label}}</td>
+              <td class="error-break-line">{{_?.error1?.error}}</td>
+              <td>{{_?.error1?.count}}</td>
+              <td class="error-break-line ">{{_?.error2?.error}}</td>
+              <td>{{_?.error2?.count}}</td>
+              <td class="error-break-line ">{{_?.error3?.error}}</td>
+              <td>{{_?.error3?.count}}</td>
+              <td class="error-break-line ">{{_?.error4?.error}}</td>
+              <td>{{_?.error4?.count}}</td>
+              <td class="error-break-line ">{{_?.error5?.error}}</td>
+              <td >{{_?.error5?.count}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

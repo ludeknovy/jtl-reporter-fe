@@ -30,4 +30,5 @@ export interface RequestStats {
   throughput: boolean
   apdex: boolean
   standardDeviation: boolean
+  failures: boolean
 }

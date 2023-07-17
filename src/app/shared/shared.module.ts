@@ -4,12 +4,15 @@ import { ControlPanelComponent } from "./control-panel/control-panel.component";
 import { BreadcrumbComponent } from "./breadcrumb/breadcrumb.component";
 import { RouterModule } from "@angular/router";
 import { UrlDecodePipeModule } from "../_pipes/url-decode.module";
+import { DateTimePickerComponent } from "./date-time-picker/date-time-picker.component";
+import { NgbDatepickerModule, NgbPopoverModule, NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [ControlPanelComponent, BreadcrumbComponent],
+  declarations: [ControlPanelComponent, BreadcrumbComponent, DateTimePickerComponent],
   imports: [
-    CommonModule, RouterModule, UrlDecodePipeModule
+    CommonModule, RouterModule, UrlDecodePipeModule, NgbPopoverModule, FormsModule, NgbTimepickerModule, NgbDatepickerModule
   ],
-  exports: [ControlPanelComponent, BreadcrumbComponent ]
+    exports: [ControlPanelComponent, BreadcrumbComponent, DateTimePickerComponent]
 })
 export class SharedModule { }

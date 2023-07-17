@@ -7,10 +7,12 @@ import { ChartLines, getChartLines } from "./chart-service-utils";
 })
 export class ItemChartService {
 
-  private plot$ = new BehaviorSubject<ChartLines>({ chartLines: null });
+  private plot = new BehaviorSubject<ChartLines>({ chartLines: null });
+  private plotRange = new BehaviorSubject<PlotRange>({ start: null, end: null });
   private interval;
 
-  selectedPlot$ = this.plot$.asObservable();
+  selectedPlot$ = this.plot.asObservable();
+  plotRange$ = this.plotRange.asObservable()
 
 
   setInterval(interval) {
@@ -18,6 +20,19 @@ export class ItemChartService {
   }
 
   setCurrentPlot(plot) {
-    this.plot$.next(getChartLines(plot));
+    this.plot.next(getChartLines(plot));
   }
+
+  setPlotRange(plotRange: PlotRange) {
+    this.plotRange.next(plotRange);
+  }
+
+  getPlotRange() {
+    return this.plotRange.getValue()
+  }
+}
+
+interface PlotRange {
+  start: Date,
+  end: Date
 }

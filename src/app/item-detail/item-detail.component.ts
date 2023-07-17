@@ -17,7 +17,6 @@ import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
 import { ItemChartService } from "../_services/item-chart.service";
-
 exporting(Highcharts);
 
 
@@ -52,6 +51,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     zeroErrorToleranceEnabled: null,
     topMetricsSettings: null,
     userSettings: null,
+    errorSummary: null
   };
   overallChartOptions;
   scatterChartOptions;
@@ -112,6 +112,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.monitoringAlerts();
         this.itemChartService.setCurrentPlot(this.itemData.plot);
         this.selectedPlotSubscription();
+        this.plotRangeSubscription();
         this.calculateTotalRequests();
         this.spinner.hide();
       });
@@ -160,6 +161,24 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.updateChartFlag = true;
     });
   }
+
+  /**
+   * Sets plot range (min, max)
+   *
+   */
+  private plotRangeSubscription() {
+    this.itemChartService.plotRange$.subscribe((value) => {
+      if (value.start && value.end) {
+        for (const chartOptions of [this.overallChartOptions, this.scatterChartOptions, this.statusChartOptions]) {
+          chartOptions.xAxis.min = value.start.getTime()
+          chartOptions.xAxis.max = value.end.getTime()
+        }
+        this.updateScatterChartFlag = true
+        this.updateChartFlag = true;
+      }
+    })
+  }
+
 
   private calculateTotalRequests() {
     this.totalRequests = this.itemData.statistics.reduce((accumulator, currentValue) => {

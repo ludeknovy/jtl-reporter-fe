@@ -79,6 +79,7 @@ describe("RequestStatsCompareComponent", () => {
           p95: true,
           apdex: true,
           standardDeviation: true,
+          failures: true,
         }
       },
       baseId: "",
@@ -141,7 +142,11 @@ describe("RequestStatsCompareComponent", () => {
           toleration: 10,
           satisfaction: 40,
         }
-      }, ]
+      }, ],
+      errorSummary: {
+        groupedErrors: [],
+        topErrorsByLabel: []
+      }
     };
     fixture.detectChanges();
   });

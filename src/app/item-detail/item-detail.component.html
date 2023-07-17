@@ -4,20 +4,22 @@
       <app-breadcrumb *ngIf="itemData.environment" [testName]="itemData.name"></app-breadcrumb>
     </li>
   </ul>
-
-  <app-chart-interval *ngIf="itemData.extraPlotData" [intervals]="{ defaultInterval: itemData.plot, extraIntervals: itemData.extraPlotData}"></app-chart-interval>
+  <app-zoom-charts *ngIf="itemData.overview" [reportStartDate]="itemData.overview.startDate"
+                   [reportEndDate]="itemData.overview.endDate"></app-zoom-charts>
+  <app-chart-interval *ngIf="itemData.extraPlotData"
+                      [intervals]="{ defaultInterval: itemData.plot, extraIntervals: itemData.extraPlotData}"></app-chart-interval>
 
   <div>
 
     <div class="btn-group">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
-        aria-label="Button group with nested dropdown">
+           aria-label="Button group with nested dropdown">
         <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
-            class="fas fa-bars"></i></button>
+          class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-item *ngIf="itemData.environment"
-            [itemDetailData]="{note: itemData.note, resourcesLink: itemData.resourcesLink, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams, name: itemData.name}"
-            (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
+                         [itemDetailData]="{note: itemData.note, resourcesLink: itemData.resourcesLink, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams, name: itemData.name}"
+                         (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
           <app-share [params]=itemParams></app-share>
           <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>
         </div>
@@ -71,7 +73,8 @@
 
       <div class="row" *ngIf="itemData.analysisEnabled && chartLines.labels">
         <div class="col">
-          <app-performance-analysis [itemData]="itemData" [labelsChartLines]="chartLines.labels" (overallChartChange)="toggleThroughputBand($event)">
+          <app-performance-analysis [itemData]="itemData" [labelsChartLines]="chartLines.labels"
+                                    (overallChartChange)="toggleThroughputBand($event)">
           </app-performance-analysis>
         </div>
       </div>
@@ -79,7 +82,8 @@
       <div class="row">
         <div class="col-sm">
           <div class="card card-shadow">
-            <h6 class="card-header bg-white border-0">Overview <span class="total-samples"> requests: {{totalRequests | number}}</span></h6>
+            <h6 class="card-header bg-white border-0">Overview <span
+              class="total-samples"> requests: {{totalRequests | number}}</span></h6>
             <div class="card-body performance-overview-card">
               <div class="row">
                 <div class="col-sm" *ngIf="itemData.topMetricsSettings.virtualUsers">
@@ -97,13 +101,13 @@
                     <div class="card-body overview-body">
                       <h2 class="card-title">{{itemData.overview.throughput > 1000 ?
                         Math.round(itemData.overview.throughput) : itemData.overview.throughput}} <span
-                          class="unit-desc">reqs/s</span>
+                        class="unit-desc">reqs/s</span>
                       </h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Throughput <i placement="bottom"
-                        ngbTooltip="Throughput is calculated as requests/unit of time. The time is calculated from the start of the first sample to the end of the last sample. This includes any intervals between samples, as it is supposed to represent the load on the server.
+                                                                                               ngbTooltip="Throughput is calculated as requests/unit of time. The time is calculated from the start of the first sample to the end of the last sample. This includes any intervals between samples, as it is supposed to represent the load on the server.
                       The formula is: Throughput = (number of requests) / (total time)."><i
-                          class="far fa-question-circle icon"></i></i></div>
+                      class="far fa-question-circle icon"></i></i></div>
 
                   </div>
                 </div>
@@ -126,7 +130,8 @@
                   <div class="card">
                     <div class="card-body overview-body">
                       <h2 *ngIf="itemData.overview.avgResponseTime >= 1000" class="card-title">{{
-                        Math.round((itemData.overview.avgResponseTime / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+                        Math.round((itemData.overview.avgResponseTime / 1000) * 100) / 100}} <span
+                          class="unit-desc">s</span>
                       </h2>
                       <h2 *ngIf="itemData.overview.avgResponseTime < 1000" class="card-title">{{
                         itemData.overview.avgResponseTime}} <span class="unit-desc">ms</span>
@@ -143,14 +148,14 @@
                         Math.round((itemData.overview.avgLatency / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
                       <h2 *ngIf="itemData.overview.avgLatency < 1000"
-                        class="card-title">{{
+                          class="card-title">{{
                         itemData.overview.avgLatency}} <span class="unit-desc">ms</span>
                       </h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Avg. latency <i class="ttp"
-                        placement="bottom"
-                        ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
-                          class="far fa-question-circle icon"></i></i></div>
+                                                                                                 placement="bottom"
+                                                                                                 ngbTooltip="JMeter measures the latency from just before sending the request to just after the first response has been received. Thus the time includes all the processing needed to assemble the request as well as assembling the first part of the response, which in general will be longer than one byte."><i
+                      class="far fa-question-circle icon"></i></i></div>
                   </div>
                 </div>
 
@@ -161,14 +166,14 @@
                         Math.round((itemData.overview.avgConnect / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
                       <h2 *ngIf="itemData.overview.avgConnect < 1000"
-                        class="card-title">{{
+                          class="card-title">{{
                         itemData.overview.avgConnect}} <span class="unit-desc">ms</span>
                       </h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Avg. connection <i class="ttp"
-                        placement="bottom"
-                        ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
-                          class="far fa-question-circle icon"></i></i></div>
+                                                                                                    placement="bottom"
+                                                                                                    ngbTooltip="JMeter measures the time it took to establish the connection, including SSL handshake. Note that connect time is not automatically subtracted from latency. In case of connection error, the metric will be equal to the time it took to face the error, for example in case of Timeout, it should be equal to connection timeout."><i
+                      class="far fa-question-circle icon"></i></i></div>
                   </div>
                 </div>
 
@@ -187,7 +192,7 @@
                   <div class="card">
                     <div class="card-body overview-body">
                       <h2 class="card-title">{{itemData.overview.errorRate}} <span
-                          class="unit-desc">%</span></h2>
+                        class="unit-desc">%</span></h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Error rate</div>
                   </div>
@@ -205,7 +210,9 @@
                 <div class="col-sm" *ngIf="itemData.topMetricsSettings.networkSent">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesSentPerSecond) | number: '1.0-2'}} <span class="unit-desc">Mbps</span></h2>
+                      <h2
+                        class="card-title">{{convertBytesToMbps(itemData.overview.bytesSentPerSecond) | number: '1.0-2'}}
+                        <span class="unit-desc">Mbps</span></h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Network sent</div>
                   </div>
@@ -215,7 +222,8 @@
                 <div class="col-sm" *ngIf="itemData.topMetricsSettings.networkReceived">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesPerSecond) | number: '1.0-2'}} <span class="unit-desc">Mbps</span></h2>
+                      <h2 class="card-title">{{convertBytesToMbps(itemData.overview.bytesPerSecond) | number: '1.0-2'}}
+                        <span class="unit-desc">Mbps</span></h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">Network received</div>
                   </div>
@@ -276,13 +284,17 @@
                 <div class="row">
                   <i class="fas fa-external-link text-carrot"></i>
                   <div class="col-sm mb-1 summary-bold">External Link</div>
-                  <div class="col-sm mb-1" *ngIf="itemData.resourcesLink"><a target="_blank" href="{{itemData.resourcesLink}}"><i class="fas fa-link"></i> <span> Resources</span>
+                  <div class="col-sm mb-1" *ngIf="itemData.resourcesLink"><a target="_blank"
+                                                                             href="{{itemData.resourcesLink}}"><i
+                    class="fas fa-link"></i> <span> Resources</span>
                   </a></div>
                 </div>
                 <div class="row" *ngIf="itemData.monitoring.cpu.data.length > 0">
                   <div class="col-sm mb-1 summary-bold">Max CPU usage</div>
-                  <div class="col-sm mb-1">{{itemData.monitoring.cpu.max}}%  <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
-                  </app-monitoring-stats></div>
+                  <div class="col-sm mb-1">{{itemData.monitoring.cpu.max}}%
+                    <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
+                    </app-monitoring-stats>
+                  </div>
                 </div>
               </div>
 
@@ -290,18 +302,17 @@
           </div>
 
 
-
         </div>
       </div>
     </div>
 
 
-
     <div class="row middle-control">
       <div class="col">
-        <ul ngbNav #nav="ngbNav" class="nav-tabs justify-content-center" [destroyOnHide]="false" [(activeId)]="activeId" >
+        <ul ngbNav #nav="ngbNav" class="nav-tabs justify-content-center" [destroyOnHide]="false"
+            [(activeId)]="activeId">
           <li ngbNavItem [ngbNavItem]="1">
-            <a ngbNavLink class="nav-link bg-transparent">Overview charts</a>
+            <a ngbNavLink class="nav-link bg-transparent">Performance Report</a>
             <ng-template ngbNavContent>
               <div class="row charts">
                 <div class="col tab-charts overallChart">
@@ -309,8 +320,10 @@
                     <h6 class="card-header bg-transparent">Overall Chart</h6>
                     <div class="card-body">
                       <div class="chart">
-                        <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions" [callbackFunction]="chartCallback"
-                          [(update)]="updateChartFlag" style="width: 100%; height: 350px; display: block;">
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions"
+                                          [callbackFunction]="chartCallback"
+                                          [(update)]="updateChartFlag"
+                                          style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
                       </div>
                     </div>
@@ -327,7 +340,8 @@
                     <div class="card-body">
                       <div class="chart" id="scatterChartAnchor">
                         <highcharts-chart [Highcharts]="Highcharts" [options]="scatterChartOptions"
-                                          [(update)]="updateScatterChartFlag" style="width: 100%; height: 350px; display: block;">
+                                          [(update)]="updateScatterChartFlag"
+                                          style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
                       </div>
                     </div>
@@ -343,8 +357,10 @@
                     <h6 class="card-header bg-transparent">Status Codes Chart</h6>
                     <div class="card-body">
                       <div class="chart">
-                        <highcharts-chart [Highcharts]="Highcharts" [options]="statusChartOptions" [callbackFunction]="chartCallback"
-                                          [(update)]="updateChartFlag" style="width: 100%; height: 350px; display: block;">
+                        <highcharts-chart [Highcharts]="Highcharts" [options]="statusChartOptions"
+                                          [callbackFunction]="chartCallback"
+                                          [(update)]="updateChartFlag"
+                                          style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
                       </div>
                     </div>
@@ -352,6 +368,73 @@
                 </div>
               </div>
 
+              <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
+                <div class="col">
+                  <div class="card table-stats card-shadow">
+                    <h6 class="card-header bg-transparent">Target System Statistics <span class="compare">
+            </span></h6>
+                    <div class="card-body card-body-request-stats">
+                      <div class="labels-detail table-responsive">
+                        <table class="table" [mfData]="itemData.sutOverview" #mf="mfDataTable">
+                          <thead>
+                          <tr>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="sutHostname">SUT</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
+                            </th>
+
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="percentile">P90 [ms]</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="throughput">reqs/s</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="bytesPerSecond">network [mbps]</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                              <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                            </th>
+                            <th scope="col" class="hd jtl-head-color">
+                            </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let _ of mf.data">
+                            <td>{{_.sutHostname || "other"}}
+                              <i *ngIf="!_.sutHostname" placement="bottom"
+                                 ngbTooltip="All samples for which we could not parse the hostname."><i
+                                class="far fa-question-circle icon"></i></i>
+                            </td>
+                            <td>{{_.avgResponseTime | number: '1.0-2'}}</td>
+                            <td>{{_.percentile | number: '1.0-2'}}</td>
+                            <td>{{_.throughput | number: '1.0-2' || "n/a"}} </td>
+                            <td>{{convertBytesToMbps(_.bytesPerSecond) | number: '1.0-2' || "n/a" }}</td>
+                            <td>{{_.errorRate | number: '1.0-2'}} %</td>
+                            <td></td>
+                            <td>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="itemData">
+                <div class="col">
+                  <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams"
+                                             [chartLines]="chartLines"></app-request-stats-compare>
+                </div>
+              </div>
 
 
             </ng-template>
@@ -361,80 +444,33 @@
             <ng-template ngbNavContent>
               <div class="row charts">
                 <div class="col tab-charts">
-                  <app-analyze-charts [chartLines]="chartLines" [params]="itemParams" [isAnonymous]="isAnonymous" [showPerformanceAnalysisLines]="performanceAnalysisLines"></app-analyze-charts>
+                  <app-analyze-charts [chartLines]="chartLines" [params]="itemParams" [isAnonymous]="isAnonymous"
+                                      [showPerformanceAnalysisLines]="performanceAnalysisLines"></app-analyze-charts>
                 </div>
               </div>
 
             </ng-template>
           </li>
+          <li>
+          <li ngbNavItem [ngbNavItem]="3" *ngIf="itemData.errorSummary?.topErrorsByLabel?.length !== 0">
+            <a ngbNavLink class="nav-link bg-transparent">Error Summary</a>
+            <ng-template ngbNavContent>
+              <div class="row charts">
+                <div class="col tab-charts">
+                  <app-error-summary [errorSummary]="itemData.errorSummary"></app-error-summary>
+                </div>
+              </div>
+
+            </ng-template>
+          </li>
+
+
         </ul>
         <div [ngbNavOutlet]="nav"></div>
       </div>
     </div>
 
-    <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
-      <div class="col">
-        <div class="card table-stats card-shadow">
-          <h6 class="card-header bg-transparent">Target System Statistics <span class="compare">
-            </span></h6>
-          <div class="card-body card-body-request-stats">
-            <div class="labels-detail table-responsive">
-              <table class="table" [mfData]="itemData.sutOverview" #mf="mfDataTable">
-                <thead>
-                  <tr>
-                    <th scope="col" class="hd jtl-head-color">
-                      <mfDefaultSorter by="sutHostname">SUT</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd jtl-head-color">
-                      <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
-                    </th>
 
-                    <th scope="col" class="hd jtl-head-color">
-                      <mfDefaultSorter by="percentile">P90 [ms]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd jtl-head-color">
-                      <mfDefaultSorter by="throughput">reqs/s</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd jtl-head-color">
-                      <mfDefaultSorter by="bytesPerSecond">network [mbps]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd jtl-head-color">
-                      <mfDefaultSorter by="errorRate">error rate [%]</mfDefaultSorter>
-                    </th>
-                    <th scope="col" class="hd jtl-head-color">
-                    </th>
-                    <th scope="col" class="hd jtl-head-color">
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let _ of mf.data">
-                    <td>{{_.sutHostname || "other"}}
-                      <i *ngIf="!_.sutHostname" placement="bottom"
-                        ngbTooltip="All samples for which we could not parse the hostname."><i
-                          class="far fa-question-circle icon"></i></i>
-                    </td>
-                    <td>{{_.avgResponseTime | number: '1.0-2'}}</td>
-                    <td>{{_.percentile | number: '1.0-2'}}</td>
-                    <td>{{_.throughput | number: '1.0-2' || "n/a"}} </td>
-                    <td>{{convertBytesToMbps(_.bytesPerSecond) | number: '1.0-2' || "n/a" }}</td>
-                    <td>{{_.errorRate | number: '1.0-2'}} % </td>
-                    <td></td>
-                    <td>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row" *ngIf="itemData">
-      <div class="col">
-        <app-request-stats-compare [itemData]="itemData" [isAnonymous]="isAnonymous" [params]="itemParams" [chartLines]="chartLines"></app-request-stats-compare>
-      </div>
-    </div>
   </div>
 </div>
 

@@ -31,9 +31,14 @@ export class ScenarioApiService {
     return this.http.get<IScenarios[]>(`projects/${projectName}/scenarios`);
   }
 
-  fetchScenarioTrend(projectName, scenarioName): Observable<any[]> {
+  fetchScenarioTrend(projectName, scenarioName, params?): Observable<any[]> {
     return this.http.get<any[]>(
-      `projects/${projectName}/scenarios/${scenarioName}/trends`);
+      `projects/${projectName}/scenarios/${scenarioName}/trends`, { params });
+  }
+
+  fetchScenarioEnvironments(projectName, scenarioName): Observable<any> {
+    return this.http.get<any>(
+      `projects/${projectName}/scenarios/${scenarioName}/environment`);
   }
 
   createNewScenario(projectName, body): Observable<Record<string, any>> {

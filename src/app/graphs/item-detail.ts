@@ -236,7 +236,7 @@ export const responseTimeDistribution = (data) => {
       valueSuffix: "",
       valueDecimals: 0,
       formatter: function () {
-        return `${this.y} responses were between ${this.x} and ${this.x + 100} ms`;
+        return `${this.y} responses between ${this.x} and ${this.x + 100} ms`;
       }
     },
     plotOptions: {

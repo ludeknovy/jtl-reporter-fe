@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
-import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptior";
+import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptor";
 import { AddNewExternalNotificationComponent } from "./add-new-external-notification/add-new-external-notification.component";
 import { DeleteExternalNotificationComponent } from "./delete-external-notification/delete-external-notification.component";
 

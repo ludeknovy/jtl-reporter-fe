@@ -153,7 +153,6 @@ export class ScenarioTrendsComponent implements OnInit {
     if (!degradationCurve) {
       return;
     }
-    console.log(degradationCurve);
     this.responseTimeDegradationChartOption.series = JSON.parse(JSON.stringify(degradationCurve));
     this.updateDegradationCurveChartFlag = true;
 

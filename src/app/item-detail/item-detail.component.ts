@@ -17,6 +17,7 @@ import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
 import { ItemChartService } from "../_services/item-chart.service";
+
 exporting(Highcharts);
 
 
@@ -56,6 +57,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   overallChartOptions;
   scatterChartOptions;
   statusChartOptions;
+  threadsPerThreadGroup;
   updateChartFlag = false;
   updateScatterChartFlag = false;
   itemParams;
@@ -136,17 +138,23 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.chartLines = value.chartLines;
       if (this.chartLines) {
         const overallChartSeries = Array.from(this.chartLines?.overall?.values());
+        if (this.chartLines.threadsPerThreadGroup.has(Metrics.Threads)) {
+          this.threadsPerThreadGroup = this.chartLines.threadsPerThreadGroup.get(Metrics.Threads);
+        }
+
+
         this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries));
         const scatterResponseTimeData = value.chartLines.scatter.get(Metrics.ResponseTimeRaw);
 
         if (this.chartLines?.scatter?.has(Metrics.ResponseTimeRaw)) {
-          this.scatterChartOptions = scatterChart
-          this.scatterChartOptions.series = [{ data: scatterResponseTimeData, name: "Response Time", marker: {
+          this.scatterChartOptions = scatterChart;
+          this.scatterChartOptions.series = [{
+            data: scatterResponseTimeData, name: "Response Time", marker: {
               radius: 1
-            }, }]
-          this.updateScatterChartFlag = true
+            },
+          }];
+          this.updateScatterChartFlag = true;
         }
-
 
         if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)) {
           // initialize the chart options only when there are the status codes data
@@ -170,13 +178,13 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.itemChartService.plotRange$.subscribe((value) => {
       if (value.start && value.end) {
         for (const chartOptions of [this.overallChartOptions, this.scatterChartOptions, this.statusChartOptions]) {
-          chartOptions.xAxis.min = value.start.getTime()
-          chartOptions.xAxis.max = value.end.getTime()
+          chartOptions.xAxis.min = value.start.getTime();
+          chartOptions.xAxis.max = value.end.getTime();
         }
-        this.updateScatterChartFlag = true
+        this.updateScatterChartFlag = true;
         this.updateChartFlag = true;
       }
-    })
+    });
   }
 
 
@@ -271,4 +279,17 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       chart.reflow();
     }, 0);
   };
+
+  displayThreadsPerGroupChange(event) {
+    const enabled = event.target.checked;
+    if (enabled) {
+      this.overallChartOptions.series = JSON.parse(JSON.stringify(this.threadsPerThreadGroup))
+      this.updateChartFlag = true;
+    } else {
+      const originalSeries = Array.from(this.chartLines?.overall?.values());
+      this.overallChartOptions.series = JSON.parse(JSON.stringify(originalSeries))
+      this.updateChartFlag = true;
+
+    }
+  }
 }

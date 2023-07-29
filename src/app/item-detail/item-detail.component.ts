@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsApiService } from "../items-api.service";
 import { ItemDetail } from "../items.service.model";

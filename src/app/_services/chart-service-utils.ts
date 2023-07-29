@@ -7,7 +7,7 @@ export const getChartLines = (plot): ChartLines => {
     threads, overallTimeResponse,
     overallThroughput, overAllFailRate, overAllNetworkV2,
     responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
-    percentile95, percentile99, statusCodes, errorRate, scatterPlotData,
+    percentile95, percentile99, statusCodes, errorRate, scatterPlotData, threadsPerThreadGroup,
   } = plot;
 
   const threadLine = { ...threadLineSettings, data: threads, tooltip: { valueSuffix: "" } };
@@ -16,6 +16,7 @@ export const getChartLines = (plot): ChartLines => {
 
   const chartLines = {
     overall: new Map(),
+    threadsPerThreadGroup: new Map(),
     labels: new Map(),
     statusCodes: new Map(),
     scatter: new Map(),
@@ -38,6 +39,12 @@ export const getChartLines = (plot): ChartLines => {
   chartLines.overall.set(Metrics.Threads, threadLine);
   chartLines.overall.set(Metrics.ErrorRate, errorLine);
   chartLines.overall.set(Metrics.Throughput, throughputLine);
+
+  if (threadsPerThreadGroup) {
+    chartLines.threadsPerThreadGroup.set(Metrics.Threads, threadsPerThreadGroup)
+
+  }
+
 
   if (scatterPlotData && scatterPlotData.length > 0) {
     chartLines.scatter.set(Metrics.ResponseTimeRaw, scatterPlotData)

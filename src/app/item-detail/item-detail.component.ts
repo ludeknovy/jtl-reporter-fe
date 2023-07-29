@@ -77,6 +77,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   performanceAnalysisLines = null;
   externalSearchTerm = null;
   totalRequests = null;
+  plotRangeMin = null
+  plotRangeMax = null
 
 
   constructor(
@@ -186,15 +188,22 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
    */
   private plotRangeSubscription() {
     this.itemChartService.plotRange$.subscribe((value) => {
-      if (value.start && value.end) {
-        for (const chartOptions of [this.overallChartOptions, this.scatterChartOptions, this.statusChartOptions]) {
-          chartOptions.xAxis.min = value.start.getTime();
-          chartOptions.xAxis.max = value.end.getTime();
-        }
-        this.updateScatterChartFlag = true;
-        this.updateChartFlag = true;
-      }
+        this.updateMinMaxOfCharts(value?.start?.getTime(), value?.end?.getTime())
     });
+  }
+
+  private updateMinMaxOfCharts(min, max) {
+    if (min && max) {
+      this.plotRangeMin = min
+      this.plotRangeMax = max
+      for (const chartOptions of [this.overallChartOptions, this.scatterChartOptions, this.statusChartOptions]) {
+        chartOptions.xAxis.min = min;
+        chartOptions.xAxis.max = max;
+      }
+      this.updateScatterChartFlag = true;
+      this.updateChartFlag = true;
+      this.updateOverallChartFlag = true;
+    }
   }
 
 
@@ -298,17 +307,19 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       this.componentRef.chart = null;
     }
 
-
     if (enabled) {
       this.overallChartOptions = commonGraphSettings("");
       this.overallChartOptions.series = this.threadsPerThreadGroup;
-      this.updateOverallChartFlag = true;
     } else {
       const originalSeries = Array.from(this.chartLines?.overall?.values());
       this.overallChartOptions = overallChartSettings("");
       this.overallChartOptions.series = originalSeries
-      this.updateOverallChartFlag = true;
-
     }
+
+    // we need always to set the correct zoom range
+    this.overallChartOptions.xAxis.min = this.plotRangeMin
+    this.overallChartOptions.xAxis.max = this.plotRangeMax
+
+     this.updateOverallChartFlag = true;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnChanges, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsApiService } from "../items-api.service";
 import { ItemDetail } from "../items.service.model";
@@ -29,7 +29,12 @@ exporting(Highcharts);
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
 
+  @ViewChild("overallChart") componentRef;
+
   Highcharts: typeof Highcharts = Highcharts;
+  chart: Highcharts.Chart;
+  overallChart: Highcharts.Chart;
+
   itemData: ItemDetail = {
     overview: null,
     environment: null,
@@ -58,8 +63,10 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   scatterChartOptions;
   statusChartOptions;
   threadsPerThreadGroup;
+  overallChartCallback;
   updateChartFlag = false;
   updateScatterChartFlag = false;
+  updateOverallChartFlag = false;
   itemParams;
   Math: any;
   token: string;
@@ -82,6 +89,9 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private itemChartService: ItemChartService,
   ) {
     this.Math = Math;
+    this.overallChartCallback = chart => {
+      this.overallChart = chart;
+    };
   }
 
 
@@ -278,17 +288,26 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       chart.reflow();
     }, 0);
+    this.chart = chart;
   };
 
   displayThreadsPerGroupChange(event) {
     const enabled = event.target.checked;
+    if (this.overallChart) {
+      this.overallChart.destroy();
+      this.componentRef.chart = null;
+    }
+
+
     if (enabled) {
-      this.overallChartOptions.series = JSON.parse(JSON.stringify(this.threadsPerThreadGroup))
-      this.updateChartFlag = true;
+      this.overallChartOptions = commonGraphSettings("");
+      this.overallChartOptions.series = this.threadsPerThreadGroup;
+      this.updateOverallChartFlag = true;
     } else {
       const originalSeries = Array.from(this.chartLines?.overall?.values());
-      this.overallChartOptions.series = JSON.parse(JSON.stringify(originalSeries))
-      this.updateChartFlag = true;
+      this.overallChartOptions = overallChartSettings("");
+      this.overallChartOptions.series = originalSeries
+      this.updateOverallChartFlag = true;
 
     }
   }

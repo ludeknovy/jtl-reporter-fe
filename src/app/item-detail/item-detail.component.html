@@ -317,12 +317,19 @@
               <div class="row charts">
                 <div class="col tab-charts overallChart">
                   <div class="card overview-chart-card card-shadow">
-                    <h6 class="card-header bg-transparent">Overall Chart</h6>
+                    <h6 class="card-header bg-transparent">Overall Chart
+                      <div *ngIf="threadsPerThreadGroup" class="form-check display-bar-values-form float-right">
+                      <input class="form-check-input" type="checkbox" value="" id="display-thread-groups" (change)="displayThreadsPerGroupChange($event)">
+                      <label class="form-check-label thread-groups-check" for="display-thread-groups">
+                        Display Thread Groups
+                      </label>
+                    </div></h6>
+
                     <div class="card-body">
                       <div class="chart">
-                        <highcharts-chart [Highcharts]="Highcharts" [options]="overallChartOptions"
-                                          [callbackFunction]="chartCallback"
-                                          [(update)]="updateChartFlag"
+                        <highcharts-chart #overallChart [Highcharts]="Highcharts" [options]="overallChartOptions"
+                                          [callbackFunction]="overallChartCallback"
+                                          [(update)]="updateOverallChartFlag"
                                           style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
                       </div>
@@ -349,7 +356,6 @@
                   </div>
                 </div>
               </div>
-
 
               <div class="row charts">
                 <div class="col tab-charts" *ngIf="statusChartOptions">

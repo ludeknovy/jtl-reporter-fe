@@ -36,7 +36,7 @@ export class LabelTrendComponent {
 
   open(content) {
     this.modalService.open(content, { size: "xl", windowClass: "label-modal d-print-none" }).result
-      .then((_) => { this.labelChartOption = null; }, () => { this.labelChartOption = null; });
+      .then(() => { this.labelChartOption = null; }, () => { this.labelChartOption = null; });
     this.fetchTrendData();
 
     this.labelApiService.fetchLabelMaxVu(
@@ -45,8 +45,8 @@ export class LabelTrendComponent {
       this.params.id,
       this.trendInput.labelName,
       { environment: this.trendInput.environment }
-    ).subscribe(__ => {
-      this.vuFilters = __.result.filter((r) => r.count >= 2).map((r) => r.maxVu);
+    ).subscribe(labelMaxVu => {
+      this.vuFilters = labelMaxVu.result.filter((r) => r.count >= 2).map((r) => r.maxVu);
     });
   }
 
@@ -65,8 +65,8 @@ export class LabelTrendComponent {
         environment: this.trendInput.environment,
         virtualUsers
       }
-    ).subscribe((_) => {
-      this.labelChartOption = _.chartSeries.timePoints.length >= 2 ? labelTrendChartOptions(_) : emptyChart();
+    ).subscribe((labelTrend) => {
+      this.labelChartOption = labelTrend.chartSeries.timePoints.length >= 2 ? labelTrendChartOptions(labelTrend) : emptyChart();
       this.updateFlag = true;
     });
   }

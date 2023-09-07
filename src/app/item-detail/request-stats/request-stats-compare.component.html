@@ -75,6 +75,9 @@
           <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)">
             <mfDefaultSorter by="maxResponseTime">max [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
           </th>
+          <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p50, false)">
+            <mfDefaultSorter by="medianResponseTime">P50 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
+          </th>
           <th scope="col" class="hd jtl-head-color" *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)">
             <mfDefaultSorter by="n0">P90 [{{ defaultUnit ? "ms" : "%" }}]</mfDefaultSorter>
           </th>
@@ -140,6 +143,9 @@
             </td>
             <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)"><span
               [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime | number: '1.0-2'}}</span>
+            </td>
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span
+              [className]="comparedData ? _.medianResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.medianResponseTime | number: '1.0-2'}}</span>
             </td>
             <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span
               [className]="comparedData ? _.n0 > 0 ? 'value-positive' : 'value-negative' : ''">{{_.n0 | number: '1.0-2'}}</span>

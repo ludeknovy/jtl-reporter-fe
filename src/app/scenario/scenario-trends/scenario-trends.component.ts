@@ -37,9 +37,8 @@ export class ScenarioTrendsComponent implements OnInit {
   };
   userSettings: ScenarioTrendsUserSettings;
   chartDataMapping;
-  itemIds = new Set();
+  itemIds: Set<string> = new Set();
   labelDataTruncated = false;
-  responseTimeDegradationCurve;
   degradationCurveDisplayed = false;
 
   constructor(private scenarioService: ScenarioService, private router: Router,
@@ -100,11 +99,14 @@ export class ScenarioTrendsComponent implements OnInit {
       return acc;
     }, {});
 
+    this.setItemIds(data)
+
     for (const key of Object.keys(seriesData)) {
       const chartSeriesSettings = this.chartDataMapping.get(key);
       if (!chartSeriesSettings) {
         continue;
       }
+
       series.push({
         name: chartSeriesSettings.name || key,
         data: chartSeriesSettings.transform ? chartSeriesSettings.transform(seriesData[key]) : seriesData[key],
@@ -132,7 +134,6 @@ export class ScenarioTrendsComponent implements OnInit {
 
     for (const key of Object.keys(data)) {
       if (seriesP90.length < 20) {
-        data[key].percentile90.forEach(dataValue => this.itemIds.add(dataValue[2]));
         seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
         seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
         seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
@@ -167,7 +168,6 @@ export class ScenarioTrendsComponent implements OnInit {
   }
 
   toggleDegradationCurve() {
-    console.log("toggleDegradationCurve");
     this.degradationCurveDisplayed = !this.degradationCurveDisplayed;
   }
 
@@ -180,5 +180,12 @@ export class ScenarioTrendsComponent implements OnInit {
     const network = data.map(_ => bytesToMbps(_));
     return network;
   };
+
+  private setItemIds = (data: ScenarioTrendsData[]) => {
+    if (this.itemIds.size > 0) {
+      this.itemIds.clear()
+    }
+    data.forEach(line => this.itemIds.add(line.id))
+  }
 
 }

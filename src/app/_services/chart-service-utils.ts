@@ -65,7 +65,7 @@ export const getChartLines = (plot): ChartLines => {
     chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime.map((label) => ({ ...label, suffix: " ms" })));
   }
   if(percentile50) {
-    chartLines.labels.set(Metrics.ResponseTimeP50, percentile50.map((label) => ({ ...label, suffix: " ms"})))
+    chartLines.labels.set(Metrics.ResponseTimeP50, percentile50.map((label) => ({ ...label, suffix: " ms" })))
   }
   if (percentile90) {
     chartLines.labels.set(Metrics.ResponseTimeP90, percentile90.map((label) => ({ ...label, suffix: " ms" })));

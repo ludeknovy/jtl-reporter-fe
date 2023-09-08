@@ -6,7 +6,7 @@ export const getChartLines = (plot): ChartLines => {
   const {
     threads, overallTimeResponse,
     overallThroughput, overAllFailRate, overAllNetworkV2,
-    responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile90,
+    responseTime, throughput, networkV2, minResponseTime, maxResponseTime, percentile50, percentile90,
     percentile95, percentile99, statusCodes, errorRate, scatterPlotData, threadsPerThreadGroup,
   } = plot;
 
@@ -42,9 +42,7 @@ export const getChartLines = (plot): ChartLines => {
 
   if (threadsPerThreadGroup) {
     chartLines.threadsPerThreadGroup.set(Metrics.Threads, threadsPerThreadGroup)
-
   }
-
 
   if (scatterPlotData && scatterPlotData.length > 0) {
     chartLines.scatter.set(Metrics.ResponseTimeRaw, scatterPlotData)
@@ -65,6 +63,9 @@ export const getChartLines = (plot): ChartLines => {
 
   if (maxResponseTime) {
     chartLines.labels.set(Metrics.ResponseTimeMax, maxResponseTime.map((label) => ({ ...label, suffix: " ms" })));
+  }
+  if(percentile50) {
+    chartLines.labels.set(Metrics.ResponseTimeP50, percentile50.map((label) => ({ ...label, suffix: " ms"})))
   }
   if (percentile90) {
     chartLines.labels.set(Metrics.ResponseTimeP90, percentile90.map((label) => ({ ...label, suffix: " ms" })));

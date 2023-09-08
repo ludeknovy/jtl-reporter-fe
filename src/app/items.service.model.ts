@@ -110,6 +110,7 @@ export interface ItemDataPlot {
   networkV2: LabelSeries[];
   networkUp: LabelSeries[];
   networkDown: LabelSeries[];
+  percentile50?: LabelSeries[];
   percentile90?: LabelSeries[];
   percentile95?: LabelSeries[];
   percentile99?: LabelSeries[];

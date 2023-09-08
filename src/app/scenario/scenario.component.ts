@@ -39,7 +39,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     private environmentService: EnvironmentService,
   ) {
     this.items$ = itemsService.items$;
-    this.environment$ = environmentService.environment$.subscribe(value => this.page = 1);
+    this.environment$ = this.environmentService.environment$.subscribe(value => this.page = 1);
   }
 
   ngOnDestroy() {

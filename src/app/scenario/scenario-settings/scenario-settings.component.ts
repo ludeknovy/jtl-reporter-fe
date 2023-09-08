@@ -58,6 +58,7 @@ export class SettingsScenarioComponent implements OnInit {
     avg: null,
     min: null,
     max: null,
+    p50: null,
     p90: null,
     p95: null,
     p99: null,
@@ -216,6 +217,7 @@ export class SettingsScenarioComponent implements OnInit {
     this.requestStatsCormControls.standardDeviation = new FormControl(settings.userSettings.requestStats.standardDeviation || true, [Validators.required]);
     this.requestStatsCormControls.min = new FormControl(settings.userSettings.requestStats.min, [Validators.required]);
     this.requestStatsCormControls.max = new FormControl(settings.userSettings.requestStats.max, [Validators.required]);
+    this.requestStatsCormControls.p50 = new FormControl(settings.userSettings.requestStats.p50, [Validators.required]);
     this.requestStatsCormControls.p90 = new FormControl(settings.userSettings.requestStats.p90, [Validators.required]);
     this.requestStatsCormControls.p95 = new FormControl(settings.userSettings.requestStats.p95, [Validators.required]);
     this.requestStatsCormControls.p99 = new FormControl(settings.userSettings.requestStats.p99, [Validators.required]);
@@ -266,6 +268,7 @@ export class SettingsScenarioComponent implements OnInit {
       avg: this.requestStatsCormControls.avg,
       min: this.requestStatsCormControls.min,
       max: this.requestStatsCormControls.max,
+      p50: this.requestStatsCormControls.p50,
       p90: this.requestStatsCormControls.p90,
       p95: this.requestStatsCormControls.p95,
       p99: this.requestStatsCormControls.p99,

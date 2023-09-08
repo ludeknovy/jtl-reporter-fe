@@ -77,6 +77,7 @@ describe("RequestStatsCompareComponent", () => {
           errorRate: true,
           min: true,
           p95: true,
+          p50: true,
           apdex: true,
           standardDeviation: true,
           failures: true,

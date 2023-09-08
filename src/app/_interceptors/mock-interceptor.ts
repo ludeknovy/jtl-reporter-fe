@@ -26,7 +26,18 @@ export class HttpRequestInterceptorMock implements HttpInterceptor {
       request.url.includes("projects/test-project/scenarios/test-scenario/items/test-item/custom-chart-settings")) {
       return of(new HttpResponse({ status: 200 }));
     }
-
+    if (request.url && request.url.includes("projects/test-project/scenarios/test-scenario/environment")) {
+      return of(new HttpResponse({ status: 200 }));
+    }
+    if (request.url && request.url.includes("projects/test-project/scenarios/test-scenario/items")) {
+      return of(new HttpResponse({ status: 200 }));
+    }
+    if (request.url && request.url.includes("projects/test-project/scenarios/test-scenario/trends")) {
+      return of(new HttpResponse({ status: 200 }));
+    }
+    if (request.url && request.url.includes("projects/test-project/scenarios/test-scenario/processing-items")) {
+      return of(new HttpResponse({ status: 200 }));
+    }
 
     return next.handle(request);
   }

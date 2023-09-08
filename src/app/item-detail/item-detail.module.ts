@@ -28,9 +28,12 @@ import { ReloadCustomChartComponent } from "./analyze-charts/reload-custom-chart
 import { ExcelService } from "../_services/excel.service";
 import { ChartIntervalComponent } from "./chart-interval/chart-interval.component";
 import { ForbiddenComponent } from "../forbidden/forbidden.component";
+import { ThresholdFailureComponent } from "./request-stats/threshold-failure/threshold-failure.component";
+import { ZoomChartsComponent } from "./zoom-charts/zoom-charts.component";
+import { ErrorSummaryComponent } from "./error-summary/error-summary.component";
 
 
-const routes: Routes = [  {
+const routes: Routes = [{
   path: "project/:projectName/scenario/:scenarioName/item/:id", component: ItemDetailComponent,
   runGuardsAndResolvers: "always", canActivate: [AuthGuard],
 }];
@@ -40,7 +43,7 @@ const routes: Routes = [  {
   declarations: [ItemDetailComponent, RequestStatsCompareComponent, ThresholdsAlertComponent,
     PerformanceAnalysisComponent, ZeroErrorToleranceWarningComponent, LabelChartComponent, AnalyzeChartsComponent,
     LabelHealthComponent, LabelTrendComponent, StatsCompareComponent, AddMetricComponent, ShareComponent, DeleteShareLinkComponent,
-    CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent, ChartIntervalComponent, ForbiddenComponent ],
+    CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent, ChartIntervalComponent, ForbiddenComponent, ThresholdFailureComponent, ZoomChartsComponent, ErrorSummaryComponent],
   imports: [
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
     ReactiveFormsModule, FormsModule, RoleModule,
@@ -48,4 +51,5 @@ const routes: Routes = [  {
   exports: [],
   providers: [ExcelService]
 })
-export class ItemDetailModule { }
+export class ItemDetailModule {
+}

@@ -12,11 +12,13 @@ export class ScenarioApiService {
   private response = new BehaviorSubject<any>({});
   public response$ = this.response.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getScenario(projectName, scenarioName): Observable<Scenario> {
     return this.http.get<Scenario>(`projects/${projectName}/scenarios/${scenarioName}`);
   }
+
   updateScenario(projectName, scenarioName, body): Observable<Record<string, any>> {
     return this.http.put(`projects/${projectName}/scenarios/${scenarioName}`, body, { observe: "response" });
   }
@@ -29,9 +31,14 @@ export class ScenarioApiService {
     return this.http.get<IScenarios[]>(`projects/${projectName}/scenarios`);
   }
 
-  fetchScenarioTrend(projectName, scenarioName): Observable<any[]> {
+  fetchScenarioTrend(projectName, scenarioName, params?): Observable<any[]> {
     return this.http.get<any[]>(
-      `projects/${projectName}/scenarios/${scenarioName}/trends`);
+      `projects/${projectName}/scenarios/${scenarioName}/trends`, { params });
+  }
+
+  fetchScenarioEnvironments(projectName, scenarioName): Observable<any> {
+    return this.http.get<any>(
+      `projects/${projectName}/scenarios/${scenarioName}/environment`);
   }
 
   createNewScenario(projectName, body): Observable<Record<string, any>> {
@@ -50,12 +57,8 @@ export class ScenarioApiService {
     return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/notifications`, body, { observe: "response" });
   }
 
-  fetchThresholds(projectName, scenarioName) {
-    return this.http.get(`projects/${projectName}/scenarios/${scenarioName}/thresholds`);
-  }
-
-  updateThresholds(projectName, scenarioName, body) {
-    return this.http.put(`projects/${projectName}/scenarios/${scenarioName}/thresholds`, body, { observe: "response" });
+  updateScenarioTrendsSettings(projectName, scenarioName, body): Observable<unknown> {
+    return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/trends/settings`, body, { observe: "response" });
   }
 
   setData(data) {

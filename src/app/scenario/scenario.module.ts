@@ -8,7 +8,7 @@ import { SettingsScenarioComponent } from "./scenario-settings/scenario-settings
 import { DeleteScenarioComponent } from "./delete-scenario/delete-scenario.component";
 import { ExternalNotificationComponent } from "./external-notification/external-notification.component";
 import { NgxSpinnerModule } from "ngx-spinner";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDropdown, NgbDropdownModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { SharedModule } from "../shared/shared.module";
 import { HighchartsChartModule } from "highcharts-angular";
 import { ItemControlsComponent } from "./item-controls/item-controls.component";
@@ -23,7 +23,8 @@ import {
 } from "./external-notification/delete-external-notification/delete-external-notification.component";
 import { RoleModule } from "../_directives/role.module";
 import { AddNewItemModule } from "./add-new-item/add-new-item.module";
-
+import { ScenarioTrendsSettingsComponent } from "./scenario-trends/scenario-trends-settings/scenario-trends-settings.component";
+import { EnvironmentsComponent } from "./environments/environments.component";
 
 const routes: Routes = [
   {
@@ -36,11 +37,12 @@ const routes: Routes = [
 @NgModule({
   declarations: [ScenarioComponent, ScenarioTrendsComponent,
     SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
-    ItemControlsComponent, AddNewExternalNotificationComponent, DeleteExternalNotificationComponent,
+    ItemControlsComponent, AddNewExternalNotificationComponent, DeleteExternalNotificationComponent, ScenarioTrendsSettingsComponent, EnvironmentsComponent
   ],
   imports: [
     CommonModule, RouterModule.forRoot(routes), NgxSpinnerModule, NgbModule, SharedModule, HighchartsChartModule,
     SharedItemModule, ReactiveFormsModule, DataTableModule, RoleModule, AddNewItemModule, FormsModule,
+
   ],
   exports: [ScenarioComponent, ScenarioTrendsComponent,
     SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,

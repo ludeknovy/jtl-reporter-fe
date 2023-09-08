@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from "@angular/core";
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 import { bytesToMbps, roundNumberTwoDecimals } from "../calculations";
 import { AnalyzeChartService } from "../../analyze-chart.service";
@@ -8,6 +8,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import html2canvas from "html2canvas";
 import { ExcelService } from "src/app/_services/excel.service";
 import { ItemDetail } from "../../items.service.model";
+import { ComparisonChartService } from "../../_services/comparison-chart.service";
 
 
 @Component({
@@ -34,8 +35,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   comparedMetadata;
   defaultUnit = true;
   externalSearchTerm = "";
-  displayApdexColumn = false;
-  collapsableSettings = {}
+  collapsableSettings = {};
 
   constructor(
     private itemsService: ItemsApiService,
@@ -43,18 +43,46 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     private analyzeChartService: AnalyzeChartService,
     private modalService: NgbModal,
     private excelService: ExcelService,
+    private comparisonChartService: ComparisonChartService
   ) {
   }
 
   ngOnInit() {
-    this.labelsData = this.itemData.statistics;
+    // enrich the data with failure count
+    this.itemData.statistics.map(labelData => {
+      const failureCount = labelData.responseMessageFailures.reduce(
+        (previousValue, currentValue) => {
+          previousValue.count += currentValue.count
+          return previousValue
+        },{ count: 0 })
+
+      Object.assign(labelData, { failures: failureCount.count })
+      return labelData
+    })
+
+    if (this.itemData?.thresholds?.passed === false) {
+      this.labelsData = this.itemData.statistics.map(labelData => {
+        const thresholdResult = this.itemData.thresholds.results.find(thresholdResult =>
+          thresholdResult.label === labelData.label);
+        if (thresholdResult) {
+          return Object.assign(labelData, {
+            thresholdResult: {
+              passed: thresholdResult.passed,
+              result: thresholdResult.result
+            }
+          });
+        }
+        return labelData;
+      });
+    } else {
+      this.labelsData = this.itemData.statistics;
+    }
     this.analyzeChartService.currentData.subscribe(data => {
       if (data && data.label) {
         this.search(data.label);
         this.externalSearchTerm = data.label;
       }
     });
-    this.displayApdexColumn = !!this.itemData.statistics.find(stats => stats.apdex?.satisfaction && stats.apdex?.toleration)
   }
 
   ngOnDestroy() {
@@ -65,6 +93,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.comparedData = null;
     this.labelsData = this.itemData.statistics;
     this.defaultUnit = true;
+    this.comparisonChartService.resetPlot();
   }
 
   search(query: string) {
@@ -122,6 +151,8 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   itemToCompare(data) {
     this.resetStatsData();
+    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData);
+    this.comparisonChartService.setHistogramPlot(data.histogramPlotData);
     this.comparingData = data;
     this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
     if (data.maxVu !== this.itemData.overview.maxVu) {
@@ -137,6 +168,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
           avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
           minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
           maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
+          medianResponseTime: (_.medianResponseTime - labelToBeCompared.medianResponseTime),
           bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
           bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
           bytesSentPerSecond: (_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
@@ -153,6 +185,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
           avgResponseTime: null,
           minResponseTime: null,
           maxResponseTime: null,
+          medianResponseTime: null,
           n0: null,
           n5: null,
           n9: null,
@@ -181,6 +214,9 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       statistics: _.statistics,
       maxVu: _.overview.maxVu,
       environment: _.environment,
+      plot: _.plot,
+      histogramPlotData: _.histogramPlotData,
+      extraPlotData: _.extraPlotData,
       id
     }));
   }
@@ -205,12 +241,12 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       this.comparedData = this.labelsData.map((_) => {
         const labelToBeCompared = this.comparingData.statistics.find((__) => __.label === _.label);
         if (labelToBeCompared) {
-          console.log(_.bytes, labelToBeCompared);
           return {
             ..._,
             avgResponseTime: this.calculatePercDifference(_.avgResponseTime, labelToBeCompared.avgResponseTime),
             minResponseTime: this.calculatePercDifference(_.minResponseTime, labelToBeCompared.minResponseTime),
             maxResponseTime: this.calculatePercDifference(_.maxResponseTime, labelToBeCompared.maxResponseTime),
+            medianResponseTime:  this.calculatePercDifference(_.medianResponseTime, labelToBeCompared.medianResponseTime),
             bytes: this.calculatePercDifference(_.bytes, labelToBeCompared.bytes) / 1024,
             n0: this.calculatePercDifference(_.n0, labelToBeCompared.n0),
             n5: this.calculatePercDifference(_.n5, labelToBeCompared.n5),
@@ -218,7 +254,9 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             bytesPerSecond: this.calculatePercDifference(_.bytesPerSecond, labelToBeCompared.bytesPerSecond),
             bytesSentPerSecond: this.calculatePercDifference(_.bytesSentPerSecond, labelToBeCompared.bytesSentPerSecond),
             errorRate: this.calculatePercDifference(_.errorRate, labelToBeCompared.errorRate),
-            throughput: this.calculatePercDifference(_.throughput, labelToBeCompared.throughput)
+            throughput: this.calculatePercDifference(_.throughput, labelToBeCompared.throughput),
+            failures: this.calculatePercDifference(_.failures, labelToBeCompared.failures),
+            standardDeviation: this.calculatePercDifference(_.standardDeviation, labelToBeCompared.standardDeviation),
           };
         } else {
           this.comparisonWarning.push(`${_.label} label not found`);
@@ -227,12 +265,15 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             avgResponseTime: null,
             minResponseTime: null,
             maxResponseTime: null,
+            medianResponseTime: null,
             n0: null,
             n5: null,
             n9: null,
             errorRate: null,
             throughput: null,
             bytes: null,
+            failures: null,
+            standardDeviation: null,
           };
         }
       });
@@ -280,12 +321,14 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   }
 
   downloadAsXLXS() {
-    const { requestStats = {
-      samples: true,
-      avg: true, min: true,
-      max: true,  p90: true, p95: true,
-      p99: true, throughput: true, network: true,
-      errorRate: true }
+    const {
+      requestStats = {
+        samples: true,
+        avg: true, min: true, p50: true,
+        max: true, p90: true, p95: true,
+        p99: true, throughput: true, network: true,
+        errorRate: true, standardDeviation: true
+      }
     } = this.itemData.userSettings;
     const dataToBeSaved = this.labelsData.map((label) => {
       return {
@@ -294,6 +337,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
         ...(requestStats.avg && { "avg [ms]": label.avgResponseTime }),
         ...(requestStats.min && { "min [ms]": label.minResponseTime }),
         ...(requestStats.max && { "max [ms]": label.maxResponseTime }),
+        ...(requestStats.p50 && { "P50 [ms]": label.medianResponseTime }),
         ...(requestStats.p90 && { "P90 [ms]": label.n0 }),
         ...(requestStats.p95 && { "P95 [ms]": label.n5 }),
         ...(requestStats.p99 && { "P99 [ms]": label.n9 }),
@@ -305,24 +349,27 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.excelService.exportAsExcelFile(dataToBeSaved, `request-stats-${this.params.id}`);
   }
 
-  displayColumn(value) {
+  displayColumn(value, defaultValue = true) {
     if (typeof value === "undefined" || value === null) {
-      return true;
+      return defaultValue;
     }
     return value;
   }
 
   calculateApdex(satisfaction, toleration, samples) {
-    const apdexValue = roundNumberTwoDecimals((satisfaction + (toleration * 0.5)) / samples)
-    return this.apdexScore(apdexValue)
+    if (satisfaction === null || toleration === null) {
+      return;
+    }
+    const apdexValue = roundNumberTwoDecimals((satisfaction + (toleration * 0.5)) / samples);
+    return this.apdexScore(apdexValue);
   }
 
   public sortByApdex(item) {
-    return roundNumberTwoDecimals(((item.apdex.satisfaction + ( item.apdex.toleration * 0.5)) / item.samples))
+    return roundNumberTwoDecimals(((item.apdex.satisfaction + (item.apdex.toleration * 0.5)) / item.samples));
   }
 
   public sortByNetwork(item) {
-    return roundNumberTwoDecimals(item.bytesPerSecond + item.bytesSentPerSecond)
+    return roundNumberTwoDecimals(item.bytesPerSecond + item.bytesSentPerSecond);
   }
 
   private apdexScore(apdexValue: number): string {
@@ -332,21 +379,21 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
       { rangeFrom: 0.7, rangeTo: 0.83, name: "Fair", },
       { rangeFrom: 0.5, rangeTo: 0.69, name: "Poor", },
       { rangeFrom: 0, rangeTo: 0.49, name: "Unacceptable" }
-    ]
-    return score.find(sc => apdexValue >=  sc.rangeFrom && apdexValue <= sc.rangeTo)?.name
-  }
-
-  shouldApdexColumnBeDisplayed(): boolean {
-    return this.displayApdexColumn
+    ];
+    return score.find(sc => apdexValue >= sc.rangeFrom && apdexValue <= sc.rangeTo)?.name;
   }
 
   toggleSectionVisibility(event, index) {
     // eslint-disable-next-line no-prototype-builtins
-      if (!this.collapsableSettings.hasOwnProperty(index)) {
-        this.collapsableSettings[index] = true
-      } else {
-        this.collapsableSettings[index] = !this.collapsableSettings[index];
+    if (!this.collapsableSettings.hasOwnProperty(index)) {
+      this.collapsableSettings[index] = true;
+    } else {
+      this.collapsableSettings[index] = !this.collapsableSettings[index];
 
-      }
+    }
+  }
+
+  identify(index, item) {
+    return item.label;
   }
 }

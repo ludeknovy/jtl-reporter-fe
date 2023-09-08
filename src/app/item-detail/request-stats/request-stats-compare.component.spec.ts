@@ -77,7 +77,10 @@ describe("RequestStatsCompareComponent", () => {
           errorRate: true,
           min: true,
           p95: true,
+          p50: true,
           apdex: true,
+          standardDeviation: true,
+          failures: true,
         }
       },
       baseId: "",
@@ -140,7 +143,11 @@ describe("RequestStatsCompareComponent", () => {
           toleration: 10,
           satisfaction: 40,
         }
-      }, ]
+      }, ],
+      errorSummary: {
+        groupedErrors: [],
+        topErrorsByLabel: []
+      }
     };
     fixture.detectChanges();
   });
@@ -165,7 +172,13 @@ describe("RequestStatsCompareComponent", () => {
         n9: 372,
         samples: 200,
         throughput: 0.17,
-      }]
+      }],
+      plot: {
+        responseTime: [{ data: [], name: "label" } ],
+        throughput: [{ data: [], name: "label" }]
+      },
+      extraPlotData: {},
+      histogramPlotData: {}
     });
     expect(spy).toHaveBeenCalled();
   });

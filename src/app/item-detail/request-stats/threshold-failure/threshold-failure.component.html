@@ -1,0 +1,12 @@
+<div>
+  <p *ngIf="thresholdResult?.result?.percentile?.passed === false">
+    <i class="fas fa-exclamation-triangle text-danger"></i>
+    90% Percentile performance regressed about {{thresholdResult?.result?.percentile?.diffValue - 100  | number: '1.0-2'}}% in comparison with baseline report.
+  </p>
+  <p *ngIf="thresholdResult?.result?.throughput?.passed === false"><i class="fas fa-exclamation-triangle text-danger"></i>
+    Throughput performance regressed about {{Math.abs(thresholdResult?.result?.throughput?.diffValue - 100)  | number: '1.0-2'}}% in comparison with baseline report.
+  </p>
+  <p *ngIf="thresholdResult?.result?.errorRate?.passed === false"><i class="fas fa-exclamation-triangle text-danger"></i>
+    Error Rate performance regressed about {{Math.abs(100 - thresholdResult?.result?.errorRate?.diffValue) | number: '1.0-2'}}% in comparison with baseline report.
+  </p>
+</div>

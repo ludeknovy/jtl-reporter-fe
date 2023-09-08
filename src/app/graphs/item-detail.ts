@@ -1,5 +1,7 @@
-const EXPORTING_SOURCE_WIDTH = 1920
-const EXPORTING_SOURCE_HEIGHT = 500
+import { Metrics } from "../item-detail/metrics";
+
+const EXPORTING_SOURCE_WIDTH = 1920;
+const EXPORTING_SOURCE_HEIGHT = 500;
 
 export const commonGraphSettings: any = (text) => {
   return {
@@ -26,7 +28,7 @@ export const commonGraphSettings: any = (text) => {
       },
     },
     title: {
-      text: ""
+      text: "",
     },
     colors: ["#5DADE2", "#2ECC71", "#F4D03F", "#D98880",
       "#707B7C", "#7DCEA0", "#21618C", "#873600", "#AF7AC5", "#B7950B"],
@@ -64,14 +66,14 @@ export const commonGraphSettings: any = (text) => {
         text
       },
     },
-    {
-      gridLineColor: "#f2f2f2",
-      lineWidth: 0,
-      opposite: true,
-      title: {
-        text: "virtual users"
-      }
-    },
+      {
+        gridLineColor: "#f2f2f2",
+        lineWidth: 0,
+        opposite: true,
+        title: {
+          text: "virtual users"
+        }
+      },
     ],
   };
 };
@@ -103,105 +105,105 @@ export const overallChartSettings = (text) => {
 };
 
 export const customChartSettings = () => {
- return {
-  chart: {
-    type: "line",
-    zoomType: "x",
-    marginTop: 50,
-    className: "chart-sync",
-  },
-  time: {
-    getTimezoneOffset: function (timestamp) {
-      const d = new Date();
-      const timezoneOffset = d.getTimezoneOffset();
-      return timezoneOffset;
-    }
-  },
-  exporting: {
-    sourceWidth: EXPORTING_SOURCE_WIDTH,
-    sourceHeight: EXPORTING_SOURCE_HEIGHT,
-    buttons: {
-      contextButton: {
-        enabled: true,
+  return {
+    chart: {
+      type: "line",
+      zoomType: "x",
+      marginTop: 50,
+      className: "chart-sync",
+    },
+    time: {
+      getTimezoneOffset: function (timestamp) {
+        const d = new Date();
+        const timezoneOffset = d.getTimezoneOffset();
+        return timezoneOffset;
+      }
+    },
+    exporting: {
+      sourceWidth: EXPORTING_SOURCE_WIDTH,
+      sourceHeight: EXPORTING_SOURCE_HEIGHT,
+      buttons: {
+        contextButton: {
+          enabled: true,
+        },
+      }
+    },
+    title: {
+      text: ""
+    },
+    colors: ["#5DADE2", "#2ECC71", "#F4D03F", "#D98880",
+      "#707B7C", "#7DCEA0", "#21618C", "#873600", "#AF7AC5", "#B7950B"],
+    tooltip: {
+      split: true,
+      crosshairs: [true],
+      valueDecimals: 2,
+    },
+    plotOptions: {
+      series: {
+        connectNulls: true,
       },
-    }
-  },
-  title: {
-    text: ""
-  },
-  colors: ["#5DADE2", "#2ECC71", "#F4D03F", "#D98880",
-    "#707B7C", "#7DCEA0", "#21618C", "#873600", "#AF7AC5", "#B7950B"],
-  tooltip: {
-    split: true,
-    crosshairs: [true],
-    valueDecimals: 2,
-  },
-  plotOptions: {
-    series: {
-      connectNulls: true,
+      line: {
+        lineWidth: 1.5,
+        states: {
+          hover: {
+            lineWidth: 1.5
+          }
+        },
+        marker: {
+          enabled: false
+        },
+      }
     },
-    line: {
-      lineWidth: 1.5,
-      states: {
-        hover: {
-          lineWidth: 1.5
-        }
+    xAxis: {
+      lineWidth: 0,
+      type: "datetime",
+      crosshair: true,
+    },
+    yAxis: [{
+      visible: false,
+      gridLineColor: "#f2f2f2",
+      lineWidth: 0,
+      title: {
+        text: "reqs/s"
       },
-      marker: {
-        enabled: false
+    },
+      {
+        visible: false,
+        gridLineColor: "#f2f2f2",
+        lineWidth: 0,
+        title: {
+          text: "ms"
+        },
       },
-    }
-  },
-  xAxis: {
-    lineWidth: 0,
-    type: "datetime",
-    crosshair: true,
-  },
-  yAxis: [{
-    visible: false,
-    gridLineColor: "#f2f2f2",
-    lineWidth: 0,
-    title: {
-      text: "reqs/s"
-    },
-  },
-  {
-    visible: false,
-    gridLineColor: "#f2f2f2",
-    lineWidth: 0,
-    title: {
-      text: "ms"
-    },
-  },
-  {
-    visible: false,
-    gridLineColor: "#f2f2f2",
-    lineWidth: 0,
-    opposite: true,
-    title: {
-      text: "VU"
-    },
-  },
-  {
-    visible: false,
-    gridLineColor: "#f2f2f2",
-    lineWidth: 0,
-    opposite: true,
-    title: {
-      text: "%"
-    },
-  },
-  {
-    visible: false,
-    gridLineColor: "#f2f2f2",
-    lineWidth: 0,
-    opposite: true,
-    title: {
-      text: "mbps"
-    },
-  }
-],
- };
+      {
+        visible: false,
+        gridLineColor: "#f2f2f2",
+        lineWidth: 0,
+        opposite: true,
+        title: {
+          text: "VU"
+        },
+      },
+      {
+        visible: false,
+        gridLineColor: "#f2f2f2",
+        lineWidth: 0,
+        opposite: true,
+        title: {
+          text: "%"
+        },
+      },
+      {
+        visible: false,
+        gridLineColor: "#f2f2f2",
+        lineWidth: 0,
+        opposite: true,
+        title: {
+          text: "mbps"
+        },
+      }
+    ],
+  };
 };
 
 export const responseTimeDistribution = (data) => {
@@ -215,7 +217,7 @@ export const responseTimeDistribution = (data) => {
     subtitle: {
       text: ""
     },
-    legend:{ enabled:false },
+    legend: { enabled: false },
     xAxis: {
       crosshair: true,
       type: "category",
@@ -234,7 +236,7 @@ export const responseTimeDistribution = (data) => {
       valueSuffix: "",
       valueDecimals: 0,
       formatter: function () {
-        return `${this.y} responses were between ${this.x} and ${this.x + 100} ms`;
+        return `${this.y} responses between ${this.x} and ${this.x + 100} ms`;
       }
     },
     plotOptions: {
@@ -251,13 +253,14 @@ export const responseTimeDistribution = (data) => {
       id: "histogram",
       name: "Response times"
     }]
-  }
-}
+  };
+};
 
 
 export const threadLineSettings: any = {
   color: "grey",
-  yAxis: 1
+  yAxis: 1,
+  name: Metrics.Threads
 };
 
 export const errorLineSettings: any = {
@@ -273,8 +276,66 @@ export const throughputLineSettings: any = {
 export const networkLineSettings: any = {
   color: "grey",
   yAxis: 3,
-  name: "network"
+  name: Metrics.Network
 };
 
-export const responseTimeLineSettings: any = {
+export const scatterChart = {
+  chart: {
+    type: "scatter",
+    zoomType: "xy"
+  },
+  title: {
+    text: ""
+  },
+  time: {
+    getTimezoneOffset: function (timestamp) {
+      const d = new Date();
+      const timezoneOffset = d.getTimezoneOffset();
+      return timezoneOffset;
+    }
+  },
+  xAxis: {
+    showLastLabel: true,
+    type: "datetime",
+    legend: {
+      enabled: false,
+    },
+  },
+  tooltip: {
+    pointFormat: "{point.y} ms"
+  },
+  yAxis: {
+    lineWidth: 0,
+    gridLineColor: "#f2f2f2",
+    title: {
+      text: "ms"
+    },
+    labels: {
+      format: "{value} ms"
+    }
+  },
+  legend: {
+    enabled: false
+  },
+  series: null,
+  plotOptions: {
+    scatter: {
+      marker: {
+        radius: 2.5,
+        symbol: "circle",
+        states: {
+          hover: {
+            enabled: true,
+          }
+        }
+      },
+      states: {
+        hover: {
+          marker: {
+            enabled: false
+          }
+        }
+      }
+    }
+  },
 };

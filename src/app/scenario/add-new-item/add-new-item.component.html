@@ -25,6 +25,8 @@
           aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">
           <p class="form-validation-error" *ngIf="environment.errors.required">Environment is required.</p>
+          <p class="form-validation-error" *ngIf="environment.errors.maxlength">Environment is too long. Max length is 100.</p>
+
         </div>
       </div>
 
@@ -32,18 +34,36 @@
         <label for="name">Name</label>
         <input type="input" id="name" class="form-control" formControlName="name" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
+          <p class="form-validation-error" *ngIf="name.errors.maxlength">Note is too long. Max length is 200.</p>
+        </div>
       </div>
 
       <div class="form-group mb-3">
         <label for="note">Note</label>
         <input type="note" id="note" class="form-control" formControlName="note" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="note.errors && (note.dirty || note.touched)">
+          <p class="form-validation-error" *ngIf="note.errors.maxlength">Note is too long. Max length is 150.</p>
+        </div>
       </div>
 
       <div class="form-group mb-3">
         <label for="hostname">Hostname</label>
         <input type="hostname" id="hostname" class="form-control" formControlName="hostname" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="hostname.errors && (hostname.dirty || hostname.touched)">
+          <p class="form-validation-error" *ngIf="hostname.errors.maxlength">Hostname is too long. Max length is 200.</p>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="resourcesLink">External Link</label>
+        <input type="hostname" id="resourcesLink" class="form-control" formControlName="resourcesLink" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="resourcesLink.errors && (resourcesLink.dirty || resourcesLink.touched)">
+          <p class="form-validation-error" *ngIf="resourcesLink.errors.maxlength">Link is too long. Max length is 350.</p>
+        </div>
       </div>
 
       <div class="form-group mb-3">

@@ -7,8 +7,8 @@ export interface ItemsListing {
   environment: string;
   status: string;
   zeroErrorToleranceEnabled: boolean;
-  thresholdPassed?: boolean
-  overview: ItemOverview
+  thresholdPassed?: boolean;
+  overview: ItemOverview;
 
 }
 
@@ -35,16 +35,22 @@ export interface ItemDetail {
   baseId: string;
   name: string;
   note: string;
+  resourcesLink?: string;
   hostname: string;
   environment: string;
   plot: ItemDataPlot;
   extraPlotData: ItemExtraPlot[];
   histogramPlotData?: {
     responseTimePerLabelDistribution?: ResponseTimePerLabelDistribution[]
-  }
+  };
   statistics: ItemStatistics[];
   thresholds?: {
     passed: boolean,
+    results: Array<{
+      label: string
+      passed: string
+      result: ThresholdResult
+    }>
     diff: {
       errorRateDiff: number,
       percentileRateDiff: number,
@@ -54,7 +60,8 @@ export interface ItemDetail {
   topMetricsSettings: TopMetricsSettings;
   userSettings: {
     requestStats: RequestStats
-  }
+  };
+  errorSummary: ErrorSummary
 }
 
 interface TopMetricsSettings {
@@ -116,8 +123,8 @@ export interface ItemDataPlot {
 }
 
 export interface ItemExtraPlot {
-  interval: string
-  data: ItemDataPlot
+  interval: string;
+  data: ItemDataPlot;
 }
 
 interface LabelSeries {
@@ -141,7 +148,7 @@ export interface ItemStatistics {
   apdex: {
     satisfaction?: number
     toleration?: number
-  }
+  };
 }
 
 interface ResponseMessageFailure {
@@ -174,6 +181,29 @@ export interface ScenarioTrendsData {
     throughput: number;
   };
   id: string;
+}
+
+export interface LabelTrendsData {
+  labelStats: [{
+    avgResponseTime: number
+    bytesPerSecond: number
+    bytesSentPerSecond: number
+    connect: number
+    errorRate: number
+    label: string
+    latency: number
+    maxResponseTime: number
+    medianResponseTime: number
+    minResponseTime: number
+    n0: number
+    n5: number
+    n9: number
+    samples: number
+    throughput: number
+  },]
+  id: string,
+  startDate: string
+
 }
 
 export interface ItemHistoryDetail {
@@ -242,31 +272,31 @@ export interface ProjectsOverallStats {
 }
 
 export interface LabelTrend {
-    chartSeries: {
-      timePoints: string[];
-      errorRate: number[];
-      id: string;
-      p90: number[];
-      p95: number[];
-      p99: number[];
-      throughput: number[];
-      virtualUsers: number[];
-      avgLatency: number[],
-      avgConnectionTime: number[],
-      avgResponseTime: number[],
-      name: string[],
-    },
-    chartSettings: {
-      virtualUsers: boolean,
-      throughput: boolean,
-      avgLatency: boolean,
-      avgConnectionTime: boolean,
-      avgResponseTime: boolean,
-      p90: boolean,
-      p95: boolean,
-      p99: boolean,
-      errorRate: boolean,
-    }
+  chartSeries: {
+    timePoints: string[];
+    errorRate: number[];
+    id: string;
+    p90: number[];
+    p95: number[];
+    p99: number[];
+    throughput: number[];
+    virtualUsers: number[];
+    avgLatency: number[],
+    avgConnectionTime: number[],
+    avgResponseTime: number[],
+    name: string[],
+  },
+  chartSettings: {
+    virtualUsers: boolean,
+    throughput: boolean,
+    avgLatency: boolean,
+    avgConnectionTime: boolean,
+    avgResponseTime: boolean,
+    p90: boolean,
+    p95: boolean,
+    p99: boolean,
+    errorRate: boolean,
+  }
 
 }
 
@@ -291,6 +321,54 @@ export interface UpsertItemChartSettings {
 }
 
 export interface ResponseTimePerLabelDistribution {
-  label: string
-  values: number[]
+  label: string;
+  values: number[];
 }
+
+export interface ScenarioTrendsUserSettings {
+  aggregatedTrends: boolean;
+  labelMetrics: {
+    errorRate: boolean
+    percentile90: boolean
+    throughput: boolean
+  };
+}
+
+export interface ThresholdResult {
+  errorRate: {
+    diffValue: number,
+    passed: boolean
+  }
+  percentile: {
+    diffValue: number,
+    passed: boolean
+  }
+  throughput: {
+    diffValue: number,
+    passed: boolean
+  }
+}
+
+export interface ErrorSummary {
+  groupedErrors: Errors[]
+  topErrorsByLabel: Top5Errors[]
+}
+
+interface Errors {
+  count: number
+  statusCode: string
+  responseMessage: string
+  failureMessage: string
+}
+
+interface Top5Errors {
+  label: string
+  error1: LabelError
+  error2: LabelError
+  error3: LabelError
+  error4: LabelError
+  error5: LabelError
+}
+
+interface LabelError { count: number; error: string }
+

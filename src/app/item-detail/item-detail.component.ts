@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsApiService } from "../items-api.service";
 import { ItemDetail } from "../items.service.model";
@@ -6,7 +6,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { DecimalPipe } from "@angular/common";
 import * as Highcharts from "highcharts";
 import exporting from "highcharts/modules/exporting";
-import { commonGraphSettings, overallChartSettings } from "../graphs/item-detail";
+import { commonGraphSettings, overallChartSettings, scatterChart } from "../graphs/item-detail";
 import { catchError, withLatestFrom } from "rxjs/operators";
 import { of } from "rxjs";
 import { SharedMainBarService } from "../shared-main-bar.service";
@@ -17,6 +17,7 @@ import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
 import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
 import { ItemChartService } from "../_services/item-chart.service";
+
 exporting(Highcharts);
 
 
@@ -28,13 +29,19 @@ exporting(Highcharts);
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
 
+  @ViewChild("overallChart") componentRef;
+
   Highcharts: typeof Highcharts = Highcharts;
+  chart: Highcharts.Chart;
+  overallChart: Highcharts.Chart;
+
   itemData: ItemDetail = {
     overview: null,
     environment: null,
     baseId: null,
     note: null,
     plot: null,
+    resourcesLink: null,
     extraPlotData: null,
     reportStatus: null,
     histogramPlotData: null,
@@ -50,13 +57,17 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     zeroErrorToleranceEnabled: null,
     topMetricsSettings: null,
     userSettings: null,
+    errorSummary: null
   };
   overallChartOptions;
+  scatterChartOptions;
   statusChartOptions;
+  threadsPerThreadGroup;
+  overallChartCallback;
   updateChartFlag = false;
-  monitoringChart;
+  updateScatterChartFlag = false;
+  updateOverallChartFlag = false;
   itemParams;
-  hasErrorsAttachment;
   Math: any;
   token: string;
   isAnonymous = false;
@@ -66,7 +77,9 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   performanceAnalysisLines = null;
   externalSearchTerm = null;
   totalRequests = null;
-  overallChart = null;
+  plotRangeMin = null
+  plotRangeMax = null
+
 
   constructor(
     private route: ActivatedRoute,
@@ -78,6 +91,9 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private itemChartService: ItemChartService,
   ) {
     this.Math = Math;
+    this.overallChartCallback = chart => {
+      this.overallChart = chart;
+    };
   }
 
 
@@ -108,8 +124,9 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       .subscribe((results) => {
         this.itemData = results;
         this.monitoringAlerts();
-        this.itemChartService.setCurrentPlot(this.itemData.plot)
-        this.selectedPlotSubscription()
+        this.itemChartService.setCurrentPlot(this.itemData.plot);
+        this.selectedPlotSubscription();
+        this.plotRangeSubscription();
         this.calculateTotalRequests();
         this.spinner.hide();
       });
@@ -128,26 +145,67 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.toastr.clear();
   }
 
-  private selectedPlotSubscription () {
+  private selectedPlotSubscription() {
     this.itemChartService.selectedPlot$.subscribe((value) => {
       this.chartLines = value.chartLines;
       if (this.chartLines) {
         const overallChartSeries = Array.from(this.chartLines?.overall?.values());
-        this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries))
+        if (this.chartLines.threadsPerThreadGroup.has(Metrics.Threads)) {
+          this.threadsPerThreadGroup = this.chartLines.threadsPerThreadGroup.get(Metrics.Threads);
+        }
 
-        if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)){
+
+        this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries));
+        const scatterResponseTimeData = value.chartLines.scatter.get(Metrics.ResponseTimeRaw);
+
+        if (this.chartLines?.scatter?.has(Metrics.ResponseTimeRaw)) {
+          this.scatterChartOptions = scatterChart;
+          this.scatterChartOptions.series = [{
+            data: scatterResponseTimeData, name: "Response Time", marker: {
+              radius: 1
+            },
+          }];
+          this.updateScatterChartFlag = true;
+        }
+
+        if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)) {
           // initialize the chart options only when there are the status codes data
           this.statusChartOptions = {
             ...commonGraphSettings("")
-          }
-          const statusCodesLines = this.chartLines?.statusCodes.get(Metrics.StatusCodeInTime)
-          this.statusChartOptions.series = JSON.parse(JSON.stringify(statusCodesLines.data))
+          };
+          const statusCodesLines = this.chartLines?.statusCodes.get(Metrics.StatusCodeInTime);
+          this.statusChartOptions.series = JSON.parse(JSON.stringify(statusCodesLines.data));
         }
       }
 
-      this.updateChartFlag = true
+      this.updateChartFlag = true;
     });
   }
+
+  /**
+   * Sets plot range (min, max)
+   *
+   */
+  private plotRangeSubscription() {
+    this.itemChartService.plotRange$.subscribe((value) => {
+        this.updateMinMaxOfCharts(value?.start?.getTime(), value?.end?.getTime())
+    });
+  }
+
+  private updateMinMaxOfCharts(min, max) {
+    if (min && max) {
+      this.plotRangeMin = min
+      this.plotRangeMax = max
+      for (const chartOptions of [this.overallChartOptions, this.scatterChartOptions, this.statusChartOptions]) {
+        chartOptions.xAxis.min = min;
+        chartOptions.xAxis.max = max;
+      }
+      this.updateScatterChartFlag = true;
+      this.updateChartFlag = true;
+      this.updateOverallChartFlag = true;
+    }
+  }
+
 
   private calculateTotalRequests() {
     this.totalRequests = this.itemData.statistics.reduce((accumulator, currentValue) => {
@@ -156,12 +214,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
 
-
   itemDetailChanged({ note, environment, hostname, name }) {
     this.itemData.note = note;
     this.itemData.environment = environment;
     this.itemData.hostname = hostname;
-    this.itemData.name = name
+    this.itemData.name = name;
   }
 
   monitoringAlerts() {
@@ -190,16 +247,16 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   toggleThroughputBand({ element, perfAnalysis }) {
-    this.overallChartOptions.series.forEach(serie => {
-      if (["response time", "errors", "network"].includes(serie.name)) {
-        serie.visible = this.toggleThroughputBandFlag;
+    this.overallChartOptions.series.forEach(series => {
+      if ([Metrics.ResponseTimeAvg, Metrics.ErrorRate, Metrics.Network].includes(series.name)) {
+        series.visible = this.toggleThroughputBandFlag;
       }
-      if (serie.name === "throughput") {
+      if (series.name === Metrics.Throughput) {
         if (this.toggleThroughputBandFlag) {
-          serie.zones = [];
+          series.zones = [];
           return;
         }
-        serie.zones = [{
+        series.zones = [{
           value: this.itemData.overview.throughput,
           color: "#e74c3c"
         }];
@@ -238,7 +295,31 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
-        chart.reflow();
-    },0);
+      chart.reflow();
+    }, 0);
+    this.chart = chart;
+  };
+
+  displayThreadsPerGroupChange(event) {
+    const enabled = event.target.checked;
+    if (this.overallChart) {
+      this.overallChart.destroy();
+      this.componentRef.chart = null;
+    }
+
+    if (enabled) {
+      this.overallChartOptions = commonGraphSettings("");
+      this.overallChartOptions.series = this.threadsPerThreadGroup;
+    } else {
+      const originalSeries = Array.from(this.chartLines?.overall?.values());
+      this.overallChartOptions = overallChartSettings("");
+      this.overallChartOptions.series = originalSeries
+    }
+
+    // we need always to set the correct zoom range
+    this.overallChartOptions.xAxis.min = this.plotRangeMin
+    this.overallChartOptions.xAxis.max = this.plotRangeMax
+
+     this.updateOverallChartFlag = true;
   }
 }

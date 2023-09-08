@@ -50,6 +50,7 @@ export class SettingsScenarioComponent implements OnInit {
     avgConnectionTime: null,
     avgLatency: null,
     errorRate: null,
+    failures: null,
   };
   labelFilterControls = {};
   requestStatsCormControls = {
@@ -57,6 +58,7 @@ export class SettingsScenarioComponent implements OnInit {
     avg: null,
     min: null,
     max: null,
+    p50: null,
     p90: null,
     p95: null,
     p99: null,
@@ -64,6 +66,8 @@ export class SettingsScenarioComponent implements OnInit {
     network: null,
     errorRate: null,
     apdex: null,
+    standardDeviation: null,
+    failures: null
   };
   apdexFormControls = {
     apdexEnabled: null,
@@ -106,6 +110,7 @@ export class SettingsScenarioComponent implements OnInit {
 
   labelFilterOperators = ["includes", "match"];
   labelFilters: FormArray;
+  hasBaselineReport = false
 
 
   constructor(
@@ -119,12 +124,15 @@ export class SettingsScenarioComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
     this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
+      this.hasBaselineReport = !!_.baselineReport
       if (_.name) {
         this.createFormControls(_);
         this.createForm();
         this.labelFilters = new FormArray(
           _.labelFilterSettings.map(filter => new FormArray([new FormControl(filter.labelTerm, Validators.required), new FormControl(filter.operator, Validators.required)])));
       }
+
+
 
 
       this.apdexSettingsForm.valueChanges.subscribe(value => {
@@ -170,7 +178,7 @@ export class SettingsScenarioComponent implements OnInit {
       Validators.max(100),
       Validators.required
     ]);
-    this.formControls.enabled = new FormControl(settings.thresholds.enabled, [
+    this.formControls.enabled = new FormControl({ value: settings.thresholds.enabled, disabled: !this.hasBaselineReport }, [
       Validators.required,
     ]);
     this.formControls.analysisEnabled = new FormControl(settings.analysisEnabled, [
@@ -201,17 +209,22 @@ export class SettingsScenarioComponent implements OnInit {
     this.labelTrendChartControls.p95 = new FormControl(settings.labelTrendChartSettings?.p95, []);
     this.labelTrendChartControls.p99 = new FormControl(settings.labelTrendChartSettings?.p99, []);
     this.labelTrendChartControls.errorRate = new FormControl(settings.labelTrendChartSettings?.errorRate, []);
+    this.labelTrendChartControls.failures = new FormControl(settings.labelTrendChartSettings?.failures, []);
+
 
     this.requestStatsCormControls.samples = new FormControl(settings.userSettings.requestStats.samples, [Validators.required]);
     this.requestStatsCormControls.avg = new FormControl(settings.userSettings.requestStats.avg, [Validators.required]);
+    this.requestStatsCormControls.standardDeviation = new FormControl(settings.userSettings.requestStats.standardDeviation || true, [Validators.required]);
     this.requestStatsCormControls.min = new FormControl(settings.userSettings.requestStats.min, [Validators.required]);
     this.requestStatsCormControls.max = new FormControl(settings.userSettings.requestStats.max, [Validators.required]);
+    this.requestStatsCormControls.p50 = new FormControl(settings.userSettings.requestStats.p50, [Validators.required]);
     this.requestStatsCormControls.p90 = new FormControl(settings.userSettings.requestStats.p90, [Validators.required]);
     this.requestStatsCormControls.p95 = new FormControl(settings.userSettings.requestStats.p95, [Validators.required]);
     this.requestStatsCormControls.p99 = new FormControl(settings.userSettings.requestStats.p99, [Validators.required]);
     this.requestStatsCormControls.throughput = new FormControl(settings.userSettings.requestStats.throughput, [Validators.required]);
     this.requestStatsCormControls.network = new FormControl(settings.userSettings.requestStats.network, [Validators.required]);
     this.requestStatsCormControls.errorRate = new FormControl(settings.userSettings.requestStats.errorRate, [Validators.required]);
+    this.requestStatsCormControls.failures = new FormControl(settings.userSettings.requestStats.failures || false, [Validators.required]);
     this.requestStatsCormControls.apdex = new FormControl(settings.userSettings.requestStats.apdex || false, [Validators.required]);
 
     this.apdexFormControls.satisfyingThreshold = new FormControl(settings?.apdexSettings?.satisfyingThreshold, [
@@ -255,13 +268,16 @@ export class SettingsScenarioComponent implements OnInit {
       avg: this.requestStatsCormControls.avg,
       min: this.requestStatsCormControls.min,
       max: this.requestStatsCormControls.max,
+      p50: this.requestStatsCormControls.p50,
       p90: this.requestStatsCormControls.p90,
       p95: this.requestStatsCormControls.p95,
       p99: this.requestStatsCormControls.p99,
       throughput: this.requestStatsCormControls.throughput,
       network: this.requestStatsCormControls.network,
       errorRate: this.requestStatsCormControls.errorRate,
+      failures: this.requestStatsCormControls.failures,
       apdex: this.requestStatsCormControls.apdex,
+      standardDeviation: this.requestStatsCormControls.standardDeviation,
     });
     this.labelFiltersForm = new FormGroup({});
     this.apdexSettingsForm = new FormGroup({
@@ -304,7 +320,7 @@ export class SettingsScenarioComponent implements OnInit {
         generateShareToken,
         extraAggregations,
         thresholds: {
-          enabled: thresholdEnabled,
+          enabled: !!thresholdEnabled,
           errorRate: parseFloat(thresholdErrorRate),
           throughput: parseFloat(thresholdThroughput),
           percentile: parseFloat(thresholdPercentile)

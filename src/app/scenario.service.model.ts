@@ -13,6 +13,7 @@ export interface Scenario {
   userSettings: {
     requestStats?: RequestStats
   };
+  baselineReport: string;
 }
 
 
@@ -22,10 +23,13 @@ export interface RequestStats {
   max: boolean
   min: boolean
   network: boolean
+  p50: boolean
   p90: boolean
   p95: boolean
   p99: boolean
   samples: boolean
   throughput: boolean
   apdex: boolean
+  standardDeviation: boolean
+  failures: boolean
 }

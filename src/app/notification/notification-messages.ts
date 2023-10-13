@@ -82,6 +82,10 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, "Scenario trend settings updated");
   }
 
+  globalSettingsNotification(response) {
+    return this.statusCodeMessage(response, "Settings updated");
+  }
+
   appInitialization(response) {
     return this.statusCodeMessage(response, "")
   }

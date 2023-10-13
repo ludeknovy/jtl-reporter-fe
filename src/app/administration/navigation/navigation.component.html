@@ -10,6 +10,14 @@
 
     </li>
 
+    <li ngbNavItem [ngbNavItem]="'global-settings'">
+      <a ngbNavLink class="jtl-nav-link"
+         [routerLinkActive]="['active-link']"
+         *userRole="'admin'">Settings</a>
+      <ng-template ngbNavContent><app-global-settings></app-global-settings></ng-template>
+
+    </li>
+
     <li [ngbNavItem]="'apiKeys'">
       <a ngbNavLink class="jtl-nav-link"
          [routerLinkActive]="['active-link']"

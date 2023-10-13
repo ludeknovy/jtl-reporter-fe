@@ -6,7 +6,6 @@ import { DeleteTokenComponent } from "./delete-token/delete-token.component";
 import { SharedModule } from "../../shared/shared.module";
 import { AuthGuard } from "../../auth.guard";
 import { ApiKeysComponent } from "./api-keys.component";
-import { NavigationModule } from "../navigation/navigation.module";
 import { ReactiveFormsModule } from "@angular/forms";
 
 

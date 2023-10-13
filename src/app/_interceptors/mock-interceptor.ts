@@ -38,6 +38,9 @@ export class HttpRequestInterceptorMock implements HttpInterceptor {
     if (request.url && request.url.includes("projects/test-project/scenarios/test-scenario/processing-items")) {
       return of(new HttpResponse({ status: 200 }));
     }
+    if (request.url && request.url.includes("global-settings")) {
+      return of(new HttpResponse({ status: 200 }));
+    }
 
     return next.handle(request);
   }

@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { GlobalSettingsComponent } from './global-settings.component';
+import { GlobalSettingsComponent } from "./global-settings.component";
 
-describe('GlobalSettingsComponent', () => {
+describe("GlobalSettingsComponent", () => {
   let component: GlobalSettingsComponent;
   let fixture: ComponentFixture<GlobalSettingsComponent>;
 
@@ -19,7 +19,7 @@ describe('GlobalSettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

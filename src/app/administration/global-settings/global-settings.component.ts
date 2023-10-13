@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { GlobalSettingsService } from "../../_services/global-settings.service";
 import { GlobalSettings } from "../../_services/global-settings.model";
-import {catchError} from 'rxjs/operators';
-import {of} from 'rxjs';
-import {NotificationMessage} from '../../notification/notification-messages';
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { NotificationMessage } from "../../notification/notification-messages";
 
 @Component({
   selector: "app-global-settings",

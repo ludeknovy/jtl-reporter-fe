@@ -5,7 +5,7 @@ import { ProjectApiService } from "../project-api.service";
 import { ScenarioApiService } from "../scenario-api.service";
 import { ToastrService } from "ngx-toastr";
 import { NotificationService } from "../_services/notification.service";
-import {GlobalSettingsService} from '../_services/global-settings.service';
+import { GlobalSettingsService } from "../_services/global-settings.service";
 
 @Component({
   selector: "app-alert",

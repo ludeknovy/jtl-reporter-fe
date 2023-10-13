@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { GlobalSettingsComponent } from "./global-settings.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ReactiveFormsModule } from "@angular/forms";
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {HttpRequestInterceptorMock} from '../../_interceptors/mock-interceptor';
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { HttpRequestInterceptorMock } from "../../_interceptors/mock-interceptor";
 
 describe("GlobalSettingsComponent", () => {
   let component: GlobalSettingsComponent;

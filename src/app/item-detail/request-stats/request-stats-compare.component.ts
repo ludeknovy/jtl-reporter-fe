@@ -168,6 +168,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
           avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
           minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
           maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
+          medianResponseTime: (_.medianResponseTime - labelToBeCompared.medianResponseTime),
           bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
           bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
           bytesSentPerSecond: (_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
@@ -184,6 +185,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
           avgResponseTime: null,
           minResponseTime: null,
           maxResponseTime: null,
+          medianResponseTime: null,
           n0: null,
           n5: null,
           n9: null,
@@ -244,6 +246,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             avgResponseTime: this.calculatePercDifference(_.avgResponseTime, labelToBeCompared.avgResponseTime),
             minResponseTime: this.calculatePercDifference(_.minResponseTime, labelToBeCompared.minResponseTime),
             maxResponseTime: this.calculatePercDifference(_.maxResponseTime, labelToBeCompared.maxResponseTime),
+            medianResponseTime:  this.calculatePercDifference(_.medianResponseTime, labelToBeCompared.medianResponseTime),
             bytes: this.calculatePercDifference(_.bytes, labelToBeCompared.bytes) / 1024,
             n0: this.calculatePercDifference(_.n0, labelToBeCompared.n0),
             n5: this.calculatePercDifference(_.n5, labelToBeCompared.n5),
@@ -262,6 +265,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             avgResponseTime: null,
             minResponseTime: null,
             maxResponseTime: null,
+            medianResponseTime: null,
             n0: null,
             n5: null,
             n9: null,
@@ -320,7 +324,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     const {
       requestStats = {
         samples: true,
-        avg: true, min: true,
+        avg: true, min: true, p50: true,
         max: true, p90: true, p95: true,
         p99: true, throughput: true, network: true,
         errorRate: true, standardDeviation: true
@@ -333,6 +337,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
         ...(requestStats.avg && { "avg [ms]": label.avgResponseTime }),
         ...(requestStats.min && { "min [ms]": label.minResponseTime }),
         ...(requestStats.max && { "max [ms]": label.maxResponseTime }),
+        ...(requestStats.p50 && { "P50 [ms]": label.medianResponseTime }),
         ...(requestStats.p90 && { "P90 [ms]": label.n0 }),
         ...(requestStats.p95 && { "P95 [ms]": label.n5 }),
         ...(requestStats.p99 && { "P99 [ms]": label.n9 }),

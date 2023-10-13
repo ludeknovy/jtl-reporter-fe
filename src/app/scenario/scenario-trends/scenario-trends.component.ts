@@ -37,9 +37,8 @@ export class ScenarioTrendsComponent implements OnInit {
   };
   userSettings: ScenarioTrendsUserSettings;
   chartDataMapping;
-  itemIds = new Set();
+  itemIds: Set<string> = new Set();
   labelDataTruncated = false;
-  responseTimeDegradationCurve;
   degradationCurveDisplayed = false;
 
   constructor(private scenarioService: ScenarioService, private router: Router,
@@ -100,11 +99,14 @@ export class ScenarioTrendsComponent implements OnInit {
       return acc;
     }, {});
 
+    this.setItemIds(data)
+
     for (const key of Object.keys(seriesData)) {
       const chartSeriesSettings = this.chartDataMapping.get(key);
       if (!chartSeriesSettings) {
         continue;
       }
+
       series.push({
         name: chartSeriesSettings.name || key,
         data: chartSeriesSettings.transform ? chartSeriesSettings.transform(seriesData[key]) : seriesData[key],
@@ -132,10 +134,10 @@ export class ScenarioTrendsComponent implements OnInit {
 
     for (const key of Object.keys(data)) {
       if (seriesP90.length < 20) {
-        data[key].percentile90.forEach(dataValue => this.itemIds.add(dataValue[2]));
-        seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
-        seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
-        seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0] })) });
+        // Adding item id to correctly identify it when clicking a point.
+        seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
+        seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
+        seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
       } else {
         this.labelDataTruncated = true;
         break;
@@ -160,14 +162,18 @@ export class ScenarioTrendsComponent implements OnInit {
 
   onPointSelect(event) {
     if (event && event.point && event.point) {
-      const itemId = Array.from(this.itemIds)[event.point.index];
+      // Label series have item id amended to open correct detail, it's needed for a case when a labels do not match, eg:
+      // label2 start at point 0, but label2 starts at point 1, it leads to off by N issues.
+      // It's not needed for aggregated trend chart, as that is column chart and only one point can be clicked.
+      const boundItemId = event.point.series.data[event.point.index]?.options?.itemId
+
+      const itemId = boundItemId || Array.from(this.itemIds)[event.point.index];
       const { projectName, scenarioName } = this.params;
       this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
     }
   }
 
   toggleDegradationCurve() {
-    console.log("toggleDegradationCurve");
     this.degradationCurveDisplayed = !this.degradationCurveDisplayed;
   }
 
@@ -180,5 +186,12 @@ export class ScenarioTrendsComponent implements OnInit {
     const network = data.map(_ => bytesToMbps(_));
     return network;
   };
+
+  private setItemIds = (data: ScenarioTrendsData[]) => {
+    if (this.itemIds.size > 0) {
+      this.itemIds.clear()
+    }
+    data.forEach(line => this.itemIds.add(line.id))
+  }
 
 }

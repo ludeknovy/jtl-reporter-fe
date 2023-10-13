@@ -9,15 +9,9 @@ export class ItemChartService {
 
   private plot = new BehaviorSubject<ChartLines>({ chartLines: null });
   private plotRange = new BehaviorSubject<PlotRange>({ start: null, end: null });
-  private interval;
 
   selectedPlot$ = this.plot.asObservable();
-  plotRange$ = this.plotRange.asObservable()
-
-
-  setInterval(interval) {
-    this.interval = interval;
-  }
+  plotRange$ = this.plotRange.asObservable();
 
   setCurrentPlot(plot) {
     this.plot.next(getChartLines(plot));
@@ -28,7 +22,7 @@ export class ItemChartService {
   }
 
   getPlotRange() {
-    return this.plotRange.getValue()
+    return this.plotRange.getValue();
   }
 }
 

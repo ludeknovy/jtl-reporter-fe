@@ -9,6 +9,7 @@ import { ProjectAdministrationModule } from "../projects/project-administration.
 import { ApiKeysModule } from "../api-token/api-keys.module";
 import { UsersModule } from "../users/users.module";
 import { MyProfileModule } from "../my-profile/my-profile.module";
+import { GlobalSettingsModule } from "../global-settings/global-settings.module";
 
 const routes: Routes = [
   { path: "administration", component: NavigationComponent, canActivate: [AuthGuard] },
@@ -18,7 +19,7 @@ const routes: Routes = [
   declarations: [NavigationComponent],
   imports: [
     CommonModule, RouterModule, RoleModule, NgbNavModule, RouterModule.forRoot(routes), ProjectAdministrationModule, ApiKeysModule,
-    UsersModule, MyProfileModule,
+    UsersModule, MyProfileModule, GlobalSettingsModule
   ],
   exports: [NavigationComponent]
 })

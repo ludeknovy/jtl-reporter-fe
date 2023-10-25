@@ -36,9 +36,9 @@ export class ScenarioApiService {
       `projects/${projectName}/scenarios/${scenarioName}/trends`, { params });
   }
 
-  fetchScenarioEnvironments(projectName, scenarioName): Observable<any> {
+  fetchScenarioEnvironments(projectName, scenarioName, params): Observable<any> {
     return this.http.get<any>(
-      `projects/${projectName}/scenarios/${scenarioName}/environment`);
+      `projects/${projectName}/scenarios/${scenarioName}/environment`, { params });
   }
 
   createNewScenario(projectName, body): Observable<Record<string, any>> {

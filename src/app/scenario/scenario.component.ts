@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { of, Observable, Subscription } from "rxjs";
-import { switchMap, catchError } from "rxjs/operators";
+import { switchMap, catchError, withLatestFrom } from "rxjs/operators";
 import { Items } from "../items.service.model";
 import { ItemsService } from "../items.service";
 import { SharedMainBarService } from "../shared-main-bar.service";
@@ -28,6 +28,8 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   processingItems;
   subscription: Subscription;
   zeroErrorToleranceEnabled: boolean;
+  token: string;
+  isAnonymous = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,8 +40,6 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     private sharedMainBarService: SharedMainBarService,
     private environmentService: EnvironmentService,
   ) {
-    this.items$ = itemsService.items$;
-    this.environment$ = this.environmentService.environment$.subscribe(value => this.page = 1);
   }
 
   ngOnDestroy() {
@@ -49,31 +49,54 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.route.params.pipe<any>(
-      switchMap(routeParams => {
-        this.params = routeParams;
-        this.sharedMainBarService.setProjectName(this.params.projectName);
-        this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
-          this.zeroErrorToleranceEnabled = _.zeroErrorToleranceEnabled;
-        });
-        return new Observable().pipe(catchError(err => of([])));
-      })
-    ).subscribe(_ => _);
-    this.subscription = this.itemsService.processingItems$.subscribe((_) => {
-      this.processingItems = _;
-      const { inprogress } = _ as any;
-      if (Array.isArray(inprogress)) {
-        const processingItems = inprogress.map((item) => item.id);
-        const reloadItems = !this.currentProcessingItems.every((id) => processingItems.includes(id));
-        if (reloadItems) {
-          this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
-          this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
-          this.scenarioService.fetchEnvironments(this.params.projectName, this.params.scenarioName);
-        }
-        return this.currentProcessingItems = inprogress.map((item) => item.id);
+    this.route.queryParams.subscribe(_ => {
+      this.token = _.token;
+      if (this.token) {
+        this.isAnonymous = true;
       }
     });
+
+    if (!this.isAnonymous) {
+      this.items$ = this.itemsService.items$;
+      this.environment$ = this.environmentService.environment$.subscribe(value => this.page = 1);
+
+      this.route.params.pipe<any>(
+        switchMap(routeParams => {
+          this.params = routeParams;
+          this.sharedMainBarService.setProjectName(this.params.projectName);
+          this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
+            this.zeroErrorToleranceEnabled = _.zeroErrorToleranceEnabled;
+          });
+          return new Observable().pipe(catchError(err => of([])));
+        })
+      ).subscribe(_ => _);
+      this.subscription = this.itemsService.processingItems$.subscribe((_) => {
+        this.processingItems = _;
+        const { inprogress } = _ as any;
+        if (Array.isArray(inprogress)) {
+          const processingItems = inprogress.map((item) => item.id);
+          const reloadItems = !this.currentProcessingItems.every((id) => processingItems.includes(id));
+          if (reloadItems) {
+            this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
+            this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
+            this.scenarioService.fetchEnvironments(this.params.projectName, this.params.scenarioName);
+          }
+          return this.currentProcessingItems = inprogress.map((item) => item.id);
+        }
+      });
+    } else {
+      this.route.params.pipe<any>(
+        switchMap(routeParams => {
+          this.params = routeParams;
+          return new Observable().pipe(catchError(err => of([])));
+        })
+      ).subscribe(_ => _);
+    }
+
+
+
   }
+
 
   loadMore() {
     const offset = (this.page - 1) * OFFSET;

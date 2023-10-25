@@ -30,8 +30,8 @@ export class ScenarioService {
   }
 
 
-  fetchScenarioTrends(projectName, scenarioName) {
-    const queryParams = { environment: this.environment };
+  fetchScenarioTrends(projectName, scenarioName, params = {}) {
+    const queryParams = { environment: this.environment, ...params };
     this.scenarioApiService.fetchScenarioTrend(projectName, scenarioName, queryParams)
       .subscribe(_ => this.trends.next(_));
   }
@@ -41,8 +41,8 @@ export class ScenarioService {
       .subscribe(_ => this.notifications.next(_));
   }
 
-  fetchEnvironments(projectName, scenarioName) {
-    this.scenarioApiService.fetchScenarioEnvironments(projectName, scenarioName)
+  fetchEnvironments(projectName, scenarioName, queryParams = {}) {
+    this.scenarioApiService.fetchScenarioEnvironments(projectName, scenarioName, queryParams)
       .subscribe(_ => this.environments.next(_));
   }
 

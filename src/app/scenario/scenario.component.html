@@ -1,16 +1,16 @@
 <app-control-panel>
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <app-breadcrumb></app-breadcrumb>
+      <app-breadcrumb [isAnonymous]="isAnonymous"></app-breadcrumb>
 
     </li>
   </ul>
   <div>
 
     <div class="btn-group">
-      <app-environments [params]="params"></app-environments>
-      <app-add-new-item-modal></app-add-new-item-modal>
-      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
+      <app-environments [params]="params" [anonymous]="{ token, isAnonymous }"></app-environments>
+      <app-add-new-item-modal *ngIf="!isAnonymous"></app-add-new-item-modal>
+      <div *ngIf="!isAnonymous" display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="Button group with nested dropdown">
         <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
             class="fas fa-bars"></i></button>
@@ -26,14 +26,14 @@
 </app-control-panel>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" color="#fff" type="pacman"></ngx-spinner>
 
-<div class="row">
+<div class="row" >
   <div class="col">
     <div class="items-overview content-container">
       <div class="container-fluid">
 
         <app-scenario-trends [params]="params"></app-scenario-trends>
 
-        <div class="row rr">
+        <div class="row rr" *ngIf="!isAnonymous">
           <div class="col" *ngIf="items$ | async; let items">
             <div class="card recent-runs card-shadow">
               <h6 class="card-header bg-transparent">Test Runs

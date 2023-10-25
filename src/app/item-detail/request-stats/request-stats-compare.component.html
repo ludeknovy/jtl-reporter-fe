@@ -144,7 +144,7 @@
             <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.max)"><span
               [className]="comparedData ? _.maxResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.maxResponseTime | number: '1.0-2'}}</span>
             </td>
-            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span
+            <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p50, false)"><span
               [className]="comparedData ? _.medianResponseTime > 0 ? 'value-positive' : 'value-negative' : ''">{{_.medianResponseTime | number: '1.0-2'}}</span>
             </td>
             <td *ngIf="displayColumn(itemData.userSettings?.requestStats?.p90)"><span

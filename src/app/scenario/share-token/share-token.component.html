@@ -10,11 +10,11 @@
       <p></p>
       <div class="input-group mb-3">
         <div>
-          <app-new-share-token></app-new-share-token>
+          <app-new-share-token [params]="params"></app-new-share-token>
         </div>
 
-        <div class="responsive-table" *ngIf="shareTokens$ | async; let shareTokens">
-          <table class="table items" [mfData]="shareTokens" #mf="mfDataTable">
+        <div class="responsive-table" *ngIf="scenarioShareTokens$ | async; let scenarioShareTokens">
+          <table class="table items" [mfData]="scenarioShareTokens" #mf="mfDataTable">
             <thead>
             <tr >
               <th scope="col" class="jtl-head">
@@ -24,7 +24,7 @@
               <th class="jtl-head"></th>
             </tr>
             </thead>
-            <tbody *ngIf="shareTokens.length === 0">
+            <tbody *ngIf="scenarioShareTokens.length === 0">
             <tr>
               <td></td>
               <td>
@@ -33,17 +33,17 @@
               <td></td>
             </tr>
             </tbody>
-            <tbody *ngIf="shareTokens.length > 0">
+            <tbody *ngIf="scenarioShareTokens.length > 0">
             <tr *ngFor="let _ of mf.data">
               <td>
-                {{_.name}}
+                {{_.note}}
               </td>
               <td class="ellipses">
                 <input class="form-control link" type="text" value="{{selfUrl + '?token=' + _.token}}" #userinput>
               </td>
               <td class="text-right">
                 <button class="btn btn-sm jtl-btn-light jtl-no-glow" (click)="copyInputMessage(userinput)" value="click to copy" >Copy link</button>
-                <app-delete-share-token></app-delete-share-token>
+                <app-delete-share-token [params]="params" [tokenId]="_.id"></app-delete-share-token>
               </td>
             </tr>
             </tbody>

@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { IScenarios, ScenarioNotifications } from "./items.service.model";
 import { Scenario } from "./scenario.service.model";
+import {ScenarioShareToken} from './scenario-api.service.model';
 
 @Injectable({
   providedIn: "root"
@@ -59,6 +60,18 @@ export class ScenarioApiService {
 
   updateScenarioTrendsSettings(projectName, scenarioName, body): Observable<unknown> {
     return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/trends/settings`, body, { observe: "response" });
+  }
+
+  fetchScenarioShareTokens(projectName, scenarioName): Observable<ScenarioShareToken[]> {
+    return this.http.get<ScenarioShareToken[]>(`projects/${projectName}/scenarios/${scenarioName}/share-token`);
+  }
+
+  createScenarioShareToken(projectName, scenarioName, body) {
+    return this.http.post(`projects/${projectName}/scenarios/${scenarioName}/share-token`, body, { observe: "response" });
+  }
+
+  deleteScenarioShareToken(projectName, scenarioName, token) {
+    return this.http.delete(`projects/${projectName}/scenarios/${scenarioName}/share-token/${token}`, { observe: "response" })
   }
 
   setData(data) {

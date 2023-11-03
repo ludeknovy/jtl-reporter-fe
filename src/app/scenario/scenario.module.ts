@@ -25,9 +25,9 @@ import { RoleModule } from "../_directives/role.module";
 import { AddNewItemModule } from "./add-new-item/add-new-item.module";
 import { ScenarioTrendsSettingsComponent } from "./scenario-trends/scenario-trends-settings/scenario-trends-settings.component";
 import { EnvironmentsComponent } from "./environments/environments.component";
-import { NewShareTokenComponent } from "./share-token/new-share-token/new-share-token.component";
-import { DeleteShareTokenComponent } from "./share-token/delete-share-token/delete-share-token.component";
-import { ShareTokenComponent } from "./share-token/share-token.component";
+import { NewScenarioShareTokenComponent } from "./share-token/new-share-token/new-scenario-share-token.component";
+import { DeleteScenarioShareTokenComponent } from "./share-token/delete-share-token/delete-scenario-share-token.component";
+import { ScenarioShareTokenComponent } from "./share-token/scenario-share-token.component";
 
 const routes: Routes = [
   {
@@ -40,7 +40,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [ScenarioComponent, ScenarioTrendsComponent,
     SettingsScenarioComponent, DeleteScenarioComponent, ExternalNotificationComponent,
-    ItemControlsComponent, AddNewExternalNotificationComponent, DeleteExternalNotificationComponent, ScenarioTrendsSettingsComponent, EnvironmentsComponent, NewShareTokenComponent, DeleteShareTokenComponent, ShareTokenComponent, ShareTokenComponent
+    ItemControlsComponent, AddNewExternalNotificationComponent, DeleteExternalNotificationComponent, ScenarioTrendsSettingsComponent, EnvironmentsComponent, NewScenarioShareTokenComponent, DeleteScenarioShareTokenComponent, ScenarioShareTokenComponent, ScenarioShareTokenComponent
   ],
   imports: [
     CommonModule, RouterModule.forRoot(routes), NgxSpinnerModule, NgbModule, SharedModule, HighchartsChartModule,

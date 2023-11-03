@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ShareTokenComponent } from './share-token.component';
+import { ScenarioShareTokenComponent } from './scenario-share-token.component';
 
 describe('ShareTokenComponent', () => {
-  let component: ShareTokenComponent;
-  let fixture: ComponentFixture<ShareTokenComponent>;
+  let component: ScenarioShareTokenComponent;
+  let fixture: ComponentFixture<ScenarioShareTokenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShareTokenComponent ]
+      declarations: [ ScenarioShareTokenComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ShareTokenComponent);
+    fixture = TestBed.createComponent(ScenarioShareTokenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

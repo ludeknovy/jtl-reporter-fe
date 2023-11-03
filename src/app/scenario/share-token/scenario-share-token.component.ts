@@ -7,10 +7,10 @@ import { ScenarioShareToken } from "../../scenario-api.service.model";
 
 @Component({
   selector: "app-share-token",
-  templateUrl: "./share-token.component.html",
-  styleUrls: ["./share-token.component.css"]
+  templateUrl: "./scenario-share-token.component.html",
+  styleUrls: ["./scenario-share-token.component.css"]
 })
-export class ShareTokenComponent implements OnInit {
+export class ScenarioShareTokenComponent implements OnInit {
 
   @Input() params: { scenarioName: string, projectName: string };
 

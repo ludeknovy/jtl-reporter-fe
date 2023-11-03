@@ -9,10 +9,10 @@ import { ScenarioService } from "../../../scenario.service";
 
 @Component({
   selector: "app-new-share-token",
-  templateUrl: "./new-share-token.component.html",
-  styleUrls: ["./new-share-token.component.css"]
+  templateUrl: "./new-scenario-share-token.component.html",
+  styleUrls: ["./new-scenario-share-token.component.css"]
 })
-export class NewShareTokenComponent implements OnInit {
+export class NewScenarioShareTokenComponent implements OnInit {
 
   private note: FormControl;
   private newScenarioShareTokenForm: FormGroup;

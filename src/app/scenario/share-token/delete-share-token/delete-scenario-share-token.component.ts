@@ -7,10 +7,10 @@ import {NotificationMessage} from '../../../notification/notification-messages';
 
 @Component({
   selector: "app-delete-share-token",
-  templateUrl: "./delete-share-token.component.html",
-  styleUrls: ["./delete-share-token.component.css"]
+  templateUrl: "./delete-scenario-share-token.component.html",
+  styleUrls: ["./delete-scenario-share-token.component.css"]
 })
-export class DeleteShareTokenComponent implements OnInit {
+export class DeleteScenarioShareTokenComponent implements OnInit {
 
   deleteCheck: FormControl;
   deleteScenarioShareTokenForm: FormGroup;

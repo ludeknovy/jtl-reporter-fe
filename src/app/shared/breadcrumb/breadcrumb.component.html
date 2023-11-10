@@ -1,7 +1,7 @@
 <ol class="breadcrumb breadcrumb-nav">
   <li class="breadcrumb-item" *ngFor="let u of urls">
     <a *ngIf="!u.last && !isAnonymous" class="" routerLink="{{u.url}}">{{u.label | urlDecode}}</a>
-    <span *ngIf="!u.last && isAnonymous" class="" routerLink="{{u.url}}">{{u.label | urlDecode}}</span>
+    <span *ngIf="!u.last && isAnonymous" class="" >{{u.label | urlDecode}}</span>
     <span *ngIf="u.last">{{u.label | urlDecode}}</span>
   </li>
 </ol>

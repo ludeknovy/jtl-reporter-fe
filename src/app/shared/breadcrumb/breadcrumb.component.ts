@@ -9,6 +9,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class BreadcrumbComponent implements OnInit, OnChanges {
   @Input() testName
+  @Input() isAnonymous: boolean
 
   params;
   urls = [];
@@ -18,7 +19,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
       const { testName } = changes
-      if (testName.currentValue !== testName.previousValue) {
+      if (testName?.currentValue !== testName?.previousValue) {
         this.urls[this.urls.length - 1] = { label: this.testName || "test run", url: "", last: true }
       }
   }

@@ -25,6 +25,10 @@ describe("EnvironmentsComponent", () => {
     fixture = TestBed.createComponent(EnvironmentsComponent);
     component = fixture.componentInstance;
     component.params = { projectName: "test-project", scenarioName: "test-scenario" };
+    component.anonymous = {
+      token: "",
+      isAnonymous: false,
+    }
     fixture.detectChanges();
   });
 

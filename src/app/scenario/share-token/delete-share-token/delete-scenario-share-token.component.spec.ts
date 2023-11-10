@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DeleteScenarioShareTokenComponent } from './delete-scenario-share-token.component';
+import { DeleteScenarioShareTokenComponent } from "./delete-scenario-share-token.component";
 
-describe('DeleteShareTokenComponent', () => {
+describe("DeleteShareTokenComponent", () => {
   let component: DeleteScenarioShareTokenComponent;
   let fixture: ComponentFixture<DeleteScenarioShareTokenComponent>;
 
@@ -19,7 +19,7 @@ describe('DeleteShareTokenComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

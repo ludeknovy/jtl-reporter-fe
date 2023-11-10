@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { ScenarioNotifications } from "./items.service.model";
 import { ScenarioApiService } from "./scenario-api.service";
 import { EnvironmentService } from "./_services/environment.service";
-import {ScenarioShareToken} from './scenario-api.service.model';
+import { ScenarioShareToken } from "./scenario-api.service.model";
 
 @Injectable({
   providedIn: "root"

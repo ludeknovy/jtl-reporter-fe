@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
-import {ScenarioApiService} from '../../../scenario-api.service';
-import {ScenarioService} from '../../../scenario.service';
-import {NotificationMessage} from '../../../notification/notification-messages';
+import { ScenarioApiService } from "../../../scenario-api.service";
+import { ScenarioService } from "../../../scenario.service";
+import { NotificationMessage } from "../../../notification/notification-messages";
 
 @Component({
   selector: "app-delete-share-token",

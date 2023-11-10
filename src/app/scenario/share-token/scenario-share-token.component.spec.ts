@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ScenarioShareTokenComponent } from './scenario-share-token.component';
+import { ScenarioShareTokenComponent } from "./scenario-share-token.component";
 
-describe('ShareTokenComponent', () => {
+describe("ShareTokenComponent", () => {
   let component: ScenarioShareTokenComponent;
   let fixture: ComponentFixture<ScenarioShareTokenComponent>;
 
@@ -19,7 +19,7 @@ describe('ShareTokenComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

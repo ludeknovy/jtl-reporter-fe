@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { IScenarios, ScenarioNotifications } from "./items.service.model";
 import { Scenario } from "./scenario.service.model";
-import {ScenarioShareToken} from './scenario-api.service.model';
+import { ScenarioShareToken } from "./scenario-api.service.model";
 
 @Injectable({
   providedIn: "root"

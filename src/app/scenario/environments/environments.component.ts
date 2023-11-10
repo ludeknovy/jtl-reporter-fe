@@ -15,6 +15,7 @@ export class EnvironmentsComponent implements OnInit {
   defaultEnvironment = "All Environments";
 
   @Input() params
+  @Input() anonymous: { token?: string, isAnonymous: boolean}
   constructor(
     private scenarioService: ScenarioService,
     private itemsService: ItemsService,
@@ -24,7 +25,7 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.scenarioService.fetchEnvironments(this.params.projectName, this.params.scenarioName);
+    this.scenarioService.fetchEnvironments(this.params.projectName, this.params.scenarioName, { token: this.anonymous.token });
     this.reloadData("")
 
   }
@@ -38,9 +39,12 @@ export class EnvironmentsComponent implements OnInit {
 
   private reloadData(environment) {
     this.environmentService.setEnvironment(environment)
-    this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: 15, offset: 0 });
-    this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName)
-    this.itemsService.setProcessingItemsIntervalSubscription(this.params.projectName, this.params.scenarioName);
+
+    if (!this.anonymous.isAnonymous) {
+      this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: 15, offset: 0 });
+      this.itemsService.setProcessingItemsIntervalSubscription(this.params.projectName, this.params.scenarioName);
+    }
+    this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName, { token: this.anonymous.token })
   }
 
 }

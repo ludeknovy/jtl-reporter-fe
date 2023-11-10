@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { ScenarioNotifications } from "./items.service.model";
 import { ScenarioApiService } from "./scenario-api.service";
 import { EnvironmentService } from "./_services/environment.service";
+import { ScenarioShareToken } from "./scenario-api.service.model";
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +19,10 @@ export class ScenarioService {
 
   private notifications = new BehaviorSubject<ScenarioNotifications[]>([]);
   public notifications$ = this.notifications.asObservable();
+
+  private scenarioShareTokens = new BehaviorSubject<ScenarioShareToken[]>([])
+  public scenarioShareTokens$ = this.scenarioShareTokens.asObservable()
+
   private environment: string;
 
   constructor(
@@ -30,8 +35,8 @@ export class ScenarioService {
   }
 
 
-  fetchScenarioTrends(projectName, scenarioName) {
-    const queryParams = { environment: this.environment };
+  fetchScenarioTrends(projectName, scenarioName, params = {}) {
+    const queryParams = { environment: this.environment, ...params };
     this.scenarioApiService.fetchScenarioTrend(projectName, scenarioName, queryParams)
       .subscribe(_ => this.trends.next(_));
   }
@@ -41,8 +46,13 @@ export class ScenarioService {
       .subscribe(_ => this.notifications.next(_));
   }
 
-  fetchEnvironments(projectName, scenarioName) {
-    this.scenarioApiService.fetchScenarioEnvironments(projectName, scenarioName)
+  fetchScenarioShareTokens(projectName: string, scenarioName: string) {
+    this.scenarioApiService.fetchScenarioShareTokens(projectName, scenarioName)
+      .subscribe(tokens => this.scenarioShareTokens.next(tokens))
+  }
+
+  fetchEnvironments(projectName, scenarioName, queryParams = {}) {
+    this.scenarioApiService.fetchScenarioEnvironments(projectName, scenarioName, queryParams)
       .subscribe(_ => this.environments.next(_));
   }
 

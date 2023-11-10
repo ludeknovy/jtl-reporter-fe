@@ -1,0 +1,33 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Delete Share Link</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="deleteScenarioShareTokenForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="alert alert-danger" role="alert">
+        <i class="fas fa-info-circle"> </i>
+        By deleting this token you will immediately revoke its access.
+      </div>
+      <div class="form-group mb-3">
+        <label for="deleteCheck">Please enter 5 random characters to confirm this action:</label>
+        <input type="deleteCheck" id="deleteCheck" class="form-control" formControlName="deleteCheck" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="deleteCheck.errors && (deleteCheck.dirty || deleteCheck.touched)">
+          <p class="form-validation-error" *ngIf="deleteCheck.errors.minlength">Please enter at least 5 characters...</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<button class="btn btn-sm jtl-btn-light jtl-no-glow revoke" (click)="open(content)">
+  Delete
+</button>

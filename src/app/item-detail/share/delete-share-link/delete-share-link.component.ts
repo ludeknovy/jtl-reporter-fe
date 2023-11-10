@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
-import { of } from "rxjs";
-import { catchError } from "rxjs/operators";
 import { ItemsApiService } from "src/app/items-api.service";
 import { ItemsService } from "src/app/items.service";
 import { NotificationMessage } from "src/app/notification/notification-messages";

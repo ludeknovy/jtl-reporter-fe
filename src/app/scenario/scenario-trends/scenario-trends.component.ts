@@ -38,8 +38,6 @@ export class ScenarioTrendsComponent implements OnInit {
   userSettings: ScenarioTrendsUserSettings;
   chartDataMapping;
   itemIds: Set<string> = new Set();
-  labelDataTruncated = false;
-  labelTruncatedWarning = false;
   degradationCurveDisplayed = false;
 
   constructor(private scenarioService: ScenarioService, private router: Router,
@@ -55,14 +53,7 @@ export class ScenarioTrendsComponent implements OnInit {
       ["network", { name: Metrics.Network, yAxis: 4, onLoad: false, transform: this.networkTransform, tooltip: { valueSuffix: " mbps" } }],
     ]);
   }
-
-  chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
-    setTimeout(() => {
-      chart.reflow();
-    }, 0);
-  };
-
-
+  
   ngOnInit() {
     this.scenarioService.trends$.subscribe((_: {
       aggregatedTrends: ScenarioTrendsData[],
@@ -134,16 +125,10 @@ export class ScenarioTrendsComponent implements OnInit {
     const seriesThroughput = [];
 
     for (const key of Object.keys(data)) {
-      if (seriesP90.length < 20) {
-        // Adding item id to correctly identify it when clicking a point.
-        seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
-        seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
-        seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
-      } else {
-        this.labelDataTruncated = true;
-        this.labelTruncatedWarning = true;
-        break;
-      }
+      // Adding item id to correctly identify it when clicking a point.
+      seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
+      seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
+      seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
     }
     this.updateLabelChart(this.labelScenarioTrendChartP90Option, seriesP90);
     this.updateLabelChart(this.labelScenarioTrendChartThroughputOption, seriesThroughput);
@@ -175,11 +160,6 @@ export class ScenarioTrendsComponent implements OnInit {
 
   toggleDegradationCurve() {
     this.degradationCurveDisplayed = !this.degradationCurveDisplayed;
-    if (!this.degradationCurveDisplayed && this.labelDataTruncated) {
-      this.labelTruncatedWarning = true;
-    } else if (this.degradationCurveDisplayed) {
-      this.labelTruncatedWarning = false;
-    }
   }
 
   private updateLabelChart(chartOptions, series) {

@@ -39,6 +39,7 @@ export class ScenarioTrendsComponent implements OnInit {
   chartDataMapping;
   itemIds: Set<string> = new Set();
   labelDataTruncated = false;
+  labelTruncatedWarning = false;
   degradationCurveDisplayed = false;
 
   constructor(private scenarioService: ScenarioService, private router: Router,
@@ -140,10 +141,9 @@ export class ScenarioTrendsComponent implements OnInit {
         seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
       } else {
         this.labelDataTruncated = true;
+        this.labelTruncatedWarning = true;
         break;
       }
-
-
     }
     this.updateLabelChart(this.labelScenarioTrendChartP90Option, seriesP90);
     this.updateLabelChart(this.labelScenarioTrendChartThroughputOption, seriesThroughput);
@@ -175,6 +175,11 @@ export class ScenarioTrendsComponent implements OnInit {
 
   toggleDegradationCurve() {
     this.degradationCurveDisplayed = !this.degradationCurveDisplayed;
+    if (!this.degradationCurveDisplayed && this.labelDataTruncated) {
+      this.labelTruncatedWarning = true;
+    } else if (this.degradationCurveDisplayed) {
+      this.labelTruncatedWarning = false;
+    }
   }
 
   private updateLabelChart(chartOptions, series) {

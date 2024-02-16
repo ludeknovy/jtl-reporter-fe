@@ -57,7 +57,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     zeroErrorToleranceEnabled: null,
     topMetricsSettings: null,
     userSettings: null,
-    errorSummary: null
+    errorSummary: null,
+    status: null,
   };
   overallChartOptions;
   scatterChartOptions;

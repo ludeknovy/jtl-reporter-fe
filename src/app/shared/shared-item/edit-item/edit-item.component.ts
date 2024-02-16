@@ -7,6 +7,8 @@ import { of } from "rxjs";
 import { NotificationMessage } from "src/app/notification/notification-messages";
 import { ItemInput } from "src/app/scenario/item-controls/item-controls.model";
 import { ItemsService } from "src/app/items.service";
+import { ItemStatus } from "../../../scenario/add-new-item/add-new-item.model";
+import { ItemStatusValue } from "../../../item-detail/item-detail.model";
 
 @Component({
   selector: "app-edit-item",
@@ -25,18 +27,23 @@ export class EditItemComponent implements OnInit {
   disabled;
   name;
   resourcesLink;
+  status;
+  statuses = Object.values(ItemStatus);
+
 
   @Input() reloadItems: boolean;
   @Input() itemDetailData: ItemInput;
   @Output() itemDetailChange = new EventEmitter<{
-    note: string, environment: string, hostname: string, name: string }>();
+    note: string, environment: string, hostname: string, name: string
+  }>();
 
   constructor(
     private modalService: NgbModal,
     private itemsApiService: ItemsApiService,
     private itemsService: ItemsService,
     private notification: NotificationMessage
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.isBase = this.itemDetailData.isBase;
@@ -59,9 +66,12 @@ export class EditItemComponent implements OnInit {
     this.base = new FormControl(this.itemDetailData.isBase, []);
     this.name = new FormControl(this.itemDetailData.name, [
       Validators.maxLength(200)
-    ])
+    ]);
     this.resourcesLink = new FormControl(this.itemDetailData.resourcesLink,
-      [Validators.maxLength(350)])
+      [Validators.maxLength(350)]);
+    this.status = new FormControl(Object.keys(ItemStatusValue).find(x => ItemStatusValue[x] === this.itemDetailData.status), [
+      Validators.required
+    ]);
   }
 
   createForm() {
@@ -72,6 +82,7 @@ export class EditItemComponent implements OnInit {
       base: this.base,
       name: this.name,
       resourcesLink: this.resourcesLink,
+      status: this.status,
     });
   }
 
@@ -81,20 +92,20 @@ export class EditItemComponent implements OnInit {
 
   onSubmit() {
     if (this.myform.valid) {
-      const { note, environment, base, hostname, name, resourcesLink } = this.myform.value;
+      const { note, environment, base, hostname, name, resourcesLink, status } = this.myform.value;
       const { projectName, id, scenarioName } = this.itemDetailData.params;
       this.itemsApiService.updateItemInfo(id, projectName, scenarioName,
-        { environment, note, base, hostname, name, resourcesLink })
+        { environment, note, base, hostname, name, resourcesLink, status: ItemStatusValue[status] })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
           this.itemDetailChange.emit({ note, environment, hostname, name });
           const message = this.notification.itemUpdate(_);
           return this.itemsApiService.setData(message);
         }).add((_) => {
-          if (this.reloadItems) {
-            this.itemsService.fetchItems(projectName, scenarioName);
-          }
-        });
+        if (this.reloadItems) {
+          this.itemsService.fetchItems(projectName, scenarioName);
+        }
+      });
       this.modalService.dismissAll();
     }
   }

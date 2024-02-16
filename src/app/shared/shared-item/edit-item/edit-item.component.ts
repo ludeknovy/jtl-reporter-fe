@@ -70,7 +70,6 @@ export class EditItemComponent implements OnInit {
     this.resourcesLink = new FormControl(this.itemDetailData.resourcesLink,
       [Validators.maxLength(350)]);
     this.status = new FormControl(Object.keys(ItemStatusValue).find(x => ItemStatusValue[x] === this.itemDetailData.status), [
-      Validators.required
     ]);
   }
 

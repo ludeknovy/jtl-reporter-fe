@@ -12,4 +12,5 @@ export interface ItemInput {
   params: ItemParams;
   name: string;
   resourcesLink?: string;
+  status: string;
 }

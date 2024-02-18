@@ -5,6 +5,7 @@ import { ProjectApiService } from "../project-api.service";
 import { ScenarioApiService } from "../scenario-api.service";
 import { ToastrService } from "ngx-toastr";
 import { NotificationService } from "../_services/notification.service";
+import { GlobalSettingsService } from "../_services/global-settings.service";
 
 @Component({
   selector: "app-alert",
@@ -18,6 +19,7 @@ export class NotificationComponent implements OnInit {
     private projectService: ProjectApiService,
     private scenarioApiService: ScenarioApiService,
     private notificationService: NotificationService,
+    private globalSettingsService: GlobalSettingsService,
     private toastr: ToastrService
   ) { }
 
@@ -29,6 +31,7 @@ export class NotificationComponent implements OnInit {
     this.projectService.response$.subscribe(_ => this.showNotification(_));
     this.scenarioApiService.response$.subscribe(_ => this.showNotification(_));
     this.notificationService.notificationMessage$.subscribe(_ => this.showNotification(_));
+    this.globalSettingsService.notification$.subscribe(_ => this.showNotification(_));
 
 
     this._success.subscribe((message) => {

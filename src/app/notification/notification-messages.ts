@@ -82,6 +82,19 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, "Scenario trend settings updated");
   }
 
+  globalSettingsNotification(response) {
+    return this.statusCodeMessage(response, "Settings updated");
+  }
+
+  createScenarioShareToken(response) {
+    return this.statusCodeMessage(response, "Scenario share token was created");
+  }
+
+  deleteScenarioShareTokenNotification(response) {
+    return this.statusCodeMessage(response, "Scenario share token was deleted");
+
+  }
+
   appInitialization(response) {
     return this.statusCodeMessage(response, "")
   }

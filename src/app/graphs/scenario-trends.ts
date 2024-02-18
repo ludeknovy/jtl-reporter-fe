@@ -123,6 +123,12 @@ export const labelTrends: any = (text, title = "") => {
         return timezoneOffset;
       }
     },
+    legend: {
+      align: "center",
+      itemMarginTop: 1,
+      useHTML: true,
+      maxHeight: 105,
+    },
     exporting: {
       buttons: {
         contextButton: {
@@ -193,6 +199,12 @@ export const responseTimeDegradationCurveOption = () => {
           enabled: false
         },
       },
+    },
+    legend: {
+      align: "center",
+      itemMarginTop: 1,
+      useHTML: true,
+      maxHeight: 105,
     },
     title: {
       text: "",

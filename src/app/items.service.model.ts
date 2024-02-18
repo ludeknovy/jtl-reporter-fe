@@ -62,6 +62,7 @@ export interface ItemDetail {
     requestStats: RequestStats
   };
   errorSummary: ErrorSummary
+  status: string
 }
 
 interface TopMetricsSettings {

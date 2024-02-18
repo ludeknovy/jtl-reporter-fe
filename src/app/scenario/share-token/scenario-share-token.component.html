@@ -1,0 +1,61 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Share Scenario</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="shareForm">
+    <div class="modal-body">
+      <p></p>
+      <div class="input-group mb-3">
+        <div>
+          <app-new-share-token [params]="params"></app-new-share-token>
+        </div>
+
+        <div class="responsive-table" *ngIf="scenarioShareTokens$ | async; let scenarioShareTokens">
+          <table class="table items" [mfData]="scenarioShareTokens" #mf="mfDataTable">
+            <thead>
+            <tr >
+              <th scope="col" class="jtl-head">
+                <mfDefaultSorter by="name">Note</mfDefaultSorter>
+              </th>
+              <th class="jtl-head w-50">Link</th>
+              <th class="jtl-head"></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="scenarioShareTokens.length === 0">
+            <tr>
+              <td></td>
+              <td>
+                <div class="empty-table">No links created yet.</div>
+              </td>
+              <td></td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="scenarioShareTokens.length > 0">
+            <tr *ngFor="let _ of mf.data">
+              <td>
+                {{_.note}}
+              </td>
+              <td class="ellipses">
+                <input class="form-control link" type="text" value="{{selfUrl + '?token=' + _.token}}" #userinput>
+              </td>
+              <td class="text-right">
+                <button class="btn btn-sm jtl-btn-light jtl-no-glow" (click)="copyInputMessage(userinput)" value="click to copy" >Copy link</button>
+                <app-delete-share-token [params]="params" [tokenId]="_.id"></app-delete-share-token>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </form>
+
+</ng-template>
+
+<button *userRole="'operator'" class="notification btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Share</button>

@@ -18,7 +18,7 @@
           class="fas fa-bars"></i></button>
         <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
           <app-edit-item *ngIf="itemData.environment"
-                         [itemDetailData]="{note: itemData.note, resourcesLink: itemData.resourcesLink, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, params: itemParams, name: itemData.name}"
+                         [itemDetailData]="{note: itemData.note, resourcesLink: itemData.resourcesLink, environment: itemData.environment, hostname: itemData.hostname, isBase: itemData.isBase, status: itemData.status, params: itemParams, name: itemData.name}"
                          (itemDetailChange)="itemDetailChanged($event)"></app-edit-item>
           <app-share [params]=itemParams></app-share>
           <app-delete-item *ngIf="itemData.reportStatus !== 'in_progress'" [itemData]="itemParams"></app-delete-item>

@@ -1,0 +1,31 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Add New Scenario Share Token</h5>
+    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="newScenarioShareTokenForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="alert alert-primary" role="alert">
+        <i class="fas fa-info-circle"> </i>
+        Please add note to your share link.
+      </div>
+      <p class="text-secondary"></p>
+      <div class="form-group mb-3">
+        <label for="note">Note</label>
+        <input type="input" id="note" class="form-control" formControlName="note" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <div class="form-control-feedback" *ngIf="note.errors && (note.dirty || note.touched)">
+          <p class="form-validation-error" *ngIf="note.errors.maxlength">Note is too long.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+</ng-template>
+
+<button class="btn btn-sm jtl-btn-light jtl-no-glow create-new-link" (click)="open(content)">Add share token</button>

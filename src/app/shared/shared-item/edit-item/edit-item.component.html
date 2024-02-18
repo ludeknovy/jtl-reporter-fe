@@ -39,6 +39,14 @@
           aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-group mb-3">
+        <label for="status">Status</label>
+        <select id="status" class="form-control custom-select" formControlName="status">
+          <option *ngFor="let s of statuses" [value]="s">
+            {{s}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
         <div>
             <input type="checkbox" id="base-check" [attr.disabled]="disabled ? '' : null" formControlName="base" [(ngModel)]="isBase"
             data-md-icheck />

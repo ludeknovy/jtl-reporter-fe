@@ -51,6 +51,7 @@ describe("RequestStatsCompareComponent", () => {
       reportStatus: undefined,
       topMetricsSettings: undefined,
       zeroErrorToleranceEnabled: false,
+      status: "10",
       overview: {
         maxVu: 100,
         avgConnect: 100,
@@ -84,7 +85,6 @@ describe("RequestStatsCompareComponent", () => {
         }
       },
       baseId: "",
-
       statistics: [{
         avgResponseTime: 10,
         bytes: 758,
@@ -124,26 +124,26 @@ describe("RequestStatsCompareComponent", () => {
           satisfaction: 4,
         }
       },
-      {
-        avgResponseTime: 10,
-        bytes: 758,
-        errorRate: 0,
-        label: "03 - Click_Log_In-20",
-        maxResponseTime: 38,
-        minResponseTime: 8,
-        n0: 33,
-        n5: 34,
-        n9: 37,
-        samples: 200,
-        throughput: 0.17,
-        responseMessageFailures: [
-          { responseMessage: "error", count: 1 }
-        ],
-        apdex: {
-          toleration: 10,
-          satisfaction: 40,
-        }
-      }, ],
+        {
+          avgResponseTime: 10,
+          bytes: 758,
+          errorRate: 0,
+          label: "03 - Click_Log_In-20",
+          maxResponseTime: 38,
+          minResponseTime: 8,
+          n0: 33,
+          n5: 34,
+          n9: 37,
+          samples: 200,
+          throughput: 0.17,
+          responseMessageFailures: [
+            { responseMessage: "error", count: 1 }
+          ],
+          apdex: {
+            toleration: 10,
+            satisfaction: 40,
+          }
+        },],
       errorSummary: {
         groupedErrors: [],
         topErrorsByLabel: []
@@ -174,7 +174,7 @@ describe("RequestStatsCompareComponent", () => {
         throughput: 0.17,
       }],
       plot: {
-        responseTime: [{ data: [], name: "label" } ],
+        responseTime: [{ data: [], name: "label" }],
         throughput: [{ data: [], name: "label" }]
       },
       extraPlotData: {},
@@ -199,5 +199,4 @@ describe("RequestStatsCompareComponent", () => {
         .toEqual(["02 - Click_Log_In-22", "03 - Click_Log_In-20"]);
     });
   });
-
 });

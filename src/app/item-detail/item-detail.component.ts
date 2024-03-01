@@ -15,7 +15,7 @@ import { bytesToMbps } from "./calculations";
 import { ItemStatusValue } from "./item-detail.model";
 import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
-import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
+import { getValidationResults } from "../utils/showZeroErrorTolerance";
 import { ItemChartService } from "../_services/item-chart.service";
 
 exporting(Highcharts);
@@ -59,6 +59,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     userSettings: null,
     errorSummary: null,
     status: null,
+    minTestDuration: null,
   };
   overallChartOptions;
   scatterChartOptions;
@@ -76,10 +77,13 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   chartLines;
   activeId = 1;
   performanceAnalysisLines = null;
-  externalSearchTerm = null;
   totalRequests = null;
-  plotRangeMin = null
-  plotRangeMax = null
+  plotRangeMin = null;
+  plotRangeMax = null;
+  validations = {
+    zeroErrorValidation: null,
+    minTestDurationValidation: null,
+  };
 
 
   constructor(
@@ -129,6 +133,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.selectedPlotSubscription();
         this.plotRangeSubscription();
         this.calculateTotalRequests();
+        const validations = this.showValidationWarning(this.itemData);
+        this.validations = {
+          zeroErrorValidation: validations.zeroErrorToleranceValidation,
+          minTestDurationValidation: validations.minTestDurationValidation
+        };
         this.spinner.hide();
       });
     this.analyzeChartService.currentData.subscribe(data => {
@@ -140,6 +149,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.overallChartOptions = {
       ...overallChartSettings("ms")
     };
+
   }
 
   ngOnDestroy() {
@@ -189,14 +199,14 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
    */
   private plotRangeSubscription() {
     this.itemChartService.plotRange$.subscribe((value) => {
-        this.updateMinMaxOfCharts(value?.start?.getTime(), value?.end?.getTime())
+      this.updateMinMaxOfCharts(value?.start?.getTime(), value?.end?.getTime());
     });
   }
 
   private updateMinMaxOfCharts(min, max) {
     if (min && max) {
-      this.plotRangeMin = min
-      this.plotRangeMax = max
+      this.plotRangeMin = min;
+      this.plotRangeMax = max;
       for (const chartOptions of [this.overallChartOptions, this.scatterChartOptions, this.statusChartOptions]) {
         chartOptions.xAxis.min = min;
         chartOptions.xAxis.max = max;
@@ -279,20 +289,21 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     return bytesToMbps(bytes);
   }
 
-  showZeroErrorToleranceWarning(): boolean | string {
-    if (this.itemData.zeroErrorToleranceEnabled) {
-      return showZeroErrorWarning(this.itemData.overview.errorRate,
-        this.itemData.overview.errorCount);
+  showValidationWarning(itemData: ItemDetail): { zeroErrorToleranceValidation: boolean, minTestDurationValidation: boolean } {
+    if (itemData.zeroErrorToleranceEnabled || itemData.minTestDuration > 0) {
+      return getValidationResults(
+        itemData.zeroErrorToleranceEnabled,
+        itemData.overview.errorRate,
+        itemData.overview.errorCount,
+        itemData.overview.duration,
+        itemData.minTestDuration
+      );
     }
-    return false;
+    return {
+      zeroErrorToleranceValidation: false,
+      minTestDurationValidation: false,
+    };
   }
-
-  focusOnLabel($event: { label: string, metrics: Metrics[] }) {
-    this.activeId = 2;
-    this.performanceAnalysisLines = $event;
-    this.externalSearchTerm = $event.label;
-  }
-
 
   chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
     setTimeout(() => {
@@ -314,13 +325,13 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     } else {
       const originalSeries = Array.from(this.chartLines?.overall?.values());
       this.overallChartOptions = overallChartSettings("");
-      this.overallChartOptions.series = originalSeries
+      this.overallChartOptions.series = originalSeries;
     }
 
     // we need always to set the correct zoom range
-    this.overallChartOptions.xAxis.min = this.plotRangeMin
-    this.overallChartOptions.xAxis.max = this.plotRangeMax
+    this.overallChartOptions.xAxis.min = this.plotRangeMin;
+    this.overallChartOptions.xAxis.max = this.plotRangeMax;
 
-     this.updateOverallChartFlag = true;
+    this.updateOverallChartFlag = true;
   }
 }

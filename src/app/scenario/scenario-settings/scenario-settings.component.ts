@@ -33,6 +33,7 @@ export class SettingsScenarioComponent implements OnInit {
     throughput: null,
     enabled: null,
     zeroErrorToleranceEnabled: null,
+    minTestDuration: null,
     deleteSamples: null,
     keepTestRunsPeriod: null,
     generateShareToken: null,
@@ -52,7 +53,6 @@ export class SettingsScenarioComponent implements OnInit {
     errorRate: null,
     failures: null,
   };
-  labelFilterControls = {};
   requestStatsCormControls = {
     samples: null,
     avg: null,
@@ -74,10 +74,7 @@ export class SettingsScenarioComponent implements OnInit {
     satisfyingThreshold: null,
     toleratingThreshold: null
   };
-
-
   params;
-
   keepTestRunPeriods = [
     {
       period: 0,
@@ -110,7 +107,7 @@ export class SettingsScenarioComponent implements OnInit {
 
   labelFilterOperators = ["includes", "match"];
   labelFilters: FormArray;
-  hasBaselineReport = false
+  hasBaselineReport = false;
 
 
   constructor(
@@ -124,15 +121,13 @@ export class SettingsScenarioComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
     this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
-      this.hasBaselineReport = !!_.baselineReport
+      this.hasBaselineReport = !!_.baselineReport;
       if (_.name) {
         this.createFormControls(_);
         this.createForm();
         this.labelFilters = new FormArray(
           _.labelFilterSettings.map(filter => new FormArray([new FormControl(filter.labelTerm, Validators.required), new FormControl(filter.operator, Validators.required)])));
       }
-
-
 
 
       this.apdexSettingsForm.valueChanges.subscribe(value => {
@@ -185,8 +180,16 @@ export class SettingsScenarioComponent implements OnInit {
       Validators.required
     ]);
     this.formControls.zeroErrorToleranceEnabled = new FormControl(settings.zeroErrorToleranceEnabled, [
+      Validators.min(0),
+      Validators.max(1000),
       Validators.required
     ]);
+    this.formControls.minTestDuration = new FormControl(settings.minTestDuration, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(1000),
+    ]);
+
     this.formControls.deleteSamples = new FormControl(settings.deleteSamples, [
       Validators.required
     ]);
@@ -245,6 +248,7 @@ export class SettingsScenarioComponent implements OnInit {
       thresholdThroughput: this.formControls.throughput,
       thresholdErrorRate: this.formControls.errorRate,
       zeroErrorToleranceEnabled: this.formControls.zeroErrorToleranceEnabled,
+      minTestDuration: this.formControls.minTestDuration,
       deleteSamples: this.formControls.deleteSamples,
       keepTestRunsPeriod: this.formControls.keepTestRunsPeriod,
       generateShareToken: this.formControls.generateShareToken,
@@ -305,16 +309,18 @@ export class SettingsScenarioComponent implements OnInit {
         thresholdThroughput,
         deleteSamples,
         zeroErrorToleranceEnabled,
+        minTestDuration,
         keepTestRunsPeriod,
         generateShareToken,
         extraAggregations
       } = this.scenarioSettingsForm.value;
-      const { apdexEnabled, satisfyingThreshold, toleratingThreshold } = this.apdexSettingsForm.value
+      const { apdexEnabled, satisfyingThreshold, toleratingThreshold } = this.apdexSettingsForm.value;
       const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
         analysisEnabled,
         zeroErrorToleranceEnabled,
+        minTestDuration,
         keepTestRunsPeriod,
         deleteSamples,
         generateShareToken,
@@ -365,5 +371,6 @@ export class SettingsScenarioComponent implements OnInit {
     return name === this.params.scenarioName;
   }
 
+  protected readonly JSON = JSON;
 }
 

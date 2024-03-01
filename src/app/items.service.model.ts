@@ -7,6 +7,7 @@ export interface ItemsListing {
   environment: string;
   status: string;
   zeroErrorToleranceEnabled: boolean;
+  minTestDuration: number,
   thresholdPassed?: boolean;
   overview: ItemOverview;
 
@@ -63,6 +64,7 @@ export interface ItemDetail {
   };
   errorSummary: ErrorSummary
   status: string
+  minTestDuration: number
 }
 
 interface TopMetricsSettings {

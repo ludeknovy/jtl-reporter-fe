@@ -65,9 +65,19 @@
         </div>
       </div>
 
-      <div class="row" *ngIf="showZeroErrorToleranceWarning() === true">
+      <div class="row" *ngIf="validations.minTestDurationValidation || validations.zeroErrorValidation">
         <div class="col">
-          <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
+          <div class="card card-shadow error-tolerance-issue">
+            <div class="card-body">
+              <h6 class="overview-body perf-analysis">Test failure</h6>
+              <div *ngIf="validations.zeroErrorValidation === true">
+                <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
+              </div>
+              <div *ngIf="validations.minTestDurationValidation === true" class="mt-2">
+                <app-min-test-duration-warning></app-min-test-duration-warning>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

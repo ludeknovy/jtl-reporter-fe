@@ -3,7 +3,7 @@ import { ProjectApiService } from "../project-api.service";
 import { ItemsListing, ProjectsOverallStats } from "../items.service.model";
 import { Router } from "@angular/router";
 import { SharedMainBarService } from "../shared-main-bar.service";
-import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
+import { getValidationResults } from "../utils/showZeroErrorTolerance";
 
 @Component({
   selector: "app-dashboard",
@@ -19,9 +19,10 @@ export class DashboardComponent implements OnInit {
     private projectService: ProjectApiService,
     private router: Router,
     private sharedMainBarService: SharedMainBarService
-    ) {
-      this.Math = Math;
-    }
+  ) {
+    this.Math = Math;
+  }
+
   ngOnInit(): void {
     this.fetchLatestItems();
     this.fetchOverallStats();
@@ -29,7 +30,10 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchLatestItems() {
-    this.projectService.fetchLatestItems().subscribe(_ => this.latestItems = _);
+    this.projectService.fetchLatestItems()
+      .subscribe(_ => {
+        this.latestItems = _;
+      });
   }
 
   fetchOverallStats() {
@@ -40,8 +44,14 @@ export class DashboardComponent implements OnInit {
     this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
   }
 
-  showZeroErrorToleranceWarning(errorCount, errorRate) {
-    return showZeroErrorWarning(errorRate, errorCount);
+  displayItemValidationError(zeroErrorEnabled, errorCount, errorRate, duration, minTestDuration) {
+    const { zeroErrorToleranceValidation, minTestDurationValidation } = getValidationResults(zeroErrorEnabled, errorRate, errorCount, duration, minTestDuration);
+    return zeroErrorToleranceValidation || minTestDurationValidation
+  }
 
+
+
+  isValidationEnabled(zeroErrorEnabled, minTestDuration): boolean {
+    return zeroErrorEnabled || minTestDuration > 0;
   }
 }

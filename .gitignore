@@ -34,6 +34,7 @@ yarn-error.log
 testem.log
 /typings
 /pacts
+/.angular/cache
 
 # System Files
 .DS_Store

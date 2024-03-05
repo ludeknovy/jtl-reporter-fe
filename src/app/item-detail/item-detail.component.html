@@ -4,7 +4,7 @@
       <app-breadcrumb *ngIf="itemData.environment" [testName]="itemData.name"></app-breadcrumb>
     </li>
   </ul>
-  <app-zoom-charts *ngIf="itemData.overview" [reportStartDate]="itemData.overview.startDate"
+  <app-zoom-charts class="ms-auto" *ngIf="itemData.overview" [reportStartDate]="itemData.overview.startDate"
                    [reportEndDate]="itemData.overview.endDate"></app-zoom-charts>
   <app-chart-interval *ngIf="itemData.extraPlotData"
                       [intervals]="{ defaultInterval: itemData.plot, extraIntervals: itemData.extraPlotData}"></app-chart-interval>

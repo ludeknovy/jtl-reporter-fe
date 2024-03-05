@@ -1,13 +1,13 @@
-<app-control-panel>
+<app-control-panel >
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
       <app-breadcrumb [isAnonymous]="isAnonymous"></app-breadcrumb>
 
     </li>
   </ul>
-  <div>
+  <div class="ms-auto">
 
-    <div class="btn-group">
+    <div class="btn-group ms-auto">
       <app-environments [params]="params" [anonymous]="{ token, isAnonymous }"></app-environments>
       <app-add-new-item-modal *ngIf="!isAnonymous"></app-add-new-item-modal>
       <div *ngIf="!isAnonymous" display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"

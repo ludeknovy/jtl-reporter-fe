@@ -16,7 +16,7 @@
           <ng-template ngbNavContent>
             <form [formGroup]="scenarioSettingsForm" class="form-settings" (ngSubmit)="onSubmit()">
               <div class="form-group pt-3">
-                <label for="scenarioName">Scenario name <span class="text-danger">*</span></label>
+                <label for="scenarioName" class="form-label">Scenario name <span class="text-danger">*</span></label>
                 <input type="text" id="scenarioName" class="form-control" formControlName="scenarioName">
                 <div class="form-control-feedback"
                      *ngIf="formControls.scenarioName.errors && (formControls.scenarioName.dirty || formControls.scenarioName.touched)">
@@ -49,11 +49,11 @@
 
               <div class="form-sub">
                 <h6>Performance analysis</h6>
-                <div class="form-group">
+                <div class="form-group form-check">
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="analysisSwitch"
+                    <input type="checkbox" class="form-check-input" id="analysisSwitch"
                            formControlName="analysisEnabled">
-                    <label class="custom-control-label" for="analysisSwitch">Enabled</label>
+                    <label class="form-check-label" for="analysisSwitch">Enabled</label>
                   </div>
                 </div>
               </div>
@@ -63,11 +63,11 @@
 
               <div class="form-sub">
                 <h6>Zero error tolerance</h6>
-                <div class="form-group">
+                <div class="form-group form-check">
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="zeroErrorSwitch"
+                    <input type="checkbox" class="form-check-input" id="zeroErrorSwitch"
                            formControlName="zeroErrorToleranceEnabled">
-                    <label class="custom-control-label" for="zeroErrorSwitch">Enabled</label>
+                    <label class="form-check-label" for="zeroErrorSwitch">Enabled</label>
                   </div>
                 </div>
               </div>
@@ -80,7 +80,7 @@
                   <small> Set the minimum test duration required to consider a test as invalid. Setting this value to zero will deactivate this feature.</small></div>
                 <div class="form-group">
                   <div class="form-group">
-                    <label for="minTestDuration">Threshold [min]</label>
+                    <label for="minTestDuration" class="form-label">Threshold [min]</label>
                     <input type="input" id="minTestDuration" class="form-control" formControlName="minTestDuration">
                     <div class="form-control-feedback"
                          *ngIf="formControls.minTestDuration.errors">
@@ -99,11 +99,11 @@
 
               <div class="form-sub">
                 <h6>Delete sample data after processing</h6>
-                <div class="form-group">
+                <div class="form-group form-check">
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="deleteSamples"
+                    <input type="checkbox" class="form-check-input" id="deleteSamples"
                            formControlName="deleteSamples">
-                    <label class="custom-control-label" for="deleteSamples">Enabled</label>
+                    <label class="form-check-label" for="deleteSamples">Enabled</label>
                   </div>
                 </div>
               </div>
@@ -115,11 +115,11 @@
                 <h6>Generate share token automatically</h6>
                 <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
                   <small> When enabled the API will return share token upon new test report upload.</small></div>
-                <div class="form-group">
+                <div class="form-group form-check">
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="shareToken"
+                    <input type="checkbox" class="form-check-input" id="shareToken"
                            formControlName="generateShareToken">
-                    <label class="custom-control-label" for="shareToken">Enabled</label>
+                    <label class="form-check-label" for="shareToken">Enabled</label>
                   </div>
                 </div>
               </div>
@@ -132,11 +132,11 @@
                 <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
                   <small> When enabled extra chart aggregations will be generated during processing. It might impact the
                     processing times though.</small></div>
-                <div class="form-group">
+                <div class="form-group form-check">
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="extraAggregations"
+                    <input type="checkbox" class="form-check-input" id="extraAggregations"
                            formControlName="extraAggregations">
-                    <label class="custom-control-label" for="extraAggregations">Enabled</label>
+                    <label class="form-check-label" for="extraAggregations">Enabled</label>
                   </div>
                 </div>
               </div>
@@ -161,25 +161,25 @@
                   <small> You need to select a baseline report first.</small>
                 </div>
 
-                <div class="form-group">
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="thresholdEnabled"
+                <div class="form-group mb-3">
+                  <div class="custom-control custom-switch form-check">
+                    <input type="checkbox" class="form-check-input" id="thresholdEnabled"
                            formControlName="thresholdEnabled" >
-                    <label class="custom-control-label" for="thresholdEnabled">Enabled</label>
+                    <label class="form-check-label" for="thresholdEnabled">Enabled</label>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="scen-settings-p90">90% percentile</label>
+                <div class="form-group mb-3">
+                  <label for="scen-settings-p90" class="form-label">90% percentile</label>
                   <input type="input" id="scen-settings-p90" class="form-control" formControlName="thresholdPercentile">
                 </div>
-                <div class="form-group">
-                  <label for="scen-settings-throughput">Throughput</label>
+                <div class="form-group mb-3">
+                  <label for="scen-settings-throughput" class="form-label">Throughput</label>
                   <input type="text" id="scen-settings-throughput" class="form-control"
                          formControlName="thresholdThroughput">
                 </div>
-                <div class="form-group">
-                  <label for="scen-settings-error-rate">Error rate</label>
+                <div class="form-group mb-3">
+                  <label for="scen-settings-error-rate" class="form-label">Error rate</label>
                   <input type="text" id="scen-settings-error-rate" class="form-control"
                          formControlName="thresholdErrorRate">
                 </div>
@@ -261,55 +261,55 @@
           <a ngbNavLink class="jtl-nav-link">Label Trend Chart Settings</a>
           <ng-template ngbNavContent>
             <form [formGroup]="labelTrendChartSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
+              <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                <small> The selected metrics will get pre-set in label trend chart found in item report.</small></div>
 
+              <div class="form-group form-settings pt-3 form-check">
 
-              <div class="form-group form-settings pt-3">
-                <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-                  <small> The selected metrics will get pre-set in label trend chart found in item report.</small></div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="virtualUsers"
+                  <input type="checkbox" class="form-check-input" id="virtualUsers"
                          formControlName="virtualUsers">
-                  <label class="custom-control-label" for="virtualUsers">Virtual Users</label>
+                  <label class="form-check-label" for="virtualUsers">Virtual Users</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="errorRate"
+                  <input type="checkbox" class="form-check-input" id="errorRate"
                          formControlName="errorRate">
-                  <label class="custom-control-label" for="errorRate">Error Rate</label>
+                  <label class="form-check-label" for="errorRate">Error Rate</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="p90"
+                  <input type="checkbox" class="form-check-input" id="p90"
                          formControlName="p90">
-                  <label class="custom-control-label" for="p90">90% Percentile</label>
+                  <label class="form-check-label" for="p90">90% Percentile</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="p95"
+                  <input type="checkbox" class="form-check-input" id="p95"
                          formControlName="p95">
-                  <label class="custom-control-label" for="p95">95% Percentile</label>
+                  <label class="form-check-label" for="p95">95% Percentile</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="p99"
+                  <input type="checkbox" class="form-check-input" id="p99"
                          formControlName="p99">
-                  <label class="custom-control-label" for="p99">99% Percentile</label>
+                  <label class="form-check-label" for="p99">99% Percentile</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="throughput"
+                  <input type="checkbox" class="form-check-input" id="throughput"
                          formControlName="throughput">
-                  <label class="custom-control-label" for="throughput">Throughput</label>
+                  <label class="form-check-label" for="throughput">Throughput</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="avgLatency"
+                  <input type="checkbox" class="form-check-input" id="avgLatency"
                          formControlName="avgLatency">
-                  <label class="custom-control-label" for="avgLatency">Average Latency</label>
+                  <label class="form-check-label" for="avgLatency">Average Latency</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="avgConnectionTime"
+                  <input type="checkbox" class="form-check-input" id="avgConnectionTime"
                          formControlName="avgConnectionTime">
-                  <label class="custom-control-label" for="avgConnectionTime">Average Connection Time</label>
+                  <label class="form-check-label" for="avgConnectionTime">Average Connection Time</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="avgResponseTime"
+                  <input type="checkbox" class="form-check-input" id="avgResponseTime"
                          formControlName="avgResponseTime">
-                  <label class="custom-control-label" for="avgResponseTime">Average Response Time</label>
+                  <label class="form-check-label" for="avgResponseTime">Average Response Time</label>
                 </div>
 
               </div>
@@ -327,79 +327,80 @@
           <a ngbNavLink class="jtl-nav-link">Request statistics configuration</a>
           <ng-template ngbNavContent>
             <form [formGroup]="requestStatsSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
-              <div class="form-group form-settings pt-3">
-                <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-                  <small> The selected metrics will get pre-set in request stats table found in a report. Please note, that this settings is
-                    user specific.</small></div>
+              <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                <small> The selected metrics will get pre-set in request stats table found in a report. Please note, that this settings is
+                  user specific.</small></div>
+              <div class="form-group form-settings pt-3 form-check">
+
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-samples"
+                  <input type="checkbox" class="form-check-input" id="rs-samples"
                          formControlName="samples">
-                  <label class="custom-control-label" for="rs-samples">Samples</label>
+                  <label class="cform-check-label" for="rs-samples">Samples</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-avg"
+                  <input type="checkbox" class="form-check-input" id="rs-avg"
                          formControlName="avg">
-                  <label class="custom-control-label" for="rs-avg">Response Time [avg]</label>
+                  <label class="form-check-label" for="rs-avg">Response Time [avg]</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-std"
+                  <input type="checkbox" class="form-check-input" id="rs-std"
                          formControlName="standardDeviation">
-                  <label class="custom-control-label" for="rs-std">Standard Deviation</label>
+                  <label class="form-check-label" for="rs-std">Standard Deviation</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-p50"
+                  <input type="checkbox" class="form-check-input" id="rs-p50"
                          formControlName="p50">
-                  <label class="custom-control-label" for="rs-p50">Response Time [P50]</label>
+                  <label class="form-check-label" for="rs-p50">Response Time [P50]</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-p90"
+                  <input type="checkbox" class="form-check-input" id="rs-p90"
                          formControlName="p90">
-                  <label class="custom-control-label" for="rs-p90">Response Time [P90]</label>
+                  <label class="form-check-label" for="rs-p90">Response Time [P90]</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-p95"
+                  <input type="checkbox" class="form-check-input" id="rs-p95"
                          formControlName="p95">
-                  <label class="custom-control-label" for="rs-p95">Response Time [P95]</label>
+                  <label class="form-check-label" for="rs-p95">Response Time [P95]</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-p99"
+                  <input type="checkbox" class="form-check-input" id="rs-p99"
                          formControlName="p99">
-                  <label class="custom-control-label" for="rs-p99">Response Time [P99]</label>
+                  <label class="form-check-label" for="rs-p99">Response Time [P99]</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-throughput"
+                  <input type="checkbox" class="form-check-input" id="rs-throughput"
                          formControlName="throughput">
-                  <label class="custom-control-label" for="rs-throughput">Throughput</label>
+                  <label class="form-check-label" for="rs-throughput">Throughput</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-min"
+                  <input type="checkbox" class="form-check-input" id="rs-min"
                          formControlName="min">
-                  <label class="custom-control-label" for="rs-min">Response Time [min]</label>
+                  <label class="form-check-label" for="rs-min">Response Time [min]</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-max"
+                  <input type="checkbox" class="form-check-input" id="rs-max"
                          formControlName="max">
-                  <label class="custom-control-label" for="rs-max">Response Time [max]</label>
+                  <label class="form-check-label" for="rs-max">Response Time [max]</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-network"
+                  <input type="checkbox" class="form-check-input" id="rs-network"
                          formControlName="network">
-                  <label class="custom-control-label" for="rs-network">Network</label>
+                  <label class="form-check-label" for="rs-network">Network</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-error-rate"
+                  <input type="checkbox" class="form-check-input" id="rs-error-rate"
                          formControlName="errorRate">
-                  <label class="custom-control-label" for="rs-error-rate">Error Rate</label>
+                  <label class="form-check-label" for="rs-error-rate">Error Rate</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-failures"
+                  <input type="checkbox" class="form-check-input" id="rs-failures"
                          formControlName="failures">
-                  <label class="custom-control-label" for="rs-failures">Error count</label>
+                  <label class="form-check-label" for="rs-failures">Error count</label>
                 </div>
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="rs-apdex"
+                  <input type="checkbox" class="form-check-input" id="rs-apdex"
                          formControlName="apdex">
-                  <label class="custom-control-label" for="rs-apdex">APDEX</label>
+                  <label class="form-check-label" for="rs-apdex">APDEX</label>
                 </div>
 
               </div>
@@ -417,28 +418,27 @@
           <a ngbNavLink class="jtl-nav-link">APDEX configuration</a>
           <ng-template ngbNavContent>
             <form [formGroup]="apdexSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
+              <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
+                <small><a href="https://jtlreporter.site/blog/understanding-apdex-metric" target="_blank"> Read more about APDEX metric</a> </small></div>
               <div class="form-group form-settings pt-3">
-                <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
-                  <small><a href="https://jtlreporter.site/blog/understanding-apdex-metric" target="_blank"> Read more about APDEX metric</a> </small></div>
-
-                <div class="form-group">
+                <div class="form-group form-check mb-3">
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="apdexEnabled"
+                    <input type="checkbox" class="form-check-input" id="apdexEnabled"
                            formControlName="apdexEnabled">
-                    <label class="custom-control-label" for="apdexEnabled">Enabled</label>
+                    <label class="form-check-label" for="apdexEnabled">Enabled</label>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="satisfying-threshold">Satisfying threshold [ms]</label>
+                <div class="mb-3">
+                  <label for="satisfying-threshold" class="form-label">Satisfying threshold [ms]</label>
                   <input type="input" id="satisfying-threshold" class="form-control" formControlName="satisfyingThreshold">
                   <div class="form-control-feedback"
                        *ngIf="apdexFormControls.satisfyingThreshold.errors">
                     <p class="form-validation-error" *ngIf="apdexFormControls.satisfyingThreshold.errors.minIsGreaterThanMax">The number cannot be greater then tolerating threshold</p>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="tolerating-threshold">Tolerating threshold [ms]</label>
+                <div class="mb-3">
+                  <label for="tolerating-threshold" class="form-label">Tolerating threshold [ms]</label>
                   <input type="text" id="tolerating-threshold" class="form-control"
                          formControlName="toleratingThreshold">
                   <div class="form-control-feedback"

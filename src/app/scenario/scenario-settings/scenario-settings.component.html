@@ -37,7 +37,7 @@
                   <div class="desc text-secondary"><i class="fas fa-info-circle"> </i>
                     <small> How long to keep test runs. All related data will be deleted as well.</small></div>
                   <label for="keep-tests-period" class="form-label">Keep tests</label>
-                  <select class="custom-select" id="keep-tests-period" formControlName="keepTestRunsPeriod">
+                  <select class="form-select" id="keep-tests-period" formControlName="keepTestRunsPeriod">
                     <option *ngFor="let keepTestRunPeriod of keepTestRunPeriods"
                             [ngValue]="keepTestRunPeriod.period">{{ keepTestRunPeriod.description }}</option>
                   </select>
@@ -215,7 +215,7 @@
                   <tr *ngFor="let subarray of labelFilters.controls;let i=index">
                     <td *ngFor="let control of subarray.controls;let j=index">
                       <input *ngIf="j === 0" class="form-control" type="text" [formControl]="subarray.controls[j]">
-                      <select *ngIf="j === 1" class="custom-select" [formControl]="subarray.controls[j]"
+                      <select *ngIf="j === 1" class="form-select" [formControl]="subarray.controls[j]"
                               aria-label="Default select example" [value]="subarray.controls[j].value">
                         <option *ngFor="let operator of labelFilterOperators" value="{{operator}}">
                           {{ operator }}
@@ -232,7 +232,7 @@
                       <input class="form-control" placeholder="Label term" type="text" id="term" name="term" #term/>
                     </td>
                     <td>
-                      <select class="custom-select" aria-label="Default select example" #operator>
+                      <select class="form-select" aria-label="Default select example" #operator>
                         <option *ngFor="let operator of labelFilterOperators" value="{{operator}}">
                           {{ operator }}
                         </option>

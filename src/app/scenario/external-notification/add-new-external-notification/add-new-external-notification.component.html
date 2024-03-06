@@ -17,7 +17,7 @@
       <p class="text-secondary"></p>
 
       <label for="channel">Channel</label>
-      <select class="custom-select mb-3" id="channel" (change)="changeNotification($event)"  formControlName="notificationType">
+      <select class="form-select mb-3" id="channel" (change)="changeNotification($event)"  formControlName="notificationType">
         <option *ngFor="let notification of notifications" [value]="notification">
           {{ notification }}
         </option>

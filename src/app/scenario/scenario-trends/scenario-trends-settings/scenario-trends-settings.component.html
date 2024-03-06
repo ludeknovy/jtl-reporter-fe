@@ -16,15 +16,15 @@
         <h6>Scenario Chart</h6>
       </div>
 
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="aggregatedTrends" value="true" name="aggregatedTrends" class="custom-control-input"
+      <div class="form-check custom-radio custom-control-inline">
+        <input type="radio" id="aggregatedTrends" value="true" name="aggregatedTrends" class="form-check-input"
                formControlName="aggregatedTrends">
-        <label class="custom-control-label" for="aggregatedTrends">Aggregated Trends</label>
+        <label class="form-check-label" for="aggregatedTrends">Aggregated Trends</label>
       </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="labelTrends" value="false" name="aggregatedTrends" class="custom-control-input"
+      <div class="form-check custom-radio custom-control-inline">
+        <input type="radio" id="labelTrends" value="false" name="aggregatedTrends" class="form-check-input"
                formControlName="aggregatedTrends">
-        <label class="custom-control-label" for="labelTrends">Label Trends</label>
+        <label class="form-check-label" for="labelTrends">Label Trends</label>
       </div>
 
 
@@ -42,21 +42,21 @@
         </div>
 
         <div class="form-group">
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="errorRate"
+          <div class="form-check custom-switch">
+            <input type="checkbox" class="form-check-input" id="errorRate"
                    formControlName="errorRate" (change)="onCheckboxChange()">
-            <label class="custom-control-label" for="errorRate">Error Rate</label>
+            <label class="form-check-label" for="errorRate">Error Rate</label>
           </div>
 
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="percentile"
+          <div class="form-check custom-switch">
+            <input type="checkbox" class="form-check-input" id="percentile"
                    formControlName="percentile90" (change)="onCheckboxChange()">
             <label class="custom-control-label" for="percentile">90% Percentile</label>
           </div>
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="throughput"
+          <div class="form-check custom-switch">
+            <input type="checkbox" class="form-check-input" id="throughput"
                    formControlName="throughput" (change)="onCheckboxChange()">
-            <label class="custom-control-label" for="throughput">Throughput</label>
+            <label class="form-check-label" for="throughput">Throughput</label>
           </div>
 
         </div>

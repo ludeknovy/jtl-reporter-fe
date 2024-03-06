@@ -68,7 +68,7 @@
 
       <div class="form-group mb-3">
         <label for="status">Status</label>
-        <select id="status" class="form-control custom-select" formControlName="status">
+        <select id="status" class="form-control form-select" formControlName="status">
           <option *ngFor="let s of statuses" [value]="s">
             {{s}}
           </option>

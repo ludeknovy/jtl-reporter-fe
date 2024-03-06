@@ -10,7 +10,7 @@
   <div class="modal-body">
     <ul class="metric-ul"  *ngFor="let item of metrics | keyvalue">
       <div class="metric">{{item.key}}</div>
-      <li class="label" *ngFor="let _ of item.value">
+      <li class="label form-check" *ngFor="let _ of item.value">
         <input class="form-check-input" id="{{item.key}}{{_.name}}" type="checkbox" name="list_name_child" [(ngModel)]="_.isChecked">
         <label class="form-check-label" for="{{item.key}}{{_.name}}">{{_.name}}</label>
       </li>

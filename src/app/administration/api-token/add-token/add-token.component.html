@@ -8,7 +8,7 @@
     <form [formGroup]="myform" (ngSubmit)="onSubmit()">
       <div class="modal-body">
         <div class="form-group mb-3">
-          <label for="description" class="mb-1">Description</label>
+          <label for="description" class="mb-1 form-label">Description</label>
           <input type="text" id="description" class="form-control" formControlName="description" aria-label="Default"
             aria-describedby="inputGroup-sizing-default">
           <div class="form-control-feedback" *ngIf="description.errors && (description.dirty || description.touched)">

@@ -8,7 +8,7 @@ import { ScenarioShareToken } from "../../scenario-api.service.model";
 @Component({
   selector: "app-share-token",
   templateUrl: "./scenario-share-token.component.html",
-  styleUrls: ["./scenario-share-token.component.css"]
+  styleUrls: ["./scenario-share-token.component.css", "../../shared-styles.css"]
 })
 export class ScenarioShareTokenComponent implements OnInit {
 

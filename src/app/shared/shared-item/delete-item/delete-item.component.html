@@ -8,7 +8,7 @@
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
       <div class="form-group mb-3">
-        <label for="deleteCheck">Please enter 5 random characters:</label>
+        <label for="deleteCheck" class="form-label">Please enter 5 random characters:</label>
         <input type="deleteCheck" id="deleteCheck" class="form-control" formControlName="deleteCheck" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="deleteCheck.errors && (deleteCheck.dirty || deleteCheck.touched)">

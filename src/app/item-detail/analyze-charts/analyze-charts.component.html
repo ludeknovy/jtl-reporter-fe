@@ -1,7 +1,7 @@
 <div class="card card-shadow" *ngIf="customChartsOptions">
   <h6 class="card-header bg-transparent">
     Custom Chart
-    <span class="float-right">
+    <span class="float-end">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="">
         <app-reload-custom-chart *ngIf=isTemporaryChart (chartUpdate)="loadSavedCustomChart($event)"></app-reload-custom-chart>

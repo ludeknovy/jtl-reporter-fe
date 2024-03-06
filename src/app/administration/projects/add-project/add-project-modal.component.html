@@ -8,7 +8,7 @@
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
       <div class="form-group mb-3">
-        <label for="projectName">Project Name <span class="text-danger">*</span></label>
+        <label for="projectName" class="form-label">Project Name <span class="text-danger">*</span></label>
         <input type="projectName" id="projectName" class="form-control" formControlName="projectName" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="projectName.errors && (projectName.dirty || projectName.touched)">
@@ -25,8 +25,8 @@
           <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
             <small> Users with role <strong>admin</strong> are automatically granted the access.</small></div>
           <li class="list-label"  *ngFor="let user of usersFormArray.controls; let i = index">
-            <label formArrayName="projectMembers">
-              <input type="checkbox" [formControlName]="i" [(ngModel)]="users[i].isChecked" [attr.disabled]="users[i].isDisabled ? true : null">
+            <label formArrayName="projectMembers" class="form-check-label">
+              <input type="checkbox" class="form-check-input" [formControlName]="i" [(ngModel)]="users[i].isChecked" [attr.disabled]="users[i].isDisabled ? true : null">
               {{users[i].username}} <span class="badge badge-secondary">{{users[i].role}}</span>
             </label>
           </li>

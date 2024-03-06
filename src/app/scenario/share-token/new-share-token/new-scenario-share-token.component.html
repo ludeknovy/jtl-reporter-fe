@@ -13,7 +13,7 @@
       </div>
       <p class="text-secondary"></p>
       <div class="form-group mb-3">
-        <label for="note">Note</label>
+        <label for="note" class="form-label">Note</label>
         <input type="input" id="note" class="form-control" formControlName="note" aria-label="Default" aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="note.errors && (note.dirty || note.touched)">
           <p class="form-validation-error" *ngIf="note.errors.maxlength">Note is too long.</p>

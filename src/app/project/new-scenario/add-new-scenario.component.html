@@ -7,7 +7,7 @@
   <form [formGroup]="myform" (ngSubmit)="onSubmit()">
     <div class="modal-body">
       <div class="form-group mb-3">
-        <label for="scenarioName" class="mb-1">Scenario Name</label>
+        <label for="scenarioName" class="form-label">Scenario Name</label>
         <input type="input" id="scenarioName" class="form-control" formControlName="scenarioName" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="scenarioName.errors && (scenarioName.dirty || scenarioName.touched)">

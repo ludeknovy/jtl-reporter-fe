@@ -43,15 +43,7 @@ export class AnalyzeChartsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isAnonymous) {
-      return;
-    }
-    this.itemApiService
-      .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
-      .subscribe(_ => {
-        this.updateChart(_);
-        this.preloadedSeries = _;
-      });
+    // this needs to be initialized for both anonymous and logged-in user
     this.analyzeChartService.currentData.subscribe(data => {
       let chartLines;
       if (data) {
@@ -74,27 +66,18 @@ export class AnalyzeChartsComponent implements OnInit {
       }
     });
 
+    // exit onInit if user is anonymous, the code that's after is only for valid for logged-in user
+    if (this.isAnonymous) {
+      return;
+    }
 
-    this.itemChartService.selectedPlot$.subscribe(plot => {
-      const currentChartSeries = this.customChartsOptions.series;
+    this.itemApiService
+      .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
+      .subscribe(_ => {
+        this.updateChart(_);
+        this.preloadedSeries = _;
+      });
 
-      if (Array.isArray(currentChartSeries) && currentChartSeries.length > 0) {
-        this.chartLines = plot.chartLines;
-
-        const updatedChartSeries = currentChartSeries.map(series => {
-          const labelChart = series.label;
-          const name = labelChart
-            ? labelChart
-            : "overall";
-
-          return {
-            name,
-            metric: series.metric
-          };
-        });
-        this.updateChart(updatedChartSeries);
-      }
-    });
 
   }
 

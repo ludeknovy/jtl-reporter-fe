@@ -13,7 +13,12 @@ export class RoleDirective {
     private viewContainer: ViewContainerRef) { }
 
   @Input() set userRole(inputRole: UserRole) {
-    const { role } = JSON.parse(localStorage.getItem("currentUser"));
+    const user = localStorage.getItem("currentUser")
+    if (!user) {
+      this.viewContainer.clear()
+      return
+    }
+    const { role } = JSON.parse(user);
     const minRole = roleMap.get(inputRole);
     const currentRole = roleMap.get(role);
 

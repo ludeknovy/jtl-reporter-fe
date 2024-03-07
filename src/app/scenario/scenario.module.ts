@@ -8,7 +8,7 @@ import { SettingsScenarioComponent } from "./scenario-settings/scenario-settings
 import { DeleteScenarioComponent } from "./delete-scenario/delete-scenario.component";
 import { ExternalNotificationComponent } from "./external-notification/external-notification.component";
 import { NgxSpinnerModule } from "ngx-spinner";
-import { NgbDropdown, NgbDropdownModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { SharedModule } from "../shared/shared.module";
 import { HighchartsChartModule } from "highcharts-angular";
 import { ItemControlsComponent } from "./item-controls/item-controls.component";

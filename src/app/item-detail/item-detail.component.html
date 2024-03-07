@@ -4,7 +4,7 @@
       <app-breadcrumb *ngIf="itemData.environment" [testName]="itemData.name"></app-breadcrumb>
     </li>
   </ul>
-  <app-zoom-charts *ngIf="itemData.overview" [reportStartDate]="itemData.overview.startDate"
+  <app-zoom-charts class="ms-auto" *ngIf="itemData.overview" [reportStartDate]="itemData.overview.startDate"
                    [reportEndDate]="itemData.overview.endDate"></app-zoom-charts>
   <app-chart-interval *ngIf="itemData.extraPlotData"
                       [intervals]="{ defaultInterval: itemData.plot, extraIntervals: itemData.extraPlotData}"></app-chart-interval>
@@ -328,7 +328,7 @@
                 <div class="col tab-charts overallChart">
                   <div class="card overview-chart-card card-shadow">
                     <h6 class="card-header bg-transparent">Overall Chart
-                      <div *ngIf="threadsPerThreadGroup" class="form-check display-bar-values-form float-right">
+                      <div *ngIf="threadsPerThreadGroup" class="form-check display-bar-values-form float-end">
                       <input class="form-check-input" type="checkbox" value="" id="display-thread-groups" (change)="displayThreadsPerGroupChange($event)">
                       <label class="form-check-label thread-groups-check" for="display-thread-groups">
                         Display Thread Groups

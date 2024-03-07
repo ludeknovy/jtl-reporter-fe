@@ -2,9 +2,7 @@
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
       <div class="input-group">
-        <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-        </div>
         <input class="form-control" id="scenario-filter" type="search" placeholder="scenario name"
           (keyup)='search($event.target.value)'>
         <div class="input-group-append scenario-filter">
@@ -12,7 +10,7 @@
           <button class="btn view-settings" (click)="changeView('cards')"><i class="fas fa-th"></i></button>
         </div>
         <div class="input-group-append">
-          <select [(ngModel)]='nrSelect' class='scenario-order rounded-left input-group-text'
+          <select [(ngModel)]='nrSelect' class='scenario-order rounded-left form-select'
             (change)="changingValue($event)">
             <option value='newest'>From newest</option>
             <option value='az'>From A-Z</option>
@@ -24,7 +22,7 @@
     </li>
   </ul>
 
-  <div>
+  <div class="ms-auto">
     <app-add-new-scenario [projectName]="projectName"></app-add-new-scenario>
     <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
          aria-label="Button group with nested dropdown">
@@ -70,10 +68,10 @@
               <table class="table jtl-table" [mfData]="filteredScenarios" #mf="mfDataTable">
                 <thead>
                   <tr>
-                    <th scope="col" class="hd jtl-head">
+                    <th scope="col" class="hd jtl-head jtl-head-color">
                       <mfDefaultSorter by="name">name</mfDefaultSorter>
                     </th>
-                    <th scope="col" class="hd jtl-head">
+                    <th scope="col" class="hd jtl-head jtl-head-color">
                       <mfDefaultSorter by="data[0].startDate">last run</mfDefaultSorter>
                     </th>
                   </tr>

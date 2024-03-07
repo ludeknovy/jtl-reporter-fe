@@ -1,9 +1,9 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Chart zoom range</h4>
-    <button type="button" style="outline: none;" class="close" aria-label="Close"
+    <button type="button" style="outline: none;" class="btn-close" aria-label="Close"
             (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
+
     </button>
   </div>
 
@@ -14,7 +14,7 @@
         <div class="form-group col-sm-6">
 
           <div>
-            <label for="startDate">Start Date   <a class="text-primary small" (click)="setOriginalStartDate()">reset</a>
+            <label for="startDate" class="form-label">Start Date   <a class="text-primary small" (click)="setOriginalStartDate()">reset</a>
 
             </label>
             <div>
@@ -31,7 +31,7 @@
           </div>
 
           <br/>
-          <label for="endDate">End Date           <a class="text-primary small" (click)="setOriginalEndDate()">reset</a></label>
+          <label for="endDate"  class="form-label">End Date           <a class="text-primary small" (click)="setOriginalEndDate()">reset</a></label>
           <app-date-time-picker formControlName="endDate" id="endDate" name="endDate"></app-date-time-picker>
 
           <div class="text-danger" *ngIf="formGroup.get('endDate').errors?.required">End Date is required.</div>

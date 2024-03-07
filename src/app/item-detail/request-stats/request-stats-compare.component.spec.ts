@@ -52,6 +52,7 @@ describe("RequestStatsCompareComponent", () => {
       topMetricsSettings: undefined,
       zeroErrorToleranceEnabled: false,
       status: "10",
+      minTestDuration: 2,
       overview: {
         maxVu: 100,
         avgConnect: 100,

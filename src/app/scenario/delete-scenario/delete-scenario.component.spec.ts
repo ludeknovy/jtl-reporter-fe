@@ -13,7 +13,7 @@ describe("DeleteScenarioComponent", () => {
     TestBed.configureTestingModule({
       declarations: [DeleteScenarioComponent],
       imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule,
-        RouterModule.forRoot([], { relativeLinkResolution: "legacy" })]
+        RouterModule.forRoot([], { })]
     })
       .compileComponents();
   }));

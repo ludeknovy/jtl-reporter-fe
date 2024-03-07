@@ -44,14 +44,6 @@ a {
   overflow: hidden;
 }
 
-th {
-  padding-left: 20px;
-}
-
-td {
-  padding-left: 20px;
-}
-
 tbody tr:hover {
   cursor: pointer;
   background-color: #e8e8e847;
@@ -95,4 +87,9 @@ tbody tr:hover {
 .issue {
   margin-left: 10px;
   font-size: 19px;
+}
+
+.status-icon {
+  padding-bottom: 7px;
+  padding-top: 7px;
 }

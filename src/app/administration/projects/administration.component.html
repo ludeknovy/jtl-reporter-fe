@@ -8,7 +8,7 @@
             [topMenu]="false"></app-add-project>
 </span></h6>
           <div class="card-body" *ngIf="projects$ | async; let projects">
-            <div class="card-body">
+            <div class="card-body card-table">
               <div class="table-responsive" *ngIf="projects$ | async; let projects">
                 <table class="table items jtl-table">
                   <thead>
@@ -45,7 +45,7 @@
                       <span>{{_.latestRun | timeago}}</span>
                     </td>
                     <td class="edit text-right">
-                      <div class="btn-group mr-3">
+                      <div class="btn-group mr-3 float-end">
                         <div display="dynamic" container="body" [placement]="['bottom-right', 'bottom-left']"
                              class="btn-group" ngbDropdown role="group"
                              aria-label="Button group with nested dropdown">

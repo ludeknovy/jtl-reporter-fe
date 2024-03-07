@@ -24,7 +24,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-spinner/animations/line-spin-fade.css"
             ],
             "scripts": [],
             "aot": false,

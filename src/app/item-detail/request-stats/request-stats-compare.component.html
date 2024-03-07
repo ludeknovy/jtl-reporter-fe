@@ -13,7 +13,7 @@
               (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
           <i class="fa" [ngClass]="{'fa-percent': defaultUnit, 'fa-stopwatch': !defaultUnit}"></i></span>
       </button>
-      <app-stats-compare (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+      <app-stats-compare *ngIf="!isAnonymous" (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
 
 
       <div *ngIf="!isAnonymous" class="btn-group mr-3">

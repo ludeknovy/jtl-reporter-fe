@@ -11,10 +11,10 @@ describe("LoginComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule,  RouterModule.forRoot([], { relativeLinkResolution: "legacy" }), HttpClientTestingModule],
-      declarations: [ LoginComponent ]
+      imports: [ReactiveFormsModule, RouterModule.forRoot([], {}), HttpClientTestingModule],
+      declarations: [LoginComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

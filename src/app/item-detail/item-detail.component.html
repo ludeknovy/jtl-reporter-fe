@@ -69,13 +69,16 @@
         <div class="col">
           <div class="card card-shadow error-tolerance-issue">
             <div class="card-body">
-              <h6 class="overview-body perf-analysis">Test failure</h6>
-              <div *ngIf="validations.zeroErrorValidation === true">
-                <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
+              <h6 class="overview-body perf-validations">Test failure</h6>
+              <div class="perf-validation-content">
+                <div *ngIf="validations.zeroErrorValidation === true" class="mt-2">
+                  <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
+                </div>
+                <div *ngIf="validations.minTestDurationValidation === true" class="mt-2">
+                  <app-min-test-duration-warning></app-min-test-duration-warning>
+                </div>
               </div>
-              <div *ngIf="validations.minTestDurationValidation === true" class="mt-2">
-                <app-min-test-duration-warning></app-min-test-duration-warning>
-              </div>
+
             </div>
           </div>
         </div>
@@ -252,7 +255,7 @@
       <div class="col">
         <div class="overview-additional card card-shadow">
           <h6 class="card-header bg-white border-0">Summary</h6>
-          <div class="card-body">
+          <div class="card-body card-content-padding">
             <div class="row ml-2">
               <div class="col">
                 <div class="row">

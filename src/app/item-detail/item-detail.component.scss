@@ -242,6 +242,7 @@ thead .hd {
 
 .performance-overview-card {
   padding-bottom: 0px;
+  padding-left: 2.2rem;
 }
 
 .charts .card-header {
@@ -312,4 +313,16 @@ thead .hd {
 
 .thread-groups-check {
   font-weight: 400;
+}
+
+.card-content-padding {
+  padding-left: 3.2rem;
+}
+
+.perf-analysis-content {
+  padding-left: 1rem;
+}
+
+.perf-validation-content {
+  padding-left: 1.3rem;
 }

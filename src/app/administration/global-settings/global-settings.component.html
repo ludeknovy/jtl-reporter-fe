@@ -5,6 +5,7 @@
         <div class="card card-content card-shadow">
           <h6 class="card-header bg-transparent">Settings <span class="inline-controller"></span></h6>
 
+          <div class="card-body p-4">
             <div class="card-body">
               <form [formGroup]="globalSettingsForm" (ngSubmit)="onSubmit()" class="pl-3" *ngIf="globalSettingsForm">
 
@@ -17,7 +18,7 @@
                     <div class="form-check">
                       <input type="checkbox" class="form-check-input" id="projectAutoProvisioning"
                              formControlName="projectAutoProvisioning">
-                      <label class="form-check-label" for="projectAutoProvisioning">Project auto-provisioning</label>
+                      <label class="form-check-label" for="projectAutoProvisioning">Enabled</label>
                     </div>
                   </div>
                 </div>
@@ -26,10 +27,9 @@
                   <button type="submit"  *userRole="'admin'" class="btn btn-primary">Submit</button>
                 </div>
               </form>
-
-
-
             </div>
+          </div>
+
         </div>
       </div>
     </div>

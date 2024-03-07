@@ -45,7 +45,7 @@
                     class="text-secondary in-progress">{{processingItems.inprogress?.length}} <i
                       class="far fa-clock"></i></span></span>
               </h6>
-              <div class="card-body">
+              <div class="card-body card-table">
                 <div class="table-responsive">
                   <table class="table items jtl-table" [mfData]="items.data" #mf="mfDataTable">
                     <thead>
@@ -125,7 +125,7 @@
                              ngbTooltip="No failures were detected"><i class="fas fa-check-square text-success issue"></i></i>
                         </td>
                         <td class="text-right">
-                          <app-item-controls
+                          <app-item-controls class="float-end"
                             [item]="{note: _.note, environment: _.environment, name: _.name, hostname: _.hostname, isBase: _.base, status: _.status, params: { id: _.id, scenarioName: params.scenarioName, projectName: params.projectName }}">
                           </app-item-controls>
                         </td>

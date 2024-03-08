@@ -5,7 +5,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ScenarioNotifications } from "../../items.service.model";
 import { ScenarioService } from "src/app/scenario.service";
 import { Observable } from "rxjs";
-import {notificationConfig} from './notificationConfig';
+import { notificationConfig } from "./notificationConfig";
 
 @Component({
   selector: "app-external-notification",

@@ -29,11 +29,8 @@
             </thead>
             <tbody *ngIf="notifications.length === 0">
             <tr>
-              <td></td>
-              <td>
-                <div class="empty-table">No data found.</div>
-              </td>
-              <td></td>
+              <td colspan="4" class="text-muted text-center">Nothing here yet! Add your first notification.</td>
+
             </tr>
             </tbody>
             <tbody *ngIf="notifications.length > 0">

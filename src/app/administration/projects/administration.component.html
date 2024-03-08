@@ -22,11 +22,7 @@
                   </thead>
                   <tbody>
                   <tr *ngIf="projects.length === 0">
-                    <td></td>
-                    <td></td>
-                    <td class="text-muted">No data...</td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="5" class="text-muted text-center">Nothing here yet! Add your first project.</td>
                   </tr>
                   <tr *ngFor="let _ of projects">
                     <td class="project-name">

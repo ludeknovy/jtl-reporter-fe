@@ -81,7 +81,7 @@
                   </thead>
                   <tbody>
                     <tr *ngIf="!latestItems || latestItems.length === 0">
-                      <td colspan="4" class="text-muted no-data">No Data...</td>
+                      <td colspan="5" class="text-muted no-data">Nothing here yet! Upload some test reports. <span><a href="https://jtlreporter.site/docs/guides/manual-data-upload">Show me how!</a></span></td>
                     </tr>
                     <tr *ngFor="let _ of latestItems" (click)="open(_.projectName, _.name, _.id)">
                       <td class="ellipsis">

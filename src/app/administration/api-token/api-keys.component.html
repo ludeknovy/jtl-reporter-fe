@@ -21,11 +21,8 @@
                   </thead>
                   <tbody>
                   <tr *ngIf="apiKeys.length === 0">
-                    <td></td>
-                    <td></td>
-                    <td class="text-muted">No api tokens...</td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="5" class="text-muted text-center">Nothing here yet! Add your first api token.</td>
+
                   </tr>
                   <tr *ngFor="let _ of apiKeys">
                     <td>

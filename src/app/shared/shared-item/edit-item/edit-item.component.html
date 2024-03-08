@@ -1,24 +1,24 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="modal-basic-title">Edit test item</h5>
-    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
+    <button type="button" style="outline: none;" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
     </button>
   </div>
   <form [formGroup]="myform" (ngSubmit)="onSubmit()" class="pl-2">
     <div class="modal-body">
       <div class="form-group mb-3">
-        <label for="name"> Name</label>
+        <label for="name" class="form-label"> Name</label>
         <input type="input" id="Name" class="form-control" formControlName="name" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-group mb-3">
-        <label for="note">Note</label>
+        <label for="note" class="form-label">Note</label>
         <input type="input" id="note" class="form-control" formControlName="note" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-group mb-3">
-        <label for="resourcesLink">External Link</label>
+        <label for="resourcesLink" class="form-label">External Link</label>
         <input type="input" id="resourcesLink" class="form-control" formControlName="resourcesLink" aria-label="Default"
                aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="resourcesLink.errors && (resourcesLink.dirty || resourcesLink.touched)">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="form-group mb-3">
-        <label for="environment">Environment <span class="text-danger">*</span></label>
+        <label for="environment" class="form-label">Environment <span class="text-danger">*</span></label>
         <input type="testName" id="environment" class="form-control" formControlName="environment" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
         <div class="form-control-feedback" *ngIf="environment.errors && (environment.dirty || environment.touched)">
@@ -34,13 +34,13 @@
         </div>
       </div>
       <div class="form-group mb-3">
-        <label for="hostname">Hostname</label>
+        <label for="hostname" class="form-label">Hostname</label>
         <input type="testName" id="hostname" class="form-control" formControlName="hostname" aria-label="Default"
           aria-describedby="inputGroup-sizing-default">
       </div>
       <div class="form-group mb-3">
-        <label for="status">Status</label>
-        <select id="status" class="form-control custom-select" formControlName="status">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" class="form-control form-select" formControlName="status">
           <option *ngFor="let s of statuses" [value]="s">
             {{s}}
           </option>
@@ -48,7 +48,7 @@
       </div>
       <div class="form-group mb-3">
         <div>
-            <input type="checkbox" id="base-check" [attr.disabled]="disabled ? '' : null" formControlName="base" [(ngModel)]="isBase"
+            <input type="checkbox" class="form-check-input" id="base-check" [attr.disabled]="disabled ? '' : null" formControlName="base" [(ngModel)]="isBase"
             data-md-icheck />
           <label id="base-desc" class="form-check-label" for="base-check">Set as base run</label>
            <i placement="bottom"

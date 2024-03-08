@@ -7,7 +7,7 @@ import { ItemsService } from "../items.service";
 import { SharedMainBarService } from "../shared-main-bar.service";
 import { ScenarioService } from "../scenario.service";
 import { ScenarioApiService } from "../scenario-api.service";
-import { showZeroErrorWarning } from "../utils/showZeroErrorTolerance";
+import { getValidationResults } from "../utils/showZeroErrorTolerance";
 import { EnvironmentService } from "../_services/environment.service";
 
 const LIMIT = 15;
@@ -30,6 +30,8 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   zeroErrorToleranceEnabled: boolean;
   token: string;
   isAnonymous = false;
+  validationEnabled = false
+  minTestDuration = null
 
   constructor(
     private route: ActivatedRoute,
@@ -65,7 +67,8 @@ export class ScenarioComponent implements OnInit, OnDestroy {
           this.params = routeParams;
           this.sharedMainBarService.setProjectName(this.params.projectName);
           this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
-            this.zeroErrorToleranceEnabled = _.zeroErrorToleranceEnabled;
+            this.validationEnabled = this.isValidationEnabled(_.zeroErrorToleranceEnabled, _.minTestDuration)
+            this.minTestDuration = _.minTestDuration
           });
           return new Observable().pipe(catchError(err => of([])));
         })
@@ -108,18 +111,18 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     this.router.navigate([`./project/${projectName}/scenario/${scenarioName}/item/${itemId}`]);
   }
 
-  navigateBack() {
-    this.router.navigate([`./project/${this.params.projectName}/scenarios`]);
-  }
-
   updateScenarioName(scenarioName: string) {
     this.router.navigate(
       [".", "project", this.params.projectName, "scenario", scenarioName, "items"]);
   }
 
-  showZeroErrorToleranceWarning(errorCount, errorRate) {
-    return showZeroErrorWarning(errorRate, errorCount);
+  displayItemValidationError(zeroErrorEnabled, errorCount, errorRate, duration, minTestDuration) {
+    const { zeroErrorToleranceValidation, minTestDurationValidation } = getValidationResults(zeroErrorEnabled, errorRate, errorCount, duration, minTestDuration);
+    return zeroErrorToleranceValidation || minTestDurationValidation
+  }
 
+  private isValidationEnabled(zeroErrorEnabled, minTestDuration): boolean {
+    return zeroErrorEnabled || minTestDuration > 0
   }
 
 

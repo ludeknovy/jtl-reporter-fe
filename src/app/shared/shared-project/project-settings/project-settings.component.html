@@ -1,9 +1,9 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="modal-basic-title">Project Settings</h5>
-    <button type="button" style="outline: none;" class="close" aria-label="Close"
+    <button type="button" style="outline: none;" class="btn-close" aria-label="Close"
             (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
+
     </button>
   </div>
 
@@ -47,60 +47,60 @@
                 </div>
 
                 <div class="form-group">
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="virtualUsers"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="virtualUsers"
                            formControlName="virtualUsers" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="virtualUsers">Virtual Users</label>
+                    <label class="form-check-label" for="virtualUsers">Virtual Users</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="errorRate"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="errorRate"
                            formControlName="errorRate" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="errorRate">Error Rate</label>
+                    <label class="form-check-label" for="errorRate">Error Rate</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="errorCount"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="errorCount"
                            formControlName="errorCount" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="errorCount">Error Count</label>
+                    <label class="form-check-label" for="errorCount">Error Count</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="percentile"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="percentile"
                            formControlName="percentile" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="percentile">90% Percentile</label>
+                    <label class="form-check-label" for="percentile">90% Percentile</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="throughput"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="throughput"
                            formControlName="throughput" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="throughput">Throughput</label>
+                    <label class="form-check-label" for="throughput">Throughput</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="avgLatency"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="avgLatency"
                            formControlName="avgLatency" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="avgLatency">Average Latency</label>
+                    <label class="form-check-label" for="avgLatency">Average Latency</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="avgConnectionTime"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="avgConnectionTime"
                            formControlName="avgConnectionTime" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="avgConnectionTime">Average Connection Time</label>
+                    <label class="form-check-label" for="avgConnectionTime">Average Connection Time</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="avgResponseTime"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="avgResponseTime"
                            formControlName="avgResponseTime" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="avgResponseTime">Average Response Time</label>
+                    <label class="form-check-label" for="avgResponseTime">Average Response Time</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="network"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="network"
                            formControlName="network" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="network">Network - combined </label>
+                    <label class="form-check-label" for="network">Network - combined </label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="network-sent"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="network-sent"
                            formControlName="networkSent" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="network-sent">Network - sent</label>
+                    <label class="form-check-label" for="network-sent">Network - sent</label>
                   </div>
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="network-received"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="network-received"
                            formControlName="networkReceived" (change)="onCheckboxChange()">
-                    <label class="custom-control-label" for="network-received">Network - received</label>
+                    <label class="form-check-label" for="network-received">Network - received</label>
                   </div>
                 </div>
               </div>
@@ -111,10 +111,10 @@
                 <div class="text-secondary mb-2"><i class="fas fa-info-circle"> </i>
                   <small> When pushing a test report into a scenario that does not exist, the application will create it on the fly.</small></div>
                 <div class="form-group">
-                  <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="scenarioUpsert"
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="scenarioUpsert"
                            formControlName="scenarioUpsert">
-                    <label class="custom-control-label" for="scenarioUpsert">Scenario Upsert</label>
+                    <label class="form-check-label" for="scenarioUpsert">Enabled</label>
                   </div>
                 </div>
               </div>
@@ -135,8 +135,8 @@
               <div class="form-group mb-3">
                 <ul>
                   <li *ngFor="let user of usersFormArray.controls; let i = index" class="list-label">
-                    <label formArrayName="projectMembers">
-                      <input type="checkbox" [formControlName]="i" [(ngModel)]="projectMembersData[i].isMember" [attr.disabled]="projectMembersData[i].isDisabled ? true : null">
+                    <label formArrayName="projectMembers" class="form-check-label">
+                      <input type="checkbox" class="form-check-input" [formControlName]="i" [(ngModel)]="projectMembersData[i].isMember" [attr.disabled]="projectMembersData[i].isDisabled ? true : null">
                       {{projectMembersData[i].username}} <span class="badge badge-secondary"> {{projectMembersData[i].role}}</span>
                     </label>
                   </li>

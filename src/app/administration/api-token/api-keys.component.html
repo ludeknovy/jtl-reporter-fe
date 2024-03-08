@@ -7,7 +7,7 @@
           </h6>
 
           <div class="card-body" *ngIf="apiKeys$ | async; let apiKeys">
-            <div class="card-body w-100">
+            <div class="card-body w-100 card-table">
               <div class="table-responsive" *ngIf="apiKeys$ | async; let apiKeys">
                 <table class="table items jtl-table">
                   <thead>
@@ -41,7 +41,7 @@
                       {{_.createdBy}}
                     </td>
                     <td class="edit text-right">
-                      <app-delete-token [tokenInput]="_.id"></app-delete-token>
+                      <app-delete-token class="float-end" [tokenInput]="_.id"></app-delete-token>
                     </td>
                   </tr>
                   </tbody>

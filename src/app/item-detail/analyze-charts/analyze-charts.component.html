@@ -1,11 +1,11 @@
 <div class="card card-shadow" *ngIf="customChartsOptions">
   <h6 class="card-header bg-transparent">
     Custom Chart
-    <span class="float-right">
+    <span class="float-end">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
         aria-label="">
-        <app-reload-custom-chart *ngIf=isTemporaryChart (chartUpdate)="loadSavedCustomChart($event)"></app-reload-custom-chart>
-        <app-add-metric *ngIf=!isTemporaryChart [chartLines]="chartLines" [preloadedSeries]="preloadedSeries" (chartUpdate)="chartUpdated($event)"></app-add-metric>
+        <app-reload-custom-chart *ngIf="isTemporaryChart && !isAnonymous" (chartUpdate)="loadSavedCustomChart($event)"></app-reload-custom-chart>
+        <app-add-metric *ngIf="!isTemporaryChart || isAnonymous" [chartLines]="chartLines" [preloadedSeries]="preloadedSeries" (chartUpdate)="chartUpdated($event)"></app-add-metric>
       </div>
     </span>
   </h6>

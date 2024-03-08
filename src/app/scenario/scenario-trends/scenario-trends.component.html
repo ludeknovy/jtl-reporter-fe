@@ -2,7 +2,7 @@
   <h6 class="card-header bg-transparent">
     {{ degradationCurveDisplayed ? "Response Time Degradation Curve" : "Scenario Trends"}}
     <span class="last-runs">{{ degradationCurveDisplayed ? "": "last 15 test runs"}}</span>
-    <span class="float-right">
+    <span class="float-end">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
            aria-label="">
             <app-scenario-trends-settings *ngIf="userSettings && !degradationCurveDisplayed" [params]="params" [userSettings]="userSettings"></app-scenario-trends-settings>
@@ -32,7 +32,7 @@
   <h6 class="card-header bg-transparent">
     {{ degradationCurveDisplayed ? "Response Time Degradation Curve" : "Scenario Trends"}}
     <span class="last-runs">{{ degradationCurveDisplayed ? "": "last 15 test runs"}}</span>
-    <span class="float-right">
+    <span class="float-end">
       <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
            aria-label="">
             <app-scenario-trends-settings *ngIf="userSettings" [params]="params" [userSettings]="userSettings"></app-scenario-trends-settings>

@@ -3,56 +3,52 @@
     <div class="row">
       <div class="col">
         <div class="card card-content card-shadow">
-          <h6 class="card-header bg-transparent">Change password
-          </h6>
+          <h6 class="card-header bg-transparent">Projects </h6>
           <div class="card-body">
-            <div class="card-body">
+            <div class="card-body p-4">
               <form [formGroup]="myform" (ngSubmit)="onSubmit()">
-                <div class="modal-body">
-                  <div class="form-group mb-3">
-                    <label for="password">Current password</label>
-                    <input type="password" id="password" class="form-control" formControlName="currentPassword"
-                           aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                    <div class="form-control-feedback"
-                         *ngIf="currentPassword.errors && (newPassword.dirty || newPassword.touched)">
-                      <p class="form-validation-error" *ngIf="currentPassword.errors.required">Current password is
-                        required</p>
-                    </div>
+                <div class="form-group mb-3">
+                  <label for="password" class="form-label">Current password</label>
+                  <input type="password" id="password" class="form-control" formControlName="currentPassword"
+                         aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                  <div class="form-control-feedback"
+                       *ngIf="currentPassword.errors && (newPassword.dirty || newPassword.touched)">
+                    <p class="form-validation-error" *ngIf="currentPassword.errors.required">Current password is
+                      required</p>
                   </div>
-                  <div class="form-group mb-3">
-                    <label for="newPassword">New password</label>
-                    <input type="password" id="newPassword" class="form-control" formControlName="newPassword"
-                           aria-label="Default"
-                           aria-describedby="inputGroup-sizing-default">
-                    <div class="form-control-feedback"
-                         *ngIf="newPassword.errors && (newPassword.dirty || newPassword.touched)">
-                      <p class="form-validation-error" *ngIf="newPassword.errors.required">New password is required</p>
-                      <p class="form-validation-error" *ngIf="newPassword.errors.minlength">New password must be at
-                        least
-                        8
-                        characters long</p>
-                    </div>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="newPassword" class="form-label">New password</label>
+                  <input type="password" id="newPassword" class="form-control" formControlName="newPassword"
+                         aria-label="Default"
+                         aria-describedby="inputGroup-sizing-default">
+                  <div class="form-control-feedback"
+                       *ngIf="newPassword.errors && (newPassword.dirty || newPassword.touched)">
+                    <p class="form-validation-error" *ngIf="newPassword.errors.required">New password is required</p>
+                    <p class="form-validation-error" *ngIf="newPassword.errors.minlength">New password must be at
+                      least
+                      8
+                      characters long</p>
                   </div>
-                  <div class="form-group mb-3">
-                    <label for="confirmPassword">Password Confirmation</label>
-                    <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword"
-                           aria-label="Default"
-                           aria-describedby="inputGroup-sizing-default">
-                    <div class="form-control-feedback"
-                         *ngIf="confirmPassword.errors && (confirmPassword.dirty || confirmPassword.touched)">
-                      <p class="form-validation-error" *ngIf="confirmPassword.errors.required">Current password is
-                        required</p>
-                      <p class="form-validation-error" *ngIf="confirmPassword.hasError('matching')">
-                        Passwords do not match!
-                      </p>
-                    </div>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="confirmPassword" class="form-label">Password Confirmation</label>
+                  <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword"
+                         aria-label="Default"
+                         aria-describedby="inputGroup-sizing-default">
+                  <div class="form-control-feedback"
+                       *ngIf="confirmPassword.errors && (confirmPassword.dirty || confirmPassword.touched)">
+                    <p class="form-validation-error" *ngIf="confirmPassword.errors.required">Current password is
+                      required</p>
+                    <p class="form-validation-error" *ngIf="confirmPassword.hasError('matching')">
+                      Passwords do not match!
+                    </p>
                   </div>
+                </div>
 
 
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn jtl-btn-primary">Submit</button>
-                </div>
+                <button type="submit" class="btn jtl-btn-primary">Submit</button>
+
               </form>
 
             </div>
@@ -60,7 +56,12 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
+
+
+
+
+
+
 

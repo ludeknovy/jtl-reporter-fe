@@ -8,7 +8,7 @@
 </span></h6>
 
             <div class="card-body" *ngIf="users$ | async; let users">
-              <div class="card-body">
+              <div class="card-body card-table">
                 <div class="table-responsive" *ngIf="users$ | async; let users">
                   <table class="table items jtl-table">
                     <thead>
@@ -42,7 +42,7 @@
                         <span>{{_.tokenCount}}</span>
                       </td>
                       <td class="edit text-right">
-                        <app-delete-user [deleteUserInput]="{ username: _.username, tokenCount: _.tokenCount, userId: _.id}"></app-delete-user>
+                        <app-delete-user class="float-end" [deleteUserInput]="{ username: _.username, tokenCount: _.tokenCount, userId: _.id}"></app-delete-user>
                       </td>
                     </tr>
                     </tbody>

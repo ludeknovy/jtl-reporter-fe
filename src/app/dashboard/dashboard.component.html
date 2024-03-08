@@ -67,7 +67,7 @@
         <div class="col">
           <div class="card recent-runs card-shadow">
             <h6 class="card-header bg-transparent">Recent Test Runs</h6>
-            <div class="card-body ">
+            <div class="card-body card-table">
               <div class="table-responsive">
                 <table class="table items jtl-table">
                   <thead>
@@ -104,13 +104,10 @@
                         <span *ngIf="_.status === '10'" title="Status not set"><i class="far fa-circle text-secondary status-icon"></i></span>
                         <i *ngIf="_.thresholdPassed === false"
                            class="fas fa-exclamation-circle text-alizarin issue"></i>
-                        <i *ngIf="_.zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === true" placement="bottom"
-                           ngbTooltip="Errors occurred during the test run"><i class="fas fa-bug text-alizarin issue"></i></i>
-                        <i *ngIf="_.zeroErrorToleranceEnabled && !showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate)" placement="bottom"
-                           ngbTooltip="No errors were detected"><i class="fas fa-check-square text-success issue"></i></i>
-                        <i *ngIf="_.zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === 'unknown'" placement="bottom"
-                           ngbTooltip="Not all required data are available"><i class="far fa-question-circle issue"></i></i>
-
+                        <i *ngIf="isValidationEnabled(_.zeroErrorToleranceEnabled, _.minTestDuration) && displayItemValidationError(_.zeroErrorToleranceEnabled, _.overview.errorCount, _.overview.errorRate, _.overview.duration, _.minTestDuration) === true" placement="bottom"
+                           ngbTooltip="Failure(s) detected"><i class="fas fa-bug text-alizarin issue"></i></i>
+                        <i *ngIf="isValidationEnabled(_.zeroErrorToleranceEnabled, _.minTestDuration) && !displayItemValidationError(_.zeroErrorToleranceEnabled, _.overview.errorCount, _.overview.errorRate, _.overview.duration, _.minTestDuration)" placement="bottom"
+                           ngbTooltip="No failures were detected"><i class="fas fa-check-square text-success issue"></i></i>
                       </td>
                     </tr>
                   </tbody>

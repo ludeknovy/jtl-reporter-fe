@@ -1,13 +1,13 @@
-<app-control-panel>
+<app-control-panel >
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
       <app-breadcrumb [isAnonymous]="isAnonymous"></app-breadcrumb>
 
     </li>
   </ul>
-  <div>
+  <div class="ms-auto">
 
-    <div class="btn-group">
+    <div class="btn-group ms-auto">
       <app-environments [params]="params" [anonymous]="{ token, isAnonymous }"></app-environments>
       <app-add-new-item-modal *ngIf="!isAnonymous"></app-add-new-item-modal>
       <div *ngIf="!isAnonymous" display="dynamic" [placement]="['bottom-right', 'bottom-left']" class="btn-group" ngbDropdown role="group"
@@ -25,7 +25,6 @@
   </div>
 
 </app-control-panel>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" color="#fff" type="pacman"></ngx-spinner>
 
 <div class="row" >
   <div class="col">
@@ -45,33 +44,33 @@
                     class="text-secondary in-progress">{{processingItems.inprogress?.length}} <i
                       class="far fa-clock"></i></span></span>
               </h6>
-              <div class="card-body">
+              <div class="card-body card-table">
                 <div class="table-responsive">
                   <table class="table items jtl-table" [mfData]="items.data" #mf="mfDataTable">
                     <thead>
                       <tr>
-                        <th scope="col" class="jtl-head">
+                        <th scope="col" class="jtl-head jtl-head-color">
                           <mfDefaultSorter by="name">name</mfDefaultSorter>
                         </th>
-                        <th scope="col" class="jtl-head vu">
+                        <th scope="col" class="jtl-head vu jtl-head-color">
                           <mfDefaultSorter by="overview.maxVu">virtual users</mfDefaultSorter>
                         </th>
-                        <th scope="col" class="jtl-head duration">
+                        <th scope="col" class="jtl-head duration jtl-head-color">
                           <mfDefaultSorter by="overview.duration">duration</mfDefaultSorter>
                         </th>
-                        <th scope="col" class="jtl-head environment">
+                        <th scope="col" class="jtl-head environment jtl-head-color">
                           <mfDefaultSorter by="environment">environment</mfDefaultSorter>
                         </th>
-                        <th scope="col" class="jtl-head">
+                        <th scope="col" class="jtl-head jtl-head-color">
                           <mfDefaultSorter by="note">note</mfDefaultSorter>
                         </th>
-                        <th scope="col" class="jtl-head start-time">
+                        <th scope="col" class="jtl-head start-time jtl-head-color">
                           <mfDefaultSorter by="start_time">start time</mfDefaultSorter>
                         </th>
-                        <th scope="col" class="jtl-head status">
+                        <th scope="col" class="jtl-head status jtl-head-color">
                           <mfDefaultSorter by="status">status</mfDefaultSorter>
                         </th>
-                        <th scope="col" class="jtl-head">
+                        <th scope="col" class="jtl-head jtl-head-color">
                         </th>
                       </tr>
                     </thead>
@@ -119,16 +118,13 @@
                               class="far fa-circle text-secondary status-icon"></i></span>
                           <i *ngIf="_.thresholdPassed === false"
                             class="fas fa-exclamation-circle text-alizarin issue"></i>
-                          <i *ngIf="zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === true" placement="bottom"
-                             ngbTooltip="Errors occurred during the test run"><i class="fas fa-bug text-alizarin issue"></i></i>
-                          <i *ngIf="zeroErrorToleranceEnabled && !showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate)" placement="bottom"
-                             ngbTooltip="No errors were detected"><i class="fas fa-check-square text-success issue"></i></i>
-                          <i *ngIf="zeroErrorToleranceEnabled && showZeroErrorToleranceWarning(_.overview.errorCount, _.overview.errorRate) === 'unknown'" placement="bottom"
-                          ngbTooltip="Not all required data are available"><i class="far fa-question-circle issue"></i></i>
-
+                          <i *ngIf="validationEnabled && displayItemValidationError(_.zeroErrorToleranceEnabled, _.overview.errorCount, _.overview.errorRate, _.overview.duration, minTestDuration) === true" placement="bottom"
+                             ngbTooltip="Failure(s) detected"><i class="fas fa-bug text-alizarin issue"></i></i>
+                          <i *ngIf="validationEnabled && !displayItemValidationError(_.zeroErrorToleranceEnabled, _.overview.errorCount, _.overview.errorRate,  _.overview.duration, minTestDuration)" placement="bottom"
+                             ngbTooltip="No failures were detected"><i class="fas fa-check-square text-success issue"></i></i>
                         </td>
                         <td class="text-right">
-                          <app-item-controls
+                          <app-item-controls class="float-end"
                             [item]="{note: _.note, environment: _.environment, name: _.name, hostname: _.hostname, isBase: _.base, status: _.status, params: { id: _.id, scenarioName: params.scenarioName, projectName: params.projectName }}">
                           </app-item-controls>
                         </td>

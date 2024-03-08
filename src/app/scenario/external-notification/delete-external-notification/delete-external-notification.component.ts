@@ -40,6 +40,7 @@ export class DeleteExternalNotificationComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log("SUBMUTED")
     if (this.myform.valid) {
       const { projectName, scenarioName } = this.params;
       this.scenarioApiService.deleteScenarioNotification(projectName, scenarioName, this.notificationInput.id)

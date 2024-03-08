@@ -1,8 +1,8 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="modal-basic-title">External notifications</h5>
-    <button type="button" style="outline: none;" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
+    <button type="button" style="outline: none;" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+
     </button>
   </div>
   <form [formGroup]="myform" >
@@ -14,13 +14,13 @@
           <table class="table items" [mfData]="notifications" #mf="mfDataTable">
             <thead>
             <tr>
-              <th scope="col" class="jtl-head">
+              <th scope="col" class="jtl-head jtl-head-color">
                 <mfDefaultSorter by="name">Name</mfDefaultSorter>
               </th>
-              <th scope="col" class="jtl-head">
+              <th scope="col" class="jtl-head jtl-head-color">
                 <mfDefaultSorter by="type">Type</mfDefaultSorter>
               </th>
-              <th scope="col" class="jtl-head">
+              <th scope="col" class="jtl-head jtl-head-color">
                 <mfDefaultSorter by="url">URL</mfDefaultSorter>
               </th>
               <th class="jtl-head">

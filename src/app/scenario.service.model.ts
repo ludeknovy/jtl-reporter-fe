@@ -1,6 +1,7 @@
 export interface Scenario {
   analysisEnabled: boolean;
   zeroErrorToleranceEnabled: boolean;
+  minTestDuration: boolean;
   name: string;
   keepTestRunsPeriod: number;
   thresholds: {

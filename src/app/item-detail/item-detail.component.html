@@ -4,7 +4,7 @@
       <app-breadcrumb *ngIf="itemData.environment" [testName]="itemData.name"></app-breadcrumb>
     </li>
   </ul>
-  <app-zoom-charts *ngIf="itemData.overview" [reportStartDate]="itemData.overview.startDate"
+  <app-zoom-charts class="ms-auto" *ngIf="itemData.overview" [reportStartDate]="itemData.overview.startDate"
                    [reportEndDate]="itemData.overview.endDate"></app-zoom-charts>
   <app-chart-interval *ngIf="itemData.extraPlotData"
                       [intervals]="{ defaultInterval: itemData.plot, extraIntervals: itemData.extraPlotData}"></app-chart-interval>
@@ -65,9 +65,22 @@
         </div>
       </div>
 
-      <div class="row" *ngIf="showZeroErrorToleranceWarning() === true">
+      <div class="row" *ngIf="validations.minTestDurationValidation || validations.zeroErrorValidation">
         <div class="col">
-          <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
+          <div class="card card-shadow error-tolerance-issue">
+            <div class="card-body">
+              <h6 class="overview-body perf-validations">Test failure</h6>
+              <div class="perf-validation-content">
+                <div *ngIf="validations.zeroErrorValidation === true" class="mt-2">
+                  <app-zero-error-tolerance-warning></app-zero-error-tolerance-warning>
+                </div>
+                <div *ngIf="validations.minTestDurationValidation === true" class="mt-2">
+                  <app-min-test-duration-warning></app-min-test-duration-warning>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
 
@@ -242,7 +255,7 @@
       <div class="col">
         <div class="overview-additional card card-shadow">
           <h6 class="card-header bg-white border-0">Summary</h6>
-          <div class="card-body">
+          <div class="card-body card-content-padding">
             <div class="row ml-2">
               <div class="col">
                 <div class="row">
@@ -318,7 +331,7 @@
                 <div class="col tab-charts overallChart">
                   <div class="card overview-chart-card card-shadow">
                     <h6 class="card-header bg-transparent">Overall Chart
-                      <div *ngIf="threadsPerThreadGroup" class="form-check display-bar-values-form float-right">
+                      <div *ngIf="threadsPerThreadGroup" class="form-check display-bar-values-form float-end">
                       <input class="form-check-input" type="checkbox" value="" id="display-thread-groups" (change)="displayThreadsPerGroupChange($event)">
                       <label class="form-check-label thread-groups-check" for="display-thread-groups">
                         Display Thread Groups

@@ -9,7 +9,6 @@ import { AuthGuard } from "../auth.guard";
 import { RouterModule, Routes } from "@angular/router";
 import { SharedItemModule } from "../shared/shared-item/shared-item.module";
 import { SharedModule } from "../shared/shared.module";
-import { ZeroErrorToleranceWarningComponent } from "./zero-error-tolerance-warning/zero-error-tolerance-warning.component";
 import { HighchartsChartModule } from "highcharts-angular";
 import { LabelChartComponent } from "./label-chart/label-chart.component";
 import { AnalyzeChartsComponent } from "./analyze-charts/analyze-charts.component";
@@ -31,6 +30,7 @@ import { ForbiddenComponent } from "../forbidden/forbidden.component";
 import { ThresholdFailureComponent } from "./request-stats/threshold-failure/threshold-failure.component";
 import { ZoomChartsComponent } from "./zoom-charts/zoom-charts.component";
 import { ErrorSummaryComponent } from "./error-summary/error-summary.component";
+import { ValidationsModule } from "./validations/validations.module";
 
 
 const routes: Routes = [{
@@ -41,11 +41,11 @@ const routes: Routes = [{
 
 @NgModule({
   declarations: [ItemDetailComponent, RequestStatsCompareComponent, ThresholdsAlertComponent,
-    PerformanceAnalysisComponent, ZeroErrorToleranceWarningComponent, LabelChartComponent, AnalyzeChartsComponent,
+    PerformanceAnalysisComponent, LabelChartComponent, AnalyzeChartsComponent,
     LabelHealthComponent, LabelTrendComponent, StatsCompareComponent, AddMetricComponent, ShareComponent, DeleteShareLinkComponent,
     CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent, ChartIntervalComponent, ForbiddenComponent, ThresholdFailureComponent, ZoomChartsComponent, ErrorSummaryComponent],
   imports: [
-    CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule,
+    CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule, ValidationsModule,
     ReactiveFormsModule, FormsModule, RoleModule,
   ],
   exports: [],

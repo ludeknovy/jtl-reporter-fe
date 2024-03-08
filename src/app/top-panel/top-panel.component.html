@@ -22,17 +22,14 @@
         </div>
       </li>
     </ul>
-    <div>
-      <div display="dynamic" [placement]="['bottom-right', 'bottom-left']" ngbDropdown class="d-inline-block">
+    <div class="ms-auto">
+      <div display="dynamic" [placement]="['bottom-start', 'bottom-end']" ngbDropdown class="d-inline-block">
         <button class="btn text-white" id="dropdownSettings" ngbDropdownToggle><i class="fas fa-user"></i> {{username}}
         </button>
         <div class="drop-area drop-area-left dropdowncustom-area dropdown-dynamic" ngbDropdownMenu
              aria-labelledby="dropdownSettings">
           <a *userRole="'operator'" ngbDropdownItem class="btn btn-block text-left text-white" [routerLink]="['/administration']"><i
             class="fas fa-cog icon"></i>Administrate</a>
-
-          <a ngbDropdownItem class="btn btn-block text-left text-white" href="/api-docs" target="_blank"><i
-            class="far fa-question-circle icon"></i>Api docs</a>
 
           <a ngbDropdownItem class="btn btn-block text-left text-white" [routerLink]="['/login']"><i
             class="fas fa-sign-out-alt icon"></i>

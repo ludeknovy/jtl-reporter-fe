@@ -18,6 +18,9 @@
                 <mfDefaultSorter by="name">Name</mfDefaultSorter>
               </th>
               <th scope="col" class="jtl-head jtl-head-color">
+                <mfDefaultSorter by="type">Channel</mfDefaultSorter>
+              </th>
+              <th scope="col" class="jtl-head jtl-head-color">
                 <mfDefaultSorter by="type">Type</mfDefaultSorter>
               </th>
               <th scope="col" class="jtl-head jtl-head-color">
@@ -29,7 +32,7 @@
             </thead>
             <tbody *ngIf="notifications.length === 0">
             <tr>
-              <td colspan="4" class="text-muted text-center">Nothing here yet! Add your first notification.</td>
+              <td colspan="5" class="text-muted text-center">Nothing here yet! Add your first notification.</td>
 
             </tr>
             </tbody>
@@ -39,12 +42,15 @@
                 {{_.name}}
               </td>
               <td>
-                {{_.type}}
+                {{_.channel}}
+              </td>
+              <td>
+                {{notificationConfig.notificationType.get(_.type)}}
               </td>
               <td class="ellipsis">
                 <span title={{_.url}}>{{_.url}}</span>
               </td>
-              <td><app-delete-external-notification [notificationInput]="{id: _.id, name: _.name}" [params]="params"></app-delete-external-notification></td>
+              <td><app-delete-external-notification [notificationInput]="{id: _.id, name: _.name}" [params]="params" class="float-end"></app-delete-external-notification></td>
             </tr>
             </tbody>
           </table>

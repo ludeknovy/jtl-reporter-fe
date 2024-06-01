@@ -89,20 +89,7 @@ interface ItemOverview {
   endDate: string;
   errorRate: number;
   maxVu: number;
-  percentil: number;
-  startDate: string;
-  throughput: number;
-  errorCount?: number;
-}
-
-interface ItemOverview {
-  avgLatency: number;
-  avgResponseTime: number;
-  duration: number;
-  endDate: string;
-  errorRate: number;
-  maxVu: number;
-  percentil: number; // legacy, it needs to be kept for backwards compatibility
+  percentil?: number; // legacy, it needs to be kept for backwards compatibility
   percentile90: number;
   percentile95: number;
   percentile99: number;

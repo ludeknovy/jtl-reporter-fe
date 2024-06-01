@@ -62,7 +62,10 @@ describe("RequestStatsCompareComponent", () => {
         endDate: "",
         startDate: "",
         errorCount: 0,
-        percentil: 10,
+        percentil: null,
+        percentile90: 10,
+        percentile95: 10,
+        percentile99: 10,
         errorRate: 0,
         throughput: 100
       },

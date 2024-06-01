@@ -75,7 +75,10 @@ interface TopMetricsSettings {
   avgResponseTime: boolean;
   avgConnectionTime: boolean;
   avgLatency: boolean;
-  percentile: boolean;
+  percentile: boolean; // legacy setting
+  percentile90: boolean;
+  percentile95: boolean;
+  percentile99: boolean
 }
 
 interface ItemOverview {
@@ -99,7 +102,10 @@ interface ItemOverview {
   endDate: string;
   errorRate: number;
   maxVu: number;
-  percentil: number;
+  percentil: number; // legacy, it needs to be kept for backwards compatibility
+  percentile90: number;
+  percentile95: number;
+  percentile99: number;
   startDate: string;
   throughput: number;
   errorCount?: number;

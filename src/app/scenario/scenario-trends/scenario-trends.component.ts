@@ -43,7 +43,7 @@ export class ScenarioTrendsComponent implements OnInit {
   constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
     this.chartDataMapping = new Map([
-      ["percentil", { name: Metrics.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)", tooltip: { valueSuffix: " ms" } }],
+      ["percentile90", { name: Metrics.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)", tooltip: { valueSuffix: " ms" } }],
       ["avgResponseTime", { name: Metrics.ResponseTimeAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
       ["avgLatency", { name: Metrics.LatencyAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
       ["avgConnect", { name: Metrics.ConnectAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
@@ -53,7 +53,7 @@ export class ScenarioTrendsComponent implements OnInit {
       ["network", { name: Metrics.Network, yAxis: 4, onLoad: false, transform: this.networkTransform, tooltip: { valueSuffix: " mbps" } }],
     ]);
   }
-  
+
   ngOnInit() {
     this.scenarioService.trends$.subscribe((_: {
       aggregatedTrends: ScenarioTrendsData[],
@@ -65,19 +65,25 @@ export class ScenarioTrendsComponent implements OnInit {
         return;
       }
       this.userSettings = _.userSettings;
-      this.generateAggregateChartLines(_.aggregatedTrends);
+      this.generateAggregatedChartLines(_.aggregatedTrends);
       this.generateLabelChartLines(_.labelTrends);
       this.generateDegradationCurve(_.responseTimeDegradationCurve);
     });
   }
 
-  generateAggregateChartLines(data: ScenarioTrendsData[]) {
+  generateAggregatedChartLines(data: ScenarioTrendsData[]) {
     if (!Array.isArray(data)) {
       return;
     }
     const dates = data.map(_ => moment(_.overview.startDate).format("DD. MM. YYYY HH:mm:ss"));
     const series = [];
-    const seriesData = data.reduce((acc, current) => {
+    const seriesData = data.map((scenarioTrends) => {
+      // legacy property `percentil` mapped to a new property
+      if (scenarioTrends.overview["percentil"]) {
+        scenarioTrends.overview["percentile90"] = scenarioTrends.overview["percentil"]
+      }
+      return scenarioTrends
+    }).reduce((acc, current) => {
       for (const key of Object.keys(current.overview)) {
 
         if (!["startDate", "endDate", "duration"].includes(key)) {

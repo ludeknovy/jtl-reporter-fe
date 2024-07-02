@@ -7,11 +7,12 @@ import { bytesToMbps } from "src/app/item-detail/calculations";
 import { LabelTrendsData, ScenarioTrendsData, ScenarioTrendsUserSettings } from "src/app/items.service.model";
 import { ScenarioService } from "src/app/scenario.service";
 import { Metrics } from "../../item-detail/metrics";
+import { normalizeOverviewData } from "../../utils/normalizeOverviewData";
 
 @Component({
-  selector: "app-scenario-trends",
-  templateUrl: "./scenario-trends.component.html",
-  styleUrls: ["./scenario-trends.component.scss"]
+  selector: 'app-scenario-trends',
+  templateUrl: './scenario-trends.component.html',
+  styleUrls: ['./scenario-trends.component.scss']
 })
 export class ScenarioTrendsComponent implements OnInit {
   @Input() params;
@@ -78,11 +79,8 @@ export class ScenarioTrendsComponent implements OnInit {
     const dates = data.map(_ => moment(_.overview.startDate).format("DD. MM. YYYY HH:mm:ss"));
     const series = [];
     const seriesData = data.map((scenarioTrends) => {
-      // legacy property `percentil` mapped to a new property
-      if (scenarioTrends.overview["percentil"]) {
-        scenarioTrends.overview["percentile90"] = scenarioTrends.overview["percentil"]
-      }
-      return scenarioTrends
+      scenarioTrends.overview = normalizeOverviewData(scenarioTrends.overview);
+      return scenarioTrends;
     }).reduce((acc, current) => {
       for (const key of Object.keys(current.overview)) {
 
@@ -97,7 +95,7 @@ export class ScenarioTrendsComponent implements OnInit {
       return acc;
     }, {});
 
-    this.setItemIds(data)
+    this.setItemIds(data);
 
     for (const key of Object.keys(seriesData)) {
       const chartSeriesSettings = this.chartDataMapping.get(key);
@@ -132,9 +130,18 @@ export class ScenarioTrendsComponent implements OnInit {
 
     for (const key of Object.keys(data)) {
       // Adding item id to correctly identify it when clicking a point.
-      seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
-      seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
-      seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
+      seriesP90.push({
+        name: key,
+        data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] }))
+      });
+      seriesErrorRate.push({
+        name: key,
+        data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] }))
+      });
+      seriesThroughput.push({
+        name: key,
+        data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] }))
+      });
     }
     this.updateLabelChart(this.labelScenarioTrendChartP90Option, seriesP90);
     this.updateLabelChart(this.labelScenarioTrendChartThroughputOption, seriesThroughput);
@@ -156,7 +163,7 @@ export class ScenarioTrendsComponent implements OnInit {
       // Label series have item id amended to open correct detail, it's needed for a case when a labels do not match, eg:
       // label2 start at point 0, but label2 starts at point 1, it leads to off by N issues.
       // It's not needed for aggregated trend chart, as that is column chart and only one point can be clicked.
-      const boundItemId = event.point.series.data[event.point.index]?.options?.itemId
+      const boundItemId = event.point.series.data[event.point.index]?.options?.itemId;
 
       const itemId = boundItemId || Array.from(this.itemIds)[event.point.index];
       const { projectName, scenarioName } = this.params;
@@ -180,9 +187,9 @@ export class ScenarioTrendsComponent implements OnInit {
 
   private setItemIds = (data: ScenarioTrendsData[]) => {
     if (this.itemIds.size > 0) {
-      this.itemIds.clear()
+      this.itemIds.clear();
     }
-    data.forEach(line => this.itemIds.add(line.id))
-  }
+    data.forEach(line => this.itemIds.add(line.id));
+  };
 
 }

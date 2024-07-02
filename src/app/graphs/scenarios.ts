@@ -11,7 +11,7 @@ export const scenarioHistory = (inputData) => {
     };
   }
   const dt = inputData.map(_ => {
-    return { percentil: _.percentil, date: _.startDate };
+    return { percentile90: _.percentile90, date: _.startDate };
   });
   return {
     type: "bar",
@@ -20,7 +20,7 @@ export const scenarioHistory = (inputData) => {
       labels: dt.map(_ => _.date),
       datasets: [
         {
-          data: dt.map(_ => _.percentil),
+          data: dt.map(_ => _.percentile90),
           backgroundColor: "rgb(17,122,139, 0.8)",
           fill: true,
           borderWidth: 1,

@@ -77,7 +77,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let _ of mf.data" (click)="open(_.name)">
+                <tr *ngIf="filteredScenarios.length === 0">
+                  <td colspan="5" class="text-muted text-center">Nothing here yet! Add your first scenario.</td>
+                </tr>
+                <tr *ngFor="let _ of mf.data" (click)="open(_.name)">
                     <td>{{_.name}}</td>
                     <td>{{_.data[0].startDate | date:'d. L. yyyy H:mm'}}</td>
                   </tr>

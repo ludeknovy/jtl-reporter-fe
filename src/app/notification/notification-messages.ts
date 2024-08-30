@@ -14,7 +14,7 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, "New project has been saved");
   }
 
-  newScenarionNotificationMessage(response) {
+  newScenarioNotificationMessage(response) {
     return this.statusCodeMessage(response, "New scenario has been created");
   }
 
@@ -100,7 +100,7 @@ export class NotificationMessage {
   }
 
   private statusCodeMessage(response, successMessage) {
-    let message = { success: false, message:  (typeof response === "string" && response?.includes("Unexpected error")) ? response : "Unexpected error occurred" };
+    let message = { success: false, message:  (typeof response === "string" && !response?.includes("Unexpected error")) ? response : "Unexpected error occurred" };
     if (response.status >= 200 && response.status < 300) {
       message = { success: true, message: successMessage };
     } else if (response.status === 400) {

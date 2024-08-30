@@ -55,7 +55,7 @@ export class AddNewScenarioComponent implements OnInit {
       this.scenarioApiService.createNewScenario(this.projectName, { scenarioName })
         .pipe(catchError(r => of(r)))
         .subscribe(_ => {
-          const message = this.notification.newProjectNotificationMessage(_);
+          const message = this.notification.newScenarioNotificationMessage(_);
           this.projectService.fetchScenarios(this.projectName);
           return this.scenarioApiService.setData(message);
         });

@@ -11,6 +11,7 @@ import {
 } from "@angular/core";
 import { Chart } from "chart.js";
 import { scenarioHistory } from "src/app/graphs/scenarios";
+import { normalizeOverviewData } from "../../utils/normalizeOverviewData";
 
 @Component({
   selector: "app-scenarios-graph",
@@ -46,7 +47,7 @@ export class ScenariosGraphComponent implements AfterViewInit, OnDestroy {
           data.datasets[0].data[i] = 0;
         }
       },
-      // after the update ..
+      // after the update
       afterUpdate: function(chart) {
         if (length === -1) { return; }
       },
@@ -68,7 +69,7 @@ export class ScenariosGraphComponent implements AfterViewInit, OnDestroy {
         }
       }
     });
-    this.chart = new Chart(this.chartCanvas.nativeElement, scenarioHistory(this.graphData));
+    this.chart = new Chart(this.chartCanvas.nativeElement, scenarioHistory(this.graphData.map(normalizeOverviewData)));
   }
 
   ngOnDestroy(): void {

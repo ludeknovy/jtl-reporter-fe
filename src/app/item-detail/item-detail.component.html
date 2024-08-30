@@ -125,17 +125,49 @@
                   </div>
                 </div>
 
-                <div class="col-sm" *ngIf="itemData.topMetricsSettings.percentile">
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.percentile || itemData.topMetricsSettings.percentile90">
                   <div class="card">
                     <div class="card-body overview-body">
-                      <h2 *ngIf="itemData.overview.percentil >= 1000" class="card-title">{{
-                        Math.round((itemData.overview.percentil / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+                      <h2 *ngIf="(itemData.overview.percentil || itemData.overview.percentile90) >= 1000" class="card-title">{{
+                        Math.round(((itemData.overview.percentil || itemData.overview.percentile90) / 1000) * 100) / 100}} <span class="unit-desc">s</span>
                       </h2>
-                      <h2 *ngIf="itemData.overview.percentil < 1000" class="card-title">{{
-                        itemData.overview.percentil}} <span class="unit-desc">ms</span>
+                      <h2 *ngIf="(itemData.overview.percentil || itemData.overview.percentile90) < 1000" class="card-title">{{
+                        itemData.overview.percentil || itemData.overview.percentile90}} <span class="unit-desc">ms</span>
                       </h2>
                     </div>
                     <div class="card-footer bg-transparent card-footer-overview">90% Response time</div>
+                  </div>
+                </div>
+
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.percentile95">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 *ngIf="itemData.overview.percentile95 >= 1000" class="card-title">{{
+                          Math.round((itemData.overview.percentile95 / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+                      </h2>
+                      <h2 *ngIf="itemData.overview.percentile95 < 1000" class="card-title">{{
+                          itemData.overview.percentile95}} <span class="unit-desc">ms</span>
+                      </h2>
+                      <h2 *ngIf="!itemData.overview.percentile95" class="card-title">N/A <span class="unit-desc">ms</span></h2>
+
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">95% Response time</div>
+                  </div>
+                </div>
+
+                <div class="col-sm" *ngIf="itemData.topMetricsSettings.percentile99">
+                  <div class="card">
+                    <div class="card-body overview-body">
+                      <h2 *ngIf="itemData.overview.percentile99 >= 1000" class="card-title">{{
+                          Math.round((itemData.overview.percentile99 / 1000) * 100) / 100}} <span class="unit-desc">s</span>
+                      </h2>
+                      <h2 *ngIf="itemData.overview.percentile99 < 1000" class="card-title">{{
+                          itemData.overview.percentile99}} <span class="unit-desc">ms</span>
+                      </h2>
+                      <h2 *ngIf="!itemData.overview.percentile99" class="card-title">N/A <span class="unit-desc">ms</span></h2>
+                    </div>
+                    <div class="card-footer bg-transparent card-footer-overview">99% Response time</div>
                   </div>
                 </div>
 

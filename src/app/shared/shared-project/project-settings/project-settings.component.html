@@ -63,10 +63,23 @@
                     <label class="form-check-label" for="errorCount">Error Count</label>
                   </div>
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="percentile"
-                           formControlName="percentile" (change)="onCheckboxChange()">
-                    <label class="form-check-label" for="percentile">90% Percentile</label>
+                    <input type="checkbox" class="form-check-input" id="percentile90"
+                           formControlName="percentile90" (change)="onCheckboxChange()">
+                    <label class="form-check-label" for="percentile90">90% Percentile</label>
                   </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="percentile95"
+                           formControlName="percentile95" (change)="onCheckboxChange()">
+                    <label class="form-check-label" for="percentile95">95% Percentile</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="percentile99"
+                           formControlName="percentile99" (change)="onCheckboxChange()">
+                    <label class="form-check-label" for="percentile99">99% Percentile</label>
+                  </div>
+
+
+
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="throughput"
                            formControlName="throughput" (change)="onCheckboxChange()">

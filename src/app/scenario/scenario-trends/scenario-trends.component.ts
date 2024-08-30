@@ -7,11 +7,12 @@ import { bytesToMbps } from "src/app/item-detail/calculations";
 import { LabelTrendsData, ScenarioTrendsData, ScenarioTrendsUserSettings } from "src/app/items.service.model";
 import { ScenarioService } from "src/app/scenario.service";
 import { Metrics } from "../../item-detail/metrics";
+import { normalizeOverviewData } from "../../utils/normalizeOverviewData";
 
 @Component({
-  selector: "app-scenario-trends",
-  templateUrl: "./scenario-trends.component.html",
-  styleUrls: ["./scenario-trends.component.scss"]
+  selector: 'app-scenario-trends',
+  templateUrl: './scenario-trends.component.html',
+  styleUrls: ['./scenario-trends.component.scss']
 })
 export class ScenarioTrendsComponent implements OnInit {
   @Input() params;
@@ -43,7 +44,7 @@ export class ScenarioTrendsComponent implements OnInit {
   constructor(private scenarioService: ScenarioService, private router: Router,
   ) {
     this.chartDataMapping = new Map([
-      ["percentil", { name: Metrics.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)", tooltip: { valueSuffix: " ms" } }],
+      ["percentile90", { name: Metrics.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)", tooltip: { valueSuffix: " ms" } }],
       ["avgResponseTime", { name: Metrics.ResponseTimeAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
       ["avgLatency", { name: Metrics.LatencyAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
       ["avgConnect", { name: Metrics.ConnectAvg, onLoad: false, tooltip: { valueSuffix: " ms" } }],
@@ -53,7 +54,7 @@ export class ScenarioTrendsComponent implements OnInit {
       ["network", { name: Metrics.Network, yAxis: 4, onLoad: false, transform: this.networkTransform, tooltip: { valueSuffix: " mbps" } }],
     ]);
   }
-  
+
   ngOnInit() {
     this.scenarioService.trends$.subscribe((_: {
       aggregatedTrends: ScenarioTrendsData[],
@@ -65,19 +66,22 @@ export class ScenarioTrendsComponent implements OnInit {
         return;
       }
       this.userSettings = _.userSettings;
-      this.generateAggregateChartLines(_.aggregatedTrends);
+      this.generateAggregatedChartLines(_.aggregatedTrends);
       this.generateLabelChartLines(_.labelTrends);
       this.generateDegradationCurve(_.responseTimeDegradationCurve);
     });
   }
 
-  generateAggregateChartLines(data: ScenarioTrendsData[]) {
+  generateAggregatedChartLines(data: ScenarioTrendsData[]) {
     if (!Array.isArray(data)) {
       return;
     }
     const dates = data.map(_ => moment(_.overview.startDate).format("DD. MM. YYYY HH:mm:ss"));
     const series = [];
-    const seriesData = data.reduce((acc, current) => {
+    const seriesData = data.map((scenarioTrends) => {
+      scenarioTrends.overview = normalizeOverviewData(scenarioTrends.overview);
+      return scenarioTrends;
+    }).reduce((acc, current) => {
       for (const key of Object.keys(current.overview)) {
 
         if (!["startDate", "endDate", "duration"].includes(key)) {
@@ -91,7 +95,7 @@ export class ScenarioTrendsComponent implements OnInit {
       return acc;
     }, {});
 
-    this.setItemIds(data)
+    this.setItemIds(data);
 
     for (const key of Object.keys(seriesData)) {
       const chartSeriesSettings = this.chartDataMapping.get(key);
@@ -126,9 +130,18 @@ export class ScenarioTrendsComponent implements OnInit {
 
     for (const key of Object.keys(data)) {
       // Adding item id to correctly identify it when clicking a point.
-      seriesP90.push({ name: key, data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
-      seriesErrorRate.push({ name: key, data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
-      seriesThroughput.push({ name: key, data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] })) });
+      seriesP90.push({
+        name: key,
+        data: data[key].percentile90.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] }))
+      });
+      seriesErrorRate.push({
+        name: key,
+        data: data[key].errorRate.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] }))
+      });
+      seriesThroughput.push({
+        name: key,
+        data: data[key].throughput.map(dataValue => ({ y: dataValue[1], name: dataValue[0], itemId: dataValue[2] }))
+      });
     }
     this.updateLabelChart(this.labelScenarioTrendChartP90Option, seriesP90);
     this.updateLabelChart(this.labelScenarioTrendChartThroughputOption, seriesThroughput);
@@ -150,7 +163,7 @@ export class ScenarioTrendsComponent implements OnInit {
       // Label series have item id amended to open correct detail, it's needed for a case when a labels do not match, eg:
       // label2 start at point 0, but label2 starts at point 1, it leads to off by N issues.
       // It's not needed for aggregated trend chart, as that is column chart and only one point can be clicked.
-      const boundItemId = event.point.series.data[event.point.index]?.options?.itemId
+      const boundItemId = event.point.series.data[event.point.index]?.options?.itemId;
 
       const itemId = boundItemId || Array.from(this.itemIds)[event.point.index];
       const { projectName, scenarioName } = this.params;
@@ -174,9 +187,9 @@ export class ScenarioTrendsComponent implements OnInit {
 
   private setItemIds = (data: ScenarioTrendsData[]) => {
     if (this.itemIds.size > 0) {
-      this.itemIds.clear()
+      this.itemIds.clear();
     }
-    data.forEach(line => this.itemIds.add(line.id))
-  }
+    data.forEach(line => this.itemIds.add(line.id));
+  };
 
 }

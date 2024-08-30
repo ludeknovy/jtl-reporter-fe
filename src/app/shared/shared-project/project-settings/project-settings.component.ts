@@ -10,21 +10,23 @@ import { UserService } from "../../../_services/user.service";
 import { UserRole, Users } from "../../../_services/users.model";
 
 @Component({
-  selector: "app-project-settings",
-  templateUrl: "./project-settings.component.html",
-  styleUrls: ["./project-settings.component.css"]
+  selector: 'app-project-settings',
+  templateUrl: './project-settings.component.html',
+  styleUrls: ['./project-settings.component.css']
 })
 export class ProjectSettingsComponent implements OnInit {
 
   projectSettingsForm: FormGroup;
   projectMembersForm: FormGroup;
   projectMembers: FormArray;
-  projectMembersData
+  projectMembersData;
   metricsEditable;
   formControls = {
     virtualUsers: null,
     throughput: null,
-    percentile: null,
+    percentile90: null,
+    percentile95: null,
+    percentile99: null,
     avgResponseTime: null,
     avgConnectionTime: null,
     avgLatency: null,
@@ -49,7 +51,8 @@ export class ProjectSettingsComponent implements OnInit {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   get usersFormArray() {
     return this.projectMembersForm.controls.projectMembers as FormArray;
@@ -57,23 +60,25 @@ export class ProjectSettingsComponent implements OnInit {
 
   createFormControls(settings) {
     this.formControls.virtualUsers = new FormControl(settings.topMetricsSettings.virtualUsers, []);
-    this.formControls.percentile = new FormControl(settings.topMetricsSettings.percentile, []);
+    this.formControls.percentile90 = new FormControl((settings.topMetricsSettings.percentile || settings.topMetricsSettings.percentile90), []);
+    this.formControls.percentile95 = new FormControl(settings.topMetricsSettings.percentile95 || false, []);
+    this.formControls.percentile99 = new FormControl(settings.topMetricsSettings.percentile99 || false, []);
     this.formControls.throughput = new FormControl(settings.topMetricsSettings.throughput, []);
     this.formControls.errorRate = new FormControl(settings.topMetricsSettings.errorRate, []);
     this.formControls.errorCount = new FormControl(settings.topMetricsSettings.errorCount || false, []),
-    this.formControls.network = new FormControl(settings.topMetricsSettings.network, []);
+      this.formControls.network = new FormControl(settings.topMetricsSettings.network, []);
     this.formControls.networkSent = new FormControl(settings.topMetricsSettings.networkSent || false, []);
     this.formControls.networkReceived = new FormControl(settings.topMetricsSettings.networkReceived || false, []);
     this.formControls.avgLatency = new FormControl(settings.topMetricsSettings.avgLatency, []);
     this.formControls.avgConnectionTime = new FormControl(settings.topMetricsSettings.avgConnectionTime, []);
     this.formControls.avgResponseTime = new FormControl(settings.topMetricsSettings.avgResponseTime, []);
-    this.formControls.scenarioUpsert = new FormControl(settings.upsertScenario, [])
+    this.formControls.scenarioUpsert = new FormControl(settings.upsertScenario, []);
     this.formControls.projectName = new FormControl(settings.projectName, [
       Validators.required,
       Validators.maxLength(50),
       Validators.minLength(3),
     ]);
-    this.formControls.projectMembers = new FormArray([])
+    this.formControls.projectMembers = new FormArray([]);
   }
 
   createForm() {
@@ -81,7 +86,9 @@ export class ProjectSettingsComponent implements OnInit {
       virtualUsers: this.formControls.virtualUsers,
       errorRate: this.formControls.errorRate,
       errorCount: this.formControls.errorCount,
-      percentile: this.formControls.percentile,
+      percentile90: this.formControls.percentile90,
+      percentile95: this.formControls.percentile95,
+      percentile99: this.formControls.percentile99,
       throughput: this.formControls.throughput,
       network: this.formControls.network,
       networkSent: this.formControls.networkSent,
@@ -95,7 +102,7 @@ export class ProjectSettingsComponent implements OnInit {
     });
     this.projectMembersForm = new FormGroup({
       projectMembers: this.formControls.projectMembers,
-    })
+    });
   }
 
   open(content) {
@@ -104,9 +111,9 @@ export class ProjectSettingsComponent implements OnInit {
 
       if (role === "admin") {
         this.userService.fetchUsers().subscribe((users) => {
-          this.mapProjectMembersToUsersData(r.body.projectMembers, users)
-          this.addCheckboxes()
-        })
+          this.mapProjectMembersToUsersData(r.body.projectMembers, users);
+          this.addCheckboxes();
+        });
       }
 
       this.createFormControls(r.body);
@@ -123,7 +130,7 @@ export class ProjectSettingsComponent implements OnInit {
       const projectMembers = this.projectMembersData
         .filter(member => member.role !== UserRole.Admin)
         .filter(member => member.isMember)
-        .map(member => member.id)
+        .map(member => member.id);
 
       const payload = {
         projectName: this.formControls.projectName.value,
@@ -131,7 +138,9 @@ export class ProjectSettingsComponent implements OnInit {
         topMetricsSettings: {
           virtualUsers: this.formControls.virtualUsers.value,
           errorRate: this.formControls.errorRate.value,
-          percentile: this.formControls.percentile.value,
+          percentile90: this.formControls.percentile90.value,
+          percentile95: this.formControls.percentile95.value,
+          percentile99: this.formControls.percentile99.value,
           throughput: this.formControls.throughput.value,
           network: this.formControls.network.value,
           avgLatency: this.formControls.avgLatency.value,
@@ -151,15 +160,16 @@ export class ProjectSettingsComponent implements OnInit {
           this.projectService.loadProjects();
           return this.projectApiService.setData(message);
         });
-      this.projectSettingsForm.reset()
+      this.projectSettingsForm.reset();
       this.modalService.dismissAll();
     }
   }
 
   isEditable() {
-    const enabledMetrics = Object.values([this.formControls.virtualUsers, this.formControls.errorRate, this.formControls.percentile,
-    this.formControls.throughput, this.formControls.network, this.formControls.avgLatency, this.formControls.avgResponseTime,
-    this.formControls.avgConnectionTime, this.formControls.errorCount, this.formControls.networkSent, this.formControls.networkReceived])
+    const enabledMetrics = Object.values([this.formControls.virtualUsers, this.formControls.errorRate, this.formControls.percentile90,
+      this.formControls.percentile95, this.formControls.percentile99, this.formControls.throughput, this.formControls.network,
+      this.formControls.avgLatency, this.formControls.avgResponseTime,
+      this.formControls.avgConnectionTime, this.formControls.errorCount, this.formControls.networkSent, this.formControls.networkReceived])
       .map(control => control.value).filter(value => value === true);
     this.metricsEditable = enabledMetrics.length > 5;
   }
@@ -171,17 +181,17 @@ export class ProjectSettingsComponent implements OnInit {
   private mapProjectMembersToUsersData = (projectMembers: string[], users: Users[]) => {
     this.projectMembersData = users
       .map(user => {
-      const isMember = projectMembers.find(member => member === user.id)
-      return {
-        id: user.id,
-        username: user.username,
-        isMember: user.role === UserRole.Admin ? true : !!isMember,
-        role: user.role,
-        isDisabled: user.role === UserRole.Admin
-      }
-    })
+        const isMember = projectMembers.find(member => member === user.id);
+        return {
+          id: user.id,
+          username: user.username,
+          isMember: user.role === UserRole.Admin ? true : !!isMember,
+          role: user.role,
+          isDisabled: user.role === UserRole.Admin
+        };
+      });
 
-  }
+  };
 
   private addCheckboxes() {
     this.projectMembersData.forEach((projectMember) => this.usersFormArray.push(new FormControl(projectMember.isMember)));

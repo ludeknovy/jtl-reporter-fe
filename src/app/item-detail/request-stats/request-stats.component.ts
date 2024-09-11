@@ -9,14 +9,15 @@ import html2canvas from "html2canvas";
 import { ExcelService } from "src/app/_services/excel.service";
 import { ItemDetail } from "../../items.service.model";
 import { ComparisonChartService } from "../../_services/comparison-chart.service";
+import {ComparisonStatsService} from '../../_services/comparison-stats.service';
 
 
 @Component({
-  selector: "app-request-stats-compare",
-  templateUrl: "./request-stats-compare.component.html",
-  styleUrls: ["./request-stats-compare.component.css", "../item-detail.component.scss"]
+  selector: "app-request-stats",
+  templateUrl: "./request-stats.component.html",
+  styleUrls: ["./request-stats.component.css", "../item-detail.component.scss"]
 })
-export class RequestStatsCompareComponent implements OnInit, OnDestroy {
+export class RequestStatsComponent implements OnInit, OnDestroy {
 
   @Input() itemData: ItemDetail;
   @Input() isAnonymous: boolean;
@@ -31,19 +32,16 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   comparedData;
   comparedDataMs;
   labelsData;
-  comparisonWarning = [];
   comparedMetadata;
   defaultUnit = true;
   externalSearchTerm = "";
   collapsableSettings = {};
 
   constructor(
-    private itemsService: ItemsApiService,
-    private toastr: ToastrService,
     private analyzeChartService: AnalyzeChartService,
     private modalService: NgbModal,
     private excelService: ExcelService,
-    private comparisonChartService: ComparisonChartService
+    private comparisonStatsService: ComparisonStatsService,
   ) {
   }
 
@@ -87,13 +85,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.analyzeChartService.changeMessage(null);
-  }
-
-  resetStatsData() {
-    this.comparedData = null;
-    this.labelsData = this.itemData.statistics;
-    this.defaultUnit = true;
-    this.comparisonChartService.resetPlot();
   }
 
   search(query: string) {
@@ -149,89 +140,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.externalSearchTerm = "";
   }
 
-  itemToCompare(data) {
-    this.resetStatsData();
-    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData);
-    this.comparisonChartService.setHistogramPlot(data.histogramPlotData);
-    this.comparingData = data;
-    this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
-    if (data.maxVu !== this.itemData.overview.maxVu) {
-      this.comparisonWarning.push(`VU do differ ${this.itemData.overview.maxVu} vs. ${data.maxVu}`);
-    }
-
-    this.comparedDataMs = this.labelsData.map((_) => {
-      const labelToBeCompared = data.statistics.find((__) => __.label === _.label);
-      if (labelToBeCompared) {
-        return {
-          ..._,
-          samples: (_.samples - labelToBeCompared.samples),
-          avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
-          minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
-          maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
-          medianResponseTime: (_.medianResponseTime - labelToBeCompared.medianResponseTime),
-          bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
-          bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
-          bytesSentPerSecond: (_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
-          n0: (_.n0 - labelToBeCompared.n0),
-          n5: (_.n5 - labelToBeCompared.n5),
-          n9: (_.n9 - labelToBeCompared.n9),
-          errorRate: (_.errorRate - labelToBeCompared.errorRate),
-          throughput: (_.throughput - labelToBeCompared.throughput)
-        };
-      } else {
-        this.comparisonWarning.push(`${_.label} label not found`);
-        return {
-          ..._,
-          avgResponseTime: null,
-          minResponseTime: null,
-          maxResponseTime: null,
-          medianResponseTime: null,
-          n0: null,
-          n5: null,
-          n9: null,
-          errorRate: null,
-          throughput: null,
-          bytes: null,
-        };
-      }
-    });
-    if (data.environment !== this.itemData.environment) {
-      this.comparisonWarning.push("Environments do differ");
-    }
-    this.comparedData = this.comparedDataMs;
-    this.labelsData = this.comparedData;
-
-    if (this.comparisonWarning.length) {
-      this.showComparisonWarnings();
-    }
-  }
-
-  quickBaseComparison(id) {
-    this.itemsService.fetchItemDetail(
-      this.params.projectName,
-      this.params.scenarioName,
-      id).subscribe(_ => this.itemToCompare({
-      statistics: _.statistics,
-      maxVu: _.overview.maxVu,
-      environment: _.environment,
-      plot: _.plot,
-      histogramPlotData: _.histogramPlotData,
-      extraPlotData: _.extraPlotData,
-      id
-    }));
-  }
-
-  showComparisonWarnings() {
-    this.toastr.warning(this.comparisonWarning.join("<br>"), "Comparison Warning!",
-      {
-        closeButton: true,
-        enableHtml: true,
-        timeOut: 15000,
-        positionClass: "toast-bottom-right"
-      });
-    this.comparisonWarning = [];
-  }
-
   convertBytesToMbps(bytes) {
     return bytesToMbps(bytes);
   }
@@ -259,7 +167,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             standardDeviation: this.calculatePercDifference(_.standardDeviation, labelToBeCompared.standardDeviation),
           };
         } else {
-          this.comparisonWarning.push(`${_.label} label not found`);
           return {
             ..._,
             avgResponseTime: null,

@@ -6,14 +6,13 @@
         href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}">{{comparedMetadata.id}}
         with
         {{comparedMetadata.maxVu}} VU</a></span>
-      <button class="remove-comparison btn btn-sm jtl-btn-light" *ngIf="comparedData" (click)="resetStatsData()"><span
-        class="compare-desc-btn">Remove</span>
-      </button>
+
       <button class="remove-comparison btn btn-sm jtl-btn-light jtl-no-glow" *ngIf="comparedData"
               (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
           <i class="fa" [ngClass]="{'fa-percent': defaultUnit, 'fa-stopwatch': !defaultUnit}"></i></span>
       </button>
-      <app-stats-compare *ngIf="!isAnonymous" (itemDetailToCompare)="itemToCompare($event)"></app-stats-compare>
+
+
 
 
       <div *ngIf="!isAnonymous" class="btn-group mr-3">
@@ -22,12 +21,6 @@
           <button class="btn btn-sm jtl-no-glow jtl-control-menu hamburger-menu" ngbDropdownToggle><i
             class="fas fa-bars"></i></button>
           <div class="dropdown-menu jtl-dropdown-control-menu" ngbDropdownMenu>
-            <button class="btn btn-sm"
-                    *ngIf="(itemData.baseId && itemData.baseId !== params.id)"
-                    (click)="quickBaseComparison(itemData.baseId)"
-                    ngbDropdownItem>
-                Compare to base run</button>
-
             <button class="btn btn-sm" (click)="downloadAsPng()" ngbDropdownItem>Download as PNG</button>
             <button class="btn btn-sm" (click)="downloadAsXLXS()" ngbDropdownItem>Download as XLXS</button>
 

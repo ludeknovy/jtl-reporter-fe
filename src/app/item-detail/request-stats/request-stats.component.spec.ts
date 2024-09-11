@@ -10,16 +10,16 @@ import { LabelTrendComponent } from "../label-trend/label-trend.component";
 import { StatsCompareComponent } from "../stats-compare/stats-compare.component";
 import { LabelHealthComponent } from "./label-health/label-health.component";
 
-import { RequestStatsCompareComponent } from "./request-stats-compare.component";
+import { RequestStatsComponent } from "./request-stats.component";
 
 describe("RequestStatsCompareComponent", () => {
-  let component: RequestStatsCompareComponent;
-  let fixture: ComponentFixture<RequestStatsCompareComponent>;
+  let component: RequestStatsComponent;
+  let fixture: ComponentFixture<RequestStatsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
-        RequestStatsCompareComponent,
+        RequestStatsComponent,
         StatsCompareComponent,
         LabelTrendComponent,
         LabelHealthComponent,
@@ -38,7 +38,7 @@ describe("RequestStatsCompareComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestStatsCompareComponent);
+    fixture = TestBed.createComponent(RequestStatsComponent);
     component = fixture.componentInstance;
     component.itemData = {
       environment: "",

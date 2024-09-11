@@ -16,6 +16,7 @@ import { normalizeOverviewData } from "../../utils/normalizeOverviewData";
 })
 export class ScenarioTrendsComponent implements OnInit {
   @Input() params;
+  @Input() isAnonymous: boolean;
   Highcharts: typeof Highcharts = Highcharts;
   updateAggregatedScenarioTrendsChartFlag = false;
   updateLabelScenarioTrendsChartFlag = false;
@@ -159,7 +160,7 @@ export class ScenarioTrendsComponent implements OnInit {
   }
 
   onPointSelect(event) {
-    if (event && event.point && event.point) {
+    if (event && event.point && !this.isAnonymous) {
       // Label series have item id amended to open correct detail, it's needed for a case when a labels do not match, eg:
       // label2 start at point 0, but label2 starts at point 1, it leads to off by N issues.
       // It's not needed for aggregated trend chart, as that is column chart and only one point can be clicked.

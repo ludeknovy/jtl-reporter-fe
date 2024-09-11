@@ -1,12 +1,6 @@
 <div class="card table-stats request-stats card-shadow">
 
   <h6 class="card-header bg-transparent">Request Statistics <span class="compare">
-
-      <span class="comparison-desc" *ngIf="comparedData">Comparing to test: <a
-        href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}">{{comparedMetadata.id}}
-        with
-        {{comparedMetadata.maxVu}} VU</a></span>
-
       <button class="remove-comparison btn btn-sm jtl-btn-light jtl-no-glow" *ngIf="comparedData"
               (click)="switchComparisonDataUnit()"><span class="compare-desc-btn">
           <i class="fa" [ngClass]="{'fa-percent': defaultUnit, 'fa-stopwatch': !defaultUnit}"></i></span>

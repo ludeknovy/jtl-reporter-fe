@@ -1,5 +1,5 @@
 <div ngbDropdown class="d-inline-block">
-  <button class="btn btn-sm btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Compare</button>
+  <button class="btn btn-sm jtl-btn-primary compare" id="dropdownBasic1" ngbDropdownToggle>Compare</button>
   <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
     <button class="btn btn-sm" (click)="open(content)"><span class="compare-desc">Select Test Report</span></button>
     <button class="btn btn-sm"
@@ -7,7 +7,13 @@
             (click)="quickBaseComparison(itemData.baseId)"
             ngbDropdownItem>
       Compare to base run
+<!--      <span class="comparison-desc" *ngIf="comparedData">Comparing to test: <a-->
+<!--        href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}">{{ comparedMetadata.id }}-->
+<!--        with-->
+<!--        {{ comparedMetadata.maxVu }} VU</a></span>-->
     </button>
+    <button *ngIf="comparingData" class="btn btn-sm" (click)="resetStatsData()"><span class="compare-desc">Remove Comparison</span></button>
+
   </div>
 </div>
 

@@ -110,46 +110,10 @@ export class StatsCompareComponent implements OnInit {
       this.comparisonWarning.push(`VU do differ ${this.itemData.overview.maxVu} vs. ${data.maxVu}`);
     }
 
-    // this.comparedDataMs = this.labelsData.map((_) => {
-    //   const labelToBeCompared = data.statistics.find((__) => __.label === _.label);
-    //   if (labelToBeCompared) {
-    //     return {
-    //       ..._,
-    //       samples: (_.samples - labelToBeCompared.samples),
-    //       avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
-    //       minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
-    //       maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
-    //       medianResponseTime: (_.medianResponseTime - labelToBeCompared.medianResponseTime),
-    //       bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
-    //       bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
-    //       bytesSentPerSecond: (_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
-    //       n0: (_.n0 - labelToBeCompared.n0),
-    //       n5: (_.n5 - labelToBeCompared.n5),
-    //       n9: (_.n9 - labelToBeCompared.n9),
-    //       errorRate: (_.errorRate - labelToBeCompared.errorRate),
-    //       throughput: (_.throughput - labelToBeCompared.throughput)
-    //     };
-    //   } else {
-    //     this.comparisonWarning.push(`${_.label} label not found`);
-    //     return {
-    //       ..._,
-    //       avgResponseTime: null,
-    //       minResponseTime: null,
-    //       maxResponseTime: null,
-    //       medianResponseTime: null,
-    //       n0: null,
-    //       n5: null,
-    //       n9: null,
-    //       errorRate: null,
-    //       throughput: null,
-    //       bytes: null,
-    //     };
-    //   }
-    // });
     if (data.environment !== this.itemData.environment) {
       this.comparisonWarning.push("Environments do differ");
     }
-    this.comparisonStatsService.setRequestStats(this.comparedData)
+    this.comparisonStatsService.setRequestStats(data.statistics)
 
     if (this.comparisonWarning.length) {
       this.showComparisonWarnings();
@@ -170,9 +134,6 @@ export class StatsCompareComponent implements OnInit {
   resetStatsData() {
     this.comparedData = null;
     this.comparisonChartService.resetPlot();
-    this.comparisonStatsService.setRequestStats(this.itemData.statistics)
+    this.comparisonStatsService.setRequestStats(null)
   }
-
-
-
 }

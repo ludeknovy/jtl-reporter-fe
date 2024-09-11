@@ -159,33 +159,6 @@ describe("RequestStatsCompareComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
-  it("should call resetStatsData when itemToCompare triggered", () => {
-    const spy = spyOn(component, "resetStatsData").and.callThrough();
-    component.itemToCompare({
-      maxVu: 100,
-      id: "123-123",
-      statistics: [{
-        avgResponseTime: 109,
-        bytes: 7587,
-        errorRate: 0,
-        label: "02 - Click_Log_In-22",
-        maxResponseTime: 380,
-        minResponseTime: 81,
-        n0: 330,
-        n5: 344,
-        n9: 372,
-        samples: 200,
-        throughput: 0.17,
-      }],
-      plot: {
-        responseTime: [{ data: [], name: "label" }],
-        throughput: [{ data: [], name: "label" }]
-      },
-      extraPlotData: {},
-      histogramPlotData: {}
-    });
-    expect(spy).toHaveBeenCalled();
-  });
   describe("label search", () => {
     it("should search fulltext", () => {
       component.search("02");

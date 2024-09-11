@@ -8,9 +8,9 @@ import { from } from "rxjs";
 @Component({
   selector: "app-monitoring-stats",
   templateUrl: "./monitoring-stats.component.html",
-  styleUrls: ["./monitoring-stats.component.css"]
+  styleUrls: ["./monitoring-stats.component.css", "../item-detail.component.scss", "../../shared-styles.css"]
 })
-export class MonitoringStatsComponent {
+export class MonitoringStatsComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
   monitoringChartOptions;
   chartConstructor = "chart";
@@ -28,11 +28,12 @@ export class MonitoringStatsComponent {
 
   @Input() data: [{ name: string, timestamp: Date, avgCpu: number, avgMem: number }];
 
+  ngOnInit() {
+    this.prepareChart()
+  }
 
-  open(content) {
-    this.modalService.open(content, { size: "xl" }).result
-      .then((_) => { this.monitoringChartOptions = null; }, () => { this.monitoringChartOptions = null; });
 
+  prepareChart() {
     const workers = Array.from(new Set(this.data.map(data => data.name)));
     const series = workers.map((worker) => this.data
       .filter(data => data.name === worker)

@@ -31,7 +31,7 @@
     <div class="items-overview content-container">
       <div class="container-fluid">
 
-        <app-scenario-trends [params]="params"></app-scenario-trends>
+        <app-scenario-trends [params]="params" [isAnonymous]="isAnonymous"></app-scenario-trends>
 
         <div class="row rr" *ngIf="!isAnonymous">
           <div class="col" *ngIf="items$ | async; let items">

@@ -337,8 +337,6 @@
                 <div class="row" *ngIf="itemData.monitoring.cpu.data.length > 0">
                   <div class="col-sm mb-1 summary-bold">Max CPU usage</div>
                   <div class="col-sm mb-1">{{itemData.monitoring.cpu.max}}%
-                    <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
-                    </app-monitoring-stats>
                   </div>
                 </div>
               </div>
@@ -418,6 +416,8 @@
                   </div>
                 </div>
               </div>
+
+
 
               <div class="row" *ngIf="itemData.sutOverview && itemData.sutOverview.length > 1">
                 <div class="col">
@@ -509,6 +509,19 @@
               <div class="row charts">
                 <div class="col tab-charts">
                   <app-error-summary [errorSummary]="itemData.errorSummary"></app-error-summary>
+                </div>
+              </div>
+
+            </ng-template>
+          </li>
+
+          <li ngbNavItem [ngbNavItem]="4" *ngIf="itemData.monitoring.cpu.data.length !== 0">
+            <a ngbNavLink class="nav-link bg-transparent">Monitoring</a>
+            <ng-template ngbNavContent>
+              <div class="row charts">
+                <div class="col tab-charts">
+                  <app-monitoring-stats [data]="itemData.monitoring.cpu.data">
+                  </app-monitoring-stats>
                 </div>
               </div>
 

@@ -1,19 +1,16 @@
-<ng-template #content let-modal>
-  <div class="modal-header" ngbAutofocus>
-    <h5 class="modal-title" id="modal-basic-title">Monitoring stats</h5>
-    <button type="button" style="outline: none;" class="btn-close" aria-label="" (click)="modal.dismiss('Cross click')">
-
-    </button>
-  </div>
-  <div class="modal-body">
-    <div *ngIf="monitoringChartOptions">
-      <highcharts-chart [Highcharts]="Highcharts" [options]="monitoringChartOptions" [callbackFunction]="chartCallback" [(update)]="updateFlag"
-        [constructorType]="chartConstructor" style="width: auto; height: 400px; display: block;"></highcharts-chart>
+<div class="row charts">
+  <div class="col tab-charts" *ngIf="data.length > 0">
+    <div class="card overview-chart-card card-shadow">
+      <h6 class="card-header bg-transparent">Monitoring</h6>
+      <div class="card-body">
+        <div class="chart">
+          <highcharts-chart [Highcharts]="Highcharts" [options]="monitoringChartOptions"
+                            [callbackFunction]="chartCallback"
+                            [(update)]="updateFlag"
+                            [constructorType]="chartConstructor"
+                            style="width: auto; height: 400px; display: block;"></highcharts-chart>
+        </div>
+      </div>
     </div>
   </div>
-</ng-template>
-
-
-
-
-<a class="monitoring-data" (click)="open(content)"><i class="fas fa-heartbeat"></i></a>
+</div>

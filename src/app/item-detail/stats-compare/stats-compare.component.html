@@ -16,13 +16,27 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">Choose test run to compare</h5>
+    <h5 class="modal-title" id="modal-basic-title">Select Test Report To Compare</h5>
+
     <button type="button" style="outline: none;" class="btn-close" aria-label="Close"
             (click)="modal.dismiss('Cross click')">
 
     </button>
   </div>
   <div class="modal-body">
+    <form class="row g-3 scenario-select-form">
+      <div class="col-md-4">
+        <label for="scenarioSelect" class="form-label">Scenario</label>
+                  <select  id="scenarioSelect" class='form-select rounded-left' [(ngModel)]="selectedScenario" [ngModelOptions]="{standalone: true}" (change)="loadScenario($event)">
+                    <option *ngFor="let scenario of scenarios" value='{{scenario.name}}'>{{scenario.name}}</option>
+                  </select>
+
+      </div>
+    </form>
+
+
+
+
     <div class="col" *ngIf="items$ | async; let items">
       <div class="responsive-table">
         <table class="table items" [mfData]="items.data" #mf="mfDataTable">

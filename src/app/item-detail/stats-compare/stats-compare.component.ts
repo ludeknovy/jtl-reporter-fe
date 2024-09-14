@@ -1,38 +1,36 @@
-import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ItemsService } from "src/app/items.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Params } from "@angular/router";
 import { Observable } from "rxjs";
-import {ItemDetail, Items} from 'src/app/items.service.model';
+import { ItemDetail, Items } from "src/app/items.service.model";
 import { ItemsApiService } from "src/app/items-api.service";
-import {ComparisonChartService} from '../../_services/comparison-chart.service';
-import {ToastrService} from 'ngx-toastr';
-import {ComparisonStatsService} from '../../_services/comparison-stats.service';
+import { ComparisonChartService } from "../../_services/comparison-chart.service";
+import { ToastrService } from "ngx-toastr";
+import { ComparisonStatsService } from "../../_services/comparison-stats.service";
 
 const LIMIT = 15;
 const OFFSET = 15;
 
 
 @Component({
-  selector: "app-stats-compare",
-  templateUrl: "./stats-compare.component.html",
-  styleUrls: ["./stats-compare.component.css"]
+  selector: 'app-stats-compare',
+  templateUrl: './stats-compare.component.html',
+  styleUrls: ['./stats-compare.component.css']
 })
 
 export class StatsCompareComponent implements OnInit {
   items$: Observable<Items>;
   page = 1;
   pageSize = LIMIT;
-  params;
-  selectedTestItem;
-
-  comparingData;
-  comparedMetadata;
+  params: Params;
+  selectedTestItem: string;
+  comparingData: ItemDetail;
+  comparedMetadata: { id: string; maxVu: number };
   comparisonWarning = [];
 
 
-
-  @Input() itemData: ItemDetail
+  @Input() itemData: ItemDetail;
 
   constructor(
     private toastr: ToastrService,
@@ -43,7 +41,8 @@ export class StatsCompareComponent implements OnInit {
     private route: ActivatedRoute,
     private comparisonChartService: ComparisonChartService,
     private comparisonStatsService: ComparisonStatsService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.items$ = this.itemsService.items$;
@@ -55,7 +54,6 @@ export class StatsCompareComponent implements OnInit {
   open(content) {
     this.modalService.open(content, { size: "xl" });
     this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
-
   }
 
   loadMore() {
@@ -114,7 +112,7 @@ export class StatsCompareComponent implements OnInit {
     if (data.environment !== this.itemData.environment) {
       this.comparisonWarning.push("Environments do differ");
     }
-    this.comparisonStatsService.setRequestStats(data.statistics)
+    this.comparisonStatsService.setRequestStats(data.statistics);
 
     if (this.comparisonWarning.length) {
       this.showComparisonWarnings();
@@ -133,8 +131,8 @@ export class StatsCompareComponent implements OnInit {
   }
 
   resetStatsData() {
-    this.comparingData = null
+    this.comparingData = null;
     this.comparisonChartService.resetPlot();
-    this.comparisonStatsService.setRequestStats(null)
+    this.comparisonStatsService.setRequestStats(null);
   }
 }

@@ -61,7 +61,7 @@ export class StatsCompareComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content, { size: "xl" });
-    this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
+    this.itemsService.fetchItems(this.params.projectName, this.selectedScenario, { limit: LIMIT, offset: 0 });
   }
 
   loadMore() {

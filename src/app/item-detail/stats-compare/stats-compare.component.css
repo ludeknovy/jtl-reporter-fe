@@ -33,3 +33,7 @@ thead {
 .compare-menu-item {
   margin-left: 10px;
 }
+
+.scenario-select-form {
+  padding-bottom: 2rem;
+}

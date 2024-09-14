@@ -2,12 +2,13 @@ import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ItemsService } from "src/app/items.service";
 import { ActivatedRoute, Params } from "@angular/router";
-import { Observable } from "rxjs";
-import { ItemDetail, Items } from "src/app/items.service.model";
+import { Observable, Subscription } from "rxjs";
+import { IScenarios, ItemDetail, Items } from "src/app/items.service.model";
 import { ItemsApiService } from "src/app/items-api.service";
 import { ComparisonChartService } from "../../_services/comparison-chart.service";
 import { ToastrService } from "ngx-toastr";
 import { ComparisonStatsService } from "../../_services/comparison-stats.service";
+import { ScenarioApiService } from "../../scenario-api.service";
 
 const LIMIT = 15;
 const OFFSET = 15;
@@ -28,6 +29,8 @@ export class StatsCompareComponent implements OnInit {
   comparingData: ItemDetail;
   comparedMetadata: { id: string; maxVu: number };
   comparisonWarning = [];
+  scenarios: IScenarios[];
+  selectedScenario: string;
 
 
   @Input() itemData: ItemDetail;
@@ -40,7 +43,8 @@ export class StatsCompareComponent implements OnInit {
     private itemsApiService: ItemsApiService,
     private route: ActivatedRoute,
     private comparisonChartService: ComparisonChartService,
-    private comparisonStatsService: ComparisonStatsService
+    private comparisonStatsService: ComparisonStatsService,
+    private scenarioApiService: ScenarioApiService,
   ) {
   }
 
@@ -48,17 +52,21 @@ export class StatsCompareComponent implements OnInit {
     this.items$ = this.itemsService.items$;
     this.route.params.subscribe(_ => {
       this.params = _;
+      this.selectedScenario = _.scenarioName;
+    });
+    this.scenarioApiService.fetchScenarios(this.params.projectName).subscribe(_ => {
+      this.scenarios = _;
     });
   }
 
   open(content) {
     this.modalService.open(content, { size: "xl" });
-    this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
+    this.itemsService.fetchItems(this.params.projectName, this.selectedScenario, { limit: LIMIT, offset: 0 });
   }
 
   loadMore() {
     const offset = (this.page - 1) * OFFSET;
-    this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset });
+    this.itemsService.fetchItems(this.params.projectName, this.selectedScenario, { limit: LIMIT, offset });
   }
 
   onSelectionChange(id) {
@@ -67,7 +75,7 @@ export class StatsCompareComponent implements OnInit {
 
   loadItemToCompare() {
     if (this.selectedTestItem) {
-      this.itemsApiService.fetchItemDetail(this.params.projectName, this.params.scenarioName, this.selectedTestItem)
+      this.itemsApiService.fetchItemDetail(this.params.projectName, this.selectedScenario, this.selectedTestItem)
         .subscribe(_ => {
           this.itemToCompare({
             statistics: _.statistics,
@@ -134,5 +142,12 @@ export class StatsCompareComponent implements OnInit {
     this.comparingData = null;
     this.comparisonChartService.resetPlot();
     this.comparisonStatsService.setRequestStats(null);
+  }
+
+  loadScenario(event) {
+    console.log(event.target.value)
+    const scenario = event.target.value
+    this.selectedScenario = scenario
+    this.itemsService.fetchItems(this.params.projectName, scenario, { limit: LIMIT, offset: 0 });
   }
 }

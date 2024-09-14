@@ -27,7 +27,6 @@ export class StatsCompareComponent implements OnInit {
   selectedTestItem;
 
   comparingData;
-  comparedData;
   comparedMetadata;
   comparisonWarning = [];
 
@@ -132,7 +131,7 @@ export class StatsCompareComponent implements OnInit {
   }
 
   resetStatsData() {
-    this.comparedData = null;
+    this.comparingData = null
     this.comparisonChartService.resetPlot();
     this.comparisonStatsService.setRequestStats(null)
   }

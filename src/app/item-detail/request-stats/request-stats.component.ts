@@ -2,48 +2,43 @@ import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetec
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 import { bytesToMbps, roundNumberTwoDecimals } from "../calculations";
 import { AnalyzeChartService } from "../../analyze-chart.service";
-import { ItemsApiService } from "src/app/items-api.service";
-import { ToastrService } from "ngx-toastr";
+
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import html2canvas from "html2canvas";
 import { ExcelService } from "src/app/_services/excel.service";
-import { ItemDetail } from "../../items.service.model";
-import { ComparisonChartService } from "../../_services/comparison-chart.service";
+import { ItemDetail, ItemStatistics } from "../../items.service.model";
+import { ComparisonStatsService } from "../../_services/comparison-stats.service";
 
 
 @Component({
-  selector: "app-request-stats-compare",
-  templateUrl: "./request-stats-compare.component.html",
-  styleUrls: ["./request-stats-compare.component.css", "../item-detail.component.scss"]
+  selector: 'app-request-stats',
+  templateUrl: './request-stats.component.html',
+  styleUrls: ['./request-stats.component.css', '../item-detail.component.scss']
 })
-export class RequestStatsCompareComponent implements OnInit, OnDestroy {
+export class RequestStatsComponent implements OnInit, OnDestroy {
 
   @Input() itemData: ItemDetail;
   @Input() isAnonymous: boolean;
   @Input() params: ItemParams;
   @Input() chartLines;
 
-  @ViewChild("screen") screen: ElementRef;
-  @ViewChild("canvas") canvas: ElementRef;
-  @ViewChild("downloadLink") downloadLink: ElementRef;
+  @ViewChild('screen') screen: ElementRef;
+  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('downloadLink') downloadLink: ElementRef;
 
   comparingData;
   comparedData;
   comparedDataMs;
   labelsData;
-  comparisonWarning = [];
-  comparedMetadata;
   defaultUnit = true;
   externalSearchTerm = "";
   collapsableSettings = {};
 
   constructor(
-    private itemsService: ItemsApiService,
-    private toastr: ToastrService,
     private analyzeChartService: AnalyzeChartService,
     private modalService: NgbModal,
     private excelService: ExcelService,
-    private comparisonChartService: ComparisonChartService
+    private comparisonStatsService: ComparisonStatsService,
   ) {
   }
 
@@ -52,13 +47,13 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.itemData.statistics.map(labelData => {
       const failureCount = labelData.responseMessageFailures.reduce(
         (previousValue, currentValue) => {
-          previousValue.count += currentValue.count
-          return previousValue
-        },{ count: 0 })
+          previousValue.count += currentValue.count;
+          return previousValue;
+        }, { count: 0 });
 
-      Object.assign(labelData, { failures: failureCount.count })
-      return labelData
-    })
+      Object.assign(labelData, { failures: failureCount.count });
+      return labelData;
+    });
 
     if (this.itemData?.thresholds?.passed === false) {
       this.labelsData = this.itemData.statistics.map(labelData => {
@@ -77,6 +72,22 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     } else {
       this.labelsData = this.itemData.statistics;
     }
+
+
+    this.comparisonStatsService.requestStats$.subscribe(data => {
+      if (data == null || data?.length == 0) {
+        this.comparedData = null
+        this.labelsData = this.itemData.statistics
+        this.comparedDataMs = null
+      } else {
+        const diffValues = this.getValuesDiff(this.labelsData, data)
+        this.comparedData = diffValues
+        this.labelsData = diffValues
+        this.comparedDataMs = diffValues
+        this.comparingData = data
+      }
+    });
+
     this.analyzeChartService.currentData.subscribe(data => {
       if (data && data.label) {
         this.search(data.label);
@@ -87,13 +98,7 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.analyzeChartService.changeMessage(null);
-  }
-
-  resetStatsData() {
-    this.comparedData = null;
-    this.labelsData = this.itemData.statistics;
-    this.defaultUnit = true;
-    this.comparisonChartService.resetPlot();
+    this.comparisonStatsService.setRequestStats(null)
   }
 
   search(query: string) {
@@ -149,89 +154,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
     this.externalSearchTerm = "";
   }
 
-  itemToCompare(data) {
-    this.resetStatsData();
-    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData);
-    this.comparisonChartService.setHistogramPlot(data.histogramPlotData);
-    this.comparingData = data;
-    this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
-    if (data.maxVu !== this.itemData.overview.maxVu) {
-      this.comparisonWarning.push(`VU do differ ${this.itemData.overview.maxVu} vs. ${data.maxVu}`);
-    }
-
-    this.comparedDataMs = this.labelsData.map((_) => {
-      const labelToBeCompared = data.statistics.find((__) => __.label === _.label);
-      if (labelToBeCompared) {
-        return {
-          ..._,
-          samples: (_.samples - labelToBeCompared.samples),
-          avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
-          minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
-          maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
-          medianResponseTime: (_.medianResponseTime - labelToBeCompared.medianResponseTime),
-          bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
-          bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
-          bytesSentPerSecond: (_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
-          n0: (_.n0 - labelToBeCompared.n0),
-          n5: (_.n5 - labelToBeCompared.n5),
-          n9: (_.n9 - labelToBeCompared.n9),
-          errorRate: (_.errorRate - labelToBeCompared.errorRate),
-          throughput: (_.throughput - labelToBeCompared.throughput)
-        };
-      } else {
-        this.comparisonWarning.push(`${_.label} label not found`);
-        return {
-          ..._,
-          avgResponseTime: null,
-          minResponseTime: null,
-          maxResponseTime: null,
-          medianResponseTime: null,
-          n0: null,
-          n5: null,
-          n9: null,
-          errorRate: null,
-          throughput: null,
-          bytes: null,
-        };
-      }
-    });
-    if (data.environment !== this.itemData.environment) {
-      this.comparisonWarning.push("Environments do differ");
-    }
-    this.comparedData = this.comparedDataMs;
-    this.labelsData = this.comparedData;
-
-    if (this.comparisonWarning.length) {
-      this.showComparisonWarnings();
-    }
-  }
-
-  quickBaseComparison(id) {
-    this.itemsService.fetchItemDetail(
-      this.params.projectName,
-      this.params.scenarioName,
-      id).subscribe(_ => this.itemToCompare({
-      statistics: _.statistics,
-      maxVu: _.overview.maxVu,
-      environment: _.environment,
-      plot: _.plot,
-      histogramPlotData: _.histogramPlotData,
-      extraPlotData: _.extraPlotData,
-      id
-    }));
-  }
-
-  showComparisonWarnings() {
-    this.toastr.warning(this.comparisonWarning.join("<br>"), "Comparison Warning!",
-      {
-        closeButton: true,
-        enableHtml: true,
-        timeOut: 15000,
-        positionClass: "toast-bottom-right"
-      });
-    this.comparisonWarning = [];
-  }
-
   convertBytesToMbps(bytes) {
     return bytesToMbps(bytes);
   }
@@ -239,14 +161,15 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
   switchComparisonDataUnit() {
     if (this.defaultUnit) {
       this.comparedData = this.labelsData.map((_) => {
-        const labelToBeCompared = this.comparingData.statistics.find((__) => __.label === _.label);
+        const labelToBeCompared = this.comparingData.find((__) => __.label === _.label);
+        console.log(labelToBeCompared)
         if (labelToBeCompared) {
           return {
             ..._,
             avgResponseTime: this.calculatePercDifference(_.avgResponseTime, labelToBeCompared.avgResponseTime),
             minResponseTime: this.calculatePercDifference(_.minResponseTime, labelToBeCompared.minResponseTime),
             maxResponseTime: this.calculatePercDifference(_.maxResponseTime, labelToBeCompared.maxResponseTime),
-            medianResponseTime:  this.calculatePercDifference(_.medianResponseTime, labelToBeCompared.medianResponseTime),
+            medianResponseTime: this.calculatePercDifference(_.medianResponseTime, labelToBeCompared.medianResponseTime),
             bytes: this.calculatePercDifference(_.bytes, labelToBeCompared.bytes) / 1024,
             n0: this.calculatePercDifference(_.n0, labelToBeCompared.n0),
             n5: this.calculatePercDifference(_.n5, labelToBeCompared.n5),
@@ -259,7 +182,6 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
             standardDeviation: this.calculatePercDifference(_.standardDeviation, labelToBeCompared.standardDeviation),
           };
         } else {
-          this.comparisonWarning.push(`${_.label} label not found`);
           return {
             ..._,
             avgResponseTime: null,
@@ -395,5 +317,44 @@ export class RequestStatsCompareComponent implements OnInit, OnDestroy {
 
   identify(index, item) {
     return item.label;
+  }
+
+  getValuesDiff(labelsData: ItemStatistics[], data: ItemStatistics[]) {
+    return labelsData.map((_) => {
+      const labelToBeCompared = data.find((itemStats) => itemStats.label === _.label);
+      if (labelToBeCompared) {
+        return {
+          ..._,
+          samples: (_.samples - labelToBeCompared.samples),
+          avgResponseTime: (_.avgResponseTime - labelToBeCompared.avgResponseTime),
+          minResponseTime: (_.minResponseTime - labelToBeCompared.minResponseTime),
+          maxResponseTime: (_.maxResponseTime - labelToBeCompared.maxResponseTime),
+          medianResponseTime: (_.medianResponseTime - labelToBeCompared.medianResponseTime),
+          bytes: ((_.bytes - labelToBeCompared.bytes) / 1024).toFixed(2),
+          bytesPerSecond: (_.bytesPerSecond - labelToBeCompared.bytesPerSecond),
+          bytesSentPerSecond: (_.bytesSentPerSecond - labelToBeCompared.bytesSentPerSecond),
+          n0: (_.n0 - labelToBeCompared.n0),
+          n5: (_.n5 - labelToBeCompared.n5),
+          n9: (_.n9 - labelToBeCompared.n9),
+          errorRate: (_.errorRate - labelToBeCompared.errorRate),
+          throughput: (_.throughput - labelToBeCompared.throughput)
+        };
+      } else {
+        // this.comparisonWarning.push(`${_.label} label not found`);
+        return {
+          ..._,
+          avgResponseTime: null,
+          minResponseTime: null,
+          maxResponseTime: null,
+          medianResponseTime: null,
+          n0: null,
+          n5: null,
+          n9: null,
+          errorRate: null,
+          throughput: null,
+          bytes: null,
+        };
+      }
+    });
   }
 }

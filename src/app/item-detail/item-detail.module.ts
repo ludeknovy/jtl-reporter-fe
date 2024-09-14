@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ItemDetailComponent } from "./item-detail.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { RequestStatsCompareComponent } from "./request-stats/request-stats-compare.component";
+import { RequestStatsComponent } from "./request-stats/request-stats.component";
 import { ThresholdsAlertComponent } from "./thresholds-alert/thresholds-alert.component";
 import { PerformanceAnalysisComponent } from "./performance-analysis/performance-analysis.component";
 import { AuthGuard } from "../auth.guard";
@@ -40,7 +40,7 @@ const routes: Routes = [{
 
 
 @NgModule({
-  declarations: [ItemDetailComponent, RequestStatsCompareComponent, ThresholdsAlertComponent,
+  declarations: [ItemDetailComponent, RequestStatsComponent, ThresholdsAlertComponent,
     PerformanceAnalysisComponent, LabelChartComponent, AnalyzeChartsComponent,
     LabelHealthComponent, LabelTrendComponent, StatsCompareComponent, AddMetricComponent, ShareComponent, DeleteShareLinkComponent,
     CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent, ChartIntervalComponent, ForbiddenComponent, ThresholdFailureComponent, ZoomChartsComponent, ErrorSummaryComponent],

@@ -38,6 +38,7 @@ export class StatsCompareComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private itemsService: ItemsService,
+    private itemApiService: ItemsApiService,
     private itemsApiService: ItemsApiService,
     private route: ActivatedRoute,
     private comparisonChartService: ComparisonChartService,
@@ -46,14 +47,15 @@ export class StatsCompareComponent implements OnInit {
 
   ngOnInit() {
     this.items$ = this.itemsService.items$;
+    this.route.params.subscribe(_ => {
+      this.params = _;
+    });
   }
 
   open(content) {
     this.modalService.open(content, { size: "xl" });
-    this.route.params.subscribe(_ => {
-      this.params = _;
-      this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
-    });
+    this.itemsService.fetchItems(this.params.projectName, this.params.scenarioName, { limit: LIMIT, offset: 0 });
+
   }
 
   loadMore() {
@@ -85,18 +87,18 @@ export class StatsCompareComponent implements OnInit {
   }
 
   quickBaseComparison(id) {
-    // this.itemsService.fetchItemDetail(
-    //   this.params.projectName,
-    //   this.params.scenarioName,
-    //   id).subscribe(_ => this.itemToCompare({
-    //   statistics: _.statistics,
-    //   maxVu: _.overview.maxVu,
-    //   environment: _.environment,
-    //   plot: _.plot,
-    //   histogramPlotData: _.histogramPlotData,
-    //   extraPlotData: _.extraPlotData,
-    //   id
-    // }));
+    this.itemApiService.fetchItemDetail(
+      this.params.projectName,
+      this.params.scenarioName,
+      id).subscribe(_ => this.itemToCompare({
+      statistics: _.statistics,
+      maxVu: _.overview.maxVu,
+      environment: _.environment,
+      plot: _.plot,
+      histogramPlotData: _.histogramPlotData,
+      extraPlotData: _.extraPlotData,
+      id
+    }));
   }
 
   itemToCompare(data) {

@@ -2,15 +2,12 @@ import { Component, Input, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetec
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 import { bytesToMbps, roundNumberTwoDecimals } from "../calculations";
 import { AnalyzeChartService } from "../../analyze-chart.service";
-import { ItemsApiService } from "src/app/items-api.service";
-import { ToastrService } from "ngx-toastr";
+
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import html2canvas from "html2canvas";
 import { ExcelService } from "src/app/_services/excel.service";
 import { ItemDetail, ItemStatistics } from "../../items.service.model";
-import { ComparisonChartService } from "../../_services/comparison-chart.service";
 import { ComparisonStatsService } from "../../_services/comparison-stats.service";
-import {ItemStatusValue} from '../item-detail.model';
 
 
 @Component({
@@ -29,6 +26,7 @@ export class RequestStatsComponent implements OnInit, OnDestroy {
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
+  comparingData;
   comparedData;
   comparedDataMs;
   labelsData;
@@ -86,6 +84,7 @@ export class RequestStatsComponent implements OnInit, OnDestroy {
         this.comparedData = diffValues
         this.labelsData = diffValues
         this.comparedDataMs = diffValues
+        this.comparingData = data
       }
     });
 
@@ -99,6 +98,7 @@ export class RequestStatsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.analyzeChartService.changeMessage(null);
+    this.comparisonStatsService.setRequestStats(null)
   }
 
   search(query: string) {
@@ -161,7 +161,8 @@ export class RequestStatsComponent implements OnInit, OnDestroy {
   switchComparisonDataUnit() {
     if (this.defaultUnit) {
       this.comparedData = this.labelsData.map((_) => {
-        const labelToBeCompared = this.comparedDataMs.find((__) => __.label === _.label);
+        const labelToBeCompared = this.comparingData.find((__) => __.label === _.label);
+        console.log(labelToBeCompared)
         if (labelToBeCompared) {
           return {
             ..._,

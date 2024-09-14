@@ -10,16 +10,16 @@ import { LabelTrendComponent } from "../label-trend/label-trend.component";
 import { StatsCompareComponent } from "../stats-compare/stats-compare.component";
 import { LabelHealthComponent } from "./label-health/label-health.component";
 
-import { RequestStatsCompareComponent } from "./request-stats-compare.component";
+import { RequestStatsComponent } from "./request-stats.component";
 
 describe("RequestStatsCompareComponent", () => {
-  let component: RequestStatsCompareComponent;
-  let fixture: ComponentFixture<RequestStatsCompareComponent>;
+  let component: RequestStatsComponent;
+  let fixture: ComponentFixture<RequestStatsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
-        RequestStatsCompareComponent,
+        RequestStatsComponent,
         StatsCompareComponent,
         LabelTrendComponent,
         LabelHealthComponent,
@@ -38,7 +38,7 @@ describe("RequestStatsCompareComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestStatsCompareComponent);
+    fixture = TestBed.createComponent(RequestStatsComponent);
     component = fixture.componentInstance;
     component.itemData = {
       environment: "",
@@ -158,33 +158,6 @@ describe("RequestStatsCompareComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
-  });
-  it("should call resetStatsData when itemToCompare triggered", () => {
-    const spy = spyOn(component, "resetStatsData").and.callThrough();
-    component.itemToCompare({
-      maxVu: 100,
-      id: "123-123",
-      statistics: [{
-        avgResponseTime: 109,
-        bytes: 7587,
-        errorRate: 0,
-        label: "02 - Click_Log_In-22",
-        maxResponseTime: 380,
-        minResponseTime: 81,
-        n0: 330,
-        n5: 344,
-        n9: 372,
-        samples: 200,
-        throughput: 0.17,
-      }],
-      plot: {
-        responseTime: [{ data: [], name: "label" }],
-        throughput: [{ data: [], name: "label" }]
-      },
-      extraPlotData: {},
-      histogramPlotData: {}
-    });
-    expect(spy).toHaveBeenCalled();
   });
   describe("label search", () => {
     it("should search fulltext", () => {

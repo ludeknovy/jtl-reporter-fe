@@ -146,6 +146,9 @@ export interface ItemStatistics {
     satisfaction?: number
     toleration?: number
   };
+  medianResponseTime?: number
+  bytesPerSecond?: number
+  bytesSentPerSecond?: number
 }
 
 interface ResponseMessageFailure {

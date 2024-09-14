@@ -9,7 +9,7 @@
       <span class="compare-menu-item"> Compare To Baseline</span>
     </button>
     <button *ngIf="comparingData" class="btn btn-sm" (click)="resetStatsData()" ngbDropdownItem><i class="fas fa-undo-alt"></i><span class="compare-menu-item"> Remove Comparison</span></button>
-    <a *ngIf="comparingData" class="btn btn-sm" ngbDropdownItem target="_blank" href="/project/{{params.projectName}}/scenario/{{params.scenarioName}}/item/{{comparedMetadata.id}}"><i class="fas fa-external-link-alt"></i><span class="compare-menu-item"> Open Comparing Report</span></a>
+    <a *ngIf="comparingData" class="btn btn-sm" ngbDropdownItem target="_blank" href="/project/{{params.projectName}}/scenario/{{selectedScenario}}/item/{{comparedMetadata.id}}"><i class="fas fa-external-link-alt"></i><span class="compare-menu-item"> Open Comparing Report</span></a>
   </div>
 </div>
 

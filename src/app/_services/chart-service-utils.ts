@@ -95,6 +95,9 @@ export interface ChartLine {
   labels: Map<string, LabelChartLine[]>;
   overall: Map<string, { name: string, data: [] }>;
   scatter: Map<string,[] >
+  threadsPerThreadGroup: Map<string,[] >
+  statusCodes:Map<string, { name: string, data: [] }>;
+
 }
 
 export interface LabelChartLine {

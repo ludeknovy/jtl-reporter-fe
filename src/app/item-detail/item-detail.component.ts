@@ -17,19 +17,21 @@ import { Metrics } from "./metrics";
 import { AnalyzeChartService } from "../analyze-chart.service";
 import { getValidationResults } from "../utils/showZeroErrorTolerance";
 import { ItemChartService } from "../_services/item-chart.service";
+import { ComparisonChartService } from "../_services/comparison-chart.service";
+import { ChartLines } from "../_services/chart-service-utils";
 
 exporting(Highcharts);
 
 
 @Component({
-  selector: "app-item-detail",
-  templateUrl: "./item-detail.component.html",
-  styleUrls: ["./item-detail.component.scss", "../shared-styles.css"],
+  selector: 'app-item-detail',
+  templateUrl: './item-detail.component.html',
+  styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
   providers: [DecimalPipe]
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
 
-  @ViewChild("overallChart") componentRef;
+  @ViewChild('overallChart') componentRef;
 
   Highcharts: typeof Highcharts = Highcharts;
   chart: Highcharts.Chart;
@@ -84,7 +86,21 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     zeroErrorValidation: null,
     minTestDurationValidation: null,
   };
-
+  comparisonChartOptionsDefault = {
+    overallChart: null,
+    threadsPerThreadGroup: null,
+    scatterChartOptions: null,
+    statusChartOptions: null,
+  };
+  comparisonLabelChartOptions = {
+    overallChart: null,
+    threadsPerThreadGroup: null,
+    scatterChartOptions: null,
+    statusChartOptions: null,
+  };
+  comparisonChart: Highcharts.Chart;
+  updateComparisonChartFlag;
+  comparisonChartCallback;
 
   constructor(
     private route: ActivatedRoute,
@@ -94,10 +110,14 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private analyzeChartService: AnalyzeChartService,
     private itemChartService: ItemChartService,
+    private comparisonChartService: ComparisonChartService,
   ) {
     this.Math = Math;
     this.overallChartCallback = chart => {
       this.overallChart = chart;
+    };
+    this.comparisonChartCallback = chart => {
+      this.comparisonChart = chart;
     };
   }
 
@@ -132,12 +152,14 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         this.itemChartService.setCurrentPlot(this.itemData.plot);
         this.selectedPlotSubscription();
         this.plotRangeSubscription();
+        this.comparisonSubscription();
         this.calculateTotalRequests();
         const validations = this.showValidationWarning(this.itemData);
         this.validations = {
           zeroErrorValidation: validations.zeroErrorToleranceValidation,
           minTestDurationValidation: validations.minTestDurationValidation
         };
+        this;
         this.spinner.hide();
       });
     this.analyzeChartService.currentData.subscribe(data => {
@@ -154,41 +176,18 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.toastr.clear();
+    this.comparisonChartService.resetPlot()
   }
 
   private selectedPlotSubscription() {
     this.itemChartService.selectedPlot$.subscribe((value) => {
       this.chartLines = value.chartLines;
-      if (this.chartLines) {
-        const overallChartSeries = Array.from(this.chartLines?.overall?.values());
-        if (this.chartLines.threadsPerThreadGroup.has(Metrics.Threads)) {
-          this.threadsPerThreadGroup = this.chartLines.threadsPerThreadGroup.get(Metrics.Threads);
-        }
-
-
-        this.overallChartOptions.series = JSON.parse(JSON.stringify(overallChartSeries));
-        const scatterResponseTimeData = value.chartLines.scatter.get(Metrics.ResponseTimeRaw);
-
-        if (this.chartLines?.scatter?.has(Metrics.ResponseTimeRaw)) {
-          this.scatterChartOptions = scatterChart;
-          this.scatterChartOptions.series = [{
-            data: scatterResponseTimeData, name: "Response Time", marker: {
-              radius: 1
-            },
-          }];
-          this.updateScatterChartFlag = true;
-        }
-
-        if (this.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)) {
-          // initialize the chart options only when there are the status codes data
-          this.statusChartOptions = {
-            ...commonGraphSettings("")
-          };
-          const statusCodesLines = this.chartLines?.statusCodes.get(Metrics.StatusCodeInTime);
-          this.statusChartOptions.series = JSON.parse(JSON.stringify(statusCodesLines.data));
-        }
-      }
-
+      const chartOptions = this.prepareChartOptions(value)
+      this.threadsPerThreadGroup = chartOptions.threadsPerThreadGroup
+      this.overallChartOptions = chartOptions.overallChart
+      this.statusChartOptions = chartOptions.statusChartOptions
+      this.scatterChartOptions = chartOptions.scatterChartOptions
+      this.updateScatterChartFlag = true;
       this.updateChartFlag = true;
     });
   }
@@ -201,6 +200,58 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     this.itemChartService.plotRange$.subscribe((value) => {
       this.updateMinMaxOfCharts(value?.start?.getTime(), value?.end?.getTime());
     });
+  }
+
+  private comparisonSubscription() {
+    this.comparisonChartService.selectedPlot$.subscribe((plot) => {
+      if (!plot) {
+        if (this.comparisonChart) {
+          this.comparisonLabelChartOptions = this.comparisonChartOptionsDefault;
+          this.comparisonChart = null;
+        }
+        return;
+      }
+      this.comparisonLabelChartOptions = this.prepareChartOptions(plot)
+      this.updateChartFlag = true;
+      this.updateScatterChartFlag = true;
+    });
+  }
+
+  private prepareChartOptions(plot: ChartLines) {
+    const chartOptions = this.comparisonChartOptionsDefault
+    if (plot.chartLines) {
+      const overallChartSeries = Array.from(this.chartLines?.overall?.values());
+      if (plot.chartLines.threadsPerThreadGroup.has(Metrics.Threads)) {
+        chartOptions.threadsPerThreadGroup = plot.chartLines.threadsPerThreadGroup.get(Metrics.Threads);
+      }
+
+      chartOptions.overallChart = {
+        ...overallChartSettings("ms"),
+        series: JSON.parse(JSON.stringify(overallChartSeries))
+      };
+
+
+      const scatterResponseTimeData = plot.chartLines.scatter.get(Metrics.ResponseTimeRaw);
+
+      if (plot.chartLines?.scatter?.has(Metrics.ResponseTimeRaw)) {
+        chartOptions.scatterChartOptions = scatterChart;
+        chartOptions.scatterChartOptions.series = [{
+          data: scatterResponseTimeData, name: "Response Time", marker: {
+            radius: 1
+          },
+        }];
+      }
+
+      if (plot.chartLines?.statusCodes?.has(Metrics.StatusCodeInTime)) {
+        // initialize the chart options only when there are the status codes data
+        chartOptions.statusChartOptions = {
+          ...commonGraphSettings("")
+        };
+        const statusCodesLines = plot.chartLines?.statusCodes.get(Metrics.StatusCodeInTime);
+        chartOptions.statusChartOptions.series = JSON.parse(JSON.stringify(statusCodesLines.data));
+      }
+      return chartOptions;
+    }
   }
 
   private updateMinMaxOfCharts(min, max) {

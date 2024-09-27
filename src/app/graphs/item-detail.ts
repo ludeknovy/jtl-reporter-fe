@@ -282,7 +282,8 @@ export const networkLineSettings: any = {
 export const scatterChart = {
   chart: {
     type: "scatter",
-    zoomType: "xy"
+    zoomType: "xy",
+    marginTop: 50,
   },
   title: {
     text: ""

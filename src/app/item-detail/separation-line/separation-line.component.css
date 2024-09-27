@@ -1,0 +1,29 @@
+
+.separation-line {
+  overflow: hidden;
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.separation-line::before,
+.separation-line::after {
+  content: "";
+  display: inline-block;
+  height: 2px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+  border: none;
+  border-top: 1px dotted #a1b3df;
+}
+
+.separation-line::before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+.separation-line::after {
+  left: 0.5em;
+  margin-right: -50%;
+}

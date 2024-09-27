@@ -31,6 +31,7 @@ import { ThresholdFailureComponent } from "./request-stats/threshold-failure/thr
 import { ZoomChartsComponent } from "./zoom-charts/zoom-charts.component";
 import { ErrorSummaryComponent } from "./error-summary/error-summary.component";
 import { ValidationsModule } from "./validations/validations.module";
+import { SeparationLineComponent } from './separation-line/separation-line.component';
 
 
 const routes: Routes = [{
@@ -43,7 +44,7 @@ const routes: Routes = [{
   declarations: [ItemDetailComponent, RequestStatsComponent, ThresholdsAlertComponent,
     PerformanceAnalysisComponent, LabelChartComponent, AnalyzeChartsComponent,
     LabelHealthComponent, LabelTrendComponent, StatsCompareComponent, AddMetricComponent, ShareComponent, DeleteShareLinkComponent,
-    CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent, ChartIntervalComponent, ForbiddenComponent, ThresholdFailureComponent, ZoomChartsComponent, ErrorSummaryComponent],
+    CreateNewShareLinkComponent, MonitoringStatsComponent, ReloadCustomChartComponent, ChartIntervalComponent, ForbiddenComponent, ThresholdFailureComponent, ZoomChartsComponent, ErrorSummaryComponent, SeparationLineComponent],
   imports: [
     CommonModule, NgbModule, RouterModule.forRoot(routes), DataTableModule, SharedItemModule, SharedModule, HighchartsChartModule, ValidationsModule,
     ReactiveFormsModule, FormsModule, RoleModule,

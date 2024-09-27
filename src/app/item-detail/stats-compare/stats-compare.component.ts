@@ -84,7 +84,9 @@ export class StatsCompareComponent implements OnInit {
             environment: _.environment,
             plot: _.plot,
             histogramPlotData: _.histogramPlotData,
-            extraPlotData: _.extraPlotData
+            extraPlotData: _.extraPlotData,
+            startDate: _.overview.startDate,
+            endDate: _.overview.endDate,
           });
           this.page = 0;
           this.modalService.dismissAll();
@@ -103,13 +105,15 @@ export class StatsCompareComponent implements OnInit {
       plot: _.plot,
       histogramPlotData: _.histogramPlotData,
       extraPlotData: _.extraPlotData,
+      startDate: _.overview.startDate,
+      endDate: _.overview.endDate,
       id
     }));
   }
 
   itemToCompare(data) {
     this.resetStatsData();
-    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData);
+    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData, data.startDate, data.endDate);
     this.comparisonChartService.setHistogramPlot(data.histogramPlotData);
     this.comparingData = data;
     this.comparedMetadata = { id: data.id, maxVu: data.maxVu };

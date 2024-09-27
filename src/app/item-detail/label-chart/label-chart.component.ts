@@ -150,7 +150,9 @@ export class LabelChartComponent implements OnChanges {
       this.labelCharts.set("Histogram", responseTimeDistribution(histogram.values));
     } else {
       const histogram = histogramData.find(data => data.label === this.label);
-      this.comparisonLabelCharts.set("Histogram", responseTimeDistribution(histogram.values));
+      if (histogram && histogram.data) {
+        this.comparisonLabelCharts.set("Histogram", responseTimeDistribution(histogram.values));
+      }
     }
   }
 

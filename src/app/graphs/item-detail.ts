@@ -279,7 +279,7 @@ export const networkLineSettings: any = {
   name: Metrics.Network
 };
 
-export const scatterChart = {
+export const scatterChart = () => ({
   chart: {
     type: "scatter",
     zoomType: "xy",
@@ -297,6 +297,8 @@ export const scatterChart = {
   },
   xAxis: {
     showLastLabel: true,
+    min: null,
+    max: null,
     type: "datetime",
     legend: {
       enabled: false,
@@ -339,4 +341,4 @@ export const scatterChart = {
       }
     }
   },
-};
+});

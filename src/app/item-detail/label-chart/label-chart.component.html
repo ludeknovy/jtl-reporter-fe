@@ -25,7 +25,11 @@
       <highcharts-chart #labelChart [Highcharts]="Highcharts" [options]="labelChartOptions" [callbackFunction]="chartCallback" [(update)]="updateLabelChartFlag"
         class="highchart-chart"
         style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+
+      <app-separation-line *ngIf="comparisonLabelChartOptions"></app-separation-line>
+
       <div *ngIf="comparisonLabelChartOptions">
+
         <highcharts-chart #labelComparisonChart [Highcharts]="Highcharts" [options]="comparisonLabelChartOptions" [callbackFunction]="comparisonChartCallback" [(update)]="updateLabelChartFlag"
                           class="highchart-chart"
                           style="width: 100%; height: 100%; display: block;"></highcharts-chart>

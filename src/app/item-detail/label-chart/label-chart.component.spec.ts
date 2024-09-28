@@ -24,7 +24,10 @@ describe("LabelChartComponent", () => {
     component.chartLines = {
       labels: new Map([[Metrics.Network, [{ name: "name", suffix: "mbps", data: [] }] ]]),
       overall: new Map([[Metrics.Threads, { name: "virtual-users", data: [] }]]),
-      scatter: new Map([[Metrics.ResponseTimeRaw, [] ]])
+      scatter: new Map([[Metrics.ResponseTimeRaw, [] ]]),
+      threadsPerThreadGroup: new Map([[Metrics.Threads, []]]),
+      monitoring: new Map([[Metrics.Monitoring, []]]),
+      statusCodes: new Map([[Metrics.StatusCodeInTime,  { name: "name", data: [] }]])
     };
     fixture.detectChanges();
   });

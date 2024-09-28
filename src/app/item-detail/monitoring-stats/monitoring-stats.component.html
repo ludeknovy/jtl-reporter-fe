@@ -9,6 +9,17 @@
                             [(update)]="updateFlag"
                             [constructorType]="chartConstructor"
                             style="width: auto; height: 400px; display: block;"></highcharts-chart>
+
+          <app-separation-line  *ngIf="monitoringComparisonChartOptions"></app-separation-line>
+
+
+          <div class="compare-chart" *ngIf="monitoringComparisonChartOptions">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="monitoringComparisonChartOptions"
+                              [(update)]="updateComparisonChartFlag"
+                              style="width: auto; height: 400px; display: block;"></highcharts-chart>
+          </div>
+
+
         </div>
       </div>
     </div>

@@ -14,4 +14,5 @@ export enum Metrics {
   ResponseTimeRaw = "Raw Response Time",
   LatencyAvg = "Latency [avg]",
   ConnectAvg = "Connection [avg]",
+  Monitoring = "Monitoring"
 }

@@ -1,14 +1,16 @@
 import { Component, OnInit, Input, } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as Highcharts from "highcharts";
 import { monitoringGraphSettings } from "src/app/graphs/monitoring";
 import { from } from "rxjs";
+import { ComparisonChartService } from "../../_services/comparison-chart.service";
+import { MonitoringData } from "../../items.service.model";
+import { Metrics } from "../metrics";
 
 
 @Component({
-  selector: "app-monitoring-stats",
-  templateUrl: "./monitoring-stats.component.html",
-  styleUrls: ["./monitoring-stats.component.css", "../item-detail.component.scss", "../../shared-styles.css"]
+  selector: 'app-monitoring-stats',
+  templateUrl: './monitoring-stats.component.html',
+  styleUrls: ['./monitoring-stats.component.css', '../item-detail.component.scss', '../../shared-styles.css']
 })
 export class MonitoringStatsComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
@@ -16,26 +18,44 @@ export class MonitoringStatsComponent implements OnInit {
   chartConstructor = "chart";
   chartCallback;
   updateFlag = false;
+  updateComparisonChartFlag = false;
+  monitoringComparisonChartOptions;
   chart;
-  constructor(
-    private modalService: NgbModal,
 
+  constructor(
+    private comparisonChartService: ComparisonChartService,
   ) {
     this.chartCallback = chart => {
       this.chart = chart;
     };
   }
 
-  @Input() data: [{ name: string, timestamp: Date, avgCpu: number, avgMem: number }];
+  @Input() data: MonitoringData[];
 
   ngOnInit() {
-    this.prepareChart()
+    const series = this.prepareChartSeries(this.data);
+    from(new Promise(resolve => setTimeout(resolve, 50))).subscribe((val: any) => {
+      this.monitoringChartOptions = {
+        ...monitoringGraphSettings(), series: series
+      };
+      this.updateFlag = true;
+    });
+    this.comparisonChartService.selectedPlot$.subscribe(plot => {
+      if (plot && plot?.chartLines?.monitoring.has(Metrics.Monitoring)) {
+        const comparisonSeries = this.prepareChartSeries(plot?.chartLines.monitoring.get(Metrics.Monitoring));
+        this.monitoringComparisonChartOptions = {
+          ...monitoringGraphSettings(),
+          series: comparisonSeries,
+        };
+        this.updateComparisonChartFlag = true;
+      }
+    });
   }
 
 
-  prepareChart() {
-    const workers = Array.from(new Set(this.data.map(data => data.name)));
-    const series = workers.map((worker) => this.data
+  prepareChartSeries(data: MonitoringData[]) {
+    const workers = Array.from(new Set(data.map(data => data.name)));
+    return workers.map((worker) => data
       .filter(data => data.name === worker)
       .reduce((acc, current) => {
         acc.data.cpu.push([current.timestamp, current.avgCpu]);
@@ -45,12 +65,5 @@ export class MonitoringStatsComponent implements OnInit {
       }, { data: { cpu: [], mem: [] }, name: null }))
       .map((worker) => [{ data: worker.data.cpu, name: worker.name + " - cpu" }, { data: worker.data.mem, name: worker.name + " - mem" }])
       .flat();
-
-    from(new Promise(resolve => setTimeout(resolve, 50))).subscribe((val: any) => {
-      this.monitoringChartOptions = {
-        ...monitoringGraphSettings(), series: series
-      };
-      this.updateFlag = true;
-    });
   }
 }

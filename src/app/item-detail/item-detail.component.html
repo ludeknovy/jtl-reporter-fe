@@ -401,6 +401,16 @@
                                           [(update)]="updateOverallChartFlag"
                                           style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
+
+                        <app-separation-line  *ngIf="comparisonItemChartOptions && comparisonItemChartOptions.overallChart"></app-separation-line>
+
+                        <div *ngIf="comparisonItemChartOptions && comparisonItemChartOptions.overallChart">
+
+                          <highcharts-chart [Highcharts]="Highcharts" [options]="comparisonItemChartOptions.overallChart" [callbackFunction]="comparisonChartCallback" [(update)]="updateComparisonChartFlag"
+                                            class="highchart-chart"
+                                            style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -419,6 +429,20 @@
                                           [(update)]="updateScatterChartFlag"
                                           style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
+
+
+
+
+                        <app-separation-line  *ngIf="comparisonItemChartOptions && comparisonItemChartOptions.scatterChartOptions"></app-separation-line>
+
+
+                        <div *ngIf="comparisonItemChartOptions && comparisonItemChartOptions.scatterChartOptions">
+
+                          <highcharts-chart [Highcharts]="Highcharts" [options]="comparisonItemChartOptions.scatterChartOptions" [callbackFunction]="comparisonScatterChartCallback" [(update)]="updateComparisonScatterChartFlag"
+                                            class="highchart-chart"
+                                            style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+
+                        </div>
                       </div>
                     </div>
 
@@ -437,6 +461,16 @@
                                           [(update)]="updateChartFlag"
                                           style="width: 100%; height: 350px; display: block;">
                         </highcharts-chart>
+
+                        <app-separation-line  *ngIf="comparisonItemChartOptions && comparisonItemChartOptions.statusChartOptions"></app-separation-line>
+
+
+                        <div *ngIf="comparisonItemChartOptions && comparisonItemChartOptions.statusChartOptions">
+
+                          <highcharts-chart [Highcharts]="Highcharts" [options]="comparisonItemChartOptions.statusChartOptions" [callbackFunction]="comparisonChartCallback" [(update)]="updateComparisonChartFlag"
+                                            class="highchart-chart"
+                                            style="width: 100%; height: 100%; display: block;"></highcharts-chart>
+                        </div>
                       </div>
                     </div>
                   </div>

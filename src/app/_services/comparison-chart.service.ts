@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { ChartLine, getChartLines } from "./chart-service-utils";
+import { MonitoringData } from "../items.service.model";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class ComparisonChartService {
 
   }
 
-  setComparisonPlot(defaultPlot: ChartLine, extraPlots, startDate, endDate) {
+  setComparisonPlot(defaultPlot: ChartLine, extraPlots, startDate, endDate, monitoring: MonitoringData[]) {
     this.interval$.subscribe(interval => {
       let comparisonPlot: ChartLine = null;
       if (!interval || interval === "Auto") {
@@ -39,7 +40,7 @@ export class ComparisonChartService {
         comparisonPlot = extraPlotIntervalData || defaultPlot;
       }
       this.plot$.next({
-        chartLines: comparisonPlot ? getChartLines(comparisonPlot).chartLines : null,
+        chartLines: comparisonPlot ? getChartLines(comparisonPlot, monitoring).chartLines : null,
         startDate: startDate ? new Date(startDate) : null,
         endDate: endDate ? new Date(endDate) : null,
       });

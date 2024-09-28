@@ -31,7 +31,7 @@ export interface ItemDetail {
   zeroErrorToleranceEnabled: boolean;
   reportStatus: ReportStatus;
   monitoring: {
-    cpu: { data: { name: string, cpu: number, timestamp: number }[], max?: number }
+    cpu: { data: MonitoringData[], max?: number }
   };
   baseId: string;
   name: string;
@@ -62,9 +62,9 @@ export interface ItemDetail {
   userSettings: {
     requestStats: RequestStats
   };
-  errorSummary: ErrorSummary
-  status: string
-  minTestDuration: number
+  errorSummary: ErrorSummary;
+  status: string;
+  minTestDuration: number;
 }
 
 interface TopMetricsSettings {
@@ -78,7 +78,7 @@ interface TopMetricsSettings {
   percentile: boolean; // legacy setting
   percentile90: boolean;
   percentile95: boolean;
-  percentile99: boolean
+  percentile99: boolean;
 }
 
 interface ItemOverview {
@@ -146,24 +146,14 @@ export interface ItemStatistics {
     satisfaction?: number
     toleration?: number
   };
-  medianResponseTime?: number
-  bytesPerSecond?: number
-  bytesSentPerSecond?: number
+  medianResponseTime?: number;
+  bytesPerSecond?: number;
+  bytesSentPerSecond?: number;
 }
 
 interface ResponseMessageFailure {
   count: number;
   responseMessage: string;
-}
-
-interface MonitoringData {
-  "bytes-recv"?: string;
-  "bytes-sent"?: string;
-  "conn-all"?: string;
-  cpu?: string;
-  "diskSpace"?: string;
-  mem?: string;
-  ts?: string;
 }
 
 export interface ScenarioTrendsData {
@@ -338,37 +328,46 @@ export interface ThresholdResult {
   errorRate: {
     diffValue: number,
     passed: boolean
-  }
+  };
   percentile: {
     diffValue: number,
     passed: boolean
-  }
+  };
   throughput: {
     diffValue: number,
     passed: boolean
-  }
+  };
 }
 
 export interface ErrorSummary {
-  groupedErrors: Errors[]
-  topErrorsByLabel: Top5Errors[]
+  groupedErrors: Errors[];
+  topErrorsByLabel: Top5Errors[];
 }
 
 interface Errors {
-  count: number
-  statusCode: string
-  responseMessage: string
-  failureMessage: string
+  count: number;
+  statusCode: string;
+  responseMessage: string;
+  failureMessage: string;
 }
 
 interface Top5Errors {
-  label: string
-  error1: LabelError
-  error2: LabelError
-  error3: LabelError
-  error4: LabelError
-  error5: LabelError
+  label: string;
+  error1: LabelError;
+  error2: LabelError;
+  error3: LabelError;
+  error4: LabelError;
+  error5: LabelError;
 }
 
-interface LabelError { count: number; error: string }
+interface LabelError {
+  count: number;
+  error: string;
+}
 
+export interface MonitoringData {
+  name: string,
+  avgCpu: number,
+  avgMem?: number,
+  timestamp: number
+}

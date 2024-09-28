@@ -145,7 +145,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
       .subscribe((results) => {
         this.itemData = results;
         this.monitoringAlerts();
-        this.itemChartService.setCurrentPlot(this.itemData.plot);
+        this.itemChartService.setCurrentPlot(this.itemData.plot, this.itemData.monitoring.cpu.data);
         this.selectedPlotSubscription();
         this.plotRangeSubscription();
         this.comparisonSubscription();

@@ -1,8 +1,9 @@
 import { errorLineSettings, networkLineSettings, threadLineSettings, throughputLineSettings } from "../graphs/item-detail";
 import { bytesToMbps } from "../item-detail/calculations";
 import { Metrics } from "../item-detail/metrics";
+import { MonitoringData } from "../items.service.model";
 
-export const getChartLines = (plot): ChartLines => {
+export const getChartLines = (plot, monitoringPlot: MonitoringData[]): ChartLines => {
   const {
     threads, overallTimeResponse,
     overallThroughput, overAllFailRate, overAllNetworkV2,
@@ -20,6 +21,7 @@ export const getChartLines = (plot): ChartLines => {
     labels: new Map(),
     statusCodes: new Map(),
     scatter: new Map(),
+    monitoring: new Map(),
   };
 
   if (overAllNetworkV2) {
@@ -46,6 +48,10 @@ export const getChartLines = (plot): ChartLines => {
 
   if (scatterPlotData && scatterPlotData.length > 0) {
     chartLines.scatter.set(Metrics.ResponseTimeRaw, scatterPlotData)
+  }
+
+  if (monitoringPlot && monitoringPlot.length > 0) {
+    chartLines.monitoring.set(Metrics.Monitoring, monitoringPlot)
   }
 
   if (networkV2) {
@@ -83,7 +89,6 @@ export const getChartLines = (plot): ChartLines => {
   chartLines.labels.set(Metrics.Throughput, throughput.map((label) => ({ ...label, suffix: " reqs/s" })));
 
   return { chartLines };
-
 };
 
 
@@ -97,11 +102,12 @@ export interface ChartLine {
   scatter: Map<string,[] >
   threadsPerThreadGroup: Map<string,[] >
   statusCodes:Map<string, { name: string, data: [] }>;
+  monitoring: Map<string,MonitoringData[]>
 
 }
-
 export interface LabelChartLine {
   name: string
   data: [],
   suffix: string
 }
+

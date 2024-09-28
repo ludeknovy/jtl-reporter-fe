@@ -29,7 +29,7 @@ export class ChartIntervalComponent implements OnInit {
     } else {
       newPlotData = this.intervals.extraIntervals.find(interval => interval.interval === inputInterval)?.data
     }
-    this.itemChartService.setCurrentPlot(newPlotData)
+    this.itemChartService.setCurrentPlot(newPlotData, null)
   }
 
 }

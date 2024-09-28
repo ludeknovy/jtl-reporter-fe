@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { ChartLines, getChartLines } from "./chart-service-utils";
+import { MonitoringData } from "../items.service.model";
 
 @Injectable({
   providedIn: "root"
@@ -13,8 +14,8 @@ export class ItemChartService {
   selectedPlot$ = this.plot.asObservable();
   plotRange$ = this.plotRange.asObservable();
 
-  setCurrentPlot(plot) {
-    this.plot.next(getChartLines(plot));
+  setCurrentPlot(plot, monitoringPlot: MonitoringData[]) {
+    this.plot.next(getChartLines(plot, monitoringPlot));
   }
 
   setPlotRange(plotRange: PlotRange) {

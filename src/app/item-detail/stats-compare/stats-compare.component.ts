@@ -1,8 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ItemsService } from "src/app/items.service";
 import { ActivatedRoute, Params } from "@angular/router";
-import { Observable, Subscription } from "rxjs";
+import { Observable } from "rxjs";
 import { IScenarios, ItemDetail, Items } from "src/app/items.service.model";
 import { ItemsApiService } from "src/app/items-api.service";
 import { ComparisonChartService } from "../../_services/comparison-chart.service";
@@ -87,6 +87,7 @@ export class StatsCompareComponent implements OnInit {
             extraPlotData: _.extraPlotData,
             startDate: _.overview.startDate,
             endDate: _.overview.endDate,
+            monitoring: _.monitoring,
           });
           this.page = 0;
           this.modalService.dismissAll();
@@ -107,13 +108,14 @@ export class StatsCompareComponent implements OnInit {
       extraPlotData: _.extraPlotData,
       startDate: _.overview.startDate,
       endDate: _.overview.endDate,
+      monitoring: _.monitoring,
       id
     }));
   }
 
   itemToCompare(data) {
     this.resetStatsData();
-    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData, data.startDate, data.endDate);
+    this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData, data.startDate, data.endDate, data.monitoring?.cpu?.data);
     this.comparisonChartService.setHistogramPlot(data.histogramPlotData);
     this.comparingData = data;
     this.comparedMetadata = { id: data.id, maxVu: data.maxVu };
@@ -149,7 +151,6 @@ export class StatsCompareComponent implements OnInit {
   }
 
   loadScenario(event) {
-    console.log(event.target.value)
     const scenario = event.target.value
     this.selectedScenario = scenario
     this.itemsService.fetchItems(this.params.projectName, scenario, { limit: LIMIT, offset: 0 });

@@ -33,7 +33,14 @@ describe("AnalyzeChartsComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AnalyzeChartsComponent);
     component = fixture.componentInstance;
-    component.chartLines = { labels: new Map([["test", [{ name: "test", data: [], suffix: " ms" }]]]), overall: new Map(), scatter: new Map() };
+    component.chartLines = {
+      labels: new Map([["test", [{ name: "test", data: [], suffix: " ms" }]]]),
+      overall: new Map(),
+      scatter: new Map(),
+      threadsPerThreadGroup: new Map(),
+      monitoring: new Map(),
+      statusCodes: new Map(),
+    };
     component.params = { projectName: "test-project", scenarioName: "test-scenario", id: "test-item" };
     fixture.detectChanges();
   });

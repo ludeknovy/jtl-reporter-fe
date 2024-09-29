@@ -1,4 +1,4 @@
-<app-control-panel *ngIf="!isAnonymous">
+<app-control-panel *ngIf="!isAnonymous" shouldStick=true>
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
       <app-breadcrumb *ngIf="itemData.environment" [testName]="itemData.name"></app-breadcrumb>

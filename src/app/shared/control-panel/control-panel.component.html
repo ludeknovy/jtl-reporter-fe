@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light py-1 content-container" id="top-panel">
+<nav class="navbar navbar-expand-lg navbar-light py-1 content-container" [ngClass]="{'sticky-top': shouldStick }" id="top-panel" (scroll)="onWindowScroll();">
   <button class="navbar-toggler text-primary" type="button" (click)="toggleNavbar()">
     <i class="fas fa-ellipsis-h"></i>
   </button>

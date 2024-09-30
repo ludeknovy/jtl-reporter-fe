@@ -74,7 +74,7 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody *ngIf="items.data.length === 0">
+                    <tbody *ngIf="!isLoading && items.data.length === 0">
                       <tr>
                         <td colspan="8" class="text-muted text-center">Nothing here yet! Please upload some test reports.</td>
                       </tr>

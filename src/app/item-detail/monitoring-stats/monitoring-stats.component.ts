@@ -48,6 +48,8 @@ export class MonitoringStatsComponent implements OnInit {
           series: comparisonSeries,
         };
         this.updateComparisonChartFlag = true;
+      } else {
+        this.monitoringComparisonChartOptions = null
       }
     });
   }

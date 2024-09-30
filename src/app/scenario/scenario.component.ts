@@ -32,6 +32,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   isAnonymous = false;
   validationEnabled = false
   minTestDuration = null
+  isLoading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,7 +60,17 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     });
 
     if (!this.isAnonymous) {
-      this.items$ = this.itemsService.items$;
+      this.items$ = this.itemsService.items$
+      this.items$
+        .pipe(catchError(r => {
+          this.isLoading = false;
+          return of(r);
+        }))
+        .subscribe(items => {
+        if (items.name) {
+          this.isLoading = false;
+        }
+      })
       this.environment$ = this.environmentService.environment$.subscribe(value => this.page = 1);
 
       this.route.params.pipe<any>(

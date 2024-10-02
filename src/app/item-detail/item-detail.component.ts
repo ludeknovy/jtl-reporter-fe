@@ -75,7 +75,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   itemParams;
   Math: any;
   token: string;
-  isAnonymous = false;
+  isAnonymous = true;
   toggleThroughputBandFlag = false;
   chartLines;
   activeId = 1;
@@ -128,8 +128,8 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     ).subscribe(_ => this.itemParams = _);
     this.route.queryParams.subscribe(_ => {
       this.token = _.token;
-      if (this.token) {
-        this.isAnonymous = true;
+      if (!this.token) {
+        this.isAnonymous = false;
       }
     });
     this.itemsService.fetchItemDetail(

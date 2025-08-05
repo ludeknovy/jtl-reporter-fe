@@ -10,7 +10,7 @@
 
 
     <div class="d-flex">
-      <ul ngbNav #nav="ngbNav" orientation="vertical">
+      <ul ngbNav #nav="ngbNav" orientation="vertical" [(activeId)]="active">
         <li *userRole="'operator'" ngbNavItem="general">
           <a ngbNavLink class="jtl-nav-link"> General</a>
           <ng-template ngbNavContent>

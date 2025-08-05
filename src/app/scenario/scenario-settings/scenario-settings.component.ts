@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { catchError } from "rxjs/operators";
-import { of } from "rxjs";
+import {combineLatest, of} from 'rxjs';
 import { ActivatedRoute } from "@angular/router";
 import { NotificationMessage } from "src/app/notification/notification-messages";
 import { ScenarioApiService } from "src/app/scenario-api.service";
@@ -16,6 +16,8 @@ import { ScenarioApiService } from "src/app/scenario-api.service";
 export class SettingsScenarioComponent implements OnInit {
 
   @Output() scenarioNameChangeEvent = new EventEmitter<string>();
+
+  active = "general"
 
   scenarioSettingsForm: FormGroup;
   labelTrendChartSettingsForm: FormGroup;
@@ -118,13 +120,18 @@ export class SettingsScenarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(_ => this.params = _);
-    this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
-      this.hasBaselineReport = !!_.baselineReport;
-      if (_.name) {
-        this.createFormControls(_);
+    combineLatest([
+      this.route.params,
+      this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName),
+      this.scenarioApiService.getScenarioUserSettings(this.params.projectName, this.params.scenarioName)
+    ]).subscribe(([params, scenario, userSettings]) => {
+      this.params = params;
+      this.hasBaselineReport = !!scenario.baselineReport;
+      if (scenario.name) {
+        this.createFormControls(scenario, userSettings);
         this.createForm();
         this.labelFilters = new FormArray(
-          _.labelFilterSettings.map(filter => new FormArray([new FormControl(filter.labelTerm, Validators.required), new FormControl(filter.operator, Validators.required)])));
+          scenario.labelFilterSettings.map(filter => new FormArray([new FormControl(filter.labelTerm, Validators.required), new FormControl(filter.operator, Validators.required)])));
       }
 
 
@@ -150,7 +157,7 @@ export class SettingsScenarioComponent implements OnInit {
 
   }
 
-  createFormControls(settings) {
+  createFormControls(settings, userSettings) {
     this.formControls.scenarioName = new FormControl(settings.name, [
       Validators.minLength(3),
       Validators.maxLength(100),
@@ -213,20 +220,20 @@ export class SettingsScenarioComponent implements OnInit {
     this.labelTrendChartControls.failures = new FormControl(settings.labelTrendChartSettings?.failures, []);
 
 
-    this.requestStatsCormControls.samples = new FormControl(settings.userSettings.requestStats.samples, [Validators.required]);
-    this.requestStatsCormControls.avg = new FormControl(settings.userSettings.requestStats.avg, [Validators.required]);
-    this.requestStatsCormControls.standardDeviation = new FormControl(settings.userSettings.requestStats.standardDeviation || true, [Validators.required]);
-    this.requestStatsCormControls.min = new FormControl(settings.userSettings.requestStats.min, [Validators.required]);
-    this.requestStatsCormControls.max = new FormControl(settings.userSettings.requestStats.max, [Validators.required]);
-    this.requestStatsCormControls.p50 = new FormControl(settings.userSettings.requestStats.p50 || false, [Validators.required]);
-    this.requestStatsCormControls.p90 = new FormControl(settings.userSettings.requestStats.p90, [Validators.required]);
-    this.requestStatsCormControls.p95 = new FormControl(settings.userSettings.requestStats.p95, [Validators.required]);
-    this.requestStatsCormControls.p99 = new FormControl(settings.userSettings.requestStats.p99, [Validators.required]);
-    this.requestStatsCormControls.throughput = new FormControl(settings.userSettings.requestStats.throughput, [Validators.required]);
-    this.requestStatsCormControls.network = new FormControl(settings.userSettings.requestStats.network, [Validators.required]);
-    this.requestStatsCormControls.errorRate = new FormControl(settings.userSettings.requestStats.errorRate, [Validators.required]);
-    this.requestStatsCormControls.failures = new FormControl(settings.userSettings.requestStats.failures || false, [Validators.required]);
-    this.requestStatsCormControls.apdex = new FormControl(settings.userSettings.requestStats.apdex || false, [Validators.required]);
+    this.requestStatsCormControls.samples = new FormControl(userSettings.requestStats.samples, [Validators.required]);
+    this.requestStatsCormControls.avg = new FormControl(userSettings.requestStats.avg, [Validators.required]);
+    this.requestStatsCormControls.standardDeviation = new FormControl(userSettings.requestStats.standardDeviation || true, [Validators.required]);
+    this.requestStatsCormControls.min = new FormControl(userSettings.requestStats.min, [Validators.required]);
+    this.requestStatsCormControls.max = new FormControl(userSettings.requestStats.max, [Validators.required]);
+    this.requestStatsCormControls.p50 = new FormControl(userSettings.requestStats.p50 || false, [Validators.required]);
+    this.requestStatsCormControls.p90 = new FormControl(userSettings.requestStats.p90, [Validators.required]);
+    this.requestStatsCormControls.p95 = new FormControl(userSettings.requestStats.p95, [Validators.required]);
+    this.requestStatsCormControls.p99 = new FormControl(userSettings.requestStats.p99, [Validators.required]);
+    this.requestStatsCormControls.throughput = new FormControl(userSettings.requestStats.throughput, [Validators.required]);
+    this.requestStatsCormControls.network = new FormControl(userSettings.requestStats.network, [Validators.required]);
+    this.requestStatsCormControls.errorRate = new FormControl(userSettings.requestStats.errorRate, [Validators.required]);
+    this.requestStatsCormControls.failures = new FormControl(userSettings.requestStats.failures || false, [Validators.required]);
+    this.requestStatsCormControls.apdex = new FormControl(userSettings.requestStats.apdex || false, [Validators.required]);
 
     this.apdexFormControls.satisfyingThreshold = new FormControl(settings?.apdexSettings?.satisfyingThreshold, [
       Validators.min(0),
@@ -295,8 +302,10 @@ export class SettingsScenarioComponent implements OnInit {
   }
 
   onSubmit() {
+    const { projectName, scenarioName: currentScenarioName } = this.params;
+
     if (this.scenarioSettingsForm.valid && this.labelFilters.valid && this.labelTrendChartSettingsForm.valid
-      && this.requestStatsSettingsForm && this.apdexSettingsForm.valid) {
+      && this.apdexSettingsForm.valid) {
 
       const {
         scenarioName,
@@ -313,7 +322,6 @@ export class SettingsScenarioComponent implements OnInit {
         extraAggregations
       } = this.scenarioSettingsForm.value;
       const { apdexEnabled, satisfyingThreshold, toleratingThreshold } = this.apdexSettingsForm.value;
-      const { projectName, scenarioName: currentScenarioName } = this.params;
       const body = {
         scenarioName,
         analysisEnabled,
@@ -331,9 +339,6 @@ export class SettingsScenarioComponent implements OnInit {
         },
         labelFilterSettings: this.labelFilters.value.map(filter => ({ labelTerm: filter[0], operator: filter[1] })),
         labelTrendChartSettings: this.labelTrendChartSettingsForm.value,
-        userSettings: {
-          requestStats: this.requestStatsSettingsForm.value,
-        },
         apdexSettings: {
           enabled: apdexEnabled,
           satisfyingThreshold,
@@ -347,12 +352,23 @@ export class SettingsScenarioComponent implements OnInit {
           const message = this.notification.scenarioUpdate(_);
           return this.scenarioApiService.setData(message);
         });
-      this.modalService.dismissAll();
 
       if (this.scenarioNameChanged) {
         this.scenarioNameChangeEvent.emit(encodeURIComponent(scenarioName));
       }
+    } else if (this.requestStatsSettingsForm.valid) {
+      this.scenarioApiService.updateScenarioUserSettings(projectName, currentScenarioName, {
+        requestStats: this.requestStatsSettingsForm.value
+      })
+        .pipe(catchError(r => of(r)))
+        .subscribe(_ => {
+          const message = this.notification.scenarioUserSettingsUpdate(_);
+          return this.scenarioApiService.setData(message);
+        });
     }
+
+    this.modalService.dismissAll();
+
   }
 
   addFieldValue(operator) {

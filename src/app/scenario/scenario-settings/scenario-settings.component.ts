@@ -17,8 +17,6 @@ export class SettingsScenarioComponent implements OnInit {
 
   @Output() scenarioNameChangeEvent = new EventEmitter<string>();
 
-  active = "general";
-
   scenarioSettingsForm: FormGroup;
   labelTrendChartSettingsForm: FormGroup;
   requestStatsSettingsForm: FormGroup;

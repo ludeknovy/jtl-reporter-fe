@@ -10,8 +10,8 @@
 
 
     <div class="d-flex">
-      <ul ngbNav #nav="ngbNav" orientation="vertical" [(activeId)]="active">
-        <li ngbNavItem="general">
+      <ul ngbNav #nav="ngbNav" orientation="vertical">
+        <li *userRole="'operator'" ngbNavItem="general">
           <a ngbNavLink class="jtl-nav-link"> General</a>
           <ng-template ngbNavContent>
             <form [formGroup]="scenarioSettingsForm" class="form-settings" (ngSubmit)="onSubmit()">
@@ -147,7 +147,7 @@
             </form>
           </ng-template>
         </li>
-        <li ngbNavItem="thresholds">
+        <li *userRole="'operator'" ngbNavItem="thresholds">
           <a ngbNavLink class="jtl-nav-link">Thresholds</a>
           <ng-template ngbNavContent>
             <form [formGroup]="scenarioSettingsForm" (ngSubmit)="onSubmit()" >
@@ -192,7 +192,7 @@
             </form>
           </ng-template>
         </li>
-        <li ngbNavItem="label-filter-settings">
+        <li *userRole="'operator'" ngbNavItem="label-filter-settings">
           <a ngbNavLink class="jtl-nav-link">Label Filter Settings</a>
           <ng-template ngbNavContent>
             <form [formGroup]="labelFiltersForm" (ngSubmit)="onSubmit()" class="pl-3">
@@ -257,7 +257,7 @@
           </ng-template>
         </li>
 
-        <li ngbNavItem="label-trend-chart-settings">
+        <li *userRole="'operator'" ngbNavItem="label-trend-chart-settings">
           <a ngbNavLink class="jtl-nav-link">Label Trend Chart Settings</a>
           <ng-template ngbNavContent>
             <form [formGroup]="labelTrendChartSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
@@ -323,7 +323,7 @@
           </ng-template>
         </li>
 
-        <li ngbNavItem="request-stats-config">
+        <li *userRole="'readonly'" ngbNavItem="request-stats-config">
           <a ngbNavLink class="jtl-nav-link">Request statistics configuration</a>
           <ng-template ngbNavContent>
             <form [formGroup]="requestStatsSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
@@ -414,7 +414,7 @@
           </ng-template>
         </li>
 
-        <li ngbNavItem="apdex-config">
+        <li *userRole="'operator'" ngbNavItem="apdex-config">
           <a ngbNavLink class="jtl-nav-link">APDEX configuration</a>
           <ng-template ngbNavContent>
             <form [formGroup]="apdexSettingsForm" (ngSubmit)="onSubmit()" class="pl-3">
@@ -465,5 +465,5 @@
 
 </ng-template>
 
-<button *userRole="'operator'" class="edit btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Settings
+<button *userRole="'readonly'" class="edit btn btn-sm btn-primary" (click)="open(content)" ngbDropdownItem> Settings
 </button>

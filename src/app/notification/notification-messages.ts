@@ -30,6 +30,10 @@ export class NotificationMessage {
     return this.statusCodeMessage(response, "Scenario has been updated");
   }
 
+  scenarioUserSettingsUpdate(response) {
+    return this.statusCodeMessage(response, "Scenario user settings has been updated");
+  }
+
   projectUpdate(response) {
     return this.statusCodeMessage(response, "Project has been updated");
   }

@@ -20,8 +20,16 @@ export class ScenarioApiService {
     return this.http.get<Scenario>(`projects/${projectName}/scenarios/${scenarioName}`);
   }
 
+  getScenarioUserSettings(projectName, scenarioName): Observable<Scenario> {
+    return this.http.get<Scenario>(`projects/${projectName}/scenarios/${scenarioName}/user-settings`);
+  }
+
   updateScenario(projectName, scenarioName, body): Observable<Record<string, any>> {
     return this.http.put(`projects/${projectName}/scenarios/${scenarioName}`, body, { observe: "response" });
+  }
+
+  updateScenarioUserSettings(projectName, scenarioName, body): Observable<Record<string, any>> {
+    return this.http.put(`projects/${projectName}/scenarios/${scenarioName}/user-settings`, body, { observe: "response" });
   }
 
   deleteScenario(projectName, scenarioName): Observable<Record<string, any>> {

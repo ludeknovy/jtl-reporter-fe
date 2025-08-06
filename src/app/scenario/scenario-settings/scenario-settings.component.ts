@@ -2,22 +2,20 @@ import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { catchError } from "rxjs/operators";
-import {combineLatest, of} from 'rxjs';
+import { combineLatest, of } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { NotificationMessage } from "src/app/notification/notification-messages";
 import { ScenarioApiService } from "src/app/scenario-api.service";
 
 @Component({
-  selector: "app-scenario-settings",
-  templateUrl: "./scenario-settings.component.html",
-  styleUrls: ["./scenario-settings.component.css"],
+  selector: 'app-scenario-settings',
+  templateUrl: './scenario-settings.component.html',
+  styleUrls: ['./scenario-settings.component.css'],
 })
 
 export class SettingsScenarioComponent implements OnInit {
 
   @Output() scenarioNameChangeEvent = new EventEmitter<string>();
-
-  active = "general"
 
   scenarioSettingsForm: FormGroup;
   labelTrendChartSettingsForm: FormGroup;
@@ -302,10 +300,12 @@ export class SettingsScenarioComponent implements OnInit {
   }
 
   onSubmit() {
+
     const { projectName, scenarioName: currentScenarioName } = this.params;
+    const actions = [];
 
     if (this.scenarioSettingsForm.valid && this.labelFilters.valid && this.labelTrendChartSettingsForm.valid
-      && this.apdexSettingsForm.valid) {
+      && this.apdexSettingsForm.valid && (this.scenarioSettingsForm.dirty || this.labelFilters.dirty || this.labelTrendChartSettingsForm.dirty || this.apdexSettingsForm.dirty)) {
 
       const {
         scenarioName,
@@ -346,29 +346,33 @@ export class SettingsScenarioComponent implements OnInit {
         }
       };
 
-      this.scenarioApiService.updateScenario(projectName, currentScenarioName, body)
-        .pipe(catchError(r => of(r)))
-        .subscribe(_ => {
-          const message = this.notification.scenarioUpdate(_);
-          return this.scenarioApiService.setData(message);
-        });
+      actions.push(this.scenarioApiService.updateScenario(projectName, currentScenarioName, body));
 
-      if (this.scenarioNameChanged) {
-        this.scenarioNameChangeEvent.emit(encodeURIComponent(scenarioName));
-      }
-    } else if (this.requestStatsSettingsForm.valid) {
-      this.scenarioApiService.updateScenarioUserSettings(projectName, currentScenarioName, {
+    }
+    if (this.requestStatsSettingsForm.dirty && this.requestStatsSettingsForm.valid) {
+      actions.push(this.scenarioApiService.updateScenarioUserSettings(projectName, currentScenarioName, {
         requestStats: this.requestStatsSettingsForm.value
-      })
-        .pipe(catchError(r => of(r)))
-        .subscribe(_ => {
-          const message = this.notification.scenarioUserSettingsUpdate(_);
-          return this.scenarioApiService.setData(message);
-        });
+      }));
     }
 
-    this.modalService.dismissAll();
 
+    combineLatest(actions)
+      .pipe(catchError(r => of(r)))
+      .subscribe((responses) => {
+        responses.forEach(response => {
+          if (response.url.endsWith("user-settings")) {
+            const scenarioMessage = this.notification.scenarioUserSettingsUpdate(response);
+            this.scenarioApiService.setData(scenarioMessage);
+          } else {
+            const scenarioMessage = this.notification.scenarioUpdate(response);
+            this.scenarioApiService.setData(scenarioMessage);
+          }
+        })
+        if (this.scenarioNameChanged) {
+          this.scenarioNameChangeEvent.emit(encodeURIComponent(this.scenarioSettingsForm.value.scenarioName));
+        }
+        this.modalService.dismissAll();
+      });
   }
 
   addFieldValue(operator) {

@@ -218,20 +218,20 @@ export class SettingsScenarioComponent implements OnInit {
     this.labelTrendChartControls.failures = new FormControl(settings.labelTrendChartSettings?.failures, []);
 
 
-    this.requestStatsCormControls.samples = new FormControl(userSettings.requestStats.samples, [Validators.required]);
-    this.requestStatsCormControls.avg = new FormControl(userSettings.requestStats.avg, [Validators.required]);
-    this.requestStatsCormControls.standardDeviation = new FormControl(userSettings.requestStats.standardDeviation || true, [Validators.required]);
-    this.requestStatsCormControls.min = new FormControl(userSettings.requestStats.min, [Validators.required]);
-    this.requestStatsCormControls.max = new FormControl(userSettings.requestStats.max, [Validators.required]);
-    this.requestStatsCormControls.p50 = new FormControl(userSettings.requestStats.p50 || false, [Validators.required]);
-    this.requestStatsCormControls.p90 = new FormControl(userSettings.requestStats.p90, [Validators.required]);
-    this.requestStatsCormControls.p95 = new FormControl(userSettings.requestStats.p95, [Validators.required]);
-    this.requestStatsCormControls.p99 = new FormControl(userSettings.requestStats.p99, [Validators.required]);
-    this.requestStatsCormControls.throughput = new FormControl(userSettings.requestStats.throughput, [Validators.required]);
-    this.requestStatsCormControls.network = new FormControl(userSettings.requestStats.network, [Validators.required]);
-    this.requestStatsCormControls.errorRate = new FormControl(userSettings.requestStats.errorRate, [Validators.required]);
-    this.requestStatsCormControls.failures = new FormControl(userSettings.requestStats.failures || false, [Validators.required]);
-    this.requestStatsCormControls.apdex = new FormControl(userSettings.requestStats.apdex || false, [Validators.required]);
+    this.requestStatsCormControls.samples = new FormControl(userSettings.samples, [Validators.required]);
+    this.requestStatsCormControls.avg = new FormControl(userSettings.avg, [Validators.required]);
+    this.requestStatsCormControls.standardDeviation = new FormControl(userSettings.standardDeviation || true, [Validators.required]);
+    this.requestStatsCormControls.min = new FormControl(userSettings.min, [Validators.required]);
+    this.requestStatsCormControls.max = new FormControl(userSettings.max, [Validators.required]);
+    this.requestStatsCormControls.p50 = new FormControl(userSettings.p50 || false, [Validators.required]);
+    this.requestStatsCormControls.p90 = new FormControl(userSettings.p90, [Validators.required]);
+    this.requestStatsCormControls.p95 = new FormControl(userSettings.p95, [Validators.required]);
+    this.requestStatsCormControls.p99 = new FormControl(userSettings.p99, [Validators.required]);
+    this.requestStatsCormControls.throughput = new FormControl(userSettings.throughput, [Validators.required]);
+    this.requestStatsCormControls.network = new FormControl(userSettings.network, [Validators.required]);
+    this.requestStatsCormControls.errorRate = new FormControl(userSettings.errorRate, [Validators.required]);
+    this.requestStatsCormControls.failures = new FormControl(userSettings.failures || false, [Validators.required]);
+    this.requestStatsCormControls.apdex = new FormControl(userSettings.apdex || false, [Validators.required]);
 
     this.apdexFormControls.satisfyingThreshold = new FormControl(settings?.apdexSettings?.satisfyingThreshold, [
       Validators.min(0),

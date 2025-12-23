@@ -17,7 +17,7 @@ COPY /src ./src
 
 RUN npm run build:prod
 
-FROM nginx:alpine
+FROM nginx:1.25.4-alpine3.18
 
 COPY nginx.conf /etc/nginx/nginx.conf
 

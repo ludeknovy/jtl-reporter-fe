@@ -161,3 +161,12 @@ tbody tr:hover {
   border:none;
   padding-top: 10px;
 }
+
+.batch-delete-bar {
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  background-color: #fff3cd;
+  border-bottom: 1px solid #ffc107;
+  font-size: 14px;
+}

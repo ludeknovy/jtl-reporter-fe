@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { of, Observable, Subscription } from "rxjs";
 import { switchMap, catchError, withLatestFrom } from "rxjs/operators";
-import { Items } from "../items.service.model";
+import { Items, ItemsListing } from "../items.service.model";
 import { ItemsService } from "../items.service";
 import { SharedMainBarService } from "../shared-main-bar.service";
 import { ScenarioService } from "../scenario.service";
@@ -33,6 +33,36 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   validationEnabled = false
   minTestDuration = null
   isLoading = true;
+  selectedItems: Set<string> = new Set();
+
+  get selectedCount(): number {
+    return this.selectedItems.size;
+  }
+
+  get selectedIds(): string[] {
+    return [...this.selectedItems];
+  }
+
+  toggleSelectItem(itemId: string): void {
+    if (this.selectedItems.has(itemId)) {
+      this.selectedItems.delete(itemId);
+    } else {
+      this.selectedItems.add(itemId);
+    }
+  }
+
+  toggleSelectAll(visibleItems: ItemsListing[]): void {
+    if (!visibleItems || visibleItems.length === 0) return;
+    if (this.selectedItems.size === visibleItems.length) {
+      this.selectedItems.clear();
+    } else {
+      this.selectedItems = new Set(visibleItems.map(i => i.id));
+    }
+  }
+
+  clearSelection(): void {
+    this.selectedItems.clear();
+  }
 
   constructor(
     private route: ActivatedRoute,

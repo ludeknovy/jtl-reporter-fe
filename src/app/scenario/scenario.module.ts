@@ -13,6 +13,7 @@ import { SharedModule } from "../shared/shared.module";
 import { HighchartsChartModule } from "highcharts-angular";
 import { ItemControlsComponent } from "./item-controls/item-controls.component";
 import { SharedItemModule } from "../shared/shared-item/shared-item.module";
+import { BatchDeleteItemModule } from "../shared/shared-item/batch-delete-item/batch-delete-item.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import {
@@ -44,7 +45,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule, RouterModule.forRoot(routes), NgxSpinnerModule, NgbModule, SharedModule, HighchartsChartModule,
-    SharedItemModule, ReactiveFormsModule, DataTableModule, RoleModule, AddNewItemModule, FormsModule,
+    SharedItemModule, ReactiveFormsModule, DataTableModule, RoleModule, AddNewItemModule, FormsModule, BatchDeleteItemModule,
 
   ],
   exports: [ScenarioComponent, ScenarioTrendsComponent,

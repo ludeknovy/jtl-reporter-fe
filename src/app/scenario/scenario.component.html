@@ -44,11 +44,27 @@
                     class="text-secondary in-progress">{{processingItems.inprogress?.length}} <i
                       class="far fa-clock"></i></span></span>
               </h6>
+              <div class="batch-delete-bar" *ngIf="selectedCount > 0 && !isAnonymous">
+                <span class="me-2">{{ selectedCount }} item(s) selected</span>
+                <app-batch-delete-item
+                  [selectedIds]="selectedIds"
+                  [projectName]="params.projectName"
+                  [scenarioName]="params.scenarioName"
+                  (deleted)="clearSelection()">
+                </app-batch-delete-item>
+                <button class="btn btn-sm btn-link" (click)="clearSelection()">Cancel</button>
+              </div>
               <div class="card-body card-table">
                 <div class="table-responsive">
-                  <table class="table items jtl-table" [mfData]="items.data" #mf="mfDataTable">
+                    <table class="table items jtl-table" [mfData]="items.data" #mf="mfDataTable">
                     <thead>
                       <tr>
+                        <th scope="col" class="jtl-head jtl-head-color" style="width: 40px;">
+                          <input type="checkbox"
+                            (change)="toggleSelectAll(mf.data)"
+                            [checked]="selectedItems.size === mf.data?.length && mf.data?.length > 0"
+                            [disabled]="isAnonymous">
+                        </th>
                         <th scope="col" class="jtl-head jtl-head-color">
                           <mfDefaultSorter by="name">name</mfDefaultSorter>
                         </th>
@@ -76,11 +92,17 @@
                     </thead>
                     <tbody *ngIf="!isLoading && items.data.length === 0">
                       <tr>
-                        <td colspan="8" class="text-muted text-center">Nothing here yet! Please upload some test reports.</td>
+                        <td colspan="9" class="text-muted text-center">Nothing here yet! Please upload some test reports.</td>
                       </tr>
                     </tbody>
                     <tbody *ngIf="items.data.length > 0">
                       <tr *ngFor="let _ of mf.data">
+                        <td class="text-center" (click)="$event.stopPropagation()">
+                          <input type="checkbox"
+                            [checked]="selectedItems.has(_.id)"
+                            (change)="toggleSelectItem(_.id)"
+                            [disabled]="isAnonymous">
+                        </td>
                         <td (click)="open(_.id)"> {{_.name || 'test run '}}</td>
                         <td (click)="open(_.id)">
                           {{_.overview.maxVu}}

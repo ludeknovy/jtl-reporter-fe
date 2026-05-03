@@ -60,6 +60,12 @@ export class ItemsApiService {
     return this.http.delete(`projects/${projectName}/scenarios/${scenarioName}/items/${itemId}`, { observe: "response" });
   }
 
+  deleteItems(itemIds: string[], scenarioName: string, projectName: string): Observable<HttpResponse<any>> {
+    return this.http.request<any>("DELETE",
+      `projects/${projectName}/scenarios/${scenarioName}/items`,
+      { body: { itemIds }, observe: "response" });
+  }
+
   fetchItems(projectName: string, scenarioName, params): Observable<Items> {
     return this.http.get<Items>(
       `projects/${projectName}/scenarios/${scenarioName}/items`, { params });

@@ -16,7 +16,7 @@ import { NotificationMessage } from "../notification/notification-messages";
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
-  initLoaded = false;
+  initLoaded = true;
   initError = false;
   submitted = false;
   returnUrl: string;

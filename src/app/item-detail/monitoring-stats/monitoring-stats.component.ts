@@ -8,9 +8,10 @@ import { Metrics } from "../metrics";
 
 
 @Component({
-  selector: 'app-monitoring-stats',
-  templateUrl: './monitoring-stats.component.html',
-  styleUrls: ['./monitoring-stats.component.css', '../item-detail.component.scss', '../../shared-styles.css']
+    selector: 'app-monitoring-stats',
+    templateUrl: './monitoring-stats.component.html',
+    styleUrls: ['./monitoring-stats.component.css', '../item-detail.component.scss', '../../shared-styles.css'],
+    standalone: false
 })
 export class MonitoringStatsComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;

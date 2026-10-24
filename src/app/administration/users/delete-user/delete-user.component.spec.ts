@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { DeleteUserComponent } from "./delete-user.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("DeleteUserComponent", () => {
   let component: DeleteUserComponent;
@@ -10,9 +11,10 @@ describe("DeleteUserComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule],
-      declarations: [ DeleteUserComponent ]
-    })
+    declarations: [DeleteUserComponent],
+    imports: [ReactiveFormsModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
   }));
 

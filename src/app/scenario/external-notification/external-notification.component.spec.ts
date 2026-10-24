@@ -1,5 +1,5 @@
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -16,17 +16,16 @@ describe("ExternalNotificationComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ExternalNotificationComponent,
+    declarations: [ExternalNotificationComponent,
         AddNewExternalNotificationComponent,
         DeleteExternalNotificationComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientTestingModule, DataTableModule],
-      providers: [{
-        provide: HTTP_INTERCEPTORS,
-        useClass: HttpRequestInterceptorMock,
-        multi: true
-      }]
-
-    })
+    imports: [RouterTestingModule, ReactiveFormsModule, DataTableModule],
+    providers: [{
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpRequestInterceptorMock,
+            multi: true
+        }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   }));
 

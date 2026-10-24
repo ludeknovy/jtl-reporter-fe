@@ -4,9 +4,10 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ItemChartService } from "../../_services/item-chart.service";
 
 @Component({
-  selector: "app-zoom-charts",
-  templateUrl: "./zoom-charts.component.html",
-  styleUrls: ["./zoom-charts.component.css"]
+    selector: "app-zoom-charts",
+    templateUrl: "./zoom-charts.component.html",
+    styleUrls: ["./zoom-charts.component.css"],
+    standalone: false
 })
 export class ZoomChartsComponent implements OnInit {
 

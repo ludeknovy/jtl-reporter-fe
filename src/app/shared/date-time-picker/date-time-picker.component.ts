@@ -6,17 +6,18 @@ import { DateTimeModel } from "./date-time.model";
 import { noop } from "rxjs";
 
 @Component({
-  selector: "app-date-time-picker",
-  templateUrl: "./date-time-picker.component.html",
-  styleUrls: ["./date-time-picker.component.scss"],
-  providers: [
-    DatePipe,
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DateTimePickerComponent),
-      multi: true
-    }
-  ]
+    selector: "app-date-time-picker",
+    templateUrl: "./date-time-picker.component.html",
+    styleUrls: ["./date-time-picker.component.scss"],
+    providers: [
+        DatePipe,
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DateTimePickerComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class DateTimePickerComponent implements ControlValueAccessor, OnInit {
   @Input()

@@ -11,9 +11,10 @@ import { ComparisonStatsService } from "../../_services/comparison-stats.service
 
 
 @Component({
-  selector: 'app-request-stats',
-  templateUrl: './request-stats.component.html',
-  styleUrls: ['./request-stats.component.css', '../item-detail.component.scss']
+    selector: 'app-request-stats',
+    templateUrl: './request-stats.component.html',
+    styleUrls: ['./request-stats.component.css', '../item-detail.component.scss'],
+    standalone: false
 })
 export class RequestStatsComponent implements OnInit, OnDestroy {
 

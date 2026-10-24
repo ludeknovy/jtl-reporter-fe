@@ -12,11 +12,12 @@ import {
 import { Chart } from "chart.js";
 
 @Component({
-  selector: "app-item-chart",
-  templateUrl: "./item-chart.component.html",
-  styleUrls: ["./item-chart.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: "app-item-chart",
+    templateUrl: "./item-chart.component.html",
+    styleUrls: ["./item-chart.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ItemChartComponent implements AfterViewInit, OnDestroy {
 

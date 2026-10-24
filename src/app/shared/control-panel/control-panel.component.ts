@@ -1,9 +1,10 @@
 import { Component, HostListener, Input } from "@angular/core";
 
 @Component({
-  selector: 'app-control-panel',
-  templateUrl: './control-panel.component.html',
-  styleUrls: ['./control-panel.component.css', '../../shared-styles.css']
+    selector: 'app-control-panel',
+    templateUrl: './control-panel.component.html',
+    styleUrls: ['./control-panel.component.css', '../../shared-styles.css'],
+    standalone: false
 })
 export class ControlPanelComponent {
 
@@ -16,7 +17,7 @@ export class ControlPanelComponent {
   }
 
   @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
+  onWindowScroll(_event?: Event) {
     if (!this.shouldStick) {
       return
     }

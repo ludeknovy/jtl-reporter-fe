@@ -14,9 +14,10 @@ const LIMIT = 15;
 const OFFSET = 15;
 
 @Component({
-  selector: "app-items",
-  templateUrl: "./scenario.component.html",
-  styleUrls: ["./scenario.component.scss", "../shared-styles.css"],
+    selector: "app-items",
+    templateUrl: "./scenario.component.html",
+    styleUrls: ["./scenario.component.scss", "../shared-styles.css"],
+    standalone: false
 })
 export class ScenarioComponent implements OnInit, OnDestroy {
   items$: Observable<Items>;

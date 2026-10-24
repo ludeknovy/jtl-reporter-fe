@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ScenarioShareTokenComponent } from "./scenario-share-token.component";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ShareTokenComponent", () => {
   let component: ScenarioShareTokenComponent;
@@ -9,11 +10,10 @@ describe("ShareTokenComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScenarioShareTokenComponent ],
-      imports:[
-        HttpClientTestingModule,
-      ]
-    })
+    declarations: [ScenarioShareTokenComponent],
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
   });
 

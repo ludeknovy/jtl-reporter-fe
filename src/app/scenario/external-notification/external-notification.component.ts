@@ -8,9 +8,10 @@ import { Observable } from "rxjs";
 import { notificationConfig } from "./notificationConfig";
 
 @Component({
-  selector: "app-external-notification",
-  templateUrl: "./external-notification.component.html",
-  styleUrls: ["./external-notification.component.css", "../../shared-styles.css"]
+    selector: "app-external-notification",
+    templateUrl: "./external-notification.component.html",
+    styleUrls: ["./external-notification.component.css", "../../shared-styles.css"],
+    standalone: false
 })
 export class ExternalNotificationComponent implements OnInit {
 

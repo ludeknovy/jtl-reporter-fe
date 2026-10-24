@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 import { IScenarios, ItemDetail, Items } from "src/app/items.service.model";
 import { ItemsApiService } from "src/app/items-api.service";
 import { ComparisonChartService } from "../../_services/comparison-chart.service";
-import { ToastrService } from "ngx-toastr";
+import { ToastService } from "../../_services/toast.service";
 import { ComparisonStatsService } from "../../_services/comparison-stats.service";
 import { ScenarioApiService } from "../../scenario-api.service";
 
@@ -15,9 +15,10 @@ const OFFSET = 15;
 
 
 @Component({
-  selector: 'app-stats-compare',
-  templateUrl: './stats-compare.component.html',
-  styleUrls: ['./stats-compare.component.css']
+    selector: 'app-stats-compare',
+    templateUrl: './stats-compare.component.html',
+    styleUrls: ['./stats-compare.component.css'],
+    standalone: false
 })
 
 export class StatsCompareComponent implements OnInit {
@@ -36,7 +37,7 @@ export class StatsCompareComponent implements OnInit {
   @Input() itemData: ItemDetail;
 
   constructor(
-    private toastr: ToastrService,
+    private toast: ToastService,
     private modalService: NgbModal,
     private itemsService: ItemsService,
     private itemApiService: ItemsApiService,
@@ -134,7 +135,7 @@ export class StatsCompareComponent implements OnInit {
   }
 
   showComparisonWarnings() {
-    this.toastr.warning(this.comparisonWarning.join("<br>"), "Comparison Warning!",
+    this.toast.warning(this.comparisonWarning.join("<br>"), "Comparison Warning!",
       {
         closeButton: true,
         enableHtml: true,

@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { LoginComponent } from "./login.component";
 import { RouterModule } from "@angular/router";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 
 describe("LoginComponent", () => {
@@ -11,9 +12,10 @@ describe("LoginComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterModule.forRoot([], {}), HttpClientTestingModule],
-      declarations: [LoginComponent]
-    })
+    declarations: [LoginComponent],
+    imports: [ReactiveFormsModule, RouterModule.forRoot([], {})],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   }));
 

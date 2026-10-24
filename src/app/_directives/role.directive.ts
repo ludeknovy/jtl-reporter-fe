@@ -2,8 +2,9 @@ import { Directive, TemplateRef, ViewContainerRef, Input } from "@angular/core";
 import { UserRole } from "../_services/users.model";
 
 @Directive({
-  // tslint:disable-next-line: directive-selector
-  selector: "[userRole]"
+    // tslint:disable-next-line: directive-selector
+    selector: "[userRole]",
+    standalone: false
 })
 
 export class RoleDirective {

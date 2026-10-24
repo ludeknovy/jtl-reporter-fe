@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as Highcharts from "highcharts";
-import * as moment from "moment";
+import moment from "moment";
 import { customScenarioTrends, labelTrends, responseTimeDegradationCurveOption } from "src/app/graphs/scenario-trends";
 import { bytesToMbps } from "src/app/item-detail/calculations";
 import { LabelTrendsData, ScenarioTrendsData, ScenarioTrendsUserSettings } from "src/app/items.service.model";
@@ -10,9 +10,10 @@ import { Metrics } from "../../item-detail/metrics";
 import { normalizeOverviewData } from "../../utils/normalizeOverviewData";
 
 @Component({
-  selector: 'app-scenario-trends',
-  templateUrl: './scenario-trends.component.html',
-  styleUrls: ['./scenario-trends.component.scss']
+    selector: 'app-scenario-trends',
+    templateUrl: './scenario-trends.component.html',
+    styleUrls: ['./scenario-trends.component.scss'],
+    standalone: false
 })
 export class ScenarioTrendsComponent implements OnInit {
   @Input() params;

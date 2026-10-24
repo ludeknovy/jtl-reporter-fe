@@ -8,9 +8,10 @@ import { NotificationService } from "src/app/_services/notification.service";
 import { NotificationMessage } from "src/app/notification/notification-messages";
 
 @Component({
-  selector: "app-delete-token",
-  templateUrl: "./delete-token.component.html",
-  styleUrls: ["./delete-token.component.css", "../../administration.css"]
+    selector: "app-delete-token",
+    templateUrl: "./delete-token.component.html",
+    styleUrls: ["./delete-token.component.css", "../../administration.css"],
+    standalone: false
 })
 export class DeleteTokenComponent implements OnInit {
 

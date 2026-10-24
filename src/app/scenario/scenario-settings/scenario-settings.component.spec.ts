@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -6,6 +6,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { HighchartsChartModule } from "highcharts-angular";
 
 import { SettingsScenarioComponent } from "./scenario-settings.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("SettingsScenarioComponent", () => {
   let component: SettingsScenarioComponent;
@@ -13,16 +14,14 @@ describe("SettingsScenarioComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [SettingsScenarioComponent],
-      imports: [
-        HighchartsChartModule,
+    declarations: [SettingsScenarioComponent],
+    imports: [HighchartsChartModule,
         NgbModule,
-        HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        FormsModule,
-      ]
-    })
+        FormsModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   }));
 

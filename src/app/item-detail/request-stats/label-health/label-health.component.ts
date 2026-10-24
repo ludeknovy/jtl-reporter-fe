@@ -6,9 +6,10 @@ import Tree from "highcharts/modules/treemap";
 Tree(Highcharts);
 
 @Component({
-  selector: "app-label-health",
-  templateUrl: "./label-health.component.html",
-  styleUrls: ["./label-health.component.css"]
+    selector: "app-label-health",
+    templateUrl: "./label-health.component.html",
+    styleUrls: ["./label-health.component.css"],
+    standalone: false
 })
 export class LabelHealthComponent implements OnInit {
 

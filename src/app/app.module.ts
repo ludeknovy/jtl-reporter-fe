@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
@@ -6,7 +6,6 @@ import { RequestHttpInterceptor } from "./_interceptors/http-interceptor";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ToastrModule } from "ngx-toastr";
 import { ErrorInterceptor } from "./_interceptors/error-interceptor";
 import { JwtInterceptor } from "./_interceptors/jwt-interceptor";
 import { AppRoutingModule } from "./AppRoutingModule";
@@ -22,48 +21,41 @@ import { NotificationComponent } from "./notification/notification.component";
 import { TimeagoModule } from "ngx-timeago";
 import { TopPanelModule } from "./top-panel/top-panel.module";
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NotificationComponent,
-  ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    NgbModule,
-    RouterModule,
-    ScenarioModule,
-    SharedModule,
-    ItemDetailModule,
-    InitUserModule,
-    AdministrationModule,
-    ProjectAdministrationModule,
-    ProjectModule,
-    NgxSpinnerModule,
-    TimeagoModule.forRoot(),
-    TopPanelModule,
-  ],
-  providers: [
-    // no need to place any providers due to the `providedIn` flag...
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: RequestHttpInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true
-    },
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        NotificationComponent,
+    ],
+    bootstrap: [AppComponent], imports: [AppRoutingModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        NgbModule,
+        RouterModule,
+        ScenarioModule,
+        SharedModule,
+        ItemDetailModule,
+        InitUserModule,
+        AdministrationModule,
+        ProjectAdministrationModule,
+        ProjectModule,
+        NgxSpinnerModule,
+        TimeagoModule.forRoot(),
+        TopPanelModule], providers: [
+        // no need to place any providers due to the `providedIn` flag...
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RequestHttpInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }

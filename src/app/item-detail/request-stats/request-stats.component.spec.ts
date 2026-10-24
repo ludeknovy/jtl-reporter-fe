@@ -1,16 +1,16 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
 import { HighchartsChartModule } from "highcharts-angular";
-import { ToastrModule } from "ngx-toastr";
 import { ExcelService } from "src/app/_services/excel.service";
 import { LabelTrendComponent } from "../label-trend/label-trend.component";
 import { StatsCompareComponent } from "../stats-compare/stats-compare.component";
 import { LabelHealthComponent } from "./label-health/label-health.component";
 
 import { RequestStatsComponent } from "./request-stats.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("RequestStatsCompareComponent", () => {
   let component: RequestStatsComponent;
@@ -18,22 +18,18 @@ describe("RequestStatsCompareComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         RequestStatsComponent,
         StatsCompareComponent,
         LabelTrendComponent,
         LabelHealthComponent,
-      ],
-      imports: [
-        DataTableModule,
+    ],
+    imports: [DataTableModule,
         NgbModule,
-        ToastrModule.forRoot(),
         HighchartsChartModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
-      ],
-      providers: [ExcelService]
-    })
+        RouterTestingModule],
+    providers: [ExcelService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   }));
 

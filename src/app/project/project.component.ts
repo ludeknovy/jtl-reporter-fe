@@ -5,9 +5,10 @@ import { SharedMainBarService } from "../shared-main-bar.service";
 import { ViewType } from "./project.component.model";
 
 @Component({
-  selector: "app-project",
-  templateUrl: "./project.component.html",
-  styleUrls: ["./project.component.css", "../shared-styles.css"],
+    selector: "app-project",
+    templateUrl: "./project.component.html",
+    styleUrls: ["./project.component.css", "../shared-styles.css"],
+    standalone: false
 })
 export class ProjectComponent implements OnInit {
 

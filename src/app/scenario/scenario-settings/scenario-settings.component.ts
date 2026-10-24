@@ -8,9 +8,10 @@ import { NotificationMessage } from "src/app/notification/notification-messages"
 import { ScenarioApiService } from "src/app/scenario-api.service";
 
 @Component({
-  selector: 'app-scenario-settings',
-  templateUrl: './scenario-settings.component.html',
-  styleUrls: ['./scenario-settings.component.css'],
+    selector: 'app-scenario-settings',
+    templateUrl: './scenario-settings.component.html',
+    styleUrls: ['./scenario-settings.component.css'],
+    standalone: false
 })
 
 export class SettingsScenarioComponent implements OnInit {

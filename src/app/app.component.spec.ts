@@ -5,30 +5,27 @@ import { NotificationComponent } from "./notification/notification.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ToastrModule } from "ngx-toastr";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { AddNewProjectComponent } from "./administration/projects/add-project/add-project-modal.component";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("AppComponent", () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         AppComponent,
         TopPanelComponent,
         NotificationComponent,
         AddNewProjectComponent,
-      ],
-      imports: [
-        RouterTestingModule,
+    ],
+    imports: [RouterTestingModule,
         NgxSpinnerModule,
         NgbModule,
-        HttpClientTestingModule,
         ReactiveFormsModule,
-        FormsModule,
-        ToastrModule.forRoot(),
-      ]
-    }).compileComponents();
+        FormsModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}).compileComponents();
   }));
   it("should create the app", waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);

@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -14,19 +14,16 @@ describe("AnalyzeChartsComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnalyzeChartsComponent, AddMetricComponent ],
-      imports: [
-        HighchartsChartModule,
+    declarations: [AnalyzeChartsComponent, AddMetricComponent],
+    imports: [HighchartsChartModule,
         NgbModule,
-        FormsModule,
-        HttpClientModule
-      ],
-      providers: [{
-        provide: HTTP_INTERCEPTORS,
-        useClass: HttpRequestInterceptorMock,
-        multi: true
-      }]
-    })
+        FormsModule],
+    providers: [{
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpRequestInterceptorMock,
+            multi: true
+        }, provideHttpClient(withInterceptorsFromDi())]
+})
     .compileComponents();
   }));
 

@@ -9,9 +9,10 @@ import { NotificationMessage } from "src/app/notification/notification-messages"
 import { UserRole } from "src/app/_services/users.model";
 
 @Component({
-  selector: "app-add-user",
-  templateUrl: "./add-user.component.html",
-  styleUrls: ["./add-user.component.css"]
+    selector: "app-add-user",
+    templateUrl: "./add-user.component.html",
+    styleUrls: ["./add-user.component.css"],
+    standalone: false
 })
 export class AddUserComponent implements OnInit {
 

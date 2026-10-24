@@ -8,9 +8,10 @@ import { NotificationMessage } from "../../../notification/notification-messages
 import { ScenarioService } from "../../../scenario.service";
 
 @Component({
-  selector: "app-scenario-trends-settings",
-  templateUrl: "./scenario-trends-settings.component.html",
-  styleUrls: ["./scenario-trends-settings.component.css"]
+    selector: "app-scenario-trends-settings",
+    templateUrl: "./scenario-trends-settings.component.html",
+    styleUrls: ["./scenario-trends-settings.component.css"],
+    standalone: false
 })
 export class ScenarioTrendsSettingsComponent implements OnInit {
 

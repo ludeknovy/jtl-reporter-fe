@@ -7,9 +7,10 @@ import { of } from "rxjs";
 import { NotificationMessage } from "../../notification/notification-messages";
 
 @Component({
-  selector: "app-global-settings",
-  templateUrl: "./global-settings.component.html",
-  styleUrls: ["./global-settings.component.css",  "../administration.css", "../../shared-styles.css"]
+    selector: "app-global-settings",
+    templateUrl: "./global-settings.component.html",
+    styleUrls: ["./global-settings.component.css", "../administration.css", "../../shared-styles.css"],
+    standalone: false
 })
 export class GlobalSettingsComponent implements OnInit {
   globalSettingsForm: FormGroup;

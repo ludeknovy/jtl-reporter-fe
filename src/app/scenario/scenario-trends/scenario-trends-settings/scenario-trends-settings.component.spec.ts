@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { ScenarioTrendsSettingsComponent } from "./scenario-trends-settings.component";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ScenarioTrendsSettingsComponent", () => {
   let component: ScenarioTrendsSettingsComponent;
@@ -9,9 +10,10 @@ describe("ScenarioTrendsSettingsComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ScenarioTrendsSettingsComponent],
-      imports: [HttpClientTestingModule]
-    })
+    declarations: [ScenarioTrendsSettingsComponent],
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   });
 

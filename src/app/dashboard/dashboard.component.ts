@@ -8,9 +8,10 @@ import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css', '../shared-styles.css']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css', '../shared-styles.css'],
+    standalone: false
 })
 export class DashboardComponent implements OnInit {
   latestItems: ItemsListing[];

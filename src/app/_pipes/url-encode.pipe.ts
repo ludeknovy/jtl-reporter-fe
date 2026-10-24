@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: "urlEncode"
+    name: "urlEncode",
+    standalone: false
 })
 export class UrlEncodePipe implements PipeTransform {
 

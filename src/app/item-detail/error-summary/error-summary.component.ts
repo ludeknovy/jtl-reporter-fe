@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from "@angular/core";
 import { ErrorSummary } from "../../items.service.model";
 
 @Component({
-  selector: "app-error-summary",
-  templateUrl: "./error-summary.component.html",
-  styleUrls: ["./error-summary.component.css", "../../shared-styles.css", "../item-detail.component.scss"]
+    selector: "app-error-summary",
+    templateUrl: "./error-summary.component.html",
+    styleUrls: ["./error-summary.component.css", "../../shared-styles.css", "../item-detail.component.scss"],
+    standalone: false
 })
 export class ErrorSummaryComponent implements OnInit {
 

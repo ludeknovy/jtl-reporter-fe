@@ -4,10 +4,11 @@ import { StatsCompareComponent } from "./stats-compare.component";
 import { BreadcrumbComponent } from "src/app/shared/breadcrumb/breadcrumb.component";
 import { AddNewItemComponent } from "src/app/scenario/add-new-item/add-new-item.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("StatsCompareComponent", () => {
   let component: StatsCompareComponent;
@@ -15,16 +16,14 @@ describe("StatsCompareComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [StatsCompareComponent, BreadcrumbComponent, AddNewItemComponent],
-      imports: [
-        DataTableModule,
+    declarations: [StatsCompareComponent, BreadcrumbComponent, AddNewItemComponent],
+    imports: [DataTableModule,
         NgbModule,
-        HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        FormsModule
-      ]
-    })
+        FormsModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   }));
 

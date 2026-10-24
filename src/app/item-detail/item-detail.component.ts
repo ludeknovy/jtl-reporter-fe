@@ -10,7 +10,7 @@ import { commonGraphSettings, overallChartSettings, scatterChart } from "../grap
 import { catchError, withLatestFrom } from "rxjs/operators";
 import { of } from "rxjs";
 import { SharedMainBarService } from "../shared-main-bar.service";
-import { ToastrService } from "ngx-toastr";
+import { ToastService } from "../_services/toast.service";
 import { bytesToMbps } from "./calculations";
 import { ItemStatusValue } from "./item-detail.model";
 import { Metrics } from "./metrics";
@@ -25,10 +25,11 @@ exporting(Highcharts);
 
 
 @Component({
-  selector: 'app-item-detail',
-  templateUrl: './item-detail.component.html',
-  styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
-  providers: [DecimalPipe]
+    selector: 'app-item-detail',
+    templateUrl: './item-detail.component.html',
+    styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
+    providers: [DecimalPipe],
+    standalone: false
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
 
@@ -100,7 +101,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private itemsService: ItemsApiService,
     private spinner: NgxSpinnerService,
     private sharedMainBarService: SharedMainBarService,
-    private toastr: ToastrService,
+    private toast: ToastService,
     private analyzeChartService: AnalyzeChartService,
     private itemChartService: ItemChartService,
     private comparisonChartService: ComparisonChartService,
@@ -171,7 +172,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.toastr.clear();
+    this.toast.clear();
     this.comparisonChartService.resetPlot()
   }
 
@@ -300,7 +301,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     }
 
     if (alertMessages.length > 0) {
-      this.toastr.warning(alertMessages.join("<br>"), "Monitoring Alert!",
+      this.toast.warning(alertMessages.join("<br>"), "Monitoring Alert!",
         {
           closeButton: true,
           disableTimeOut: true,

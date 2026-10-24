@@ -10,9 +10,10 @@ import { UserService } from "../../../_services/user.service";
 import { UserRole, Users } from "../../../_services/users.model";
 
 @Component({
-  styleUrls: ["./add-project-modal.component.css"],
-  selector: "app-add-project",
-  templateUrl: "./add-project-modal.component.html",
+    styleUrls: ["./add-project-modal.component.css"],
+    selector: "app-add-project",
+    templateUrl: "./add-project-modal.component.html",
+    standalone: false
 })
 export class AddNewProjectComponent implements OnInit {
   myform: FormGroup;

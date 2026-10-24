@@ -8,9 +8,10 @@ import { AuthenticationService } from "src/app/_services/authentication.service"
 import { matchValidator } from "../../form-utils/form-validators";
 
 @Component({
-  selector: "app-my-profile",
-  templateUrl: "./my-profile.component.html",
-  styleUrls: ["./my-profile.component.css", "../administration.css", "../../shared-styles.css"]
+    selector: "app-my-profile",
+    templateUrl: "./my-profile.component.html",
+    styleUrls: ["./my-profile.component.css", "../administration.css", "../../shared-styles.css"],
+    standalone: false
 })
 export class MyProfileComponent implements OnInit {
   myform: FormGroup;

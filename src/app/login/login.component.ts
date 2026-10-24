@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   initLoaded = false;
+  initError = false;
   submitted = false;
   returnUrl: string;
   error = null;
@@ -47,6 +48,8 @@ export class LoginComponent implements OnInit {
       }, (res) => {
         const message = this.notification.appInitialization(res);
         this.notificationService.showNotification(message);
+        this.initError = true;
+        this.initLoaded = true;
 
       });
 

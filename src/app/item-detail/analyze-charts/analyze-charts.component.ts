@@ -75,8 +75,12 @@ export class AnalyzeChartsComponent implements OnInit {
     this.itemApiService
       .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
       .subscribe(_ => {
-        this.updateChart(_);
         this.preloadedSeries = _;
+        // Do not overwrite a label chart requested from Performance Analysis
+        // when the saved chart settings response arrives after that request.
+        if (!this.isTemporaryChart) {
+          this.updateChart(_);
+        }
       });
 
 

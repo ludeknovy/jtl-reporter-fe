@@ -9,6 +9,9 @@ import { ComparisonChartService } from "../../_services/comparison-chart.service
 import { ToastService } from "../../_services/toast.service";
 import { ComparisonStatsService } from "../../_services/comparison-stats.service";
 import { ScenarioApiService } from "../../scenario-api.service";
+import { AnalyticsService, ComparisonType } from "../../_services/analytics.service";
+import { EMPTY } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 const LIMIT = 15;
 const OFFSET = 15;
@@ -46,6 +49,7 @@ export class StatsCompareComponent implements OnInit {
     private comparisonChartService: ComparisonChartService,
     private comparisonStatsService: ComparisonStatsService,
     private scenarioApiService: ScenarioApiService,
+    private analyticsService: AnalyticsService,
   ) {
   }
 
@@ -77,7 +81,11 @@ export class StatsCompareComponent implements OnInit {
   loadItemToCompare() {
     if (this.selectedTestItem) {
       this.itemsApiService.fetchItemDetail(this.params.projectName, this.selectedScenario, this.selectedTestItem)
+        .pipe(catchError(() => EMPTY))
         .subscribe(_ => {
+          if (!_.overview) {
+            return;
+          }
           this.itemToCompare({
             statistics: _.statistics,
             maxVu: _.overview.maxVu,
@@ -89,7 +97,7 @@ export class StatsCompareComponent implements OnInit {
             startDate: _.overview.startDate,
             endDate: _.overview.endDate,
             monitoring: _.monitoring,
-          });
+          }, "manual");
           this.page = 0;
           this.modalService.dismissAll();
         });
@@ -100,21 +108,28 @@ export class StatsCompareComponent implements OnInit {
     this.itemApiService.fetchItemDetail(
       this.params.projectName,
       this.params.scenarioName,
-      id).subscribe(_ => this.itemToCompare({
-      statistics: _.statistics,
-      maxVu: _.overview.maxVu,
-      environment: _.environment,
-      plot: _.plot,
-      histogramPlotData: _.histogramPlotData,
-      extraPlotData: _.extraPlotData,
-      startDate: _.overview.startDate,
-      endDate: _.overview.endDate,
-      monitoring: _.monitoring,
-      id
-    }));
+      id)
+      .pipe(catchError(() => EMPTY))
+      .subscribe(_ => {
+        if (!_.overview) {
+          return;
+        }
+        this.itemToCompare({
+          statistics: _.statistics,
+          maxVu: _.overview.maxVu,
+          environment: _.environment,
+          plot: _.plot,
+          histogramPlotData: _.histogramPlotData,
+          extraPlotData: _.extraPlotData,
+          startDate: _.overview.startDate,
+          endDate: _.overview.endDate,
+          monitoring: _.monitoring,
+          id
+        }, "baseline");
+      });
   }
 
-  itemToCompare(data) {
+  itemToCompare(data, comparisonType: ComparisonType) {
     this.resetStatsData();
     this.comparisonChartService.setComparisonPlot(data.plot, data.extraPlotData, data.startDate, data.endDate, data.monitoring?.cpu?.data);
     this.comparisonChartService.setHistogramPlot(data.histogramPlotData);
@@ -128,6 +143,7 @@ export class StatsCompareComponent implements OnInit {
       this.comparisonWarning.push("Environments do differ");
     }
     this.comparisonStatsService.setRequestStats(data.statistics);
+    this.analyticsService.track("comparisonOpened", { comparisonType });
 
     if (this.comparisonWarning.length) {
       this.showComparisonWarnings();

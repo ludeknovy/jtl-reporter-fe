@@ -271,14 +271,29 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     if (min && max) {
       this.plotRangeMin = min;
       this.plotRangeMax = max;
-      for (const chartOptions of [this.overallChartOptions, this.scatterChartOptions, this.statusChartOptions]) {
-        chartOptions.xAxis.min = min;
-        chartOptions.xAxis.max = max;
-      }
+      this.overallChartOptions = this.withPlotRange(this.overallChartOptions, min, max);
+      this.scatterChartOptions = this.withPlotRange(this.scatterChartOptions, min, max);
+      this.statusChartOptions = this.withPlotRange(this.statusChartOptions, min, max);
       this.updateScatterChartFlag = true;
       this.updateChartFlag = true;
       this.updateOverallChartFlag = true;
+      this.cdr.detectChanges();
     }
+  }
+
+  private withPlotRange(chartOptions, min, max) {
+    if (!chartOptions?.xAxis) {
+      return chartOptions;
+    }
+
+    return {
+      ...chartOptions,
+      xAxis: {
+        ...chartOptions.xAxis,
+        min,
+        max,
+      },
+    };
   }
 
 

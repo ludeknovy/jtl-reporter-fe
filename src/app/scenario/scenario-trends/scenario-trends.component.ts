@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as Highcharts from "highcharts";
 import moment from "moment";
@@ -44,6 +44,7 @@ export class ScenarioTrendsComponent implements OnInit {
   degradationCurveDisplayed = false;
 
   constructor(private scenarioService: ScenarioService, private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.chartDataMapping = new Map([
       ["percentile90", { name: Metrics.ResponseTimeP90, onLoad: true, color: "rgb(17,122,139, 0.8)", tooltip: { valueSuffix: " ms" } }],
@@ -71,6 +72,7 @@ export class ScenarioTrendsComponent implements OnInit {
       this.generateAggregatedChartLines(_.aggregatedTrends);
       this.generateLabelChartLines(_.labelTrends);
       this.generateDegradationCurve(_.responseTimeDegradationCurve);
+      this.cdr.detectChanges();
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsApiService } from "../items-api.service";
 import { ItemDetail } from "../items.service.model";
@@ -7,7 +7,7 @@ import { DecimalPipe } from "@angular/common";
 import * as Highcharts from "highcharts";
 import exporting from "highcharts/modules/exporting";
 import { commonGraphSettings, overallChartSettings, scatterChart } from "../graphs/item-detail";
-import { catchError, withLatestFrom } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { SharedMainBarService } from "../shared-main-bar.service";
 import { ToastService } from "../_services/toast.service";
@@ -105,6 +105,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private analyzeChartService: AnalyzeChartService,
     private itemChartService: ItemChartService,
     private comparisonChartService: ComparisonChartService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.Math = Math;
     this.overallChartCallback = chart => {
@@ -121,17 +122,18 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.spinner.show();
-    this.route.params.pipe(
-      withLatestFrom(_ => {
-        this.sharedMainBarService.setProjectName(_.projectName);
-        return _;
-      })
-    ).subscribe(_ => this.itemParams = _);
-    this.route.queryParams.subscribe(_ => {
-      this.token = _.token;
-      if (!this.token) {
-        this.isAnonymous = false;
-      }
+    this.itemParams = this.route.snapshot.params;
+    this.token = this.route.snapshot.queryParams.token;
+    this.isAnonymous = Boolean(this.token);
+    this.sharedMainBarService.setProjectName(this.itemParams.projectName);
+
+    this.route.params.subscribe(params => {
+      this.itemParams = params;
+      this.sharedMainBarService.setProjectName(params.projectName);
+    });
+    this.route.queryParams.subscribe(params => {
+      this.token = params.token;
+      this.isAnonymous = Boolean(this.token);
     });
     this.itemsService.fetchItemDetail(
       this.itemParams.projectName,
@@ -158,6 +160,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         };
         this;
         this.spinner.hide();
+        this.cdr.detectChanges();
       });
     this.analyzeChartService.currentData.subscribe(data => {
       if (data) {

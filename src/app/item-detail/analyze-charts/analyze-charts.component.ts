@@ -88,9 +88,11 @@ export class AnalyzeChartsComponent implements OnInit {
     this.saveChartSettings(event);
   }
 
-  chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
+  chartCallback: Highcharts.ChartCallbackFunction = (chart): void => {
     setTimeout(() => {
-      chart.reflow();
+      if (chart.container) {
+        chart.reflow();
+      }
     }, 0);
   };
 
@@ -166,4 +168,3 @@ interface Line {
   metric?,
   label?: string,
 }
-

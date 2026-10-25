@@ -11,7 +11,7 @@ describe("ScenarioService", () => {
 }));
 
   it("should be created", () => {
-    const service: ScenarioService = TestBed.get(ScenarioService);
+    const service: ScenarioService = TestBed.inject(ScenarioService);
     expect(service).toBeTruthy();
   });
 });

@@ -11,7 +11,7 @@ describe("ApiTokenService", () => {
 }));
 
   it("should be created", () => {
-    const service: ApiTokenService = TestBed.get(ApiTokenService);
+    const service: ApiTokenService = TestBed.inject(ApiTokenService);
     expect(service).toBeTruthy();
   });
 });

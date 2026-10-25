@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { customChartSettings } from "src/app/graphs/item-detail";
 import * as Highcharts from "highcharts";
 import { ItemsApiService } from "src/app/items-api.service";
@@ -14,7 +14,7 @@ import { Metrics } from "../metrics";
     standalone: false
 })
 
-export class AnalyzeChartsComponent implements OnInit {
+export class AnalyzeChartsComponent implements OnInit, OnChanges {
 
   @Input() params: { projectName: string, scenarioName: string, id: string };
   @Input() chartLines: ChartLine;
@@ -35,35 +35,29 @@ export class AnalyzeChartsComponent implements OnInit {
   ]);
   preloadedSeries;
   isTemporaryChart = false;
+  private performanceAnalysisData;
 
   constructor(
     private itemApiService: ItemsApiService,
     private analyzeChartService: AnalyzeChartService,
-    private itemChartService: ItemChartService
+    private itemChartService: ItemChartService,
+    private cdr: ChangeDetectorRef
   ) {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.chartLines && this.performanceAnalysisData) {
+      this.updatePerformanceAnalysisChart(this.performanceAnalysisData);
+    }
   }
 
   ngOnInit() {
     // this needs to be initialized for both anonymous and logged-in user
     this.analyzeChartService.currentData.subscribe(data => {
-      let chartLines;
       if (data) {
-        const { label, metrics } = data;
+        this.performanceAnalysisData = data;
         this.isTemporaryChart = true;
-        if (metrics && metrics.length > 0) {
-          chartLines = metrics.map(_ => ({ name: label, metric: _ }));
-        } else {
-          // add all available lines
-          const labelLines = [];
-          this.chartLines.labels.forEach((value, key) => {
-            const labelFound = value.find((_) => _.name === data.label);
-            if (labelFound) {
-              labelLines.push({ name: data.label, metric: key });
-            }
-          });
-          chartLines = labelLines;
-        }
-        this.updateChart(chartLines);
+        this.updatePerformanceAnalysisChart(data);
       }
     });
 
@@ -75,11 +69,39 @@ export class AnalyzeChartsComponent implements OnInit {
     this.itemApiService
       .fetchItemChartSettings(this.params.projectName, this.params.scenarioName, this.params.id)
       .subscribe(_ => {
-        this.updateChart(_);
         this.preloadedSeries = _;
+        // Do not overwrite a label chart requested from Performance Analysis
+        // when the saved chart settings response arrives after that request.
+        if (!this.isTemporaryChart) {
+          this.updateChart(_);
+        }
       });
 
 
+  }
+
+  private updatePerformanceAnalysisChart(data) {
+    if (!this.chartLines?.labels) {
+      return;
+    }
+
+    const { label, metrics } = data;
+    let chartLines;
+    if (metrics && metrics.length > 0) {
+      chartLines = metrics.map(_ => ({ name: label, metric: _ }));
+    } else {
+      // add all available lines
+      const labelLines = [];
+      this.chartLines.labels.forEach((value, key) => {
+        const labelFound = value.find((_) => _.name === data.label);
+        if (labelFound) {
+          labelLines.push({ name: data.label, metric: key });
+        }
+      });
+      chartLines = labelLines;
+    }
+    this.updateChart(chartLines);
+    this.cdr.detectChanges();
   }
 
 

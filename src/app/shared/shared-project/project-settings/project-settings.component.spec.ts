@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { ProjectSettingsComponent } from "./project-settings.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("ProjectSettingsComponent", () => {
   let component: ProjectSettingsComponent;
@@ -10,9 +11,10 @@ describe("ProjectSettingsComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule],
-      declarations: [ ProjectSettingsComponent ]
-    })
+    declarations: [ProjectSettingsComponent],
+    imports: [ReactiveFormsModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
   }));
 

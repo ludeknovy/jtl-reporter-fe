@@ -8,9 +8,10 @@ import { ScenarioApiService } from "src/app/scenario-api.service";
 import { ScenarioService } from "src/app/scenario.service";
 
 @Component({
-  selector: "app-delete-external-notification",
-  templateUrl: "./delete-external-notification.component.html",
-  styleUrls: ["./delete-external-notification.component.css"]
+    selector: "app-delete-external-notification",
+    templateUrl: "./delete-external-notification.component.html",
+    styleUrls: ["./delete-external-notification.component.css"],
+    standalone: false
 })
 export class DeleteExternalNotificationComponent implements OnInit {
 

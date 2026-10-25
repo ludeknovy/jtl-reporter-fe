@@ -5,7 +5,8 @@ import { NavigationComponent } from "../navigation/navigation.component";
 import { ControlPanelComponent } from "src/app/shared/control-panel/control-panel.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("MyProfileComponent", () => {
   let component: MyProfileComponent;
@@ -13,9 +14,10 @@ describe("MyProfileComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule],
-      declarations: [ MyProfileComponent, NavigationComponent, ControlPanelComponent ]
-    })
+    declarations: [MyProfileComponent, NavigationComponent, ControlPanelComponent],
+    imports: [ReactiveFormsModule, RouterTestingModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
   }));
 

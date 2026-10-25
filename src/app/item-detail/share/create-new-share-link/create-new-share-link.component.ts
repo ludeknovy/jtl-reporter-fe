@@ -10,9 +10,10 @@ import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 
 @Component({
-  selector: "app-create-new-share-link",
-  templateUrl: "./create-new-share-link.component.html",
-  styleUrls: ["./create-new-share-link.component.css"]
+    selector: "app-create-new-share-link",
+    templateUrl: "./create-new-share-link.component.html",
+    styleUrls: ["./create-new-share-link.component.css"],
+    standalone: false
 })
 export class CreateNewShareLinkComponent implements OnInit {
 

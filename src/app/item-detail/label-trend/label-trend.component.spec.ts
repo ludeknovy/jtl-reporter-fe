@@ -1,8 +1,9 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { HighchartsChartModule } from "highcharts-angular";
 import { LabelTrendComponent } from "../label-trend/label-trend.component";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 
 describe("RequestStatsCompareComponent", () => {
@@ -11,15 +12,13 @@ describe("RequestStatsCompareComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         LabelTrendComponent,
-      ],
-      imports: [
-        NgbModule,
-        HighchartsChartModule,
-        HttpClientTestingModule,
-      ]
-    })
+    ],
+    imports: [NgbModule,
+        HighchartsChartModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   }));
 

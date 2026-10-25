@@ -7,9 +7,10 @@ import { AuthenticationService } from "../_services/authentication.service";
 import { ChangeDetectorRef } from "@angular/core";
 
 @Component({
-  selector: "app-top-panel",
-  templateUrl: "./top-panel.component.html",
-  styleUrls: ["./top-panel.component.scss", "../shared-styles.css"],
+    selector: "app-top-panel",
+    templateUrl: "./top-panel.component.html",
+    styleUrls: ["./top-panel.component.scss", "../shared-styles.css"],
+    standalone: false
 })
 export class TopPanelComponent implements OnInit {
 

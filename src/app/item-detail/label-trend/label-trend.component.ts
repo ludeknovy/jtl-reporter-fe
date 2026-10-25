@@ -7,9 +7,10 @@ import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 
 @Component({
-  selector: "app-label-trend",
-  templateUrl: "./label-trend.component.html",
-  styleUrls: ["./label-trend.component.css"]
+    selector: "app-label-trend",
+    templateUrl: "./label-trend.component.html",
+    styleUrls: ["./label-trend.component.css"],
+    standalone: false
 })
 export class LabelTrendComponent {
   @Input() params: ItemParams;

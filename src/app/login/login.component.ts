@@ -8,14 +8,16 @@ import { NotificationService } from "../_services/notification.service";
 import { NotificationMessage } from "../notification/notification-messages";
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+    selector: "app-login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.css"],
+    standalone: false
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
-  initLoaded = false;
+  initLoaded = true;
+  initError = false;
   submitted = false;
   returnUrl: string;
   error = null;
@@ -46,6 +48,8 @@ export class LoginComponent implements OnInit {
       }, (res) => {
         const message = this.notification.appInitialization(res);
         this.notificationService.showNotification(message);
+        this.initError = true;
+        this.initLoaded = true;
 
       });
 

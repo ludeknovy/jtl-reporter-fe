@@ -10,9 +10,9 @@ import { HighchartsChartModule } from "highcharts-angular";
 import { RouterTestingModule } from "@angular/router/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { ToastrModule } from "ngx-toastr";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { DataTableModule } from "@pascalhonegger/ng-datatable";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 
 describe("ItemDetailComponent", () => {
@@ -21,25 +21,22 @@ describe("ItemDetailComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         ItemDetailComponent,
         BreadcrumbComponent,
         EditItemComponent,
         DeleteItemComponent,
         ControlPanelComponent,
         StatsCompareComponent,
-      ],
-      imports: [
-        DataTableModule,
+    ],
+    imports: [DataTableModule,
         HighchartsChartModule,
         RouterTestingModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
         FormsModule,
-        NgbModule,
-        ToastrModule.forRoot(),
-      ]
-    })
+        NgbModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   }));
 

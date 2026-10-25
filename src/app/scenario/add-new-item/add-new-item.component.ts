@@ -13,10 +13,10 @@ import { ItemStatusValue } from "src/app/item-detail/item-detail.model";
 import { ScenarioService } from "src/app/scenario.service";
 
 @Component({
-  selector: "app-add-new-item-modal",
-  templateUrl: "./add-new-item.component.html",
-  styleUrls: ["./add-new-item.component.css"],
-
+    selector: "app-add-new-item-modal",
+    templateUrl: "./add-new-item.component.html",
+    styleUrls: ["./add-new-item.component.css"],
+    standalone: false
 })
 export class AddNewItemComponent implements OnInit {
   addItemForm: FormGroup;

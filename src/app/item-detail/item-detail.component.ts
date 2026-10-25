@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsApiService } from "../items-api.service";
 import { ItemDetail } from "../items.service.model";
@@ -7,10 +7,10 @@ import { DecimalPipe } from "@angular/common";
 import * as Highcharts from "highcharts";
 import exporting from "highcharts/modules/exporting";
 import { commonGraphSettings, overallChartSettings, scatterChart } from "../graphs/item-detail";
-import { catchError, withLatestFrom } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { SharedMainBarService } from "../shared-main-bar.service";
-import { ToastrService } from "ngx-toastr";
+import { ToastService } from "../_services/toast.service";
 import { bytesToMbps } from "./calculations";
 import { ItemStatusValue } from "./item-detail.model";
 import { Metrics } from "./metrics";
@@ -25,10 +25,11 @@ exporting(Highcharts);
 
 
 @Component({
-  selector: 'app-item-detail',
-  templateUrl: './item-detail.component.html',
-  styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
-  providers: [DecimalPipe]
+    selector: 'app-item-detail',
+    templateUrl: './item-detail.component.html',
+    styleUrls: ['./item-detail.component.scss', '../shared-styles.css'],
+    providers: [DecimalPipe],
+    standalone: false
 })
 export class ItemDetailComponent implements OnInit, OnDestroy {
 
@@ -100,10 +101,11 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private itemsService: ItemsApiService,
     private spinner: NgxSpinnerService,
     private sharedMainBarService: SharedMainBarService,
-    private toastr: ToastrService,
+    private toast: ToastService,
     private analyzeChartService: AnalyzeChartService,
     private itemChartService: ItemChartService,
     private comparisonChartService: ComparisonChartService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.Math = Math;
     this.overallChartCallback = chart => {
@@ -120,17 +122,18 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.spinner.show();
-    this.route.params.pipe(
-      withLatestFrom(_ => {
-        this.sharedMainBarService.setProjectName(_.projectName);
-        return _;
-      })
-    ).subscribe(_ => this.itemParams = _);
-    this.route.queryParams.subscribe(_ => {
-      this.token = _.token;
-      if (!this.token) {
-        this.isAnonymous = false;
-      }
+    this.itemParams = this.route.snapshot.params;
+    this.token = this.route.snapshot.queryParams.token;
+    this.isAnonymous = Boolean(this.token);
+    this.sharedMainBarService.setProjectName(this.itemParams.projectName);
+
+    this.route.params.subscribe(params => {
+      this.itemParams = params;
+      this.sharedMainBarService.setProjectName(params.projectName);
+    });
+    this.route.queryParams.subscribe(params => {
+      this.token = params.token;
+      this.isAnonymous = Boolean(this.token);
     });
     this.itemsService.fetchItemDetail(
       this.itemParams.projectName,
@@ -157,6 +160,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         };
         this;
         this.spinner.hide();
+        this.cdr.detectChanges();
       });
     this.analyzeChartService.currentData.subscribe(data => {
       if (data) {
@@ -171,7 +175,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.toastr.clear();
+    this.toast.clear();
     this.comparisonChartService.resetPlot()
   }
 
@@ -267,14 +271,29 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     if (min && max) {
       this.plotRangeMin = min;
       this.plotRangeMax = max;
-      for (const chartOptions of [this.overallChartOptions, this.scatterChartOptions, this.statusChartOptions]) {
-        chartOptions.xAxis.min = min;
-        chartOptions.xAxis.max = max;
-      }
+      this.overallChartOptions = this.withPlotRange(this.overallChartOptions, min, max);
+      this.scatterChartOptions = this.withPlotRange(this.scatterChartOptions, min, max);
+      this.statusChartOptions = this.withPlotRange(this.statusChartOptions, min, max);
       this.updateScatterChartFlag = true;
       this.updateChartFlag = true;
       this.updateOverallChartFlag = true;
+      this.cdr.detectChanges();
     }
+  }
+
+  private withPlotRange(chartOptions, min, max) {
+    if (!chartOptions?.xAxis) {
+      return chartOptions;
+    }
+
+    return {
+      ...chartOptions,
+      xAxis: {
+        ...chartOptions.xAxis,
+        min,
+        max,
+      },
+    };
   }
 
 
@@ -300,7 +319,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     }
 
     if (alertMessages.length > 0) {
-      this.toastr.warning(alertMessages.join("<br>"), "Monitoring Alert!",
+      this.toast.warning(alertMessages.join("<br>"), "Monitoring Alert!",
         {
           closeButton: true,
           disableTimeOut: true,

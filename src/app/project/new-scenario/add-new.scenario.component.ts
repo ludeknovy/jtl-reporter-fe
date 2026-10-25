@@ -8,9 +8,10 @@ import { ProjectService } from "src/app/project.service";
 import { ScenarioApiService } from "src/app/scenario-api.service";
 
 @Component({
-  selector: "app-add-new-scenario",
-  templateUrl: "./add-new-scenario.component.html",
-  styleUrls: ["./add-new-scenario.component.css"]
+    selector: "app-add-new-scenario",
+    templateUrl: "./add-new-scenario.component.html",
+    styleUrls: ["./add-new-scenario.component.css"],
+    standalone: false
 })
 export class AddNewScenarioComponent implements OnInit {
 

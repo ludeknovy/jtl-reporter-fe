@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from "@angular/core";
 import { ThresholdResult } from "../../../items.service.model";
 
 @Component({
-  selector: "app-threshold-failure",
-  templateUrl: "./threshold-failure.component.html",
-  styleUrls: ["./threshold-failure.component.css"]
+    selector: "app-threshold-failure",
+    templateUrl: "./threshold-failure.component.html",
+    styleUrls: ["./threshold-failure.component.css"],
+    standalone: false
 })
 export class ThresholdFailureComponent implements OnInit {
 

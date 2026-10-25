@@ -39,7 +39,7 @@ export class HttpRequestInterceptorMock implements HttpInterceptor {
       return of(new HttpResponse({ status: 200 }));
     }
     if (request.url && request.url.includes("global-settings")) {
-      return of(new HttpResponse({ status: 200 }));
+      return of(new HttpResponse({ status: 200, body: { projectAutoProvisioning: false } }));
     }
 
     return next.handle(request);

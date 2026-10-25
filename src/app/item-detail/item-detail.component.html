@@ -514,7 +514,7 @@
                           </tr>
                           </thead>
                           <tbody>
-                          <tr *ngFor="let _ of mf.data">
+                          <tr *ngFor="let _ of mf.data()">
                             <td>{{ _.sutHostname || "other" }}
                               <i *ngIf="!_.sutHostname" placement="bottom"
                                  ngbTooltip="All samples for which we could not parse the hostname."><i

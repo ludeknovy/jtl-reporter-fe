@@ -8,9 +8,10 @@ import { NotificationMessage } from "src/app/notification/notification-messages"
 import { NotificationService } from "src/app/_services/notification.service";
 
 @Component({
-  selector: "app-add-token",
-  templateUrl: "./add-token.component.html",
-  styleUrls: ["./add-token.component.css"]
+    selector: "app-add-token",
+    templateUrl: "./add-token.component.html",
+    styleUrls: ["./add-token.component.css"],
+    standalone: false
 })
 export class AddTokenComponent implements OnInit {
   myform: FormGroup;

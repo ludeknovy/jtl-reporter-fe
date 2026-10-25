@@ -12,9 +12,10 @@ import { ItemsService } from "src/app/items.service";
 import { ScenarioService } from "src/app/scenario.service";
 
 @Component({
-  selector: "app-delete-item",
-  templateUrl: "./delete-item.component.html",
-  styleUrls: ["./delete-item.component.css"]
+    selector: "app-delete-item",
+    templateUrl: "./delete-item.component.html",
+    styleUrls: ["./delete-item.component.css"],
+    standalone: false
 })
 export class DeleteItemComponent implements OnInit {
 

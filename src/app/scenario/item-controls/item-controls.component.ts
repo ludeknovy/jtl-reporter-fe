@@ -2,9 +2,10 @@ import { Component, Input } from "@angular/core";
 import { ItemInput } from "./item-controls.model";
 
 @Component({
-  selector: "app-item-controls",
-  templateUrl: "./item-controls.component.html",
-  styleUrls: ["./item-controls.component.css"]
+    selector: "app-item-controls",
+    templateUrl: "./item-controls.component.html",
+    styleUrls: ["./item-controls.component.css"],
+    standalone: false
 })
 export class ItemControlsComponent {
 

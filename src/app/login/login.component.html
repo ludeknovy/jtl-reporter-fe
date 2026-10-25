@@ -4,8 +4,11 @@
     <div class="col-md-3">
       <div class="card mt-5 card-shadow">
         <h6 class="card-header bg-transparent">Login</h6>
-        <div class="card-body">
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="card-body">
+        <div *ngIf="initError" class="alert alert-danger mb-0" role="alert">
+          Backend API is unavailable. Start the backend service and reload this page.
+        </div>
+        <form *ngIf="!initError" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
 
               <div class="form-group mb-3">

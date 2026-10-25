@@ -8,9 +8,10 @@ import { NotificationMessage } from "src/app/notification/notification-messages"
 import { NotificationService } from "src/app/_services/notification.service";
 
 @Component({
-  selector: "app-delete-user",
-  templateUrl: "./delete-user.component.html",
-  styleUrls: ["./delete-user.component.css", "../../administration.css"]
+    selector: "app-delete-user",
+    templateUrl: "./delete-user.component.html",
+    styleUrls: ["./delete-user.component.css", "../../administration.css"],
+    standalone: false
 })
 
 

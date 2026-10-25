@@ -1,12 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ItemChartService } from "../../_services/item-chart.service";
 
 @Component({
-  selector: "app-zoom-charts",
-  templateUrl: "./zoom-charts.component.html",
-  styleUrls: ["./zoom-charts.component.css"]
+    selector: "app-zoom-charts",
+    templateUrl: "./zoom-charts.component.html",
+    styleUrls: ["./zoom-charts.component.css"],
+    standalone: false
 })
 export class ZoomChartsComponent implements OnInit {
 
@@ -16,7 +17,8 @@ export class ZoomChartsComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private itemChartService: ItemChartService
+    private itemChartService: ItemChartService,
+    private cdr: ChangeDetectorRef,
     ) {
   }
 
@@ -41,16 +43,33 @@ export class ZoomChartsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.itemChartService.setPlotRange({ start: new Date(this.formGroup.value.startDate), end: new Date(this.formGroup.value.endDate) })
-    this.modalService.dismissAll();
+    if (this.applyRange()) {
+      this.modalService.dismissAll();
+    }
   }
 
   setOriginalStartDate() {
-    this.startDateControl.setValue(this.reportStartDate)
+    this.startDateControl.setValue(new Date(this.reportStartDate));
+    this.cdr.detectChanges();
+    this.applyRange();
   }
 
   setOriginalEndDate() {
-    this.endDateControl.setValue(this.reportEndDate)
+    this.endDateControl.setValue(new Date(this.reportEndDate));
+    this.cdr.detectChanges();
+    this.applyRange();
+  }
+
+  private applyRange(): boolean {
+    if (this.formGroup.invalid) {
+      return false;
+    }
+
+    this.itemChartService.setPlotRange({
+      start: new Date(this.formGroup.value.startDate),
+      end: new Date(this.formGroup.value.endDate)
+    });
+    return true;
   }
 
 }

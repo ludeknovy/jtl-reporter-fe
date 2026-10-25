@@ -1,4 +1,4 @@
-FROM node:20.17.0-alpine3.20 as builder
+FROM node:24-alpine AS builder
 
 WORKDIR /src/fe
 
@@ -6,11 +6,8 @@ RUN apk --update add openjdk8 \
     git build-base && \
 rm -rf /var/lib/apt/lists/*
 
-ENV NODE_OPTIONS=--openssl-legacy-provider
-
-
 COPY package.json package-lock.json angular.json ./
-RUN npm install
+RUN npm ci
 
 COPY tsconfig.json ./
 COPY /src ./src

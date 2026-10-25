@@ -7,9 +7,10 @@ import { NotificationMessage } from "src/app/notification/notification-messages"
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 @Component({
-  selector: "app-delete-share-link",
-  templateUrl: "./delete-share-link.component.html",
-  styleUrls: ["./delete-share-link.component.css"]
+    selector: "app-delete-share-link",
+    templateUrl: "./delete-share-link.component.html",
+    styleUrls: ["./delete-share-link.component.css"],
+    standalone: false
 })
 export class DeleteShareLinkComponent implements OnInit {
   deleteCheck: FormControl;

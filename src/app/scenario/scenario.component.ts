@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { of, Observable, Subscription } from "rxjs";
 import { switchMap, catchError, withLatestFrom } from "rxjs/operators";
@@ -14,9 +14,10 @@ const LIMIT = 15;
 const OFFSET = 15;
 
 @Component({
-  selector: "app-items",
-  templateUrl: "./scenario.component.html",
-  styleUrls: ["./scenario.component.scss", "../shared-styles.css"],
+    selector: "app-items",
+    templateUrl: "./scenario.component.html",
+    styleUrls: ["./scenario.component.scss", "../shared-styles.css"],
+    standalone: false
 })
 export class ScenarioComponent implements OnInit, OnDestroy {
   items$: Observable<Items>;
@@ -42,6 +43,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
     private router: Router,
     private sharedMainBarService: SharedMainBarService,
     private environmentService: EnvironmentService,
+    private cdr: ChangeDetectorRef,
   ) {
   }
 
@@ -52,6 +54,10 @@ export class ScenarioComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Child controls use params in their own ngOnInit. Route observables emit
+    // too late on a direct navigation, so initialize the input synchronously.
+    this.params = this.route.snapshot.params;
+
     this.route.queryParams.subscribe(_ => {
       this.token = _.token;
       if (this.token) {
@@ -70,6 +76,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
         if (items.name) {
           this.isLoading = false;
         }
+        this.cdr.detectChanges();
       })
       this.environment$ = this.environmentService.environment$.subscribe(value => this.page = 1);
 
@@ -80,6 +87,7 @@ export class ScenarioComponent implements OnInit, OnDestroy {
           this.scenarioApiService.getScenario(this.params.projectName, this.params.scenarioName).subscribe(_ => {
             this.validationEnabled = this.isValidationEnabled(_.zeroErrorToleranceEnabled, _.minTestDuration)
             this.minTestDuration = _.minTestDuration
+            this.cdr.detectChanges();
           });
           return new Observable().pipe(catchError(err => of([])));
         })
@@ -95,7 +103,9 @@ export class ScenarioComponent implements OnInit, OnDestroy {
             this.scenarioService.fetchScenarioTrends(this.params.projectName, this.params.scenarioName);
             this.scenarioService.fetchEnvironments(this.params.projectName, this.params.scenarioName);
           }
-          return this.currentProcessingItems = inprogress.map((item) => item.id);
+          this.currentProcessingItems = inprogress.map((item) => item.id);
+          this.cdr.detectChanges();
+          return this.currentProcessingItems;
         }
       });
     } else {

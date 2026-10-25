@@ -3,9 +3,10 @@ import { ItemDataPlot, ItemExtraPlot } from "src/app/items.service.model";
 import { ItemChartService } from "src/app/_services/item-chart.service";
 
 @Component({
-  selector: "app-chart-interval",
-  templateUrl: "./chart-interval.component.html",
-  styleUrls: ["./chart-interval.component.css"]
+    selector: "app-chart-interval",
+    templateUrl: "./chart-interval.component.html",
+    styleUrls: ["./chart-interval.component.css"],
+    standalone: false
 })
 export class ChartIntervalComponent implements OnInit {
 

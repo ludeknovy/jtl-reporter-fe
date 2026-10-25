@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
 import * as Highcharts from "highcharts";
 import { commonGraphSettings, responseTimeDistribution } from "src/app/graphs/item-detail";
-import * as deepmerge from "deepmerge";
+import deepmerge from "deepmerge";
 import { Metrics } from "../metrics";
 import { ResponseTimePerLabelDistribution } from "../../items.service.model";
 import { ChartLine } from "../../_services/chart-service-utils";
@@ -9,9 +9,10 @@ import { ComparisonChartService } from "../../_services/comparison-chart.service
 import { ItemChartService } from "../../_services/item-chart.service";
 
 @Component({
-  selector: "app-label-chart",
-  templateUrl: "./label-chart.component.html",
-  styleUrls: ["./label-chart.component.css", "../item-detail.component.scss"]
+    selector: "app-label-chart",
+    templateUrl: "./label-chart.component.html",
+    styleUrls: ["./label-chart.component.css", "../item-detail.component.scss"],
+    standalone: false
 })
 export class LabelChartComponent implements OnChanges {
 

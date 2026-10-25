@@ -45,7 +45,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let _ of mf.data">
+              <tr *ngFor="let _ of mf.data()">
                 <td>{{_.responseMessage}} </td>
                 <td>{{_.statusCode || "n/a"}}</td>
                 <td>{{_.failureMessage}}</td>

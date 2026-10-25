@@ -7,9 +7,10 @@ import { ItemsService } from "src/app/items.service";
 import { ItemParams } from "src/app/scenario/item-controls/item-controls.model";
 
 @Component({
-  selector: "app-share",
-  templateUrl: "./share.component.html",
-  styleUrls: ["./share.component.css", "../../shared-styles.css"]
+    selector: "app-share",
+    templateUrl: "./share.component.html",
+    styleUrls: ["./share.component.css", "../../shared-styles.css"],
+    standalone: false
 })
 export class ShareComponent implements OnInit {
 

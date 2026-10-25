@@ -6,9 +6,10 @@ import { Observable } from "rxjs";
 import { ScenarioShareToken } from "../../scenario-api.service.model";
 
 @Component({
-  selector: "app-share-token",
-  templateUrl: "./scenario-share-token.component.html",
-  styleUrls: ["./scenario-share-token.component.css", "../../shared-styles.css"]
+    selector: "app-share-token",
+    templateUrl: "./scenario-share-token.component.html",
+    styleUrls: ["./scenario-share-token.component.css", "../../shared-styles.css"],
+    standalone: false
 })
 export class ScenarioShareTokenComponent implements OnInit {
 

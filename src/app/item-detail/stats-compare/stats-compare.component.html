@@ -80,7 +80,7 @@
           </tr>
           </tbody>
           <tbody *ngIf="items.data.length > 0">
-          <tr *ngFor="let _ of mf.data">
+          <tr *ngFor="let _ of mf.data()">
             <td>{{ _.name || 'test run' }}</td>
             <td>
               {{ _.overview.maxVu }}
@@ -132,5 +132,4 @@
     <button type="submit" (click)="loadItemToCompare()" class="btn btn-primary">Compare</button>
   </div>
 </ng-template>
-
 

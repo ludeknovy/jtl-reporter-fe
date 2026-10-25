@@ -8,9 +8,10 @@ import { NotificationMessage } from "src/app/notification/notification-messages"
 import { ProjectService } from "src/app/project.service";
 
 @Component({
-  selector: "app-delete-project",
-  templateUrl: "./delete-project.component.html",
-  styleUrls: ["./delete-project.component.css"]
+    selector: "app-delete-project",
+    templateUrl: "./delete-project.component.html",
+    styleUrls: ["./delete-project.component.css"],
+    standalone: false
 })
 export class DeleteProjectComponent implements OnInit {
 

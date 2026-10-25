@@ -15,7 +15,7 @@
           <div class="drop-area drop-area-left dropdowncustom-area dropdown-static" ngbDropdownMenu
                aria-labelledby="dropdownBasic1" *ngIf="projectsState$ | async; let projects">
             <a *ngFor="let _ of projects" ngbDropdownItem class="btn btn-block text-left text-white"
-               routerLink="/project/{{_.projectName | urlEncode }}/scenarios"
+               [routerLink]="['/project', _.projectName, 'scenarios']"
                routerLinkActive="active" (click)="changeSelectedProject(_.projectName)">{{_.projectName }}</a>
             <app-add-project  *userRole="'operator'" [topMenu]="true">New Project</app-add-project>
           </div>

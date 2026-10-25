@@ -1,13 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ProjectService } from "../project.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SharedMainBarService } from "../shared-main-bar.service";
 import { ViewType } from "./project.component.model";
 
 @Component({
-  selector: "app-project",
-  templateUrl: "./project.component.html",
-  styleUrls: ["./project.component.css", "../shared-styles.css"],
+    selector: "app-project",
+    templateUrl: "./project.component.html",
+    styleUrls: ["./project.component.css", "../shared-styles.css"],
+    standalone: false
 })
 export class ProjectComponent implements OnInit {
 
@@ -21,7 +22,8 @@ export class ProjectComponent implements OnInit {
     private projectService: ProjectService,
     private route: ActivatedRoute,
     private router: Router,
-    private sharedMainBarService: SharedMainBarService
+    private sharedMainBarService: SharedMainBarService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -30,8 +32,9 @@ export class ProjectComponent implements OnInit {
       this.projectService.fetchScenarios(this.projectName);
       this.sharedMainBarService.setProjectName(this.projectName);
       this.projectService.scenarios$.subscribe((scenario) => {
-        this.filteredScenarios = scenario.sort(this.azSort);
+        this.filteredScenarios = [...scenario].sort(this.azSort);
         this.scenarios = scenario;
+        this.cdr.detectChanges();
       });
     });
   }

@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { DeleteScenarioShareTokenComponent } from "./delete-scenario-share-token.component";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("DeleteShareTokenComponent", () => {
   let component: DeleteScenarioShareTokenComponent;
@@ -9,11 +10,10 @@ describe("DeleteShareTokenComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DeleteScenarioShareTokenComponent],
-      imports: [
-        HttpClientTestingModule,
-      ]
-    })
+    declarations: [DeleteScenarioShareTokenComponent],
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
   });
 

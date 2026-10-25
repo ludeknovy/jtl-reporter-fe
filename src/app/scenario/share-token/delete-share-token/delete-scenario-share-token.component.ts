@@ -6,9 +6,10 @@ import { ScenarioService } from "../../../scenario.service";
 import { NotificationMessage } from "../../../notification/notification-messages";
 
 @Component({
-  selector: "app-delete-share-token",
-  templateUrl: "./delete-scenario-share-token.component.html",
-  styleUrls: ["./delete-scenario-share-token.component.css"]
+    selector: "app-delete-share-token",
+    templateUrl: "./delete-scenario-share-token.component.html",
+    styleUrls: ["./delete-scenario-share-token.component.css"],
+    standalone: false
 })
 export class DeleteScenarioShareTokenComponent implements OnInit {
 

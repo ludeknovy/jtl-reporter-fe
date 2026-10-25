@@ -4,16 +4,17 @@ import { Metrics } from "../metrics";
 import { AnalyzeChartService } from "../../analyze-chart.service";
 
 @Component({
-  selector: "app-performance-analysis",
-  templateUrl: "./performance-analysis.component.html",
-  styleUrls: ["./performance-analysis.component.css", "../item-detail.component.scss"],
-  animations: [
-    trigger("panelState", [
-      state("closed", style({ height: 0, overflow: "hidden" })),
-      state("open", style({ height: "*" })),
-      transition("closed <=> open", animate("300ms ease-in-out")),
-    ]),
-  ],
+    selector: "app-performance-analysis",
+    templateUrl: "./performance-analysis.component.html",
+    styleUrls: ["./performance-analysis.component.css", "../item-detail.component.scss"],
+    animations: [
+        trigger("panelState", [
+            state("closed", style({ height: 0, overflow: "hidden" })),
+            state("open", style({ height: "*" })),
+            transition("closed <=> open", animate("300ms ease-in-out")),
+        ]),
+    ],
+    standalone: false
 })
 export class PerformanceAnalysisComponent implements OnInit {
 

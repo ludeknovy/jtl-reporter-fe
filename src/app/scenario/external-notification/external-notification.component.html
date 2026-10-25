@@ -37,7 +37,7 @@
             </tr>
             </tbody>
             <tbody *ngIf="notifications.length > 0">
-            <tr *ngFor="let _ of mf.data">
+            <tr *ngFor="let _ of mf.data()">
               <td>
                 {{_.name}}
               </td>

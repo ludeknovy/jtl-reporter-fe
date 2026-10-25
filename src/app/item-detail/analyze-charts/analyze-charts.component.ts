@@ -8,9 +8,10 @@ import { ChartLine } from "../../_services/chart-service-utils";
 import { Metrics } from "../metrics";
 
 @Component({
-  selector: "app-analyze-charts",
-  templateUrl: "./analyze-charts.component.html",
-  styleUrls: ["./analyze-charts.component.css", "../item-detail.component.scss"]
+    selector: "app-analyze-charts",
+    templateUrl: "./analyze-charts.component.html",
+    styleUrls: ["./analyze-charts.component.css", "../item-detail.component.scss"],
+    standalone: false
 })
 
 export class AnalyzeChartsComponent implements OnInit {
@@ -87,9 +88,11 @@ export class AnalyzeChartsComponent implements OnInit {
     this.saveChartSettings(event);
   }
 
-  chartCallback: Highcharts.ChartCallbackFunction = function (chart): void {
+  chartCallback: Highcharts.ChartCallbackFunction = (chart): void => {
     setTimeout(() => {
-      chart.reflow();
+      if (chart.container) {
+        chart.reflow();
+      }
     }, 0);
   };
 
@@ -165,4 +168,3 @@ interface Line {
   metric?,
   label?: string,
 }
-

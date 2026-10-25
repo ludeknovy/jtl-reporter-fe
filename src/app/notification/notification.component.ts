@@ -3,13 +3,14 @@ import { Subject } from "rxjs";
 import { ItemsApiService } from "../items-api.service";
 import { ProjectApiService } from "../project-api.service";
 import { ScenarioApiService } from "../scenario-api.service";
-import { ToastrService } from "ngx-toastr";
 import { NotificationService } from "../_services/notification.service";
 import { GlobalSettingsService } from "../_services/global-settings.service";
+import { ToastService } from "../_services/toast.service";
 
 @Component({
-  selector: "app-alert",
-  templateUrl: "./notification.component.html",
+    selector: "app-alert",
+    templateUrl: "./notification.component.html",
+    standalone: false
 })
 export class NotificationComponent implements OnInit {
   private _success = new Subject<{ success: boolean, message: string }>();
@@ -20,7 +21,7 @@ export class NotificationComponent implements OnInit {
     private scenarioApiService: ScenarioApiService,
     private notificationService: NotificationService,
     private globalSettingsService: GlobalSettingsService,
-    private toastr: ToastrService
+    public toastService: ToastService
   ) { }
 
   message: string;
@@ -35,16 +36,15 @@ export class NotificationComponent implements OnInit {
 
 
     this._success.subscribe((message) => {
-      const options = { positionClass: "toast-bottom-right" };
       if (message.success === true) {
-        this.toastr.success(message.message, null, options);
+        this.toastService.success(message.message);
       } else {
-        this.toastr.error(message.message, null, options);
+        this.toastService.error(message.message);
       }
     });
   }
 
-  public showNotification(message) {
+  public showNotification(message: { success: boolean, message: string }): void {
     this._success.next(message);
   }
 }

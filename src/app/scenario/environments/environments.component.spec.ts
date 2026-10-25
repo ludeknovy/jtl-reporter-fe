@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { EnvironmentsComponent } from "./environments.component";
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { HttpRequestInterceptorMock } from "../../_interceptors/mock-interceptor";
 
 describe("EnvironmentsComponent", () => {
@@ -10,14 +10,14 @@ describe("EnvironmentsComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-      declarations: [EnvironmentsComponent],
-      providers: [{
-        provide: HTTP_INTERCEPTORS,
-        useClass: HttpRequestInterceptorMock,
-        multi: true
-      }]
-    })
+    declarations: [EnvironmentsComponent],
+    imports: [],
+    providers: [{
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpRequestInterceptorMock,
+            multi: true
+        }, provideHttpClient(withInterceptorsFromDi())]
+})
       .compileComponents();
   });
 

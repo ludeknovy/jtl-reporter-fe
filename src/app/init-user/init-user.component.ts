@@ -6,9 +6,10 @@ import { AuthenticationService } from "../_services/authentication.service";
 import { matchValidator } from "../form-utils/form-validators";
 
 @Component({
-  selector: "app-init-user",
-  templateUrl: "./init-user.component.html",
-  styleUrls: ["./init-user.component.css"]
+    selector: "app-init-user",
+    templateUrl: "./init-user.component.html",
+    styleUrls: ["./init-user.component.css"],
+    standalone: false
 })
 export class InitUserComponent implements OnInit {
   initUserForm: FormGroup;

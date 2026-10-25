@@ -14,11 +14,12 @@ import { scenarioHistory } from "src/app/graphs/scenarios";
 import { normalizeOverviewData } from "../../utils/normalizeOverviewData";
 
 @Component({
-  selector: "app-scenarios-graph",
-  templateUrl: "./scenarios-graph.component.html",
-  styleUrls: ["./scenarios-graph.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: "app-scenarios-graph",
+    templateUrl: "./scenarios-graph.component.html",
+    styleUrls: ["./scenarios-graph.component.css"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ScenariosGraphComponent implements AfterViewInit, OnDestroy {
 

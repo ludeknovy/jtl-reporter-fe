@@ -9,9 +9,10 @@ import { ScenarioService } from "src/app/scenario.service";
 import { notificationConfig } from "../notificationConfig";
 
 @Component({
-  selector: 'app-add-new-external-notification',
-  templateUrl: './add-new-external-notification.component.html',
-  styleUrls: ['./add-new-external-notification.component.css']
+    selector: 'app-add-new-external-notification',
+    templateUrl: './add-new-external-notification.component.html',
+    styleUrls: ['./add-new-external-notification.component.css'],
+    standalone: false
 })
 export class AddNewExternalNotificationComponent implements OnInit {
   myform: FormGroup;

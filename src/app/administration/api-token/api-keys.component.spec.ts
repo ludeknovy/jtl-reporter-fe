@@ -7,7 +7,7 @@ import { ControlPanelComponent } from "src/app/shared/control-panel/control-pane
 import { DeleteTokenComponent } from "./delete-token/delete-token.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { HttpRequestInterceptorMock } from "src/app/_interceptors/mock-interceptor";
 
 
@@ -17,14 +17,14 @@ describe("ApiKeysComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule],
-      declarations: [ApiKeysComponent, NavigationComponent, AddTokenComponent, ControlPanelComponent, DeleteTokenComponent],
-      providers: [{
-        provide: HTTP_INTERCEPTORS,
-        useClass: HttpRequestInterceptorMock,
-        multi: true
-      }]
-    })
+    declarations: [ApiKeysComponent, NavigationComponent, AddTokenComponent, ControlPanelComponent, DeleteTokenComponent],
+    imports: [RouterTestingModule, ReactiveFormsModule],
+    providers: [{
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpRequestInterceptorMock,
+            multi: true
+        }, provideHttpClient(withInterceptorsFromDi())]
+})
       .compileComponents();
   }));
 

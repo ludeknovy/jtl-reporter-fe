@@ -4,9 +4,10 @@ import { Users } from "src/app/_services/users.model";
 import { Observable } from "rxjs";
 
 @Component({
-  selector: "app-users",
-  templateUrl: "./users.component.html",
-  styleUrls: ["./users.component.css", "../administration.css", "../../shared-styles.css"]
+    selector: "app-users",
+    templateUrl: "./users.component.html",
+    styleUrls: ["./users.component.css", "../administration.css", "../../shared-styles.css"],
+    standalone: false
 })
 export class UsersComponent implements OnInit {
 

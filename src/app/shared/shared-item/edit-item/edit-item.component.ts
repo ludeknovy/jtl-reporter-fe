@@ -11,9 +11,10 @@ import { ItemStatus } from "../../../scenario/add-new-item/add-new-item.model";
 import { ItemStatusValue } from "../../../item-detail/item-detail.model";
 
 @Component({
-  selector: "app-edit-item",
-  templateUrl: "./edit-item.component.html",
-  styleUrls: ["./edit-item.component.css"],
+    selector: "app-edit-item",
+    templateUrl: "./edit-item.component.html",
+    styleUrls: ["./edit-item.component.css"],
+    standalone: false
 })
 
 export class EditItemComponent implements OnInit {
@@ -100,7 +101,7 @@ export class EditItemComponent implements OnInit {
           this.itemDetailChange.emit({ note, environment, hostname, name });
           const message = this.notification.itemUpdate(_);
           return this.itemsApiService.setData(message);
-        }).add((_) => {
+        }).add(() => {
         if (this.reloadItems) {
           this.itemsService.fetchItems(projectName, scenarioName);
         }

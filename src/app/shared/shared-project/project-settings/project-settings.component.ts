@@ -10,9 +10,10 @@ import { UserService } from "../../../_services/user.service";
 import { UserRole, Users } from "../../../_services/users.model";
 
 @Component({
-  selector: 'app-project-settings',
-  templateUrl: './project-settings.component.html',
-  styleUrls: ['./project-settings.component.css']
+    selector: 'app-project-settings',
+    templateUrl: './project-settings.component.html',
+    styleUrls: ['./project-settings.component.css'],
+    standalone: false
 })
 export class ProjectSettingsComponent implements OnInit {
 

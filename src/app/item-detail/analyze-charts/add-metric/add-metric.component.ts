@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angu
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: "app-add-metric",
-  templateUrl: "./add-metric.component.html",
-  styleUrls: ["./add-metric.component.scss"]
+    selector: "app-add-metric",
+    templateUrl: "./add-metric.component.html",
+    styleUrls: ["./add-metric.component.scss"],
+    standalone: false
 })
 export class AddMetricComponent implements OnChanges {
 

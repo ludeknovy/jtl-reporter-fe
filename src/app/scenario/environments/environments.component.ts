@@ -5,9 +5,10 @@ import { ItemsService } from "../../items.service";
 import { EnvironmentService } from "../../_services/environment.service";
 
 @Component({
-  selector: "app-environments",
-  templateUrl: "./environments.component.html",
-  styleUrls: ["./environments.component.css"]
+    selector: "app-environments",
+    templateUrl: "./environments.component.html",
+    styleUrls: ["./environments.component.css"],
+    standalone: false
 })
 export class EnvironmentsComponent implements OnInit {
   $environments: Observable<Array<string>>;

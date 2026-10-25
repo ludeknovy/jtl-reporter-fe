@@ -10,9 +10,10 @@ import { Router } from "@angular/router";
 import { ScenarioApiService } from "src/app/scenario-api.service";
 
 @Component({
-  selector: "app-delete-scenario",
-  templateUrl: "./delete-scenario.component.html",
-  styleUrls: ["./delete-scenario.component.css"]
+    selector: "app-delete-scenario",
+    templateUrl: "./delete-scenario.component.html",
+    styleUrls: ["./delete-scenario.component.css"],
+    standalone: false
 })
 export class DeleteScenarioComponent implements OnInit {
 

@@ -2,10 +2,11 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation }
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-breadcrumb",
-  templateUrl: "./breadcrumb.component.html",
-  styleUrls: ["./breadcrumb.component.css"],
-  encapsulation: ViewEncapsulation.None
+    selector: "app-breadcrumb",
+    templateUrl: "./breadcrumb.component.html",
+    styleUrls: ["./breadcrumb.component.css"],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class BreadcrumbComponent implements OnInit, OnChanges {
   @Input() testName

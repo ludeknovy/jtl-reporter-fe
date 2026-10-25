@@ -1,4 +1,4 @@
-<div ngbDropdown container="body" class="d-inline-block" *ngIf="$environments | async; let environments">
+<div ngbDropdown class="d-inline-block" *ngIf="$environments | async; let environments">
   <button type="button" class="btn btn btn-sm jtl-no-glow" id="dropdownBasic1" ngbDropdownToggle>
     {{selectedEnvironment || defaultEnvironment}}
   </button>

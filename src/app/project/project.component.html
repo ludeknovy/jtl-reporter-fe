@@ -43,7 +43,7 @@
       <div class="col-md-3" *ngFor="let _ of filteredScenarios">
         <div class="card card-scenario card-shadow">
           <h6 class="card-header bg-transparent">
-            <a routerLink="/project/{{projectName}}/scenario/{{_.name | urlEncode}}/items">{{_.name}}</a>
+            <a [routerLink]="['/project', projectName, 'scenario', _.name, 'items']">{{_.name}}</a>
           </h6>
           <div class="card-body">
             <div class="chart">
@@ -80,7 +80,7 @@
                 <tr *ngIf="filteredScenarios.length === 0">
                   <td colspan="5" class="text-muted text-center">Nothing here yet! Add your first scenario.</td>
                 </tr>
-                <tr *ngFor="let _ of mf.data" (click)="open(_.name)">
+                <tr *ngFor="let _ of mf.data()" (click)="open(_.name)">
                     <td>{{_.name}}</td>
                     <td>{{_.data[0].startDate | date:'d. L. yyyy H:mm'}}</td>
                   </tr>

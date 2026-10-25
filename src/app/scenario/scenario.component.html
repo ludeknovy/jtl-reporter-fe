@@ -80,7 +80,7 @@
                       </tr>
                     </tbody>
                     <tbody *ngIf="items.data.length > 0">
-                      <tr *ngFor="let _ of mf.data">
+                      <tr *ngFor="let _ of mf.data()">
                         <td (click)="open(_.id)"> {{_.name || 'test run '}}</td>
                         <td (click)="open(_.id)">
                           {{_.overview.maxVu}}

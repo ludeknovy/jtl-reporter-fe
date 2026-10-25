@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ProjectApiService } from "../project-api.service";
 import { ItemsListing, ProjectsOverallStats } from "../items.service.model";
 import { Router } from "@angular/router";
@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
     private projectService: ProjectApiService,
     private router: Router,
     private sharedMainBarService: SharedMainBarService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.Math = Math;
   }
@@ -37,16 +38,21 @@ export class DashboardComponent implements OnInit {
     this.projectService.fetchLatestItems()
       .pipe(catchError(r => {
         this.isLoading = false;
+        this.cdr.detectChanges();
         return of(r);
       }))
       .subscribe(_ => {
         this.latestItems = _;
         this.isLoading = false;
+        this.cdr.detectChanges();
       });
   }
 
   fetchOverallStats() {
-    this.projectService.fetchOverallStats().subscribe(_ => this.overallStats = _);
+    this.projectService.fetchOverallStats().subscribe(_ => {
+      this.overallStats = _;
+      this.cdr.detectChanges();
+    });
   }
 
   open(projectName, scenarioName, itemId) {

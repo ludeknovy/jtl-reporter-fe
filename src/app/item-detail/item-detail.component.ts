@@ -20,6 +20,7 @@ import { ItemChartService } from "../_services/item-chart.service";
 import { ComparisonChartService } from "../_services/comparison-chart.service";
 import { ChartLine } from "../_services/chart-service-utils";
 import { ItemChartOption } from "./item-chart-option";
+import { AnalyticsService } from "../_services/analytics.service";
 
 exporting(Highcharts);
 
@@ -93,6 +94,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
   scatterChart: Highcharts.Chart;
   updateComparisonChartFlag = false;
   updateComparisonScatterChartFlag = false;
+  private reportViewTracked = false;
   comparisonChartCallback;
   comparisonScatterChartCallback
 
@@ -106,6 +108,7 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
     private itemChartService: ItemChartService,
     private comparisonChartService: ComparisonChartService,
     private cdr: ChangeDetectorRef,
+    private analyticsService: AnalyticsService,
   ) {
     this.Math = Math;
     this.overallChartCallback = chart => {
@@ -146,7 +149,14 @@ export class ItemDetailComponent implements OnInit, OnDestroy {
         return of(r);
       }))
       .subscribe((results) => {
+        if (!results || !results.overview) {
+          return;
+        }
         this.itemData = results;
+        if (!this.isAnonymous && !this.reportViewTracked) {
+          this.reportViewTracked = true;
+          this.analyticsService.track("reportViewed");
+        }
         this.monitoringAlerts();
         this.itemChartService.setCurrentPlot(this.itemData.plot, this.itemData.monitoring.cpu.data);
         this.selectedPlotSubscription();

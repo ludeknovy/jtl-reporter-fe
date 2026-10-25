@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, } from "@angular/core";
 import * as Highcharts from "highcharts";
 import { monitoringGraphSettings } from "src/app/graphs/monitoring";
-import { from } from "rxjs";
 import { ComparisonChartService } from "../../_services/comparison-chart.service";
 import { MonitoringData } from "../../items.service.model";
 import { Metrics } from "../metrics";
@@ -15,7 +14,10 @@ import { Metrics } from "../metrics";
 })
 export class MonitoringStatsComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
-  monitoringChartOptions;
+  monitoringChartOptions = {
+    ...monitoringGraphSettings(),
+    series: []
+  };
   chartConstructor = "chart";
   chartCallback;
   updateFlag = false;
@@ -35,12 +37,10 @@ export class MonitoringStatsComponent implements OnInit {
 
   ngOnInit() {
     const series = this.prepareChartSeries(this.data);
-    from(new Promise(resolve => setTimeout(resolve, 50))).subscribe((val: any) => {
-      this.monitoringChartOptions = {
-        ...monitoringGraphSettings(), series: series
-      };
-      this.updateFlag = true;
-    });
+    this.monitoringChartOptions = {
+      ...monitoringGraphSettings(), series: series
+    };
+    this.updateFlag = true;
     this.comparisonChartService.selectedPlot$.subscribe(plot => {
       if (plot && plot?.chartLines?.monitoring.has(Metrics.Monitoring)) {
         const comparisonSeries = this.prepareChartSeries(plot?.chartLines.monitoring.get(Metrics.Monitoring));

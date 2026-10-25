@@ -4,10 +4,9 @@
       <h6 class="card-header bg-transparent">Monitoring</h6>
       <div class="card-body">
         <div class="chart">
-          <highcharts-chart [Highcharts]="Highcharts" [options]="monitoringChartOptions"
+          <highcharts-chart *ngIf="monitoringChartOptions" [Highcharts]="Highcharts" [options]="monitoringChartOptions"
                             [callbackFunction]="chartCallback"
                             [(update)]="updateFlag"
-                            [constructorType]="chartConstructor"
                             style="width: auto; height: 400px; display: block;"></highcharts-chart>
 
           <app-separation-line  *ngIf="monitoringComparisonChartOptions"></app-separation-line>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { GlobalSettingsService } from "../../_services/global-settings.service";
 import { GlobalSettings } from "../../_services/global-settings.model";
@@ -22,6 +22,7 @@ export class GlobalSettingsComponent implements OnInit {
   constructor(
     private globalSettingsService: GlobalSettingsService,
     private notification: NotificationMessage,
+    private cdr: ChangeDetectorRef,
   ) {
   }
 
@@ -29,6 +30,7 @@ export class GlobalSettingsComponent implements OnInit {
     this.globalSettingsService.getGlobalSettings().subscribe((body) => {
       this.createFormControls(body);
       this.createForm();
+      this.cdr.detectChanges();
     })
 
   }

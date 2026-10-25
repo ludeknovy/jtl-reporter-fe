@@ -20,16 +20,16 @@
           <table class="table perf-analysis-table" [mfData]="perfAnalysis.onePerc.failingLabels" #mf="mfDataTable">
             <thead>
             <tr class="d-flex">
-              <th scope="col" class="hd col-4 jtl-head-color border-1">
+              <th scope="col" class="hd col-4 jtl-head-color border-bottom">
                 <mfDefaultSorter by="label">label</mfDefaultSorter>
               </th>
-              <th scope="col" class="hd col-3 jtl-head-color border-1">
+              <th scope="col" class="hd col-3 jtl-head-color border-bottom">
                 <mfDefaultSorter by="onePerc">variability [multiple]</mfDefaultSorter>
               </th>
-              <th scope="col" class="hd col-3 jtl-head-color border-1">
+              <th scope="col" class="hd col-3 jtl-head-color border-bottom">
                 <mfDefaultSorter by="p99">slowest 1% [ms]</mfDefaultSorter>
               </th>
-              <th scope="col" class="hd col-2 jtl-head-color border-1">
+              <th scope="col" class="hd col-2 jtl-head-color border-bottom">
                 <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
               </th>
             </tr>
@@ -59,16 +59,16 @@
           <table class="table perf-analysis-table" [mfData]="perfAnalysis.variability.failingLabels" #mf="mfDataTable">
             <thead>
             <tr class="d-flex">
-              <th scope="col" class="col-4 hd jtl-head-color border-1">
+              <th scope="col" class="col-4 hd jtl-head-color border-bottom">
                 <mfDefaultSorter by="label">label</mfDefaultSorter>
               </th>
-              <th scope="col" class="col-3 hd jtl-head-color border-1">
+              <th scope="col" class="col-3 hd jtl-head-color border-bottom">
                 <mfDefaultSorter by="variability">variability [multiple]</mfDefaultSorter>
               </th>
-              <th scope="col" class="col-3 hd jtl-head-color border-1">
+              <th scope="col" class="col-3 hd jtl-head-color border-bottom">
                 <mfDefaultSorter by="minResponseTime">min [ms]</mfDefaultSorter>
               </th>
-              <th scope="col" class="col-2 hd jtl-head-color border-1">
+              <th scope="col" class="col-2 hd jtl-head-color border-bottom">
                 <mfDefaultSorter by="avgResponseTime">avg [ms]</mfDefaultSorter>
               </th>
             </tr>

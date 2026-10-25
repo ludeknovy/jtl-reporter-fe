@@ -1,5 +1,5 @@
 <div class="input-group mr-2">
-  <input [ngClass]="ngControl?.valid ? 'ng-valid' : 'ng-invalid'" class="form-control" (blur)="inputBlur($event)"
+  <input #dateInput [ngClass]="ngControl?.valid ? 'ng-valid' : 'ng-invalid'" class="form-control" (blur)="inputBlur($event)"
          [value]="dateString | date:inputDatetimeFormat" (change)="onInputChange($event)" [disabled]='disabled'/>
 
     <button class="btn btn-outline-secondary" [ngbPopover]="calendarContent" [disabled]='disabled' type="button">

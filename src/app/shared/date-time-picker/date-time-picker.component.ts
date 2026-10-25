@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef, ViewChild, AfterViewInit, Injector } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, forwardRef, Injector, Input, OnInit, ViewChild } from "@angular/core";
 import { NgbTimeStruct, NgbDateStruct, NgbPopoverConfig, NgbPopover, NgbDatepicker } from "@ng-bootstrap/ng-bootstrap";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from "@angular/forms";
 import { DatePipe } from "@angular/common";
@@ -19,7 +19,7 @@ import { noop } from "rxjs";
     ],
     standalone: false
 })
-export class DateTimePickerComponent implements ControlValueAccessor, OnInit {
+export class DateTimePickerComponent implements AfterViewInit, ControlValueAccessor, OnInit {
   @Input()
   dateString: string;
 
@@ -47,18 +47,25 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit {
   @ViewChild(NgbPopover)
   private popover: NgbPopover;
 
+  @ViewChild("dateInput")
+  private dateInput: ElementRef<HTMLInputElement>;
+
   private onTouched: () => void = noop;
   private onChange: (_: any) => void = noop;
 
   public ngControl: NgControl;
 
-  constructor(private config: NgbPopoverConfig, private inj: Injector ) {
+  constructor(private config: NgbPopoverConfig, private datePipe: DatePipe, private inj: Injector ) {
     config.autoClose = "outside";
     config.placement = "auto";
   }
 
   ngOnInit(): void {
     this.ngControl = this.inj.get(NgControl);
+  }
+
+  ngAfterViewInit(): void {
+    this.updateInputValue();
   }
 
   writeValue(newModel: string) {
@@ -68,6 +75,8 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit {
       this.setDateStringModel();
     } else {
       this.datetime = new DateTimeModel();
+      this.dateString = "";
+      this.updateInputValue();
     }
   }
 
@@ -131,6 +140,7 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit {
 
   setDateStringModel() {
     this.dateString = this.datetime.toString();
+    this.updateInputValue();
 
     if (!this.firstTimeAssign) {
       this.onChange(this.dateString);
@@ -140,6 +150,12 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit {
         this.firstTimeAssign = false;
 
       }
+    }
+  }
+
+  private updateInputValue() {
+    if (this.dateInput) {
+      this.dateInput.nativeElement.value = this.datePipe.transform(this.dateString, this.inputDatetimeFormat) || "";
     }
   }
 
